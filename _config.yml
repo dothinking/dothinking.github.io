@@ -30,7 +30,7 @@ author:
   name     : "Train"
   job      : "PHD candidate"
   bio      : "正心诚意 格物致知."
-  thumb    : /images/author.jpg
+  # thumb    : /images/author.jpg
   email    : train8808@gmail.com
   url      : http://dothinking.github.io
   github   : http://github.com/dothinking
@@ -45,10 +45,10 @@ gems:
   - jekyll-paginate
 
 # navbar pages
-navbar:
-  - slug : about
-    title: About
-  - slug : blog
-    title: Blog
+# navbar:
+#   - slug : about
+#     title: About
+#   - slug : blog
+#     title: Blog
 
 exclude: ["gulp", "node_modules", "bower", "bower_components", "config.rb", "src", "Gemfile", "Gemfile.lock", ".rvmrc", ".rbenv-version", "package.json", "gulpfile.js", "README.md", "Rakefile", "changelog.md"]

@@ -54,7 +54,6 @@
   {% endcapture %}
   {% capture page_image %}{{ page_image | strip | rstrip | lstrip | escape | strip_newlines }}{% endcapture %}
 
-  <!-- Social: Facebook / Open Graph -->
 {% if page.id %}
   <meta property="og:type" content="article">
   <meta property="article:author" content="{{ site.author.name }}">

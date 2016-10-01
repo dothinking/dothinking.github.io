@@ -75,22 +75,6 @@ hr {
   min-height: 80px;
 }
 
-.intro {
-  .author-name {
-    display: inline-block;
-    padding: 0 .2em;
-    background: lighten($light-gray-color, 15%)
-  }
-
-  a {
-    @extend .link;
-  }
-
-  .container {
-    padding-bottom: 0;
-  }
-}
-
 .logo {
   float: left;
   margin: 0 0 1em 0;
@@ -100,17 +84,19 @@ hr {
   line-height: 28px;
   font-weight: 300;
 
+  a{
+    font-size: 30px;
+  }
+
   span {
+    display: inline-block;
+    text-align: bottom;
     font-weight: 700;
   }
 }
 
 .nav {
   min-height: 64px;
-}
-
-.nav a{
-  font-size: 36px;
 }
 
 .navbar {
@@ -198,27 +184,6 @@ hr {
 
   .prev, .next {
     @extend .link;
-  }
-}
-
-.share {
-  border-top: 0.2em solid lighten($light-gray-color, 13%);
-  padding-top: $base-spacing;
-  margin-top: $base-spacing;
-
-  p {
-    margin: 0;
-    font-size: rem(14);
-    color: $medium-gray-color;
-  }
-}
-
-.disqus {
-  background-color: lighten($light-gray-color, 16%);
-  padding: $base-spacing 0;
-
-  hr {
-    margin: $base-spacing 0;
   }
 }
 

@@ -4,6 +4,7 @@
   &:after {
     box-sizing: border-box;
   }
+  font-family:"Microsoft Yahei",simSun,Arial;
 }
 
 html,
@@ -106,6 +107,10 @@ hr {
 
 .nav {
   min-height: 64px;
+}
+
+.nav a{
+  font-size: 36px;
 }
 
 .navbar {

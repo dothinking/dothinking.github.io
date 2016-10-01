@@ -4,7 +4,7 @@
   &:after {
     box-sizing: border-box;
   }
-  font-family:"Microsoft Yahei",simSun,Arial;
+  font-family: Arial,'Times New Roman','Microsoft YaHei',SimHei; 
 }
 
 html,
@@ -131,9 +131,9 @@ hr {
   }
 }
 
-.post-list {
+/*.post-list {
   background-color: lighten($light-gray-color, 17%);
-}
+}*/
 
 .category-title {
   margin: 1em 0 0.5em 0;
@@ -146,6 +146,7 @@ hr {
 .post-item {
   margin-bottom: 0.2em;
   display: block;
+  border-bottom: 1px dashed lighten($light-gray-color, 10%);
 
   a {
     color: $action-color;
@@ -154,12 +155,11 @@ hr {
 
   .article-title {
     display: inline-block;
-    width: 85%;
-    border-bottom: 1px dashed lighten($light-gray-color, 10%);
+    width: 85%;    
   }
 
   .date-label {
-    border: 1px solid lighten($light-gray-color, 10%);
+    /*border: 1px solid lighten($light-gray-color, 10%);*/
     padding: 0 0.2em;
     margin-left: 1em;
     margin-top: 2px;
@@ -239,6 +239,7 @@ hr {
 
   .block {
     display: block;
+    text-align:center;
   }
 }
 

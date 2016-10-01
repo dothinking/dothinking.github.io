@@ -83,15 +83,15 @@ hr {
   font-size: 20px;
   line-height: 28px;
   font-weight: 300;
+  vertical-align: baseline;
 
   a{
     font-size: 30px;
   }
 
   span {
-    display: inline-block;
-    text-align: bottom;
     font-weight: 700;
+    font-style: italic;
   }
 }
 
@@ -184,6 +184,18 @@ hr {
 
   .prev, .next {
     @extend .link;
+  }
+}
+
+.share {
+  border-top: 0.2em solid lighten($light-gray-color, 13%);
+  padding-top: $base-spacing;
+  margin-top: $base-spacing;
+
+  p {
+    margin: 0;
+    font-size: rem(14);
+    color: $medium-gray-color;
   }
 }
 

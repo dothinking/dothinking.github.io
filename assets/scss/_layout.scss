@@ -88,15 +88,18 @@ hr {
   a{
     font-size: 30px;
   }
-
-  span {
-    font-weight: 700;
-    font-style: italic;
-  }
 }
 
 .nav {
   min-height: 64px;
+
+  span {    
+    display: inline-block;
+    height: 45px;
+    vertical-align: bottom;
+    font-weight: 700;
+    font-style: italic;  
+  }
 }
 
 .navbar {

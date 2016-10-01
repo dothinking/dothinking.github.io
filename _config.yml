@@ -17,6 +17,8 @@ permalink   : /:year/:title/
 markdown    : kramdown
 highlighter : rouge
 
+safe: true
+lsi: false
 source: ./
 destination: ./_site
 

@@ -37,6 +37,7 @@ author:
 
 gems:
   - bourbon
+  - jekyll-redirect-from
   - jekyll-paginate
 
 paginate: 20

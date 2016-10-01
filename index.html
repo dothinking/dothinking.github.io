@@ -4,7 +4,7 @@ title: Home
 ---
 <section class="post-list">
   <div class="container">
-    {% for post in site.posts %}
+    {% for post in paginator.posts %}
       {% unless post.next %}
         <h2 class="category-title">{{ post.date | date: '%Y' }}</h2>
       {% else %}

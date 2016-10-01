@@ -26,13 +26,13 @@ How to use:
 3. `mkdir posts`, then copy all your posts which are `markdown` format to `posts` folder
 4. open site.conf.json
 
-`
+```
 {
 "username": "your-github-username",
 "repo": "your-github-repo",
 "branch": "gh-pages"
 }
-`
+```
   
 5. run `npm run deploy`, that's it!
 

@@ -4,6 +4,10 @@ title: hello world
 mathjax: true
 ---
 
+### Image
+
+![Minion](/images/test.jpg)
+
 ### MathJax
 
 Let's test some inline math $x$, $y$, $x_1$, $y_1$.

@@ -25,17 +25,19 @@ title: Home
   {% if paginator.total_pages > 1 %}
   <nav class="pagination" role="pagination">
     <ul>
+      <li><a class="prev" href="{{ site.url }}" title="Articles new">&laquo; 首页</a></li>
       {% if paginator.previous_page %}
-        <li><a class="prev" href="{{ paginator.previous_page_path | prepend: site.baseurl }}" title="Articles new">&laquo; Prev</a></li>
+        <li><a class="prev" href="{{ paginator.previous_page_path | prepend: site.baseurl }}" title="Articles new">&laquo; 上一页</a></li>
       {% else %}
-        <li><span class="prev disabled">&laquo; Prev</span></li>
+        <li><span class="prev disabled">&laquo; 上一页</span></li>
       {% endif %}
       <li><span class="page-number">Page {{paginator.page}} of {{paginator.total_pages}}</span></li>
       {% if paginator.next_page %}
-        <li><a class="next" href="{{ paginator.next_page_path | prepend: site.baseurl }}" title="Articles old">Next &raquo;</a></li>
+        <li><a class="next" href="{{ paginator.next_page_path | prepend: site.baseurl }}" title="Articles old">下一页 &raquo;</a></li>
       {% else %}
-        <li><span class="next disabled">Next &raquo;</span></li>
+        <li><span class="next disabled">下一页 &raquo;</span></li>
       {% endif %}
+      <li><a class="prev" href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', total_pages }}" title="Articles new">&laquo; 末页</a></li>
     </ul>
   </nav>
   {% endif %}

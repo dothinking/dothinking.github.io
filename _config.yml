@@ -10,7 +10,6 @@ baseurl: "/blog" # apply repo name if use it under gh-pages branch
 repo: http://github.com/dothinking/blog
 
 # Build settings
-# permalink   : /:year/:title/
 markdown    : kramdown
 kramdown:
   input: GFM
@@ -41,6 +40,7 @@ gems:
 
 paginate: 20
 paginate_path: "/blog/page:num/"
+# permalink   : /:year/:title/ # 如果需要分页，则必须注释掉permalink 
 
 # navbar pages
 # navbar:

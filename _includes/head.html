@@ -82,4 +82,10 @@
 
   <!-- Canonical link tag -->
   <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+
+  {% if page.mathjax %}
+    {% include mathjax_support.html %}
+  {% endif %}
+
+
 </head>

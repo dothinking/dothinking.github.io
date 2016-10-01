@@ -6,7 +6,6 @@ description: "Thinking and recording"
 keywords: "numerical analysis, CAE, PHP, thinkspace"
 url: http://dothinking.github.io/blog # site url
 baseurl: "/blog" # apply repo name if use it under gh-pages branch
-imageurl: "/blog/_images/" # 自定义图片目录
 
 repo: http://github.com/dothinking/blog
 

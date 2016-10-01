@@ -46,6 +46,9 @@ gems:
   - bourbon
   - jekyll-paginate
 
+paginate: 25
+paginate_path: "page:num"  
+
 # navbar pages
 # navbar:
 #   - slug : about

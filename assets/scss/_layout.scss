@@ -70,7 +70,7 @@ hr {
 }
 
 .site-header {
-  border-bottom: 1px solid lighten($light-gray-color, 5%);
+  border-bottom: 2px solid lighten($light-gray-color, 5%);
   margin-bottom: $small-spacing;
   min-height: 80px;
 }
@@ -98,6 +98,8 @@ hr {
     font-weight: 200;
     font-style: italic;
     font-size: 12px;
+    color: #eee;
+    text-shadow:3px 3px 0 #ccc, 5px 5px 0 #eee;
   }
 }
 

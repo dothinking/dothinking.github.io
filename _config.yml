@@ -4,7 +4,7 @@ title: "格致"
 title2: "" # default: ""
 description: "Thinking and recording"
 keywords: "numerical analysis, CAE, PHP, thinkspace"
-url: http://dothinking.github.io/blog # site url
+url: http://dothinking.github.io/blog/ # site url
 baseurl: "/blog" # apply repo name if use it under gh-pages branch
 
 repo: http://github.com/dothinking/blog

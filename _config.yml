@@ -40,7 +40,7 @@ gems:
   - jekyll-paginate
 
 paginate: 20
-paginate_path: "blog/page:num"
+# paginate_path: "blog/page:num"
 
 # navbar pages
 # navbar:

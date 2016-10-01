@@ -6,7 +6,7 @@ mathjax: true
 
 ### Image
 
-![Minion]({{ "/_posts/images/test.jpg" | prepend: site.baseurl }})
+![Minion]({{ "/images/test.jpg" | prepend: site.baseurl }})
 
 ### MathJax
 

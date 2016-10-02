@@ -39,7 +39,7 @@ data_dir = user_dir + "\\data\\initial_data.txt"
 
 至此，第一个问题解决。
 
-### 2 读入初始文件失败<
+### 2 读入初始文件失败
 
 数据文件的目标位置是`\user_application\data\`，实际上却定位向了错误位置`C:\User\data\`。这是因为上述代码期望通过`os.getcwd()`获取当前脚本文件所在目录，然而`os.getcwd()`获取的是当前目录——正在运行的Marc程序的目录，而不是Marc调用的脚本的目录。
 

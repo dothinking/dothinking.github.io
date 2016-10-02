@@ -127,9 +127,7 @@ ___
 
 根据本项目中图片文件夹的路径，采用`![图片注释]({{ "/images/test.png" | prepend: site.baseurl }})`显示图片。
 
-![图片注释]({{ "/images/test.png" | prepend: site.baseurl }})
-
-或者使用`<img>`标签插入图片
+或者也可以使用`<img>`标签插入图片：`<img src="{{ "/images/test.png" | prepend: site.baseurl }}" width="200">`
 
 <img src="\images\test.png" width="200">
 

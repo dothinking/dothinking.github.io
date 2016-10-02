@@ -13,7 +13,7 @@
 ### 文件头
 ```python
 ---
-layout: post # 默认模板文件为post。html
+layout: post # 默认模板文件为post.html
 title: hello world # 文章标题
 description: "Markdown Cheatsheet Demo..." # 文章概要
 keywords: "markdown, 语法, Latex" # 关键字
@@ -41,11 +41,11 @@ mathjax: true # 是否使用Latex，需要的话则引入mathjex引擎
 
 ### 文本样式 
 
-可以使用`**sth**`来**加粗文本**，使用`_sth_`来_获得斜体效果_；当然，**_二者可以组合使用_**。``sth``可以`高亮文本`。
+可以使用`**sth**`来**加粗文本**，使用`_sth_`来_获得斜体效果_；当然，**_二者可以组合使用_**。`sth`可以`高亮文本`。
 
 超链接形式为：`[文本](地址)` ，例如[http://www.example.com](http://www.example.com)。
 
-`>`引导yiyongwenben引用文本：
+`>`引导引用文本：
 > 这是一段引用文字。
 
 <div class="divider"></div>
@@ -88,15 +88,15 @@ But let's throw in a <b>tag</b>.
 
 ### 表格
 
-### Table 1: With Alignment
+#### 使用`:`表示对齐方式
 
 | Tables        | Are           | Cool  |
 | ------------- |:-------------:| -----:|
 | col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
+| col 2 is      | centered      | $12   |
+| zebra stripes | are neat      | $1    |
 
-### Table 2: With Typography Elements
+#### 自由边线表格
 
 Markdown | Less | Pretty
 --- | --- | ---

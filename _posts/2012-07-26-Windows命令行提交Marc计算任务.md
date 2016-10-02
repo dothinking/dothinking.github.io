@@ -67,4 +67,4 @@ number_of_processors) -nthread number_of_threads
 
 ## 参考资料
 
-[^1]: 1: [run_marc后出现getarch.bat不是内部或外部命令，如何解决？](http://iknow.baidu.com/question/256648092.html)
+[^1]: [1] [run_marc后出现getarch.bat不是内部或外部命令，如何解决？](http://iknow.baidu.com/question/256648092.html)

@@ -54,6 +54,6 @@ data_dir = user_dir + "\\data\\initial_data.txt"
 
 ## 参考资料
 
-[^1]: 1: Windows下配置Python环境变量[](http://www.cnblogs.com/qiyeshublog/archive/2012/01/24/2329162.html)
-[^2]: 2: Python语言获取脚本文件所在路径[](http://blog.csdn.net/bupteinstein/article/details/6534177)
-[^3]: 3: Python 获取当前脚本文件路径目录[](http://www.cnblogs.com/pchgo/archive/2011/09/19/2181248.html)
+[^1]: 1: [Windows下配置Python环境变量](http://www.cnblogs.com/qiyeshublog/archive/2012/01/24/2329162.html)
+[^2]: 2: [Python语言获取脚本文件所在路径](http://blog.csdn.net/bupteinstein/article/details/6534177)
+[^3]: 3: [Python 获取当前脚本文件路径目录](http://www.cnblogs.com/pchgo/archive/2011/09/19/2181248.html)

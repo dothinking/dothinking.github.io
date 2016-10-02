@@ -35,15 +35,15 @@ data_dir = user_dir + "\\data\\initial_data.txt"
 
 当前Python版本为Marc安装时自带的Python 2.5，但是在python编辑器下直接运行`import os`不存在此问题。猜测原因为：实际调用Python脚本的是Marc程序，则由于Marc无法搜索到Python的`OS`模块而导致错误。
 
-**解决方案**：尝试为Marc指定Python相关模块，即建立`PYTHONPATH`环境变量，其值为Marc安装目录下Python库文件路径`Lib`。
+**解决方案**：尝试为Marc指定Python相关模块，即建立`PYTHONPATH`环境变量[[^1]]，其值为Marc安装目录下Python库文件路径`Lib`。
 
 至此，第一个问题解决。
 
 ### 2 读入初始文件失败
 
-数据文件的目标位置是`\user_application\data\`，实际上却定位向了错误位置`C:\User\data\`。这是因为上述代码期望通过`os.getcwd()`获取当前脚本文件所在目录，然而`os.getcwd()`获取的是当前目录——正在运行的Marc程序的目录，而不是Marc调用的脚本的目录。
+数据文件的目标位置是`\user_application\data\`，实际上却定位向了错误位置`C:\User\data\`。这是因为上述代码期望通过`os.getcwd()`获取当前脚本文件所在目录，然而`os.getcwd()`获取的是当前目录——正在运行的Marc程序的目录，而不是Marc调用的脚本的目录[[^2]]。
 
-**解决方案**：使用`sys.path[0]`获取当前脚本文件所在路径。
+**解决方案**：使用`sys.path[0]`获取当前脚本文件所在路径[[^3]]。
 
 因此，修正后代码为：
 
@@ -54,7 +54,6 @@ data_dir = user_dir + "\\data\\initial_data.txt"
 
 ## 参考资料
 
-1. [Windows下配置Python环境变量](http://www.cnblogs.com/qiyeshublog/archive/2012/01/24/2329162.html)
-2. [Python文件目录操作](http://www.cnblogs.com/xuxm2007/archive/2010/08/09/1795504.html)
-3. [Python 获取当前脚本文件路径目录](http://www.cnblogs.com/pchgo/archive/2011/09/19/2181248.html)
-4. [Python语言获取脚本文件所在路径](http://blog.csdn.net/bupteinstein/article/details/6534177)
+[^1]: 1. [Windows下配置Python环境变量](http://www.cnblogs.com/qiyeshublog/archive/2012/01/24/2329162.html)
+[^2]: 2. [Python语言获取脚本文件所在路径](http://blog.csdn.net/bupteinstein/article/details/6534177)
+[^3]: 3. [Python 获取当前脚本文件路径目录](http://www.cnblogs.com/pchgo/archive/2011/09/19/2181248.html)

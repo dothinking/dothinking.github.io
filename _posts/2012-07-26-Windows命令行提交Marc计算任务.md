@@ -65,5 +65,6 @@ number_of_processors) -nthread number_of_threads
 
 4处理器前台运行任务`e2x1.dat` ，并使用用户子程序`u2x14.f`，计算完成后在相应目录下创建可执行模块`u2x14.marc` 。
 
----
-[^1]: [run_marc后出现getarch.bat不是内部或外部命令，如何解决？](http://iknow.baidu.com/question/256648092.html)
+## 参考资料
+
+[^1]: 1: [run_marc后出现getarch.bat不是内部或外部命令，如何解决？](http://iknow.baidu.com/question/256648092.html)

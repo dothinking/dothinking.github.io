@@ -13,6 +13,6 @@ keywords: "Marc, Python"
 
 或者使用`<img>`标签插入图片
 
-<img src="\images\test.png" width="200">
+<img src="{{ "/images/test.png" | prepend: site.baseurl }}" width="200">
 
 <div class="divider"></div>

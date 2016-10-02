@@ -2,7 +2,7 @@
 layout: post
 author: Train
 description: "Windows命令行提交Marc计算任务的指令及可能遇到的问题"
-keywords: "Marc, 命令行"
+keywords: "Marc, Python"
 ---
 
 完成有限元建模后，可以直接在MENTAT中执行计算，也可以使用`run_marc`命令直接在命令行提交计算任务。

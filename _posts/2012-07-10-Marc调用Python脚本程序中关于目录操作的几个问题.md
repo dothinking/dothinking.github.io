@@ -1,5 +1,6 @@
 ---
 layout: post
+author: Train
 description: "Marc程序调用Python脚本过程中获取当前目录方法"
 keywords: "Marc, Python"
 ---
@@ -20,7 +21,7 @@ user_application
 
 ## 基本思路
 
-1. 获得当前脚本文件所在目录，返回上级目录即`data`文件夹所在目录
+1. 获取当前脚本文件所在目录的上级目录，即`data`文件夹所在目录
 2. 用Marc内部命令`*user_defined_read filename`读取`data`下文件
 
 ```python
@@ -32,7 +33,7 @@ data_dir = user_dir + "\\data\\initial_data.txt"
 
 ### 1 错误提示 ImportError: No module named os
 
-Python版本为Marc安装时自带的Python 2.5，并且在python编辑器下直接运行`import os`不存在此问题。猜测原因为：实际调用该Python脚本的是Marc程序，则因为Marc无法搜索到Python的OS模块而导致错误。
+当前Python版本为Marc安装时自带的Python 2.5，但是在python编辑器下直接运行`import os`不存在此问题。猜测原因为：实际调用Python脚本的是Marc程序，则由于Marc无法搜索到Python的`OS`模块而导致错误。
 
 **解决方案**：尝试为Marc指定Python相关模块，即建立`PYTHONPATH`环境变量，其值为Marc安装目录下Python库文件路径`Lib`。
 
@@ -40,11 +41,12 @@ Python版本为Marc安装时自带的Python 2.5，并且在python编辑器下直
 
 ### 2 读入初始文件失败<
 
-数据文件的目标位置是`\user_application\data\`，实际上却定位向了错误位置`C:\User\data\`。这是因为上述代码中期望通过`os.getcwd()`获取当前脚本文件所在目录，然而`os.getcwd()`获取的是当前目录——正在运行的Marc程序的目录，而不是Marc调用的脚本的目录。
+数据文件的目标位置是`\user_application\data\`，实际上却定位向了错误位置`C:\User\data\`。这是因为上述代码期望通过`os.getcwd()`获取当前脚本文件所在目录，然而`os.getcwd()`获取的是当前目录——正在运行的Marc程序的目录，而不是Marc调用的脚本的目录。
 
-**解决方案**：使用获取当前脚本文件所在路径函数`sys.path[0]`。
+**解决方案**：使用`sys.path[0]`获取当前脚本文件所在路径。
 
 因此，修正后代码为：
+
 ```python
 user_dir = os.path.dirname(sys.path[0]) # 脚本目录
 data_dir = user_dir + "\\data\\initial_data.txt"

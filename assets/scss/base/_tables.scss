@@ -2,15 +2,14 @@ table {
   border-collapse: collapse;
   font-feature-settings: "kern", "liga", "tnum";
   margin: $small-spacing 0;
-  table-layout: fixed;
+  /*table-layout: fixed;*/
   width: 100%;
-  white-space: nowrap;
 }
 
 th {
   border-bottom: 1px solid shade($base-border-color, 25%);
   font-weight: 600;
-  padding: $small-spacing 0;
+  padding: $small-spacing 10px;
   text-align: left;
 }
 
@@ -23,4 +22,8 @@ tr,
 td,
 th {
   vertical-align: middle;
+}
+
+tr:hover{
+  background-color: $secondary-background-color;
 }

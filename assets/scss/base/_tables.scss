@@ -4,6 +4,7 @@ table {
   margin: $small-spacing 0;
   table-layout: fixed;
   width: 100%;
+  white-space: nowrap;
 }
 
 th {

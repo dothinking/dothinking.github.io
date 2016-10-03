@@ -57,15 +57,15 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: $heading-font-family;
+  /*font-family: $heading-font-family;*/
   font-size: $base-font-size;
   line-height: $heading-line-height;
   margin: $small-spacing 0 $small-spacing 0;
-  font-weight: 300;
+  font-weight: 500;
 }
 
 h1 {
-  font-size: rem(30);
+  font-size: rem(30);  
 }
 
 h2 {

@@ -4,7 +4,8 @@
   &:after {
     box-sizing: border-box;
   }
-  font-family: Arial,'Times New Roman','Microsoft YaHei',SimHei; 
+  /*font-family: Arial,'Times New Roman','Microsoft YaHei',SimHei; */
+  font:15px Baskerville,Georgia,'Microsoft Yahei',Simsun,Arial,Helvetica,sans-serif,Tahoma;
 }
 
 html,
@@ -141,9 +142,8 @@ hr {
 
   a {  
     color: $action-color;
-    font-family:Georgia, Sans-serif;
-    font-weight: 400;
-    letter-spacing: 1px;
+    font-family: Georgia, Sans-serif;
+    font-weight: 600;
   }
 
   .article-title {

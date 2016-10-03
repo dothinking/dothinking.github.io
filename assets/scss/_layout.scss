@@ -139,8 +139,9 @@ hr {
   display: block;
   border-bottom: 1px dashed lighten($light-gray-color, 10%);
 
-  a {
+  a {  
     color: $action-color;
+    font-family:Georgia, Sans-serif;
     font-weight: 400;
     letter-spacing: 1px;
   }

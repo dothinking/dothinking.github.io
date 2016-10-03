@@ -28,10 +28,11 @@
     code {
       white-space: pre;
       padding: 0 !important;
-      font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
-
       * {
         white-space: nowrap; // this sets all children inside to nowrap
+      }
+      span{
+        font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
       }
     }
   }

@@ -10,7 +10,6 @@ code{
   box-shadow: 0px 0px 2px rgba($black-color, .1); 
 
   .highlighter-rouge &, &, .hll, pre, code {
-    color: $base-font-color;
     background-color: lighten($light-gray-color, 13%) !important;
     font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
   }
@@ -26,11 +25,11 @@ code{
     word-wrap: inherit;
 
     &, code {
-      color: $base-font-color;
       font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
     }
 
     code {
+      color: $base-font-color;
       font-family: "Consolas", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
       white-space: pre;
       padding: 0 !important;

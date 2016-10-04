@@ -21,20 +21,22 @@ mathjax: true
 
 $$d\varepsilon_{ij}^{p} = d\lambda\,{\sigma_{ij}}'$$
 
-根据等效塑性应变增量$d{\bar\varepsilon}_{ij}^{p}$的定义式及体积不变条件得到
+根据等效塑性应变增量`$d{\bar\varepsilon}_{ij}^{p}$`的定义式及体积不变条件得到
 
 $$d{\bar\varepsilon}_{ij}^{p} = \sqrt{\frac{2}{3}\,d{\varepsilon'}_{ij}^{p}\,d{\varepsilon'}_{ij}^{p}} = \sqrt{\frac{2}{3}\,d{\varepsilon}_{ij}^{p}\,d{\varepsilon}_{ij}^{p}}$$
 
 于是等效应变
 
-$$\begin{align} 
+$$ 
+\begin{align} 
 \bar\sigma &= \sqrt{\dfrac{3}{2}\,{\sigma_{ij}}'\,{\sigma_{ij}}'} = \sqrt{\dfrac{3}{2}\,\dfrac{d\varepsilon_{ij}^{p}}{d\lambda} \, \dfrac{d\varepsilon_{ij}^{p}}{d\lambda}} \\
 &= \dfrac{1}{d\lambda}\,\sqrt{\dfrac{3}{2}\,d\varepsilon_{ij}^{p} \, d\varepsilon_{ij}^{p}} \\
 &= \dfrac{3}{2}\,\dfrac{1}{d\lambda}\,\sqrt{\dfrac{2}{3}\,d\varepsilon_{ij}^{p} \, d\varepsilon_{ij}^{p}} \\
 &= \dfrac{3}{2}\,\dfrac{1}{d\lambda}\,d{\bar\varepsilon}_{ij}^{p}
-\end{align}$$
+\end{align}
+$$
 
-最后，根据Mises屈服条件$\bar\sigma = \sigma_s$得到
+最后，根据Mises屈服条件`$\bar\sigma = \sigma_s$`得到
 
 $$
 d\lambda = \dfrac{3\,d{\bar\varepsilon}_{ij}^{p}}{2\,\bar\sigma} = \dfrac{3\,d{\bar\varepsilon}_{ij}^{p}}{2\,\sigma_s}
@@ -55,7 +57,7 @@ $$
 
 ### Mises屈服准则的假设条件是否必要？
 
-从形式上看，前面推导过程中只是最后一步根据Mises屈服准则代入了$\bar\sigma=\sigma_s$，那么即便去除此条件，不是依然可以得到$d\lambda$的表达式$d\lambda = \dfrac{3\,d{\bar\varepsilon}_{ij}^{p}}{2\,\bar\sigma}$么？
+从形式上看，前面推导过程中只是最后一步根据Mises屈服准则代入了`$\bar\sigma=\sigma_s$`，那么即便去除此条件，不是依然可以得到`$d\lambda$`的表达式`$d\lambda = \dfrac{3\,d{\bar\varepsilon}_{ij}^{p}}{2\,\bar\sigma}$`么？
 
 那么，这个假设条件还是必要的么？
 
@@ -65,7 +67,7 @@ $$\bar\sigma = f(\sigma'_{ij}) = \sqrt{\dfrac{3}{2}\,{\sigma_{ij}}'\,{\sigma_{ij
 
 显然前面的推导过程是基于上式的，因此Mises屈服准则是Levy-Mises理论必须的假设条件之一。
 
-> Mises屈服准则不仅给出了$\bar\sigma=\sigma_s$，还给出了Mises等效应力$\bar\sigma$的表达式。
+> Mises屈服准则不仅给出了`$\bar\sigma=\sigma_s$`，还给出了Mises等效应力`$\bar\sigma$`的表达式。
 
 ### 屈服准则与本构方程的关联
 
@@ -81,11 +83,13 @@ $$d{\varepsilon'}_{ij}^{p} = d\lambda\,\frac{\partial\,f}{\partial\,{\sigma_{ij}
 
 得到
 
-$$\begin{align} 
+$$ 
+\begin{align} 
 d{\varepsilon'}_{ij}^{p} &= d\lambda\,\frac{\partial\left({J'}_2-\frac{1}{3}\,\sigma_s^2\right)}{\partial\,{\sigma_{ij}}'} \\
 &= d\lambda\,\frac{\partial\left(\frac{1}{3}\,{\bar\sigma}^2\right)}{\partial\,{\sigma_{ij}}'} \\
 &= d\lambda\,{\sigma'}_{ij}
-\end{align}$$
+\end{align} 
+$$
 
 即得到与Livey-Mises理论同样的表达式。
 

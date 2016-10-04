@@ -26,7 +26,7 @@ $$d\varepsilon_{ij}^{p} = d\lambda\,{\sigma_{ij}}'$$
 
 根据等效塑性应变增量定义式及体积不变条件得到
 
-$$d\bar{\varepsilon}_{ij}^{p} = \sqrt{\frac{2}{3}\,d{\varepsilon}'_{ij}^{p}\,d{\varepsilon}'_{ij}^{p}} = \sqrt{\frac{2}{3}\,d\varepsilon_{ij}^{p}\,d\varepsilon_{ij}^{p}}$$
+$$d\bar{\varepsilon}_{ij}^{p} = \sqrt{\frac{2}{3}\,d{{\varepsilon}'}_{ij}^{p}\,d{{\varepsilon}'}_{ij}^{p}} = \sqrt{\frac{2}{3}\,d{\varepsilon}_{ij}^{p}\,d{\varepsilon}_{ij}^{p}}$$
 
 根据屈服条件
 

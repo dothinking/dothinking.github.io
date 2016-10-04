@@ -2,7 +2,7 @@
 layout: post
 author: Train
 description: "直接在Sublime Text2编辑器中运行Python程序的设置方法"
-keywords: "numpy, Python, sublime text"
+keywords: "Python, sublime text"
 ---
 
 `Sublime Text`是一款相当经典的编辑器，自从用上之后便爱不释手；当用其写完一段Python代码而马上可以运行调试之，那就更惬意了。随着不断的使用过程和如上迫切的需求，逐渐积累了下文介绍的在`Sublime Text`编辑器中直接运行Python程序的两种方法——软件自带的`Build`功能和`SublimeREPL`插件。
@@ -34,11 +34,11 @@ keywords: "numpy, Python, sublime text"
 
 `SublimeREPL`(Sublime Read-Evaluation-Print-Loop)，解释型语言编译运行的过程，装了该插件后即可支持直接在Sublime编辑器上的编译运行和交互。
 
-安装方法不必多述，可以在线或者手动完成。安装完插件后，在Tools菜单下即可看到新增的SublimeREPL菜单项，如下图选择`Run Current File`即可运行，上面提到的`Build`命令无法实现的两类问题瞬间不复存在。
+安装方法不必多述，可以在线或者手动完成。安装完插件后，在`Tools`菜单下即可看到新增的SublimeREPL菜单项，如下图选择`Run Current File`即可运行，上面提到的`Build`命令无法实现的两类问题瞬间不复存在。
 
 <div align='center'><img src="{{ "/images/2013-10-31-02.jpg" | prepend: site.baseurl }}"></div>
 
-至此，算是达成了心愿，也更加肯定了这款神器。然而挑剔一点，感觉美中不足的是运行程序需要点击的菜单过长，多么希望像在其他IDE环境下直接`F5`运行啊。
+至此，算是达成了心愿，也更加肯定了这款神器。然而挑剔一点，美中不足的是运行程序需要点击的菜单过长，多么希望像在其他IDE环境下直接`F5`运行啊。
 
 Sublime不会让人失望，用户自定义快捷键即可。
 
@@ -73,7 +73,8 @@ Sublime不会让人失望，用户自定义快捷键即可。
 
 `Preferences => Key Boundings-User`打开自定义快捷键文件，写入如下内容：
 
-```[
+```
+[
     {
         "keys" : ["f5"],                           // 快捷键，注意小写
         "command" : "run_existing_window_command", // 运行定义的命令

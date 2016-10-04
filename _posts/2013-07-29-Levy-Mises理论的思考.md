@@ -28,9 +28,9 @@ $$d{\bar\varepsilon}_{ij}^{p} = \sqrt{\frac{2}{3}\,d{\varepsilon'}_{ij}^{p}\,d{\
 于是等效应变
 
 \begin{align}
-\bar\sigma &= \sqrt{\dfrac{3}{2}\,{\sigma_{ij}}'\,{\sigma_{ij}}'} = \sqrt{\dfrac{3}{2}\,\dfrac{d\varepsilon_{ij}^{p}}{d\lambda} \, \dfrac{d\varepsilon_{ij}^{p}}{d\lambda}}  \\
-&= \dfrac{1}{d\lambda}\,\sqrt{\dfrac{3}{2}\,d\varepsilon_{ij}^{p} \, d\varepsilon_{ij}^{p}}  \\\\
-&= \dfrac{3}{2}\,\dfrac{1}{d\lambda}\,\sqrt{\dfrac{2}{3}\,d\varepsilon_{ij}^{p} \, d\varepsilon_{ij}^{p}}  \\
+\bar\sigma &= \sqrt{\dfrac{3}{2}\,{\sigma_{ij}}'\,{\sigma_{ij}}'} = \sqrt{\dfrac{3}{2}\,\dfrac{d\varepsilon_{ij}^{p}}{d\lambda} \, \dfrac{d\varepsilon_{ij}^{p}}{d\lambda}}  \\\\\\\\
+&= \dfrac{1}{d\lambda}\,\sqrt{\dfrac{3}{2}\,d\varepsilon_{ij}^{p} \, d\varepsilon_{ij}^{p}}  \\\\\\\\
+&= \dfrac{3}{2}\,\dfrac{1}{d\lambda}\,\sqrt{\dfrac{2}{3}\,d\varepsilon_{ij}^{p} \, d\varepsilon_{ij}^{p}}  \\\\\\\\
 &= \dfrac{3}{2}\,\dfrac{1}{d\lambda}\,d{\bar\varepsilon}_{ij}^{p}
 \end{align}
 

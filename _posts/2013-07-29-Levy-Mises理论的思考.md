@@ -27,14 +27,12 @@ $$d{\bar\varepsilon}_{ij}^{p} = \sqrt{\frac{2}{3}\,d{\varepsilon'}_{ij}^{p}\,d{\
 
 于是等效应变
 
-$$
 \begin{align\*}
 \bar\sigma &= \sqrt{\dfrac{3}{2}\,{\sigma\_{ij}}'\,{\sigma\_{ij}}'} = \sqrt{\dfrac{3}{2}\,\dfrac{d\varepsilon\_{ij}^{p}}{d\lambda} \, \dfrac{d\varepsilon\_{ij}^{p}}{d\lambda}}  \\\\\\
 &= \dfrac{1}{d\lambda}\,\sqrt{\dfrac{3}{2}\,d\varepsilon\_{ij}^{p} \, d\varepsilon\_{ij}^{p}}  \\\\\\
 &= \dfrac{3}{2}\,\dfrac{1}{d\lambda}\,\sqrt{\dfrac{2}{3}\,d\varepsilon\_{ij}^{p} \, d\varepsilon\_{ij}^{p}}  \\\\\\
 &= \dfrac{3}{2}\,\dfrac{1}{d\lambda}\,d{\bar\varepsilon}\_{ij}^{p}
 \end{align\*}
-$$
 
 最后，根据Mises屈服条件$\bar\sigma = \sigma_s$得到
 
@@ -84,9 +82,9 @@ $$d{\varepsilon'}_{ij}^{p} = d\lambda\,\frac{\partial\,f}{\partial\,{\sigma_{ij}
 得到
 
 \begin{align} 
-d{\varepsilon'}\_{ij}^{p} &= d\lambda\,\frac{\partial\left({J'}_2-\frac{1}{3}\,\sigma_s^2\right)}{\partial\,{\sigma_{ij}}'}
-&= d\lambda\,\frac{\partial\left(\frac{1}{3}\,{\bar\sigma}^2\right)}{\partial\,{\sigma_{ij}}'}
-&= d\lambda\,{\sigma'}_{ij}
+d{\varepsilon'}\_{ij}^{p} &= d\lambda\,\frac{\partial\left({J'}\_2-\frac{1}{3}\,\sigma\_s^2\right)}{\partial\,{\sigma\_{ij}}'}
+&= d\lambda\,\frac{\partial\left(\frac{1}{3}\,{\bar\sigma}^2\right)}{\partial\,{\sigma\_{ij}}'}
+&= d\lambda\,{\sigma'}\_{ij}
 \end{align}
 
 即得到与Livey-Mises理论同样的表达式。

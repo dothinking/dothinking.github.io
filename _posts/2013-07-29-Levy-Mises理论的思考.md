@@ -34,6 +34,13 @@ $$\begin{align}
 &= \dfrac{3}{2}\,\dfrac{1}{d\lambda}\,d{\bar\varepsilon}_{ij}^{p}
 \end{align}$$
 
+$$
+  \begin{align}
+    |\psi_1\rangle &= a|0\rangle + b|1\rangle \\\\
+    |\psi_2\rangle &= c|0\rangle + d|1\rangle
+  \end{align}
+$$
+
 最后，根据Mises屈服条件$\bar\sigma = \sigma_s$得到
 
 $$

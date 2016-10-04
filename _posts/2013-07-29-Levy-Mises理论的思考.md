@@ -27,6 +27,7 @@ $$d{\bar\varepsilon}_{ij}^{p} = \sqrt{\frac{2}{3}\,d{\varepsilon'}_{ij}^{p}\,d{\
 
 于是等效应变
 
+```
 $$
 \begin{align\*}
 \bar\sigma &= \sqrt{\dfrac{3}{2}\,{\sigma_{ij}}'\,{\sigma_{ij}}'} = \sqrt{\dfrac{3}{2}\,\dfrac{d\varepsilon_{ij}^{p}}{d\lambda} \, \dfrac{d\varepsilon_{ij}^{p}}{d\lambda}}  \\\\\\
@@ -35,6 +36,7 @@ $$
 &= \dfrac{3}{2}\,\dfrac{1}{d\lambda}\,d{\bar\varepsilon}_{ij}^{p}
 \end{align\*}
 $$
+```
 
 最后，根据Mises屈服条件$\bar\sigma = \sigma_s$得到
 

@@ -20,19 +20,29 @@ Levy-Mises理论基于如下假设：
 
 ## 推导过程
 
-在圣维南假设的基础上，假设各分量也成比例，即
+在圣维南假设的基础上，假设等效塑性应变增量的各个分量与相应偏应力分量成比例
 
-$$d\varepsilon = d\lambda\,{\sigma_{ij}}'$$
+$$d\varepsilon_{ij}^{p} = d\lambda\,{\sigma_{ij}}'$$
 
-根据屈服条件假设
-<p style="text-align: center;"><span class="Apple-style-span" style="font-family: 'Helvetica Neue', Helvetica, Arial, 'Nimbus Sans L', sans-serif;"><img class=" wp-image-538 aligncenter" style="border-style: initial; border-color: initial;" src="http://127.0.0.3/wordpress//wp-content/uploads/2013/07/2013-07-29_224513-300x106.jpg" alt="2013-07-29_224513" width="210" height="74" /></span></p>
-<p style="text-align: left;"><span class="Apple-style-span" style="font-family: 'Helvetica Neue', Helvetica, Arial, 'Nimbus Sans L', sans-serif;">根据体积不变假设</span></p>
-<span class="Apple-style-span" style="font-family: 'Helvetica Neue', Helvetica, Arial, 'Nimbus Sans L', sans-serif;"><img class="wp-image-539 aligncenter" style="border-style: initial; border-color: initial;" src="http://127.0.0.3/wordpress//wp-content/uploads/2013/07/2013-07-29_224532.jpg" alt="2013-07-29_224532" width="144" height="48" /></span>
+根据等效塑性应变增量定义式及体积不变条件得到
 
-<span class="Apple-style-span" style="font-family: 'Helvetica Neue', Helvetica, Arial, 'Nimbus Sans L', sans-serif;">则</span>
-<p style="text-align: center;"><span class="Apple-style-span" style="font-family: 'Helvetica Neue', Helvetica, Arial, 'Nimbus Sans L', sans-serif;"><img class="wp-image-540 aligncenter" style="border-style: initial; border-color: initial;" src="http://127.0.0.3/wordpress//wp-content/uploads/2013/07/2013-07-29_224608-1024x305.jpg" alt="2013-07-29_224608" width="1024" height="305" /></span></p>
+$$
+d\bar{\varepsilon}_{ij}^{p}
+ = \sqrt{\dfrac{2}{3}\,d{\varepsilon}'_{ij}^{p}\,d{\varepsilon}'_{ij}^{p}}
+ = \sqrt{\dfrac{2}{3}\,d\varepsilon_{ij}^{p}\,d\varepsilon_{ij}^{p}}
+$$
 
-<h1><span class="Apple-style-span" style="font-family: 'Helvetica Neue', Helvetica, Arial, 'Nimbus Sans L', sans-serif;"><span class="Apple-style-span" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;"> 疑问</span></span></h1>
+根据屈服条件
+
+$$\bar\sigma = \sqrt{\dfrac{3}{2}\,{\sigma_{ij}}'\,{\sigma_{ij}}'} = \sigma_s$$
+
+
+
+则
+
+
+
+sans-serif;"> 疑问</span></span></h1>
 <h2> 需要做理想刚塑性假设么？</h2>
 一些资料在Livey-Mises理论的假设条件中都提到理想刚塑性假设，例如我本科时的教材《材料成型原理》（机械工业出版社），还有网上的<a href="http://jpkc.hfut.edu.cn/jpkc2004/2004/cxyn/kejian/shang/ch17_03.htm">一些教程、课件</a>，那么理想刚塑性条件是必须的么？
 

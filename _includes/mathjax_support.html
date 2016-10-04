@@ -1,6 +1,6 @@
 <!--Load Mathjax-->
 <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
+<script type="text/x-mathjax-config">
   MathJax.Hub.Config({
       config: ["MMLorHTML.js"],
       extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js"],
@@ -8,7 +8,8 @@
       tex2jax: {
           inlineMath: [ ['$','$'], ["\\(","\\)"] ],
           displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-          processEscapes: false
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
       },
       TeX: {
           TagSide: "right",

@@ -28,8 +28,8 @@ $$d\varepsilon_{ij}^{p} = d\lambda\,{\sigma_{ij}}'$$
 
 $$
 d\bar{\varepsilon}_{ij}^{p}
- = \sqrt{\dfrac{2}{3}\,d{\varepsilon}'_{ij}^{p}\,d{\varepsilon}'_{ij}^{p}}
- = \sqrt{\dfrac{2}{3}\,d\varepsilon_{ij}^{p}\,d\varepsilon_{ij}^{p}}
+ = \sqrt{\frac{2}{3}\,d{\varepsilon}'_{ij}^{p}\,d{\varepsilon}'_{ij}^{p}}
+ = \sqrt{\frac{2}{3}\,d\varepsilon_{ij}^{p}\,d\varepsilon_{ij}^{p}}
 $$
 
 根据屈服条件

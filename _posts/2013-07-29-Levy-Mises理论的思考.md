@@ -6,11 +6,9 @@ keywords: "Levy-Mises理论, 本构方程"
 mathjax: true
 ---
 
-Levy-Mises理论是塑性成形增量理论之一。增量理论指用应变增量描述本构关系，又称为流动理论。本构关系包括三部分：本构方程、屈服条件和硬化条件。
+增量理论指的是用应变增量描述本构关系，又称为流动理论。本构关系包括三部分：本构方程、屈服条件和硬化条件。
 
-## 前提假设
-
-Levy-Mises理论基于如下假设：
+`Levy-Mises理论`是塑性成形增量理论之一，其基本假设如下：
 
 > * 刚塑性材料  
 > * Mises屈服准则  
@@ -29,12 +27,7 @@ $$d{\bar\varepsilon}_{ij}^{p} = \sqrt{\frac{2}{3}\,d{\varepsilon'}_{ij}^{p}\,d{\
 
 于是等效应变
 
-$$
-\bar\sigma &= \sqrt{\dfrac{3}{2}\,{\sigma_{ij}}'\,{\sigma_{ij}}'} = \sqrt{\dfrac{3}{2}\,\dfrac{d\varepsilon_{ij}^{p}}{d\lambda} \, \dfrac{d\varepsilon_{ij}^{p}}{d\lambda}}
-&= \dfrac{1}{d\lambda}\,\sqrt{\dfrac{3}{2}\,d\varepsilon_{ij}^{p} \, d\varepsilon_{ij}^{p}}
-&= \dfrac{3}{2}\,\dfrac{1}{d\lambda}\,\sqrt{\dfrac{2}{3}\,d\varepsilon_{ij}^{p} \, d\varepsilon_{ij}^{p}}
-&= \dfrac{3}{2}\,\dfrac{1}{d\lambda}\,d{\bar\varepsilon}_{ij}^{p}
-$$
+$$\bar\sigma &= \sqrt{\dfrac{3}{2}\,{\sigma_{ij}}'\,{\sigma_{ij}}'} = \sqrt{\dfrac{3}{2}\,\dfrac{d\varepsilon_{ij}^{p}}{d\lambda} \, \dfrac{d\varepsilon_{ij}^{p}}{d\lambda}}&= \dfrac{1}{d\lambda}\,\sqrt{\dfrac{3}{2}\,d\varepsilon_{ij}^{p} \, d\varepsilon_{ij}^{p}}&= \dfrac{3}{2}\,\dfrac{1}{d\lambda}\,\sqrt{\dfrac{2}{3}\,d\varepsilon_{ij}^{p} \, d\varepsilon_{ij}^{p}}&= \dfrac{3}{2}\,\dfrac{1}{d\lambda}\,d{\bar\varepsilon}_{ij}^{p}$$
 
 最后，根据Mises屈服条件$\bar\sigma = \sigma_s$得到
 
@@ -46,7 +39,7 @@ $$
 
 ### 理想刚塑性假设是否必要？
 
-机械工业出版社的《`材料成型原理`》等资料在Livey-Mises理论的假设条件中都提到了理想刚塑性假设，那么理想刚塑性条件是必须的么？
+机械工业出版社的《材料成型原理》等资料在Livey-Mises理论的假设条件中都提到了理想刚塑性假设，那么理想刚塑性条件是必须的么？
 
 理想刚塑性包含两层意思：
 
@@ -67,7 +60,7 @@ $$\bar\sigma = f(\sigma'_{ij}) = \sqrt{\dfrac{3}{2}\,{\sigma_{ij}}'\,{\sigma_{ij
 
 显然前面的推导过程是基于上式的，因此Mises屈服准则是Levy-Mises理论必须的假设条件之一。
 
-> Mises屈服准则不仅给出了$\bar\sigma=\sigma_s$，还给出了Mises等效应力$\bar\sigma$的表达式.
+> Mises屈服准则不仅给出了$\bar\sigma=\sigma_s$，还给出了Mises等效应力$\bar\sigma$的表达式。
 
 ### 屈服准则与本构方程的关联
 
@@ -83,11 +76,7 @@ $$d{\varepsilon'}_{ij}^{p} = d\lambda\,\frac{\partial\,f}{\partial\,{\sigma_{ij}
 
 得到
 
-$$
-d{\varepsilon'}_{ij}^{p} &= d\lambda\,\frac{\partial\biggl({J'}_2-\frac{1}{3}\,\sigma_s^2\biggr)}{\partial\,{\sigma_{ij}}'}
-&= d\lambda\,\frac{\partial\biggl(\frac{1}{3}\,{\bar\sigma}^2\biggr)}{\partial\,{\sigma_{ij}}'}
-&= d\lambda\,{\sigma'}_{ij}
-$$
+$$d{\varepsilon'}_{ij}^{p} &= d\lambda\,\frac{\partial\biggl({J'}_2-\frac{1}{3}\,\sigma_s^2\biggr)}{\partial\,{\sigma_{ij}}'}&= d\lambda\,\frac{\partial\biggl(\frac{1}{3}\,{\bar\sigma}^2\biggr)}{\partial\,{\sigma_{ij}}'}&= d\lambda\,{\sigma'}_{ij}$$
 
 即得到与Livey-Mises理论同样的表达式。
 

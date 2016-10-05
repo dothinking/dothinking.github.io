@@ -1,91 +1,105 @@
 ---
 layout: post
 author: Train
-description: "直接在Sublime Text2编辑器中运行Python程序的设置方法"
-keywords: "Python, sublime text"
+description: "frompyfunc()和vectorize()函数说明"
+keywords: "numpy, Python, 数值计算"
 ---
+NumPy提供了两种基本对象`ndarray`（n-dimensional array）和`ufunc`（universal function），后者指能够对数组中的每个元素进行操作的函数，可以提高运算速度。为了将普通的计算单个元素的函数转换成ufunc函数，NumPy提供了`frompyfunc()`和`vectorize()`两个函数。通过转换，可以使原来的函数参数接受向量输入（换句话说将转换后的函数的向量作为标量输入原来的函数），最终输出相应维度的结果。那么问题来了，
 
-`Sublime Text`是一款相当经典的编辑器，自从用上之后便爱不释手；当用其写完一段Python代码而马上可以运行调试之，那就更惬意了。随着不断的使用过程和如上迫切的需求，逐渐积累了下文介绍的在`Sublime Text`编辑器中直接运行Python程序的两种方法——软件自带的`Build`功能和`SublimeREPL`插件。
+* 当我原来的函数本来就是输出数组，最终会输出新的二维数组么？
+* 当我某些输入参数并不希望被向量化，那该怎么办？
 
-## Build功能
+本文针对应用中遇到的这两个问题作示例说明。
 
-通过为编辑器配置代码运行所需信息，可以直接运行代码。查看`Tools => Build System`如下图所示为内置的一些配置情况。
+## 函数说明
 
-<div align='center'><img src="{{ "/images/2013-10-31-01.jpg" | prepend: site.baseurl }}"></div>
+参考Numpy官方手册对这两个函数的声明[[^1],[^2]]：
 
-仿照相应的格式，配置Python程序运行信息。`Tools => Build System => New Build System`，新建配置文件，删除初始化的内容，写入如下内容并保存为`Python.sublime-build`，位置在`C:\Users\Administrator\AppData\Roaming\Sublime Text 2\Packages\Python`文件夹。注意：`Preferences => Browse Packages…`可以打开到`Packages`，然后选择`Python`文件夹即可。
-
-```python
-{
-    "cmd": ["python", "-u", "$file"],
-    "path":"C:/Python27",
-    "file_regex": "^[ ]*File "(...*?)", line ([0-9]*)",
-    "selector": "source.python"
-}
+``` python
+numpy.frompyfunc(func, nin, nout)
+class numpy.vectorize(pyfunc, otypes='', doc=None, excluded=None, cache=False)
 ```
 
-`path`一行指定Python的安装位置，根据具体情况确定，其余内容可保持固定。
+* `frompyfunc()`的输入参数分别为函数名，输入参数个数，输出参数个数。
+* `vectorize()`的输出参数较多，常使用的是前两个：函数名和返回类型。
 
-通过`Tools => Build System` 查看，此时对比第一张图的初始状态，即会发现新增了`Python`选项。在`Build System`菜单选择Python选项后，点击`Build`或者快捷键`Ctrl+B`，就会发现代码区下方出现了运行结果。
+并且注意文档中明确指出的一句话，`vectorize()`函数本质上是通过循环实现的，所以它的使用只是为了方便而不是效率。也就是说`frompyfunc()`更为底层些，效率相对更高。
 
-这个方法对于常规的代码没有任何问题，但是对于一些第三方程序包如`numpy`， `scipy`等，或者交互式代码如`raw_input()`函数，则无法正常执行。这就需要介绍`SublimeREPL`插件。
+## 问题一 函数返回数组
 
-## SublimeREPL插件
+测试代码
 
-`SublimeREPL`(Sublime Read-Evaluation-Print-Loop)，解释型语言编译运行的过程，装了该插件后即可支持直接在Sublime编辑器上的编译运行和交互。
-
-安装方法不必多述，可以在线或者手动完成。安装完插件后，在`Tools`菜单下即可看到新增的SublimeREPL菜单项，如下图选择`Run Current File`即可运行，上面提到的`Build`命令无法实现的两类问题瞬间不复存在。
-
-<div align='center'><img src="{{ "/images/2013-10-31-02.jpg" | prepend: site.baseurl }}"></div>
-
-至此，算是达成了心愿，也更加肯定了这款神器。然而挑剔一点，美中不足的是运行程序需要点击的菜单过长，多么希望像在其他IDE环境下直接`F5`运行啊。
-
-Sublime不会让人失望，用户自定义快捷键即可。
-
-## 自定义快捷键
-
-`Preferences`菜单下的`Key Boundings-Default`文件过除了软件默认的快捷键，同时也告诉我们了定义快捷键的格式，方便我们在`Key Boundings-User`文件中自行定义。所以思路为找到`SublimeREPL`插件菜单命令的定义文件，然后为我们需要的命令定义快捷键。
-
-### SublimeREPL插件的菜单命令
-
-`Preferences => Browser Packages…`打开插件安装包位置，依次找到`SublimeREPL\config\Python`文件夹下的`Main.sublime-menu`并打开。该文件即是插件菜单的结构及相关参数，从中找到运行Python文件的菜单项的部分：
-
-```
-{"command": "repl_open",
- "caption": "Python - RUN current file",
- "id": "repl_python_run",
- "mnemonic": "d",
- "args": {
-    "type": "subprocess",
-    "encoding": "utf8",
-    "cmd": ["python", "-u", "$file_basename"],
-    "cwd": "$file_path",
-    "syntax": "Packages/Python/Python.tmLanguage",
-    "external_id": "python",
-    "extend_env": {"PYTHONIOENCODING": "utf-8"}
-    }
-},
+``` python
+# encoding: utf8
+import numpy as np
+def test1(x):
+    return x*np.array([0.0,1.0])
+fpf_test1 = np.frompyfunc(test1,1,1)
+vec_test1 = np.vectorize(test1)
+x = np.linspace(0,1,2)
 ```
 
-其中id的值是我们需要的，因为我们正是要为其添加快捷键。另外，菜单文件的位置也是需要先记下的，因为需要为这个命令指定定义的来源。
+测试结果
 
-### 自定义快捷键
-
-`Preferences => Key Boundings-User`打开自定义快捷键文件，写入如下内容：
-
-```
-[
-    {
-        "keys" : ["f5"],                           // 快捷键，注意小写
-        "command" : "run_existing_window_command", // 运行定义的命令
-        "args" :                                   // 命令参数
-        {
-            "id" : "repl_python_run",              // 上一步查看的命令的id
-            "file" : "config/Python/Main.sublime-menu" // 菜单定义文件位置
-        }
-
-    }
-]
+``` python
+print fpf_test1(x)
+[array([ 0.,  0.]) array([ 0.,  1.])]
 ```
 
-到此为止，可以使用快捷键`F5`在`Sublime Text 2`编辑器中快速执行Python代码。
+``` python
+print vec_test1(x)
+ValueError: setting an array element with a sequence.
+```
+
+原函数输出结果也为一个数组，测试结果表明使用`frompyfunc()`函数达到了预期的效果，而`vectorize()`函数却导致了错误。
+
+## 问题二 参数不需要向量化
+
+测试代码
+
+``` python 
+# encoding: utf8
+import numpy as np
+def test2(x,y):
+    '''返回x数组对应y位置的元素'''
+    return x[int(y)]
+fpf_test2 = np.frompyfunc(test2,2,1)
+vec_test2 = np.vectorize(test2)
+x = np.linspace(0,4,5) * 10
+y = np.linspace(0,4,5)
+```
+
+测试结果
+
+``` python
+print fpf_test2(x,y)
+TypeError: 'float' object has no attribute '__getitem__'
+```
+
+``` python
+print vec_test2(x,y)
+IndexError: invalid index to scalar variable.
+```
+
+``` python
+vec_test2.excluded.add(0) # 第一个参数无需向量化
+print vec_test2(x,y)
+[  0.  10.  20.  30.  40.]
+```
+
+结果可以看出，直接使用时由于将x也视为需要向量化处理的参数，所以都出现类型错误（x最终被视为一个标量了）。而使用`vectorize`函数类的`excluded`属性添加不考虑向量化的输入参数后，得到了正确的输出。
+
+> `excluded`属性在`NumPy 1.7`之后版本才支持。不巧，我使用的是1.6版本，所以升级新版本后解决问题。
+
+## 结论
+
+`frompyfunc()`和`vectorize()`函数都可以使自定义的单输入值函数转为`ufunc`函数，但是注意以下几点：
+
+* `frompyfunc()`较`vectorize()`有更高的执行效率，尤其在规模较大时。
+* `frompyfunc()`可以适用于原函数输出数组的情形，而`vectorize()`则不支持。
+* `vectorize()`可以指定不需要向量化处理的输入参数，从而满足具体需求。
+
+## 参考资料
+
+[^1]: [1] [numpy.frompyfunc](http://docs.scipy.org/doc/numpy/reference/generated/numpy.frompyfunc.html)
+[^2]: [2] [numpy.vectorize](http://docs.scipy.org/doc/numpy/reference/generated/numpy.vectorize.html#numpy.vectorize)

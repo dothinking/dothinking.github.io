@@ -7,7 +7,7 @@ keywords: "Matlab, mlab, numpy, Python, 数值计算"
 
 `numpy`、`scipy`、`sympy`等扩展库增加了Python在科学计算上的优势，但是，某些函数的执行效率依旧比不上商业化的Matlab。例如，针对本人的一个约束极值问题，matlab优化工具箱的`fmincon()`函数相比scipy.optimize的`minimize()`函数表现出更高的计算效率。因此，在某些场合下，需要在python代码中执行matlab命令。
 
-庆幸的是，已经有开源项目实现了这个需求。其中值得推荐的是：Alexander Schmolck 和 Vivek Rathod 负责的`mlabwrap`。此项目作者的本意是在Linux下写的，对于windows用户需要C++编译器才能成功安装。Yauhen Yakimovich在mlabwrap的基础上开发了并不依赖于C++编译器的`mlab`，本文即对其安装和使用作个简要说明。
+庆幸的是，已经有开源项目实现了这个需求。其中值得推荐的是：Alexander Schmolck 和 Vivek Rathod 负责的`mlabwrap`。此项目作者的本意是在Linux下写的，对于windows用户需要C++编译器才能成功安装。Yauhen Yakimovich在mlabwrap的基础上开发了并不依赖于C++编译器的`mlab`，本文即对其安装和使用作简要说明。
 
 ## mlab简介
 
@@ -71,8 +71,7 @@ function [y1, y2] = myfun(x,y)
 x = matlab.myfun(1,2)
 print x
 # output:
-# <MlabObjectProxy of matlab-class: u'int32'; 
-# internal name: 'PROXY_VAL0__'; has parent: no>
+# <MlabObjectProxy of matlab-class: u'int32'; internal name: 'PROXY_VAL0__'; has parent: no>
 ```
 
 ``` python

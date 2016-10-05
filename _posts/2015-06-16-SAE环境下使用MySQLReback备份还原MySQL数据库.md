@@ -49,7 +49,7 @@ public function getBacoverFiles(){
 
 ## 备份数据库
 
-浏览一下`MySQLReback`类的实现代码，可以发现该类先生成备份文件的内容，然后写入到目标文件夹。因此为了兼容SAE环境，只需要修改保存文件的`setFile()`私有方法。对应这部分修改，SAE提供了`write()`方法供写入文件到Storage。由于`write()`方法第一个参数为domain的名称，所以为`MySQLReback`类的配置参数提供一个domain键和值：
+浏览一下`MySQLReback`类的实现代码，可以发现该类先生成备份文件的内容，然后写入到目标文件夹。因此为了兼容SAE环境，只需要修改保存文件的`setFile()`私有方法。对应这部分修改，SAE提供了`write()`方法供写入文件到Storage。由于`write()`方法第一个参数为domain的名称，所以为`MySQLReback`类的配置参数提供一个`domain`键值对：
 
 ```php
 $domain = "public";

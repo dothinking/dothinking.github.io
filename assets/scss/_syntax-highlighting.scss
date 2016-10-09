@@ -1,12 +1,10 @@
 /*MathJax*/
 .MathJax {
-    color: #14e;
     padding:0 2px !important;
 }
 
-.MathJax_Display span.MathJax {
-    font-size: 18px;
-    color: inherit;
+.MathJax_Display .MathJax {
+    font-size: 16px;
 }
 
 /**

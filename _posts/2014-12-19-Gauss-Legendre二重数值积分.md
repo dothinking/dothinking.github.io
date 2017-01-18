@@ -16,13 +16,13 @@ $$
 
 不过，当阶数较大（n$\ge$8）时，积分系数会出现负值，即计算不具有稳定性。所以又引进了复合求积公式——把积分区间划分为若干子区间，再在每个子区间采用低阶的求积公式。
 
-再如，`高斯积分公式`对积分点的选取采用了更高的要求——以积分点为零点的多项式必须满足：与任何次数不超过n的多项式带权正交。相应的回报是：n阶高斯积分公式具有2n+1次代数精度。
+再如，`高斯积分公式`对积分点的选取采用了更高的要求——以积分点$x_0,x_1,\cdots,x_n$为零点的多项式$\omega_{n+1}(x)$满足：与任何次数不超过n的多项式$p_k(x)$带权正交。相应的回报是：n阶高斯积分公式具有2n+1次代数精度。
  
 \begin{align\*}
-a \le x_0 \le x_1 \le \cdots \le x_n \le b\\\\\\
-&= -\dfrac{2}{\pi}\,\int\limits\_{-1}^1{\biggl[\sin\dfrac{\pi\,(y+1)}{2}-\sin\dfrac{\pi\,(y-1)}{2}\biggr] }\,\mathrm{d}y \\\\\\
-&= -\frac{4}{\pi^2}\left. {\biggl[ {\cos\frac{\pi\,(y+1)}{2} - \cos\frac{\pi\,(y-1)}{2}}\biggr]}\right|\_{-1}^1 \\\\\\
-&= -\frac{16}{\pi ^2} \approx 1.6211
+a \le x_0 \le x_1 \le \cdots \le x_n \le b \\\\\\
+\omega_{n+1}(x) = (x-x_0)(x-x_1)\cdots(x-x_n)  \\\\\\
+p_k(x) = a_k x^k + a_{k-1} x^{k-1} + \cdots + a_0 \,\,\,(k \le n) \\\\\\
+\int_{a}^{b}p_k(x) \omega_{n+1}(x) \rho(x) \mathrm{d}x = 0
 \end{align\*}
 
 ## 高斯积分

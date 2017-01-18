@@ -78,7 +78,7 @@ $$
 另外，需要通过换元，将`Legendre`多项式的标准积分区间$[-1,1]$转换到一般积分区间$[a,b]$：
 
 $$
-\int_{a}^{b}f(x)\mathrm{d}x = \frac{b-a}{2}\,\int_{-1}^{1}f\biggl(\frac{b-a}{2}\,t + \frac{b+a}{2}\biggr)\mathrm{d}t
+\int_{a}^{b}f(x)\mathrm{d}x = \frac{b-a}{2}\,\int_{-1}^{1}f\left(\frac{b-a}{2}\,t + \frac{b+a}{2}\right)\mathrm{d}t
 $$
 
 ## Gauss-Legendre二重积分
@@ -87,10 +87,10 @@ $$
 
 \begin{align\*}
 &\int_a^b\int_{c(x)}^{d(x)}\,f(x,y)\mathrm{d}y\mathrm{d}x \\\\\\
-&= \int_a^b\int_{-1}^{1}\,\frac{d(x)-c(x)}{2}\,f\biggl(x,\frac{d(x)-c(x)}{2}\,v + \frac{d(x)+c(x)}{2}\biggr)\mathrm{d}v\mathrm{d}x \\\\\\
-&\approx \int_a^b \sum_{i=0}^n \biggl[A_i\,\frac{d(x)-c(x)}{2}\,f(x,\frac{d(x)-c(x)}{2}\,v_i + \frac{d(x)+c(x)}{2})\biggr] \mathrm{d}x \\\\\\
-&= \sum_{i=0}^n\biggl[A_i\int_a^b \alpha(x)\,f\bigl(x,\alpha(x)v_i+\beta(x)\bigr)\mathrm{d}x\biggr] \\\\\\
-&= \sum_{i=0}^n\Bigl[A_i\int_{-1}^1 \frac{b-a}{2} \alpha\biggl(\frac{b-a}{2}\,u + \frac{b+a}{2}\biggr)\,f\biggl(\frac{b-a}{2}\,u + \frac{b+a}{2},\alpha\bigl(\frac{b-a}{2}\,u + \frac{b+a}{2}\bigr)v_i+\beta\bigl(\frac{b-a}{2}\,u + \frac{b+a}{2}\bigr)\biggr)\mathrm{d}u\Bigr] 
+&= \int_a^b\int_{-1}^{1}\,\frac{d(x)-c(x)}{2}\,f\left(x,\frac{d(x)-c(x)}{2}\,v + \frac{d(x)+c(x)}{2}\right)\mathrm{d}v\mathrm{d}x \\\\\\
+&\approx \int_a^b \sum_{i=0}^n \left[A_i\,\frac{d(x)-c(x)}{2}\,f(x,\frac{d(x)-c(x)}{2}\,v_i + \frac{d(x)+c(x)}{2})\right] \mathrm{d}x \\\\\\
+&= \sum_{i=0}^n\left[A_i\int_a^b \alpha(x)\,f\left(x,\alpha(x)v_i+\beta(x)\right)\mathrm{d}x\right] \\\\\\
+&= \sum_{i=0}^n\left[A_i\int_{-1}^1 \frac{b-a}{2} \alpha\left(\frac{b-a}{2}\,u + \frac{b+a}{2}\right)\,f\left(\frac{b-a}{2}\,u + \frac{b+a}{2},\alpha\left(\frac{b-a}{2}\,u + \frac{b+a}{2}\right)v_i+\beta\left(\frac{b-a}{2}\,u + \frac{b+a}{2}\right)\right)\mathrm{d}u\right] 
 \end{align\*}
 
 ## Matlab实现

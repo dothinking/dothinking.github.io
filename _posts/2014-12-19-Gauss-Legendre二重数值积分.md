@@ -72,7 +72,7 @@ f_k(x) &= \frac{(x-x_0)(x-x_1)\cdots(x-x_{k-1})(x-x_{k+1})\cdots(x-x_n)}{(x_k-x_
 显然该函数在$x_k$点的函数值为1，在其他积分点上的函数值为0，于是进行多项式积分就可以得到积分系数
 
 $$
-A_k = \sum_{k=0}^{n}A_k\,f(x_k) = \int_{a}^{b}f_k(x)\mathrm{d}x
+A_k = \sum_{k=0}^{n}A_k\,f(x_k) = \int_{a}^{b}f_k(x)\,\mathrm{d}x
 $$
 
 另外，需要通过换元，将`Legendre`多项式的标准积分区间$[-1,1]$转换到一般积分区间$[a,b]$：
@@ -86,8 +86,8 @@ $$
 以上是`Gauss-Legendre`数值积分的基本原理，对每个变量分别使用上述过程即可推广至一般区间上二重积分的计算。
 
 \begin{align\*}
-&\quad\int_a^b \\!\\! \int_{c(x)}^{d(x)}\,f(x,y)\mathrm{d}y\mathrm{d}x \\\\\\
-&= \int_a^b\\!\\!\int_{-1}^{1}\,\frac{d(x)-c(x)}{2}\,f\left(x,\frac{d(x)-c(x)}{2}\,v + \frac{d(x)+c(x)}{2}\right)\mathrm{d}v\mathrm{d}x \\\\\\
+&\quad\int_a^b \\!\\! \int_{c(x)}^{d(x)}\,f(x,y)\mathrm{d}y\,\mathrm{d}x \\\\\\
+&= \int_a^b\\!\\!\int_{-1}^{1}\,\frac{d(x)-c(x)}{2}\,f\left(x,\frac{d(x)-c(x)}{2}\,v + \frac{d(x)+c(x)}{2}\right)\mathrm{d}v\,\mathrm{d}x \\\\\\
 &\approx \int_a^b \sum_{i=0}^n \left[A_i\,\frac{d(x)-c(x)}{2}\,f\left(x,\frac{d(x)-c(x)}{2}\,v_i + \frac{d(x)+c(x)}{2}\right)\right] \mathrm{d}x \\\\\\
 &= \sum_{i=0}^n\left[A_i\int_a^b \alpha(x)\,f\left(x,\alpha(x)v_i+\beta(x)\right)\mathrm{d}x\right] \\\\\\
 &= \sum_{i=0}^n\left[A_i\int_{-1}^1 \frac{b-a}{2} \alpha\left(\frac{b-a}{2}\,u + \frac{b+a}{2}\right)\,f\left(\frac{b-a}{2}\,u + \frac{b+a}{2},\alpha\left(\frac{b-a}{2}\,u + \frac{b+a}{2}\right)v_i+\beta\left(\frac{b-a}{2}\,u + \frac{b+a}{2}\right)\right)\mathrm{d}u\right] \\\\\\

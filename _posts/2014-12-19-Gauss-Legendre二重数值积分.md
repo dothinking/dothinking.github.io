@@ -83,7 +83,7 @@ $$
 
 ## Gauss-Legendre二重积分
 
-以上是Gauss-Legendre数值积分的基本原理，对每个变量分别使用上述过程即可推广至一般区间上二重积分的计算。
+以上是`Gauss-Legendre`数值积分的基本原理，对每个变量分别使用上述过程即可推广至一般区间上二重积分的计算。
 
 \begin{align\*}
 &\quad\int_a^b \\!\\! \int_{c(x)}^{d(x)}\,f(x,y)\mathrm{d}y\mathrm{d}x \\\\\\
@@ -91,8 +91,8 @@ $$
 &\approx \int_a^b \sum_{i=0}^n \left[A_i\,\frac{d(x)-c(x)}{2}\,f\left(x,\frac{d(x)-c(x)}{2}\,v_i + \frac{d(x)+c(x)}{2}\right)\right] \mathrm{d}x \\\\\\
 &= \sum_{i=0}^n\left[A_i\int_a^b \alpha(x)\,f\left(x,\alpha(x)v_i+\beta(x)\right)\mathrm{d}x\right] \\\\\\
 &= \sum_{i=0}^n\left[A_i\int_{-1}^1 \frac{b-a}{2} \alpha\left(\frac{b-a}{2}\,u + \frac{b+a}{2}\right)\,f\left(\frac{b-a}{2}\,u + \frac{b+a}{2},\alpha\left(\frac{b-a}{2}\,u + \frac{b+a}{2}\right)v_i+\beta\left(\frac{b-a}{2}\,u + \frac{b+a}{2}\right)\right)\mathrm{d}u\right] \\\\\\
-&\approx \sum_{i=0}^n\left[A_i \sum_{j=0}^n A_j \frac{b-a}{2} \alpha\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2}\right)\,f\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2},\alpha\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2}\right)v_i+\beta\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2}\right)\right)\right] \\\\\\
-&= \frac{b-a}{2}\,\sum_{i=0}^n\sum_{j=0}^n A_iA_j\alpha(U_j)f(U_j,V_{ji})
+&\approx \sum_{i=0}^n\left[A_i \sum_{j=0}^n B_j \frac{b-a}{2} \alpha\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2}\right)\,f\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2},\alpha\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2}\right)v_i+\beta\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2}\right)\right)\right] \\\\\\
+&= \frac{b-a}{2}\,\sum_{i=0}^n\sum_{j=0}^n A_i\,B_j\,\alpha(U_j)\,f(U_j,V_{ji})
 \end{align\*}
 
 其中，

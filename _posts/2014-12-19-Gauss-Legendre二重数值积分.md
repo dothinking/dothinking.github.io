@@ -86,7 +86,7 @@ $$
 以上是`Gauss-Legendre`数值积分的基本原理，对每个变量分别使用上述过程即可推广至一般区间上二重积分的计算。
 
 \begin{align\*}
-&\quad\int_a^b \\!\\! \int_{c(x)}^{d(x)}\,f(x,y)\mathrm{d}y\,\mathrm{d}x \\\\\\
+&\quad\int_a^b \\!\\! \int_{c(x)}^{d(x)}\,f(x,y)\,\mathrm{d}y\,\mathrm{d}x \\\\\\
 &= \int_a^b\\!\\!\int_{-1}^{1}\,\frac{d(x)-c(x)}{2}\,f\left(x,\frac{d(x)-c(x)}{2}\,v + \frac{d(x)+c(x)}{2}\right)\mathrm{d}v\,\mathrm{d}x \\\\\\
 &\approx \int_a^b \sum_{i=0}^n \left[A_i\,\frac{d(x)-c(x)}{2}\,f\left(x,\frac{d(x)-c(x)}{2}\,v_i + \frac{d(x)+c(x)}{2}\right)\right] \mathrm{d}x \\\\\\
 &= \sum_{i=0}^n\left[A_i\int_a^b \alpha(x)\,f\left(x,\alpha(x)v_i+\beta(x)\right)\mathrm{d}x\right] \\\\\\

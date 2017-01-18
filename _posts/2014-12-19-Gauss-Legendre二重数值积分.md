@@ -89,7 +89,8 @@ $$
 &\int_a^b\int_{c(x)}^{d(x)}\,f(x,y)\mathrm{d}y\mathrm{d}x \\\\\\
 &= \int_a^b\int_{-1}^{1}\,\frac{d(x)-c(x)}{2}\,f\biggl(x,\frac{d(x)-c(x)}{2}\,v + \frac{d(x)+c(x)}{2}\biggr)\mathrm{d}v\mathrm{d}x \\\\\\
 &\approx \int_a^b \sum_{i=0}^n \biggl[A_i\,\frac{d(x)-c(x)}{2}\,f(x,\frac{d(x)-c(x)}{2}\,v_i + \frac{d(x)+c(x)}{2})\biggr] \mathrm{d}x \\\\\\
-&= \sum_{i=0}^n\biggl[A_i\int_a^b \alpha(x)\,f\bigl(x,\alpha(x)v_i+\beta(x)\bigr)\mathrm{d}x\biggr]
+&= \sum_{i=0}^n\biggl[A_i\int_a^b \alpha(x)\,f\bigl(x,\alpha(x)v_i+\beta(x)\bigr)\mathrm{d}x\biggr] \\\\\\
+&= \sum_{i=0}^n\Bigl[A_i\int_{-1}^1 \frac{b-a}{2} \alpha\biggl(\frac{b-a}{2}\,u + \frac{b+a}{2}\biggr)\,f\biggl(\frac{b-a}{2}\,u + \frac{b+a}{2},\alpha\bigl(\frac{b-a}{2}\,u + \frac{b+a}{2}\bigr)v_i+\beta\bigl(\frac{b-a}{2}\,u + \frac{b+a}{2}\bigr)\biggr)\mathrm{d}u\Bigr] 
 \end{align\*}
 
 ## Matlab实现

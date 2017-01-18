@@ -18,12 +18,20 @@ $$
 
 再如，`高斯积分公式`对积分点的选取采用了更高的要求——以积分点$x_0,x_1,\cdots,x_n$为零点的多项式$\omega_{n+1}(x)$满足：与任何次数不超过n的多项式$p_k(x)$带权正交。相应的回报是：n阶高斯积分公式具有2n+1次代数精度。
  
-\begin{align\*}
-a \le x_0 \le x_1 \le \cdots \le x_n \le b \\\\\\
-\omega_{n+1}(x) = (x-x_0)(x-x_1)\cdots(x-x_n)  \\\\\\
-p_k(x) = a_k x^k + a_{k-1} x^{k-1} + \cdots + a_0 \,\,\,(k \le n) \\\\\\
+
+$$
+a \le x_0 \le x_1 \le \cdots \le x_n \le b
+$$
+$$
+\omega_{n+1}(x) = (x-x_0)(x-x_1)\cdots(x-x_n)
+$$
+$$
+p_k(x) = a_k x^k + a_{k-1} x^{k-1} + \cdots + a_0 \,\,\,(k \le n)
+$$
+$$
 \int_{a}^{b}p_k(x) \omega_{n+1}(x) \rho(x) \mathrm{d}x = 0
-\end{align\*}
+$$
+
 
 ## 高斯积分
 

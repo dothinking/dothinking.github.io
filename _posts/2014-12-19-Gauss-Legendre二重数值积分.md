@@ -33,23 +33,53 @@ $$
 $$
 
 
-## 高斯积分
+## Gauss-Legendre求积公式
 
-由于目标函数恰好在Gauss-Legendre的标准积分区间$[-1,1]$，可以直接取积分点代入二重高斯积分公式。于是$W$的$n$阶Gauss-Legendre积分近似值就可通过下式求得
+选取不同的权系数及积分区间，可以得到不同的高斯型求积公式。`Legendre多项式`是区间$[-1,1]$，权函数为1时，$\{1,x,\cdots,x^n,\cdots\}$正交化得到的多项式，因此其零点即为高斯积分点。同理，`Chebyshev多项式`的零点是另一类高斯型求积公式的积分点。
 
-$${W_n} = \sum\limits_{i=0}^n {\sum\limits_{j=0}^n{A_i\,A_j\,f(x_i,\,y_j)} }$$
+Gauss-Legendre求积公式表示为：
 
-其中$x_i,\,x_j$分别为$x,\,y$方向的积分点，$A_i$为对应的积分系数。
+$$
+\int_{-1}^{1} f(x) \mathrm{d}x \approx \sum_{k=0}^n A_k\,f(x_k)
+$$
+ 
+其中，$x_k$是n+1次Legendre多项式P_n(x)
 
-积分点及求积系数的求解可以参考相关文献。为方便起见，这里直接给出前2阶Gauss-Legendre求积公式的节点及系数：
+$$
+P_n(x) = \frac{1}{2^n\,n!}\,\frac{\mathrm{d}^n}{\mathrm{d}x^n}(x^2-1)^n \quad n=0,1,2,\cdots
+$$
 
-|阶数$n$|积分点$\mathrm{x}$|求积系数$\mathrm{A}$
-|---|---|---
-|0|0|2
-|1|$\biggl[-\dfrac{1}{\sqrt{3}},\,\dfrac{1}{\sqrt{3}}\biggr]$|$\biggl[1,\,1\biggr]$
-|2|$\biggl[-\dfrac{\sqrt{15}}{5},\,0,\,\dfrac{\sqrt{15}}{5}\biggr]$|$\biggl[\dfrac{5}{9},\,\dfrac{8}{9},\,\dfrac{5}{9}\biggr]$
+的零点。
+ 
+Gauss-Legendre数值积分的思路同样为：求解积分点和积分系数，然后代入公式求和。
 
-以上公式很容易编写为Matlab代码，以2阶高斯积分为例
+* 积分点可以通过求解`Legendre多项式`的零点得到，需要注意的是n阶gauss-Legendre公式的积分点是n+1阶`Legendre多项式`的零点。
+
+* 根据定义，积分系数可以通过依次代入被积函数$x^k\,\,(k=0,1,2,\cdots,2n+1)$，求解代数方程组得到。然而，这样的方法较为复杂，一般推荐以下便于计算机计算的方法：
+
+求解第$k$个积分系数$A_k$时，构造被积函数：
+
+\begin{align\*}
+f_k(x) &= \frac{(x-x_0)(x-x_1)\cdots(x-x_{k-1})(x-x_{k+1})\cdots(x-x_n)}{(x_k-x_0)(x_k-x_1)\cdots(x_k-x_{k-1})(x_k-x_{k+1})\cdots(x_k-x_n)} \\\\\\
+&= \frac{\omega_{n+1}(x)}{(x-x_k)\,\omega'_{n+1}(x_k)}
+\end{align\*}
+
+$$
+f_k(x) = \frac{(x-x_0)(x-x_1)\cdots(x-x_{k-1})(x-x_{k+1})\cdots(x-x_n)}{(x_k-x_0)(x_k-x_1)\cdots(x_k-x_{k-1})(x_k-x_{k+1})\cdots(x_k-x_n)}
+$$
+
+显然该函数在$x_k$点的函数值为1，在其他积分点上的函数值为0，于是进行多项式积分就可以得到积分系数
+
+$$
+A_k = \sum_{k=0}^{n}A_k\,f(x_k) = \int_{a}^{b}f_k(x)\mathrm{d}x
+$$
+
+另一个重要问题是，一般积分区间为[a,b]，需要从[-1,1]进行变换
+ 
+于是
+ 
+实际上也对原始积分点做了同样的变换。
+
 
 ```matlab
 function w = fun_gauss(f)

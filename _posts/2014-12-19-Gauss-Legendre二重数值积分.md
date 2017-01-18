@@ -158,7 +158,7 @@ res = (b-a)/2.0*sum(w(:));
 作为测试，分别使用以上代码及Matlab自带的数值积分函数`integral2`对下面二重积分进行计算：
 
 $$
-I = \int_{-1}^1\\!\\!\int_x^{\mathrm{e}^x^2}\,e^{-\left(x^2+y^2\right)}\,\mathrm{d}y\,\mathrm{d}x
+I = \int_{-1}^1\!\!\int_x^{\mathrm{e}^{x^2}}\,e^{-\left(x^2+y^2\right)}\,\mathrm{d}y\,\mathrm{d}x
 $$
 
 |阶数$n$|计算值

@@ -22,12 +22,15 @@ $$
 $$
 a \le x_0 \le x_1 \le \cdots \le x_n \le b
 $$
+
 $$
 \omega_{n+1}(x) = (x-x_0)(x-x_1)\cdots(x-x_n)
 $$
+
 $$
 p_k(x) = a_k x^k + a_{k-1} x^{k-1} + \cdots + a_0 \,\,\,(k \le n)
 $$
+
 $$
 \int_{a}^{b}p_k(x) \omega_{n+1}(x) \rho(x) \mathrm{d}x = 0
 $$

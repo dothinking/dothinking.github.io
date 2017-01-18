@@ -83,7 +83,7 @@ $$
 
 ## Gauss-Legendre二重积分
 
-以上是`Gauss-Legendre`数值积分的基本原理，对每个变量分别使用上述过程即可推广至一般区间上二重积分的计算。
+以上是`Gauss-Legendre`数值积分的基本原理，对每一层积分分别使用上述过程即可推广至一般区间上二重积分的计算。
 
 \begin{align\*}
 &\quad\int_a^b \\!\\! \int_{c(x)}^{d(x)}\,f(x,y)\,\mathrm{d}y\,\mathrm{d}x \\\\\\
@@ -91,8 +91,8 @@ $$
 &\approx \int_a^b \sum_{i=0}^n \left[A_i\,\frac{d(x)-c(x)}{2}\,f\left(x,\frac{d(x)-c(x)}{2}\,v_i + \frac{d(x)+c(x)}{2}\right)\right] \mathrm{d}x \\\\\\
 &= \sum_{i=0}^n\left[A_i\int_a^b \alpha(x)\,f\left(x,\alpha(x)v_i+\beta(x)\right)\mathrm{d}x\right] \\\\\\
 &= \sum_{i=0}^n\left[A_i\int_{-1}^1 \frac{b-a}{2} \alpha\left(\frac{b-a}{2}\,u + \frac{b+a}{2}\right)\,f\left(\frac{b-a}{2}\,u + \frac{b+a}{2},\alpha\left(\frac{b-a}{2}\,u + \frac{b+a}{2}\right)v_i+\beta\left(\frac{b-a}{2}\,u + \frac{b+a}{2}\right)\right)\mathrm{d}u\right] \\\\\\
-&\approx \sum_{i=0}^n\left[A_i \sum_{j=0}^n B_j \frac{b-a}{2} \alpha\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2}\right)\,f\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2},\alpha\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2}\right)v_i+\beta\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2}\right)\right)\right] \\\\\\
-&= \frac{b-a}{2}\,\sum_{i=0}^n\sum_{j=0}^n A_i\,B_j\,\alpha(U_j)\,f(U_j,V_{ji})
+&\approx \sum_{i=0}^n\left[A_i \sum_{j=0}^m B_j \frac{b-a}{2} \alpha\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2}\right)\,f\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2},\alpha\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2}\right)v_i+\beta\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2}\right)\right)\right] \\\\\\
+&= \frac{b-a}{2}\,\sum_{i=0}^n\sum_{j=0}^m A_i\,B_j\,\alpha(U_j)\,f(U_j,V_{ji})
 \end{align\*}
 
 其中，
@@ -107,4 +107,9 @@ U_j &= \frac{b-a}{2}\,u_j + \frac{b+a}{2} \\\\\\
 V_{ji} &= \alpha(U_j)\,v_i + \beta(U_j)
 \end{align\*}
 
+$v_i, \, u_j$分别是$y,\, x$方向在标准区间的积分点，$n,\,m$分别是这两个方向的积分点个数。
+
 ## Matlab实现
+
+以上两节介绍了`Gauss-Legendre`数值积分中积分点、积分系数的求解方法，以及二重积分的计算方案，接下来使用Matlab实现以上过程。为减小参数个数，假设两个方向的积分点数相同，即之前式子中$m=n$。
+

@@ -85,3 +85,13 @@ driver.execute_script(js)
 ``` javascript
 obj = document.getElementById('ueditor_0').contentWindow.document.getElementsByTagName('body')[0]
 ```
+
+综上，解决本问题的主要代码为：
+
+``` python
+# 输入内容
+content = u'这是一段自动输入的测试内容'
+js = "document.getElementById('ueditor_0').contentWindow.\
+    document.getElementsByTagName('body')[0].innerHTML = ' % s'" % content
+driver.execute_script(js)
+```

@@ -57,8 +57,8 @@ driver.quit()
 使用PhantomJS和Chrome驱动的结果分别如下图所示，可见前者无法实现文本的正确输入。
 
 <div align='center'>
-    <img src="{{ "/images/2017-04-24-01.png" | prepend: site.baseurl }}" width="200">
-    <img src="{{ "/images/2017-04-24-02.png" | prepend: site.baseurl }}" width="200">
+    <img src="{{ "/images/2017-04-24-01.png" | prepend: site.baseurl }}">
+    <img src="{{ "/images/2017-04-24-02.png" | prepend: site.baseurl }}">
 </div>
 
 ## 原因分析

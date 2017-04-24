@@ -1,23 +1,46 @@
 ---
 layout: post
 author: Train
-description: "使用Selenium Python输入文本过程中的问题与解决方法"
-keywords: "selenium, phantomjs, chrome, send_keys, excute_script"
+description: "Selenium Python基本操作"
+keywords: "selenium, phantomjs, chrome"
 ---
 
-`Selenium`是一个用于Web应用程序测试的工具，既支持Chrome、IE、Firefox、Opera等常规浏览器，也支持`PhantomJs`、`HtmlUnit`这类无界面浏览器（headless WebKit）。Selenium支持.Net、Java、Perl、Python等不同语言编写的测试脚本，本文使用的是Selenium Python。
+`Selenium`是一个用于Web应用程序自动化测试的工具，可以模拟人类使用浏览器浏览页面、进行交互的行为。Selenium既支持Chrome、IE、Firefox、Opera等常规浏览器，也支持`PhantomJs`、`HtmlUnit`这类无界面浏览器（headless WebKit）。
+
+Selenium支持.Net、Java、Perl、Python等不同语言编写的测试脚本，本文使用的是Selenium Python。
 
 > Selenium Python bindings provide a convenient API to access Selenium WebDrivers like Firefox, Ie, Chrome, Remote etc.
 
-本文主要记录了使用Selenium Python脚本自动输入文本过程中遇到的问题及其解决方法。在此之前，简要备忘一下Selenium Python的基础知识。
-
 ## 安装
 
-## 元素定位与内容获取
+使用Selenium Python处理页面前，需要安装Selenium和至少一个WebDriver。本文使用的是Chrome浏览器对应的chromedriver，以及无界面浏览器phantomjs。
 
+1. 使用`pip`安装Selenium Python
 
+```
+pip install selenium
+```
 
-## 文本输入问题及其对策
+2. 下载WebDriver（通常是*.exe文件）
+
+Selenium官网给出了一些第三方的WebDriver驱动:
+
+> [Third Party Drivers, Bindings, and Plugins](http://www.seleniumhq.org/download/#thirdPartyDrivers)
+
+下载相应驱动并保存到Python可以识别的目录，例如`C:\Python27\Scripts`
+
+以上完成了基础工作，本文使用的版本为：
+
+Python | 2.7
+Selenium | 3.3.3
+Chrome Driver | 2.29
+PhantomJS | 2.1
+
+## 定位元素
+
+## 获取内容
+
+## 页面输入
 
 思路：初始化一个隐藏自身、仅带有文件/图片上传按钮的UEditor，并监听其文件/图片上传组件的插入动作；然后在目标对象的单击事件中打开文件/图片上传对话框。
 

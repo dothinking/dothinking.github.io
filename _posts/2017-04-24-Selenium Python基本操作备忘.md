@@ -11,6 +11,10 @@ Selenium支持.Net、Java、Perl、Python等不同语言编写的测试脚本，
 
 > Selenium Python bindings provide a convenient API to access Selenium WebDrivers like Firefox, Ie, Chrome, Remote etc.
 
+其帮助手册的项目主页：
+
+> [Selenium with Python](http://selenium-python.readthedocs.io/index.html)
+
 ## 安装
 
 使用Selenium Python处理页面前，需要安装Selenium和至少一个WebDriver。本文使用的是Chrome浏览器对应的chromedriver，以及无界面浏览器phantomjs。
@@ -27,7 +31,7 @@ Selenium官网给出了一些第三方的WebDriver驱动:
 
 > [Third Party Drivers, Bindings, and Plugins](http://www.seleniumhq.org/download/#thirdPartyDrivers)
 
-下载相应驱动并保存到Python可以识别的目录，例如`C:\Python27\Scripts`
+下载相应驱动并保存到Python可以识别的目录，例如`C:\Python27\Scripts`。
 
 以上完成了基础工作，本文使用的版本为：
 
@@ -38,157 +42,99 @@ PhantomJS | 2.1
 
 ## 定位元素
 
+定位到目标元素后才能进行相应的操作，因此元素定位是以下操作的基础。Selenium提供了如下的元素定位方法：
+
+``` python
+find_element_by_id()
+find_element_by_name()
+find_element_by_xpath()
+find_element_by_link_text()
+find_element_by_partial_link_text()
+find_element_by_tag_name()
+find_element_by_class_name()
+find_element_by_css_selector()
+```
+
+具体参数及使用示例参考文档：
+
+> [Locating Elements](http://selenium-python.readthedocs.io/locating-elements.html)
+
+**一般情况下，查找效率按id, name, css_selector, xpath递减**。
+
+当页面中存在`iframe`时，则需要使用`switch_to.frame()`方法跳转到相应`iframe`，或者使用`switch_to.default_content()`方法切换回顶层结构后，才能使用上述查找方法。示例HTML结构：
+
+``` html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>test</title>
+</head>
+<body>
+    <div id='div_id'></div>
+    <iframe id="frame_name">
+        <html>
+        <head>
+            <title>frame title</title>
+        </head>
+        <body>
+            <div id='frame_div_id'></div>
+        </body>
+        </html>
+    </iframe>
+</body>
+</html>
+```
+
+示例Python脚本：
+
+``` python
+# encoding=utf8
+from selenium import webdriver
+
+driver = webdriver.PhantomJS()
+driver.get(url)
+
+# 切换到iframe后查找内层元素
+driver.switch_to.frame('frame_name') # 参数为iframe的id或者name属性值
+frame_div = driver.find_element_by_id('frame_div_id')
+
+# 切换后外层后查找元素
+driver.switch_to.default_content()
+div = driver.find_element_by_id('div_id')
+```
+
+
 ## 获取内容
+
+``` python
+# 获取解析后的网页代码
+driver.page_source
+
+# 获取元素的内容 / 值
+obj = driver.find_element_by_id('id')
+print obj.text  # 获取标签内容，对应JQuery中的html()函数
+print obj.value # 获取标签值，对应JQuery的val()函数
+
+# 获取元素属性
+obj.get_attribute('href')
+
+# 获取元素的css属性
+obj.value_off_css_property('font')
+```
 
 ## 页面输入
 
-思路：初始化一个隐藏自身、仅带有文件/图片上传按钮的UEditor，并监听其文件/图片上传组件的插入动作；然后在目标对象的单击事件中打开文件/图片上传对话框。
+主要操作有键盘输入文本，鼠标单击及执行javascript代码：
 
-```javascript
-/**
-* 基于ueditor自定义上传组件
-* 需要在ueditor.all.js文件me.execCommand('insertHtml', html);之后增加：me.fireEvent('afterUpfile', filelist);
-*/
+``` python
+# 文本输入
+obj.send_keys('something')
 
-(function($) {
-    $.fn.ueditor_upload = function(options) {
-        // 默认参数
-        var defaults = {
-            editorid: null,        // 百度编辑器容器
-            uploadtype: 0,         // 0 图片 1 文件
-            title: '选择文件...',  // 选择文件对话框的标题
-            success: function() {} // 上传完成后的回调函数
-        };
+# 鼠标单击
+obj.click()
 
-        // 初始化ueditor，并隐藏之
-        function getEditor(editorid, tool) {
-            return UE.getEditor(editorid, {
-                isShow: false,
-                focus: false,
-                enableAutoSave: false,
-                autoSyncData: false,
-                autoFloatEnabled: false,
-                wordCount: false,
-                sourceEditor: null,
-                scaleEnabled: true,
-                toolbars: [
-                    [tool]
-                ]
-            });
-        };
-
-        var o = $.extend(defaults, options || {});
-        var me = null; // 当前被点击的对象
-        if (o.uploadtype === 0) { // 上传图片
-            var listener = 'beforeInsertImage';
-            var dialogtype = 'insertimage';
-            var tool = 'insertimage';
-        } else { // 上传文件
-            var listener = 'afterUpfile';
-            var dialogtype = 'attachment';
-            var tool = 'attachment';
-        }
-
-        // 初始化编辑器
-        var editor = getEditor(o.editorid, tool);
-
-        // 根据上传类型注册监听事件
-        editor.ready(function() {
-            editor.addListener(listener, function(t, args) {
-                if (typeof(o.success) == 'function') {
-                    o.success(me, args); // 回调函数
-                }
-            });
-        });
-
-        // 点击对象弹出上传对话框
-        $(this).click(function(event) {
-            me = $(this); // 获取被点击的对象，作为回调函数的参数
-            var dialog = editor.getDialog(dialogtype);
-            dialog.title = o.title;
-            dialog.render();
-            dialog.open();
-        });
-    }
-})(jQuery);
+# 执行javascript代码
+obj.execute_script('alert("hello world")')
 ```
 
-## 参数说明
-
-初始化插件时接受的参数为一个对象，其属性为：
-
-* `editorid`: _string_ 初始化UEditor编辑器的容器
-* `uploadtype`: _int_ 上传类型，默认为图片（0）或者修改为文件（1）
-* `title`: _string_ 上传对话框的显示标题
-* `success`: _function_ 上传文件成功后的回调函数，第一个参数为触发文件上传的自定义对象，第二个参数为上传成功的文件信息数组：`[{url: // 新生成的文件名, alt: // 原始文件名}, {}, ...]`
-
-## 使用示例
-
-以下示例在同一页面下多次使用此插件实现不同栏目图片的上传：
-
-1. 按照UEditor的使用说明引入必要的js文件
-
-``` html
-<script src="/js/ueditor/ueditor.config.js"></script>
-<script src="/js/ueditor/ueditor.all.min.js"></script>
-<script src="/js/ueditor_upload.js"></script>
-```
-
-2. HTML结构
-
-``` html
-<!--加载编辑器-->
-<textarea id="uploadImgEditor" class="hidden"></textarea>
-
-<!-- 选项卡：全局图 -->
-<div class="layui-tab-item">
-    <div class="upload_img_wrap">
-        <div class="addpic">
-            <img class="upload_img_btn" src="/images/product/addpic.png" alt="添加图片">
-        </div>
-    </div>
-</div>
-
-<!-- 选项卡：紧固件图 -->
-<div class="layui-tab-item">
-    <div class="upload_img_wrap">        
-        <div class="addpic">
-            <img class="upload_img_btn" src="/images/product/addpic.png" alt="添加图片">
-        </div>
-    </div>
-</div>
-
-<!-- 选项卡：测量图 -->
-<div class="layui-tab-item">
-    <div class="upload_img_wrap">
-        <div class="addpic">
-            <img class="upload_img_btn" src="/images/product/addpic.png" alt="添加图片">
-        </div>
-    </div>
-</div>
-```
-
-3. 调用插件
-
-```javascript
-$('.upload_img_btn').ueditor_upload({
-    editorid: "uploadImgEditor",
-    uploadtype:0,
-    title:"选择图片...",
-    success: function(obj, res){
-        var imageHtml = '';
-        for(var i in res){
-            imageHtml += '<div class="thumblist"><img src="'+res[i].src+'" alt="'+res[i].alt+'"><div class="del_upload"></div></div>';
-        }
-        $(obj).parent(".addpic").before(imageHtml);
-    }
-})
-```
-
-4. 效果示例
-
-<div align='center'><img src="{{ "/images/2016-11-05-01.png" | prepend: site.baseurl }}"></div>
-
-<div align='center'><img src="{{ "/images/2016-11-05-02.png" | prepend: site.baseurl }}"></div>
-
-<div align='center'><img src="{{ "/images/2016-11-05-03.png" | prepend: site.baseurl }}"></div>
+以上总结了Selenium Python的基本操作，下一篇将具体介绍使用`send_keys()`方法输入文本过程中可能遇到的问题及其解决方法。

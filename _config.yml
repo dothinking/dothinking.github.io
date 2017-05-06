@@ -1,11 +1,12 @@
 
 # SEO settings
-title: "格致"
+title: 格致
 title2: "" # default: ""
-description: "Thinking and recording"
-keywords: "numerical analysis, CAE, PHP, thinkspace"
+description: Thinking and recording
+keywords: numerical analysis, CAE, PHP, thinkspace
 url: https://dothinking.github.io/blog/ # site url
-baseurl: "/blog" # apply repo name if use it under gh-pages branch
+baseurl: /blog # apply repo name if use it under gh-pages branch
+basetag: python
 
 repo: https://github.com/dothinking/blog
 

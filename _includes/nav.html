@@ -3,7 +3,7 @@
         <h1 class="logo"><a href="{{ site.url }}">{{ site.title }}</a></h1>
         <span>{{ site.description }}</span>
         <ul class="navbar">
-            <li><a href="{{ '/tagged' | prepend: site.baseurl }}">Tags</a></li>
+            <li><a href="{{ site.basetag | prepend: '/tagged#' | prepend: site.baseurl }}">Tags</a></li>
             <li><a href="{{ '/about' | prepend: site.baseurl }}">About</a></li>
         </ul>
     </div>

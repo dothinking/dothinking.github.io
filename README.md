@@ -5,7 +5,7 @@
 ## 选择的原因
 
 * MarkDown语法编辑文章，兼顾美观性和便捷性
-* 依靠MathJex实现Latex语法编辑公式
+* 依赖MathJex实现Latex语法编辑公式
 * 本地的及时备份
 
 ## 语法参考
@@ -13,11 +13,12 @@
 ### 文件头
 ```python
 ---
-layout: post # 默认模板文件为post.html
-title: hello world # 文章标题
-description: "Markdown Cheatsheet Demo..." # 文章概要
-keywords: "markdown, 语法, Latex" # 关键字
-mathjax: true # 是否使用Latex，需要的话则引入mathjex引擎
+layout      : post                         # 使用post模板
+title       : hello world                  # 文章标题
+description : Markdown Cheatsheet Demo...  # 文章概要
+keywords    : markdown, 语法, Latex         # 关键字
+tags        : [markdown, readme]           # 文章标签
+mathjax     : true                         # 是否使用Latex，需要的话则引入mathjex引擎
 ---
 ```
 

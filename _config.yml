@@ -7,7 +7,7 @@ keywords: "numerical analysis, CAE, PHP, thinkspace"
 url: https://dothinking.github.io/blog/ # site url
 baseurl: "/blog" # apply repo name if use it under gh-pages branch
 
-repo: http://github.com/dothinking/blog
+repo: https://github.com/dothinking/blog
 
 # Build settings
 markdown    : kramdown
@@ -30,8 +30,8 @@ author:
   bio      : "正心诚意 格物致知"
   # thumb    : /images/author.jpg
   email    : train8808@gmail.com
-  url      : http://dothinking.github.io
-  github   : http://github.com/dothinking
+  url      : https://dothinking.github.io
+  github   : https://github.com/dothinking
 
 gems:
   - bourbon

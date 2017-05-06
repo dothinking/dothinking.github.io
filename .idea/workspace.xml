@@ -2,42 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="032e1b08-277f-47cf-bf8f-bbc165e07c02" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tagged.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_layouts/post.html" afterPath="$PROJECT_DIR$/_layouts/post.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2012-07-10-Marc调用Python脚本程序中关于目录操作的几个问题.md" afterPath="$PROJECT_DIR$/_posts/2012-07-10-Marc调用Python脚本程序中关于目录操作的几个问题.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2012-07-26-Windows命令行提交Marc计算任务.md" afterPath="$PROJECT_DIR$/_posts/2012-07-26-Windows命令行提交Marc计算任务.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2012-07-27-MSC Marc2011单机多核并行计算示例.md" afterPath="$PROJECT_DIR$/_posts/2012-07-27-MSC Marc2011单机多核并行计算示例.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2012-10-10-实例说明VS2005、Python程序读写文件时的字符编码问题.md" afterPath="$PROJECT_DIR$/_posts/2012-10-10-实例说明VS2005、Python程序读写文件时的字符编码问题.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2012-10-18-MSC.MARC 2010表格之创建方式.md" afterPath="$PROJECT_DIR$/_posts/2012-10-18-MSC.MARC 2010表格之创建方式.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2012-10-20-MSC.MARC 2010表格之数据模式.md" afterPath="$PROJECT_DIR$/_posts/2012-10-20-MSC.MARC 2010表格之数据模式.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2012-10-21-MSC.MARC 2010刚性接触体运动设置.md" afterPath="$PROJECT_DIR$/_posts/2012-10-21-MSC.MARC 2010刚性接触体运动设置.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2013-06-13-UG运动仿真学习记录.md" afterPath="$PROJECT_DIR$/_posts/2013-06-13-UG运动仿真学习记录.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2013-07-29-Levy-Mises理论的思考.md" afterPath="$PROJECT_DIR$/_posts/2013-07-29-Levy-Mises理论的思考.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2013-07-30-应力张量的认识之基本概念.md" afterPath="$PROJECT_DIR$/_posts/2013-07-30-应力张量的认识之基本概念.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2013-07-30-应力张量的认识之线性变换.md" afterPath="$PROJECT_DIR$/_posts/2013-07-30-应力张量的认识之线性变换.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2013-07-31-应力张量的认识之线性变换的证明.md" afterPath="$PROJECT_DIR$/_posts/2013-07-31-应力张量的认识之线性变换的证明.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2013-08-05-UG-NX-角色定制与应用.md" afterPath="$PROJECT_DIR$/_posts/2013-08-05-UG-NX-角色定制与应用.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2013-09-28-ThinkPHP自动验证之unique规则的问题和理解.md" afterPath="$PROJECT_DIR$/_posts/2013-09-28-ThinkPHP自动验证之unique规则的问题和理解.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2013-10-19-ThinkPHP框架下MySQL数据库备份还原类.md" afterPath="$PROJECT_DIR$/_posts/2013-10-19-ThinkPHP框架下MySQL数据库备份还原类.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2013-10-31-Sublime-Text-2中运行Python程序.md" afterPath="$PROJECT_DIR$/_posts/2013-10-31-Sublime-Text-2中运行Python程序.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2014-07-02-Sublime-Text-自定义颜色主题.md" afterPath="$PROJECT_DIR$/_posts/2014-07-02-Sublime-Text-自定义颜色主题.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2014-11-28-上限法塑性功数值积分算例之二重积分.md" afterPath="$PROJECT_DIR$/_posts/2014-11-28-上限法塑性功数值积分算例之二重积分.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2014-12-19-Gauss-Legendre二重数值积分.md" afterPath="$PROJECT_DIR$/_posts/2014-12-19-Gauss-Legendre二重数值积分.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2014-12-22-NumPy库frompyfunc()与vectorize()的比较.md" afterPath="$PROJECT_DIR$/_posts/2014-12-22-NumPy库frompyfunc()与vectorize()的比较.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2014-12-24-上限法塑性功数值积分算例之三重积分.md" afterPath="$PROJECT_DIR$/_posts/2014-12-24-上限法塑性功数值积分算例之三重积分.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2015-06-16-SAE环境下使用MySQLReback备份还原MySQL数据库.md" afterPath="$PROJECT_DIR$/_posts/2015-06-16-SAE环境下使用MySQLReback备份还原MySQL数据库.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2015-06-17-SAE环境下使用PHPExcel导入数据.md" afterPath="$PROJECT_DIR$/_posts/2015-06-17-SAE环境下使用PHPExcel导入数据.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2015-11-04-程序实现社会核算矩阵（SAM）的账户集结与平衡.md" afterPath="$PROJECT_DIR$/_posts/2015-11-04-程序实现社会核算矩阵（SAM）的账户集结与平衡.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2015-11-15-python中使用mlab库实现与MATLAB交互.md" afterPath="$PROJECT_DIR$/_posts/2015-11-15-python中使用mlab库实现与MATLAB交互.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2016-01-20-使用Python导出MSC.Marc后处理数据.md" afterPath="$PROJECT_DIR$/_posts/2016-01-20-使用Python导出MSC.Marc后处理数据.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2016-11-05-整合UEditor图片上传模块为上传插件.md" afterPath="$PROJECT_DIR$/_posts/2016-11-05-整合UEditor图片上传模块为上传插件.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2017-01-07-学位论文写作中的软件组合.md" afterPath="$PROJECT_DIR$/_posts/2017-01-07-学位论文写作中的软件组合.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2017-03-08-球面距离与方位角公式的推导：解三角形法.md" afterPath="$PROJECT_DIR$/_posts/2017-03-08-球面距离与方位角公式的推导：解三角形法.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2017-03-09-球面距离与方位角公式的推导：向量代数法.md" afterPath="$PROJECT_DIR$/_posts/2017-03-09-球面距离与方位角公式的推导：向量代数法.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2017-04-24-Selenium Python基本操作备忘.md" afterPath="$PROJECT_DIR$/_posts/2017-04-24-Selenium Python基本操作备忘.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2017-04-24-Selenium+PhantomJS无法输入文本及其解决方法.md" afterPath="$PROJECT_DIR$/_posts/2017-04-24-Selenium+PhantomJS无法输入文本及其解决方法.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/scss/_layout.scss" afterPath="$PROJECT_DIR$/assets/scss/_layout.scss" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -62,17 +28,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
+            <state relative-caret-position="-7">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="post.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="post.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/_layouts/post.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="357">
@@ -114,7 +80,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/_layouts/post.html" />
         <option value="$PROJECT_DIR$/tagged.html" />
         <option value="$PROJECT_DIR$/_posts/2012-07-10-Marc调用Python脚本程序中关于目录操作的几个问题.md" />
         <option value="$PROJECT_DIR$/assets/scss/_layout.scss" />
@@ -149,6 +114,7 @@
         <option value="$PROJECT_DIR$/_posts/2017-03-09-球面距离与方位角公式的推导：向量代数法.md" />
         <option value="$PROJECT_DIR$/_posts/2017-04-24-Selenium Python基本操作备忘.md" />
         <option value="$PROJECT_DIR$/_posts/2017-04-24-Selenium+PhantomJS无法输入文本及其解决方法.md" />
+        <option value="$PROJECT_DIR$/_layouts/post.html" />
       </list>
     </option>
   </component>
@@ -382,14 +348,7 @@
       <updated>1488951915283</updated>
       <workItem from="1488951916531" duration="32534000" />
       <workItem from="1489062496505" duration="9429000" />
-      <workItem from="1494048027575" duration="4515000" />
-    </task>
-    <task id="LOCAL-00041" summary="new post">
-      <created>1488981725831</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1488981725831</updated>
+      <workItem from="1494048027575" duration="4572000" />
     </task>
     <task id="LOCAL-00042" summary="new post">
       <created>1488983018555</created>
@@ -727,11 +686,18 @@
       <option name="project" value="LOCAL" />
       <updated>1494050663811</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="update template">
+      <created>1494052580120</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1494052580120</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46478000" />
+    <option name="totallyTimeSpent" value="46535000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -1304,18 +1270,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/_layouts/post.html">
+    <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="45" lean-forward="false" selection-start-line="21" selection-start-column="45" selection-end-line="21" selection-end-column="45" />
+        <state relative-caret-position="-7">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/_layouts/post.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="357">
+          <caret line="21" column="45" lean-forward="false" selection-start-line="21" selection-start-column="45" selection-end-line="21" selection-end-column="45" />
           <folding />
         </state>
       </provider>

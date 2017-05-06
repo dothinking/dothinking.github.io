@@ -1,8 +1,9 @@
 ---
 layout: post
 author: Train
-description: "ThinkPHP自动验证之unique规则说明"
-keywords: "ThinkPHP, unique, 自动验证"
+description: ThinkPHP自动验证之unique规则说明
+keywords: ThinkPHP, unique, 自动验证
+tags: [ThinkPHP, web]
 ---
 
 本文针对ThinkPHP自动验证部分学习过程中遇到的几个问题，经过查阅文档及思考理解，作了以下几个方面的总结记录：

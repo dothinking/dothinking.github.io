@@ -280,3 +280,67 @@ hr {
     }
   }
 }
+
+
+// tag
+.post {
+  .tagged {
+    margin-top: 1rem;
+  }
+
+  .tagged a {
+    border: 1px solid #ddd;
+    padding: 2px 5px;
+    background: transparent;
+    display: inline-block;
+    color: #999;
+    outline: 0;
+    text-decoration: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-size: 70%;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+  }
+
+  .tagged a:hover {
+    cursor: pointer;
+    border: 1px solid #555;
+    background: #444;
+    color: #fff;
+  }
+}
+
+.tag-cloud {
+  margin-bottom: 20px;
+
+  a.tag-anchor {
+    margin-right: 4px;
+    margin-bottom: 8px;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding-left: 5px;
+    padding-right: 5px;
+    display: inline-block;
+    background: #f0f0f0;
+    color: #444;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px
+  }
+  a.tag-anchor:active,
+  a.tag-anchor:focus,
+  a.tag-anchor:hover {
+    background: #069;
+    color: #fff;
+  }
+}
+
+.tag-cloud-small {
+  a.tag-anchor {
+    font-size: 80%;
+  }
+}

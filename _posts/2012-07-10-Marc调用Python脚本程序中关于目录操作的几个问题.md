@@ -3,7 +3,7 @@ layout: post
 author: Train
 description: Marc程序调用Python脚本过程中获取当前目录方法
 keywords: Marc, Python
-tags: Marc, Python
+tags: [Marc, Python]
 ---
 
 本文为作者在编写供`Marc`调用的`Python`脚本程序过程中，遇到的关于当前目录的几个问题及解决方法。

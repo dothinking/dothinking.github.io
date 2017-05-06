@@ -1,8 +1,9 @@
 ---
 layout: post
 author: Train
-description: "ThinkPHP框架MySQL数据库备份还原类代码"
-keywords: "ThinkPHP, MySQL, 备份还原"
+description: ThinkPHP框架MySQL数据库备份还原类代码
+keywords: ThinkPHP, MySQL, 备份还原
+tags: [ThinkPHP, web]
 ---
 
 最近在用ThinkPHP框架写一个实验预约网站，到了数据库备份与还原一步，在网上找了一个现成的`MySQLReback`类，以.sql文件方式备份和还原数据库。本文记录使用过程以作备忘。

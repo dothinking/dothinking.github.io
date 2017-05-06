@@ -1,8 +1,9 @@
 ---
 layout: post
 author: Train
-description: "使用py_post模块读取和处理marc后处理数据"
-keywords: "Marc, Python, 后处理"
+description: 使用py_post模块读取和处理marc后处理数据
+keywords: Marc, Python, 后处理
+tags: [Python, Marc, CAE]
 ---
 
 在Marc后处理中，我们通常希望将某些数据导出后重新绘图。对于少量数据，可以使用`PATH PLOT`和`HISTORY PLOT`采集数据，然后直接使用界面上的`SAVE`按钮保存到文件，或者使用`COPY TO CLIPBOARD`按钮复制到剪切板。

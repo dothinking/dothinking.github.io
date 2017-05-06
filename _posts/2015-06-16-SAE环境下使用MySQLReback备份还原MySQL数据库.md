@@ -1,8 +1,9 @@
 ---
 layout: post
 author: Train
-description: "修改MySQLReback类使其适用于SAE的读写环境"
-keywords: "MySQL, SAE, ThinkPHP, 备份还原"
+description: 修改MySQLReback类使其适用于SAE的读写环境
+keywords: MySQL, SAE, ThinkPHP, 备份还原
+tags: [ThinkPHP, web]
 ---
 
 之前一篇文章介绍了ThinkPHP框架下的MySQL数据库备份还原类的使用，后来将项目迁移到了新浪云计算平台上，由于无法像本地一样读写文件，备份、还原功能也就失效了。本文即针对此问题，对原来的`MySQLReback.class.php`文件作相应修改，以适应SAE环境。

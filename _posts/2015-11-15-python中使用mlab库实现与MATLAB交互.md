@@ -3,7 +3,7 @@ layout: post
 author: Train
 description: python程序中使用mlab调用matlab计算进程的方法
 keywords: Matlab, mlab, numpy, Python, 数值计算
-tags: [Python, matlab, numeric analysis]
+tags: [python, matlab, numeric analysis]
 ---
 
 `numpy`、`scipy`、`sympy`等扩展库增加了Python在科学计算上的优势，但是，某些函数的执行效率依旧比不上商业化的Matlab。例如，针对本人的一个约束极值问题，matlab优化工具箱的`fmincon()`函数相比scipy.optimize的`minimize()`函数表现出更高的计算效率。因此，在某些场合下，需要在python代码中执行matlab命令。

@@ -3,7 +3,7 @@ layout: post
 author: Train
 description: Selenium Python基本操作
 keywords: selenium, phantomjs, chrome
-tags: [Python, spider]
+tags: [python, spider]
 ---
 
 `Selenium`是一个用于Web应用程序自动化测试的工具，可以模拟人类使用浏览器浏览页面、进行交互的行为。Selenium既支持Chrome、IE、Firefox、Opera等常规浏览器，也支持`PhantomJs`、`HtmlUnit`这类无界面浏览器（headless WebKit）。

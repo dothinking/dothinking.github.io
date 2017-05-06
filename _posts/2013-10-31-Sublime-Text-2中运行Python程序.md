@@ -1,8 +1,9 @@
 ---
 layout: post
 author: Train
-description: "直接在Sublime Text2编辑器中运行Python程序的设置方法"
-keywords: "Python, sublime text"
+description: 直接在Sublime Text2编辑器中运行Python程序的设置方法
+keywords: Python, sublime text
+tags: [python, sublime text]
 ---
 
 `Sublime Text`是一款相当经典的编辑器，自从用上之后便爱不释手；当用其写完一段Python代码而马上可以运行调试之，那就更惬意了。随着不断的使用过程和如上迫切的需求，逐渐积累了下文介绍的在`Sublime Text`编辑器中直接运行Python程序的两种方法——软件自带的`Build`功能和`SublimeREPL`插件。

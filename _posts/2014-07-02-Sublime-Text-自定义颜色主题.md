@@ -1,8 +1,9 @@
 ---
 layout: post
 author: Train
-description: "设置Sublime Text 2编辑器颜色风格的方法"
-keywords: "sublime text, 颜色主题"
+description: 设置Sublime Text 2编辑器颜色风格的方法
+keywords: sublime text, 颜色主题
+tags: [sublime text]
 ---
 
 Sublime Text编辑器提供了很多自定义的颜色主题，使代码界面显得更为清晰和优雅。默认颜色主题基本可以满足我们的要求，并且网上也有新的主题可供下载。但是对于喜欢折腾或者为了使选用的主题更符合自己的视觉习惯，有必要新建或者修改颜色主题。

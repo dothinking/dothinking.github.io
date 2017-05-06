@@ -1,8 +1,9 @@
 ---
 layout: post
 author: Train
-description: "修改PHPExcel使其适用于SAE环境"
-keywords: "SAE, ThinkPHP, PHPExcel"
+description: 修改PHPExcel使其适用于SAE环境
+keywords: SAE, ThinkPHP, PHPExcel
+tags: [ThinkPHP, web]
 ---
 
 当我们将一些涉及文件读写的项目移到云计算平台上，可能发现某些在本地运行得好好的功能会突然失效。例如，之前处理的是MySQL数据库备份还原功能在新浪云上的修改。本文将以ThinkPHP框架为例，处理SAE环境下使用PHPExcel插件导入数据的问题。

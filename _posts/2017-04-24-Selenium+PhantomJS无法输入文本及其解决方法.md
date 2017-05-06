@@ -1,8 +1,9 @@
 ---
 layout: post
 author: Train
-description: "使用Selenium及PhantomJS输入文本过程中遇到的问题及其解决方法"
-keywords: "selenium, phantomjs, chrome, send_keys, execute_script"
+description: 使用Selenium及PhantomJS输入文本过程中遇到的问题及其解决方法
+keywords: selenium, phantomjs, chrome, send_keys, execute_script
+tags: [Python, spider]
 ---
 
 `Selenium`是一个Web应用程序自动化测试工具，可以结合不同的webDriver（如Chrome、Firefox、Opera、PhantomJs）进行程序功能、兼容性方面的测试，也可进行爬虫相关的页面获取和分析。

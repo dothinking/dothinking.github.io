@@ -1,8 +1,9 @@
 ---
 layout: post
 author: Train
-description: "frompyfunc()和vectorize()函数说明"
-keywords: "numpy, Python, 数值计算"
+description: frompyfunc()和vectorize()函数说明
+keywords: numpy, Python, 数值计算
+tags: [python, numeric analysis]
 ---
 NumPy提供了两种基本对象`ndarray`（n-dimensional array）和`ufunc`（universal function），后者指能够对数组中的每个元素进行操作的函数，可以提高运算速度。为了将普通的计算单个元素的函数转换成ufunc函数，NumPy提供了`frompyfunc()`和`vectorize()`两个函数。通过转换，可以使原来的函数参数接受向量输入（换句话说将转换后的函数的向量作为标量输入原来的函数），最终输出相应维度的结果。那么问题来了，
 

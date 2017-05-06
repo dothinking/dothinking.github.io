@@ -1,8 +1,9 @@
 ---
 layout: post
 author: Train
-description: "Levy-Mises理论假设条件的分析"
-keywords: "Levy-Mises理论, 本构方程"
+description: Levy-Mises理论假设条件的分析
+keywords: Levy-Mises理论, 本构方程
+tags: [plastic theory, thinking]
 mathjax: true
 ---
 

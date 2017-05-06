@@ -5,12 +5,32 @@ layout: default
 <article class="post container" itemscope itemtype="http://schema.org/BlogPosting">
   <header class="post-header">
     <h1 class="post-title" itemprop="name headline">{{ page.title }}</h1>
-    <p class="post-meta"><time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%b %-d, %Y" }}</time>{% if page.author %} • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ page.author }}</span></span>{% endif %}</p>    
+    <p class="post-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">{{ page.date | date: "%b %-d, %Y" }}</time>
+      {% if page.author %} • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ page.author }}</span></span>{% endif %}
+    </p>
   </header>
   <div class="post-content" itemprop="articleBody">
     {{ content }}
+
+    {% assign post = page %}
+    {% if post.tags.size > 0 %}
+
+    {% assign tags_content = "" %}
+    {% for post_tag in post.keywords %}
+    {% capture tags_content_temp %}
+    {{ tags_content }}<a href="{{ site.url }}{{ site.baseurl }}/tagged#{{ post_tag | slugify }}"><i class="fa fa-hashtag muted" aria-hidden="true"></i>{{ post_tag }}</a>
+    {% endcapture %}
+    {% assign tags_content = tags_content_temp %}
+    {% endfor %}
+
+    <div class="tagged">
+      {{ tags_content }}
+    </div>
+    {% endif %}
+
     <aside class="share">
-	    <p>对文章内容有任何质疑或建议,请邮件联系<span>train8808@gmail.com</span>。</p>
+	    <p>对文章内容有任何质疑或建议,请邮件联系<span>{{ site.author.email }}</span>。</p>
     </aside>
   </div>
 </article>

@@ -5,7 +5,7 @@ description: "使用Selenium及PhantomJS输入文本过程中遇到的问题及�
 keywords: "selenium, phantomjs, chrome, send_keys, execute_script"
 ---
 
-`Selenium`是一个Web应用程序自动化测试工具，可以结合不同的webDriver（如Chrome、、Firefox、Opera、PhantomJs）进行程序功能、兼容性方面的测试，也可进行爬虫相关的页面获取和分析。
+`Selenium`是一个Web应用程序自动化测试工具，可以结合不同的webDriver（如Chrome、Firefox、Opera、PhantomJs）进行程序功能、兼容性方面的测试，也可进行爬虫相关的页面获取和分析。
 
 本文记录使用Selenium Python的`send_keys`方法进行文本输入时遇到的问题及其解决方法。
 
@@ -83,7 +83,7 @@ driver.execute_script(js)
 本问题中，目标元素在`iframe`标签内，所以需要使用如下获取元素的方法：
 
 ``` javascript
-obj = document.getElementById('ueditor_0').contentWindow.document.getElementsByTagName('body')[0]
+obj = document.getElementById('frame_id').contentWindow.document.getElementsById('target_id')
 ```
 
 综上，解决本问题的主要代码为：

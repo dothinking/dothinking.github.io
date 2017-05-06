@@ -19,7 +19,7 @@ layout: default
     {% assign tags_content = "" %}
     {% for post_tag in post.tags %}
     {% capture tags_content_temp %}
-    {{ tags_content }}<a href="{{ site.url }}/tagged#{{ post_tag | slugify }}"><i class="fa fa-hashtag muted" aria-hidden="true"></i>{{ post_tag }}</a>
+    {{ tags_content }}<a href="{{ site.url }}tagged#{{ post_tag | slugify }}"><i class="fa fa-hashtag muted" aria-hidden="true"></i>{{ post_tag }}</a>
     {% endcapture %}
     {% assign tags_content = tags_content_temp %}
     {% endfor %}

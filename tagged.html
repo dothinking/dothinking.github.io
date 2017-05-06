@@ -4,6 +4,7 @@ title: Tagged
 ---
 
 <section class="post-list">
+ <div class="container">
   {% assign rawtags = "" %}
   {% for post in site.posts %}
   {% assign ttags = post.tags | join:'|' | append:'|' %}
@@ -69,5 +70,6 @@ title: Tagged
 
    {% endfor %}
   </div>
+ </div>
 </section>
 <hr/>

@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="032e1b08-277f-47cf-bf8f-bbc165e07c02" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_config.yml" afterPath="$PROJECT_DIR$/_config.yml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_includes/nav.html" afterPath="$PROJECT_DIR$/_includes/nav.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tagged.html" afterPath="$PROJECT_DIR$/tagged.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/scss/_layout.scss" afterPath="$PROJECT_DIR$/assets/scss/_layout.scss" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -63,7 +61,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="nav.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="_layout.scss" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/assets/scss/_layout.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="498">
+              <caret line="269" column="19" lean-forward="false" selection-start-line="269" selection-start-column="19" selection-end-line="269" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="nav.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/_includes/nav.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="85">
@@ -81,7 +89,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/assets/scss/_layout.scss" />
         <option value="$PROJECT_DIR$/_posts/2012-10-18-MSC.MARC 2010表格之创建方式.md" />
         <option value="$PROJECT_DIR$/_posts/2012-10-10-实例说明VS2005、Python程序读写文件时的字符编码问题.md" />
         <option value="$PROJECT_DIR$/_posts/2012-07-27-MSC Marc2011单机多核并行计算示例.md" />
@@ -125,6 +132,7 @@
         <option value="$PROJECT_DIR$/tagged.html" />
         <option value="$PROJECT_DIR$/_config.yml" />
         <option value="$PROJECT_DIR$/_includes/nav.html" />
+        <option value="$PROJECT_DIR$/assets/scss/_layout.scss" />
       </list>
     </option>
   </component>
@@ -306,14 +314,7 @@
       <workItem from="1488951916531" duration="32534000" />
       <workItem from="1489062496505" duration="9429000" />
       <workItem from="1494048027575" duration="6196000" />
-      <workItem from="1494066287909" duration="7880000" />
-    </task>
-    <task id="LOCAL-00053" summary="new post">
-      <created>1488987049936</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1488987049936</updated>
+      <workItem from="1494066287909" duration="8465000" />
     </task>
     <task id="LOCAL-00054" summary="new post">
       <created>1488987576588</created>
@@ -651,11 +652,18 @@
       <option name="project" value="LOCAL" />
       <updated>1494072050061</updated>
     </task>
-    <option name="localTasksCounter" value="102" />
+    <task id="LOCAL-00102" summary="update template">
+      <created>1494074175947</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1494074175947</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56039000" />
+    <option name="totallyTimeSpent" value="56624000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -1196,18 +1204,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/scss/_layout.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="401">
-          <caret line="304" column="28" lean-forward="true" selection-start-line="304" selection-start-column="28" selection-end-line="304" selection-end-column="28" />
-          <folding>
-            <element signature="e#3577#4001#0" expanded="false" />
-            <element signature="e#3731#3862#0" expanded="false" />
-            <element signature="e#3877#3999#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tagged.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -1236,6 +1232,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="5" column="61" lean-forward="false" selection-start-line="5" selection-start-column="61" selection-end-line="5" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/scss/_layout.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="498">
+          <caret line="269" column="19" lean-forward="false" selection-start-line="269" selection-start-column="19" selection-end-line="269" selection-end-column="19" />
           <folding />
         </state>
       </provider>

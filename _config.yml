@@ -1,15 +1,13 @@
 #local setting
-port: 5001
-encoding: 'utf-8'
+port: 4444
 
 
 # SEO settings
 title: 格致
 title2: "" # default: ""
 description: Thinking and recording
-keywords: numerical analysis, CAE, PHP, thinkspace
-url: https://dothinking.github.io/blog/ # site url
-baseurl: /blog # apply repo name if use it under gh-pages branch
+keywords: ''
+baseurl: /blog/ # apply repo name if use it under gh-pages branch
 basetag: python
 
 repo: https://github.com/dothinking/blog

@@ -38,6 +38,11 @@ hr {
   margin: $small-spacing 0;
 }
 
+sup {
+  vertical-align: super;
+  color: #0086B3;
+}
+
 .container {
   padding: $base-spacing;
   margin-left: auto;

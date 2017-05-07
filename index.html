@@ -19,7 +19,7 @@ title: Home
         <article class="post-item">
             <span class="post-meta date-label">{{ post.date | date: "%b %d" }}</span>
             <div class="article-title">
-                <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title}}</a>
+                <a class="post-link" href="{{ post.url | replace: '/','' | prepend: site.baseurl }}">{{ post.title}}</a>
             </div>
         </article>
 
@@ -30,10 +30,10 @@ title: Home
 {% if paginator.total_pages > 1 %}
     <nav class="pagination" role="pagination">
         <ul>
-            <li><a class="prev" href="{{ site.url }}" title="Articles new">&laquo; 首页</a></li>
+            <li><a class="prev" href="{{ site.baseurl }}" title="Articles new">&laquo; 首页</a></li>
 
             {% if paginator.previous_page %}
-            <li><a class="prev" href="{{ paginator.previous_page_path | prepend: site.baseurl }}" title="Articles new">&lt; 上一页</a></li>
+            <li><a class="prev" href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" title="Articles new">&lt; 上一页</a></li>
             {% else %}
             <li><span class="prev disabled">&lt; 上一页</span></li>
             {% endif %}
@@ -41,7 +41,7 @@ title: Home
             <li><span class="page-number">第 {{paginator.page}} / {{paginator.total_pages}} 页</span></li>
 
             {% if paginator.next_page %}
-            <li><a class="next" href="{{ paginator.next_page_path | prepend: site.baseurl }}" title="Articles old">下一页&gt;</a></li>
+            <li><a class="next" href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" title="Articles old">下一页&gt;</a></li>
             {% else %}
             <li><span class="next disabled">下一页 &gt;</span></li>
             {% endif %}

@@ -149,7 +149,7 @@ ___
 
 [^2]: 2: 脚注也可以是超链接 - [click here!](#)
 
-## 鸣谢
+## 致谢
 
-使用[**GitHub Pages**](https://pages.github.com/)托管个人博客，感谢[**Heiswayi Nrird**](http://heiswayi.github.io/)贡献的Jekyll主题[**Thinkspace**](https://github.com/heiswayi/thinkspace)。
+基于[**Heiswayi Nrird**](http://heiswayi.github.io/)贡献的Jekyll主题[**Thinkspace**](https://github.com/heiswayi/thinkspace)修改。
 

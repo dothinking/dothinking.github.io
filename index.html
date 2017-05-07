@@ -19,7 +19,7 @@ title: Home
         <article class="post-item">
             <span class="post-meta date-label">{{ post.date | date: "%b %d" }}</span>
             <div class="article-title">
-                <a class="post-link" href="{{ post.url | replace: '/','' | prepend: site.baseurl }}">{{ post.title}}</a>
+                <a class="post-link" href="{{ post.url | prepend: site.baseurl | replace: '//','/' }}">{{ post.title}}</a>
             </div>
         </article>
 

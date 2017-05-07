@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="032e1b08-277f-47cf-bf8f-bbc165e07c02" name="Default" comment="update template">
+    <list default="true" id="032e1b08-277f-47cf-bf8f-bbc165e07c02" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_includes/nav.html" afterPath="$PROJECT_DIR$/_includes/nav.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/assets/scss/_layout.scss" afterPath="$PROJECT_DIR$/assets/scss/_layout.scss" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -62,10 +61,10 @@
       <file leaf-file-name="_layout.scss" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/assets/scss/_layout.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="520">
-              <caret line="396" column="35" lean-forward="false" selection-start-line="396" selection-start-column="35" selection-end-line="396" selection-end-column="35" />
+            <state relative-caret-position="340">
+              <caret line="71" column="34" lean-forward="false" selection-start-line="71" selection-start-column="34" selection-end-line="71" selection-end-column="34" />
               <folding>
-                <element signature="e#3623#4600#0" expanded="false" />
+                <element signature="e#3664#4641#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -334,14 +333,7 @@
       <workItem from="1489062496505" duration="9429000" />
       <workItem from="1494048027575" duration="6196000" />
       <workItem from="1494066287909" duration="10260000" />
-      <workItem from="1494137434833" duration="5513000" />
-    </task>
-    <task id="LOCAL-00063" summary="new post">
-      <created>1488990108766</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1488990108766</updated>
+      <workItem from="1494137434833" duration="5850000" />
     </task>
     <task id="LOCAL-00064" summary="new post">
       <created>1488990222329</created>
@@ -679,11 +671,18 @@
       <option name="project" value="LOCAL" />
       <updated>1494139527563</updated>
     </task>
-    <option name="localTasksCounter" value="112" />
+    <task id="LOCAL-00112" summary="update template">
+      <created>1494143570614</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1494143570614</updated>
+    </task>
+    <option name="localTasksCounter" value="113" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="63932000" />
+    <option name="totallyTimeSpent" value="64269000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -1190,10 +1189,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/scss/_layout.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="520">
-          <caret line="396" column="35" lean-forward="false" selection-start-line="396" selection-start-column="35" selection-end-line="396" selection-end-column="35" />
+        <state relative-caret-position="340">
+          <caret line="71" column="34" lean-forward="false" selection-start-line="71" selection-start-column="34" selection-end-line="71" selection-end-column="34" />
           <folding>
-            <element signature="e#3623#4600#0" expanded="false" />
+            <element signature="e#3664#4641#0" expanded="false" />
           </folding>
         </state>
       </provider>

@@ -69,6 +69,7 @@ hr {
 .site-header {
   margin-bottom: $small-spacing;
   min-height: 80px;
+  border-bottom: 2px solid #efefef;
 }
 
 .logo {
@@ -83,7 +84,7 @@ hr {
   }
 }
 
-.burger-check {
+input.burger-check {
   display: none;
 }
 
@@ -398,7 +399,6 @@ hr {
 
   .tagged a:hover {
     cursor: pointer;
-    border: 1px solid #555;
     background: #444;
     color: #fff;
   }

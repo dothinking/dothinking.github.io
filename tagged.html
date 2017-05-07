@@ -30,7 +30,7 @@ title: Tagged
             </style>
 
             <div id="{{ tag | slugify }}">
-                <h2 class="year" ><i class="fa fa-hashtag muted" aria-hidden="true"></i>{{ tag }}</h2>
+                <h2 class="year" ><i class="fa fa-hashtag muted" aria-hidden="true"></i>{{ tag[0] }}</h2>
 
                 {% for post in tag[1] %}
                     <article class="post-item">

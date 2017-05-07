@@ -88,19 +88,30 @@ input.burger-check {
   display: none;
 }
 
-.nav {
-  min-height: 64px;
+//.nav {
+//  min-height: 64px;
+//
+//  span {
+//    float: left;
+//    display: inline-block;
+//    padding-left:20px;
+//    height: 30px;
+//    font-style: italic;
+//    font-size: rem(12);
+//    color: #A7A7A7;
+//    text-shadow: 1px 1px #fff;
+//  }
+//}
 
-  span { 
-    float: left;
-    display: inline-block;
-    padding-left:20px;
-    height: 30px;
-    font-style: italic;
-    font-size: rem(12);
-    color: #A7A7A7;
-    text-shadow: 1px 1px #fff;
-  }
+sup {
+  float: left;
+  display: inline-block;
+  padding-left:20px;
+  height: 30px;
+  font-style: italic;
+  font-size: rem(12);
+  color: #A7A7A7;
+  text-shadow: 1px 1px #fff;
 }
 
 .navbar {
@@ -330,13 +341,11 @@ input.burger-check {
   .navbar {
     overflow: hidden;
     max-height: 0;
-
     transition: $navigation__transition;
   }
 
   .burger-check:checked ~ .navbar {
     max-height: 500px;
-
     transition: $navigation__transition;
   }
 

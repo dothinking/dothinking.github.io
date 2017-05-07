@@ -46,13 +46,9 @@ hr {
   font-weight: normal;
 }
 
-.pull-left {
-  float: left;
-}
+.pull-left {float: left;}
 
-.pull-right {
-  float: right;
-}
+.pull-right {float: right;}
 
 .link {
   color: $blue-color;
@@ -68,11 +64,11 @@ hr {
   }
 }
 
+/* navigation */
+
 .site-header {
-  border-bottom: 2px solid lighten($light-gray-color, 5%);
   margin-bottom: $small-spacing;
   min-height: 80px;
-  background: #EEE;
 }
 
 .logo {
@@ -85,6 +81,10 @@ hr {
   a{
     font-size: rem(30);
   }
+}
+
+.burger-check {
+  display: none;
 }
 
 .nav {
@@ -257,6 +257,90 @@ hr {
 
 // This applies from 0px to 600px
 @media (max-width: 600px) {
+  // navigation
+  // Burger menu button
+  $burger--thickness: 4px;
+  .burger {
+    $width: 28px;
+
+    display: inline-block;
+    border: 0;
+    background: none;
+    outline: 0;
+    padding: 0;
+    cursor: pointer;
+
+    border-bottom: $burger--thickness solid currentColor;
+    width: $width;
+
+    transition: border-bottom 1s ease-in-out;
+    -webkit-transition: border-bottom 1s ease-in-out;
+
+    // Fix for extra space in Firefox
+    &::-moz-focus-inner {
+      border: 0;
+      padding: 0;
+    }
+
+    &:before {
+      content: "";
+      display: block;
+      border-bottom: $burger--thickness solid currentColor;
+      width: 100%;
+      margin-bottom: 5px;
+      transition: transform 0.5s ease-in-out;
+      -webkit-transition: -webkit-transform 0.5s ease-in-out;
+    }
+
+    &:after {
+      content: "";
+      display: block;
+      border-bottom: $burger--thickness solid currentColor;
+      width: 100%;
+      margin-bottom: 5px;
+      transition: transform 0.5s ease-in-out;
+      -webkit-transition: -webkit-transform 0.5s ease-in-out;
+    }
+  }
+
+  .burger-check:checked ~ .burger {
+    border-bottom: $burger--thickness solid transparent;
+    transition: border-bottom 0.8s ease-in-out;
+    -webkit-transition: border-bottom 0.8s ease-in-out;
+
+    &:before {
+      transform: rotate(-405deg) translateY(1px) translateX(-3px);
+      -webkit-transform: rotate(-405deg) translateY(1px) translateX(-3px);
+      transition: transform 0.5s ease-in-out;
+      -webkit-transition: -webkit-transform 0.5s ease-in-out;
+    }
+
+    &:after {
+      transform: rotate(405deg) translateY(-4px) translateX(-5px);
+      -webkit-transform: rotate(405deg) translateY(-4px) translateX(-5px);
+      transition: transform 0.5s ease-in-out;
+      -webkit-transition: -webkit-transform 0.5s ease-in-out;
+    }
+  }
+
+  // * * * Navigation * * *
+  $navigation__transition: max-height 0.5s ease-in-out;
+
+  .navbar {
+    overflow: hidden;
+    max-height: 0;
+
+    transition: $navigation__transition;
+  }
+
+  .burger-check:checked ~ .navbar {
+    max-height: 500px;
+
+    transition: $navigation__transition;
+  }
+
+  /***********/
+
   .date-label {
     float: left !important;
     border: 0;
@@ -309,6 +393,8 @@ hr {
     -moz-border-radius: 3px;
     border-radius: 3px;
   }
+
+  .post-meta .tagged a{border: none;}
 
   .tagged a:hover {
     cursor: pointer;

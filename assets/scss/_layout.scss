@@ -43,6 +43,20 @@ sup {
   color: #0086B3;
 }
 
+/* SELECTION
+----------------- */
+::-moz-selection {
+  background: #333;
+  color: white;
+  text-shadow: none;
+}
+
+::selection {
+  background: #A33248;
+  color: white;
+  text-shadow: none;
+}
+
 .container {
   padding: $base-spacing;
   margin-left: auto;

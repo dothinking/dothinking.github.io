@@ -31,8 +31,8 @@
       <file leaf-file-name="tagged.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tagged.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="595">
-              <caret line="40" column="176" lean-forward="false" selection-start-line="40" selection-start-column="176" selection-end-line="40" selection-end-column="176" />
+            <state relative-caret-position="527">
+              <caret line="40" column="26" lean-forward="false" selection-start-line="40" selection-start-column="26" selection-end-line="40" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -282,14 +282,7 @@
       <workItem from="1489062496505" duration="9429000" />
       <workItem from="1494048027575" duration="6196000" />
       <workItem from="1494066287909" duration="10260000" />
-      <workItem from="1494137434833" duration="170000" />
-    </task>
-    <task id="LOCAL-00057" summary="new post">
-      <created>1488988003612</created>
-      <option name="number" value="00057" />
-      <option name="presentableId" value="LOCAL-00057" />
-      <option name="project" value="LOCAL" />
-      <updated>1488988003612</updated>
+      <workItem from="1494137434833" duration="845000" />
     </task>
     <task id="LOCAL-00058" summary="new post">
       <created>1488988075626</created>
@@ -627,11 +620,18 @@
       <option name="project" value="LOCAL" />
       <updated>1494075348529</updated>
     </task>
-    <option name="localTasksCounter" value="106" />
+    <task id="LOCAL-00106" summary="update template">
+      <created>1494137609089</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1494137609089</updated>
+    </task>
+    <option name="localTasksCounter" value="107" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="58589000" />
+    <option name="totallyTimeSpent" value="59264000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -1130,8 +1130,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tagged.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="40" column="176" lean-forward="false" selection-start-line="40" selection-start-column="176" selection-end-line="40" selection-end-column="176" />
+        <state relative-caret-position="527">
+          <caret line="40" column="26" lean-forward="false" selection-start-line="40" selection-start-column="26" selection-end-line="40" selection-end-column="26" />
           <folding />
         </state>
       </provider>

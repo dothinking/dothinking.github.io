@@ -37,7 +37,8 @@ title: Tagged
 
         {% if site.tags %}
         <div class="tag-cloud tag-cloud-small" id="Tags">
-            {% for tag in site.tags %}
+            {% assign sort_tags = site.tags | sort %}
+            {% for tag in sort_tags%}
             <a class="tag-anchor" id="tag_{{ tag[0] | slugify }}" href="#{{ tag[0] | slugify }}"><i class="fa fa-tag muted" aria-hidden="true"></i> {{ tag[0] }} {{ tag[1].size }}</a>
             {% endfor %}
         </div>

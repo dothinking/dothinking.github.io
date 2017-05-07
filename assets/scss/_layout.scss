@@ -38,11 +38,6 @@ hr {
   margin: $small-spacing 0;
 }
 
-sup {
-  vertical-align: super;
-  color: #0086B3;
-}
-
 /* SELECTION
 ----------------- */
 ::-moz-selection {
@@ -440,6 +435,11 @@ span.description {
   a.tag-anchor:hover {
     background: #069;
     color: #fff;
+  }
+
+  sup {
+    vertical-align: super;
+    color: #0086B3;
   }
 }
 

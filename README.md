@@ -1,9 +1,5 @@
 # Do Thinking
 
-使用[**GitHub Pages**](https://pages.github.com/)托管个人博客，感谢[**Heiswayi Nrird**](http://heiswayi.github.io/)贡献的Jekyll主题[**Thinkspace**](https://github.com/heiswayi/thinkspace)。
-
-## 选择的原因
-
 * MarkDown语法编辑文章，兼顾美观性和便捷性
 * 依赖MathJex实现Latex语法编辑公式
 * 本地的及时备份
@@ -152,4 +148,8 @@ ___
 [^1]: 1: 这是脚注1.
 
 [^2]: 2: 脚注也可以是超链接 - [click here!](#)
+
+## 鸣谢
+
+使用[**GitHub Pages**](https://pages.github.com/)托管个人博客，感谢[**Heiswayi Nrird**](http://heiswayi.github.io/)贡献的Jekyll主题[**Thinkspace**](https://github.com/heiswayi/thinkspace)。
 

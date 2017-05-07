@@ -1,3 +1,7 @@
+#local setting
+port: 5001
+encoding: 'utf-8'
+
 
 # SEO settings
 title: 格致
@@ -51,3 +55,4 @@ paginate_path: "/page:num/"
 #     title: Blog
 
 exclude: ["gulp", "node_modules", "bower", "bower_components", "config.rb", "src", "Gemfile", "Gemfile.lock", ".rvmrc", ".rbenv-version", "package.json", "gulpfile.js", "README.md", "Rakefile", "changelog.md"]
+

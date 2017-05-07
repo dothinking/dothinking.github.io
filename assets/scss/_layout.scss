@@ -196,9 +196,10 @@ span.description {
 }
 
 .pagination {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 800px;
+
+  margin-top: 1.5em;
+
+  li{margin-left: 0;}
 
   li, a, span {
     display: inline-block;

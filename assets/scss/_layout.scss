@@ -134,7 +134,7 @@ span.description {
 }
 
 .post-item {
-  margin-bottom: 0.2em;
+  margin-bottom: 0.5em;
   display: block;
   border-bottom: 1px dashed lighten($light-gray-color, 10%);
 
@@ -346,7 +346,7 @@ span.description {
 
   .post-item {
     border: 1px solid lighten($light-gray-color, 10%);
-    padding: 0 0.5em;
+    padding: 0.2em 0.5em;
     background: lighten($light-gray-color, 15%);
   }
 

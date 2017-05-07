@@ -29,7 +29,7 @@ title: Tagged
                 #{{ tag[0] | slugify }}:target {opacity: 1;height: auto;}
             </style>
 
-            <div id="{{ tag | slugify }}">
+            <div id="{{ tag[0] | slugify }}">
                 <h2 class="year" ><i class="fa fa-hashtag muted" aria-hidden="true"></i>{{ tag[0] }}</h2>
 
                 {% for post in tag[1] %}

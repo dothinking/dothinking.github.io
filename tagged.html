@@ -22,27 +22,23 @@ title: Tagged
         <!--posts in each tag-->
 
         <div class="posts">
-        {% for tag in tags %}
+        {% for tag in site.tags %}
 
             <style>
-                #{{ tag | slugify }} {transition: opacity 0.5s ease-out;opacity: 0;height: 0;overflow: hidden;}
-                #{{ tag | slugify }}:target {opacity: 1;height: auto;}
+                #{{ tag[0] | slugify }} {transition: opacity 0.5s ease-out;opacity: 0;height: 0;overflow: hidden;}
+                #{{ tag[0] | slugify }}:target {opacity: 1;height: auto;}
             </style>
 
             <div id="{{ tag | slugify }}">
                 <h2 class="year" ><i class="fa fa-hashtag muted" aria-hidden="true"></i>{{ tag }}</h2>
 
-                {% for post in site.posts %}
-
-                    {% if post.tags contains tag %}
-                        <article class="post-item">
-                            <span class="post-meta date-label">{{ post.date | date: "%b %d" }}</span>
-                            <div class="article-title">
-                                <a class="post-link" href="{{ post.url | prepend: site.baseurl }}" target="_blank">{{ post.title }}</a>
-                            </div>
-                        </article>
-                    {% endif %}
-
+                {% for post in tag[1] %}
+                    <article class="post-item">
+                        <span class="post-meta date-label">{{ post.date | date: "%b %d" }}</span>
+                        <div class="article-title">
+                            <a class="post-link" href="{{ post.url | prepend: site.baseurl }}" target="_blank">{{ post.title }}</a>
+                        </div>
+                    </article>
                 {% endfor %}
             </div>
 

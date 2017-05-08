@@ -149,6 +149,12 @@ ___
 
 [^2]: 2: 脚注也可以是超链接 - [click here!](#)
 
+## LICENSE
+
+* `_posts`中文章及`images`中相应图片采用[署名-非商业性使用-相同方式共享](http://creativecommons.org/licenses/by-nc-sa/3.0/)协议进行授权，转载请注明来源
+
+* 站点其他代码采用[MIT License 许可](http://zh.wikipedia.org/wiki/MIT_License)
+
 ## 致谢
 
 基于[**Heiswayi Nrird**](http://heiswayi.github.io/)贡献的Jekyll主题[**Thinkspace**](https://github.com/heiswayi/thinkspace)修改。

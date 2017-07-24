@@ -50,11 +50,11 @@ tags: [VBA]
 
 > [Customizing the 2007 Office Fluent Ribbon for Developers (Part 2 of 3)](https://msdn.microsoft.com/en-us/library/aa338199(v=office.12).aspx)
 
-大致了解以上背景知识后，正式开始这一步的操作步骤：
+大致了解以上背景知识后，正式开始操作步骤：
 
-**1.1 新建`customUI`文件夹，在该文件夹下新建`CustomUI.xml`文件，文件内容为以上`xml`示例代码。注意保存为`UTF-8`编码。**
+**1.1 新建`customUI`文件夹，在该文件夹下新建`CustomUI.xml`文件，文件内容为以上示例`xml`代码。注意保存以`UTF-8`编码保存文件。**
 
-**1.2 以解压缩软件例如`7-zip`直接打开插件`hello_world.xlam`，然后将整个`customUI`文件夹拖入到压缩文件中并保存。**
+**1.2 以解压缩软件例如`7-zip`直接打开`hello_world.xlam`，然后将整个`customUI`文件夹拖入到压缩文件中并保存。**
 
 <div align='center'><img src="{{ "/images/2017-07-24-01.png" | prepend: site.baseurl }}"></div>
 
@@ -63,12 +63,14 @@ tags: [VBA]
 
 接下来继续在以压缩包形式打开的`hello_world.xlam`文件上进行操作：
 
-**2.1 右键压缩包中`_res`文件夹下的`.res`文件，选择`编辑`以记事本方式打开`.res`文件。**
+**2.1 右键压缩包中`_res`文件夹下的`.res`文件，在弹出菜单中选择`编辑`，以记事本方式打开`.res`文件。**
 
-**2.2 在`.rels`文件最后一个`</Relationships>`之前添加如下内容，保存并在提示更新压缩文件时选择确定。**
+**2.2 在`.rels`文件最后一个`</Relationships>`标签之前添加如下内容，保存并在提示更新压缩文件时选择确定。**
 
 ```
-<Relationship Id="customUIRelID" Type="http://schemas.microsoft.com/office/2006/relationships/ui/extensibility" Target="customUI/customUI.xml"/>
+<Relationship Id="customUIRelID" 
+    Type="http://schemas.microsoft.com/office/2006/relationships/ui/extensibility" 
+    Target="customUI/customUI.xml"/>
 ```
 
 完成以上步骤后打开`hello_world.xlam`得到如下效果：
@@ -78,18 +80,18 @@ tags: [VBA]
 
 ## 3 编辑`VBA`代码
 
-`xml`中为`say hello world`指定的回调函数是`user_fun`，最后完成该子过程即可。特别注意，该过程需要带参数`control As IRibbon`：
+`xml`中为`say hello world`指定的回调函数是`user_fun`，所以最后完成该子过程即可。特别注意，该过程需要带参数`control As IRibbon`：
 
 ```
-Sub user_fun(Controlcontrol As IRibbonControl)
+Sub user_fun(Control As IRibbonControl)
     MsgBox "Hello world."
 End Sub
 ```
 
 ##  扩展阅读
 
-[^1]: [1] [A Guide to Customizing the Office 2007 Ribbon](https://technet.microsoft.com/en-us/library/2009.05.ribbon.aspx#id0980025)  
+[1] [A Guide to Customizing the Office 2007 Ribbon](https://technet.microsoft.com/en-us/library/2009.05.ribbon.aspx#id0980025)  
 
-[^2]: [2] [Customizing the 2007 Office Fluent Ribbon for Developers (Part 1 of 3)](https://msdn.microsoft.com/en-us/library/aa338202.aspx)
+[2] [Customizing the 2007 Office Fluent Ribbon for Developers (Part 1 of 3)](https://msdn.microsoft.com/en-us/library/aa338202.aspx)
 
-[^3]: [3] [Customizing the 2007 Office Fluent Ribbon for Developers (Part 3 of 3)](https://msdn.microsoft.com/en-us/library/aa722523(v=office.12).aspx)
+[3] [Customizing the 2007 Office Fluent Ribbon for Developers (Part 3 of 3)](https://msdn.microsoft.com/en-us/library/aa722523(v=office.12).aspx)

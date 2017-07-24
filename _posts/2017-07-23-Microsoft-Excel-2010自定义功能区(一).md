@@ -50,4 +50,4 @@ Excel 2010已经为用户提供了自定义功能区的功能，`文件`->`选�
 
 显然，上述方案的可移植性依然不强，我们希望赵、钱、孙、李收到`hello_world.xlam`文件后，可以自动完成上述过程。于是，这就需要：
 
-[在Excel插件中自动创建Ribbon菜单]({{ site.baseurl }}{% post_url 2017-07-23-Microsoft-Excel-2010自定义功能区(二) %})
+[在Excel插件中自动创建Ribbon菜单]({{ site.baseurl }}{% post_url 2017-07-24-Microsoft-Excel-2010自定义功能区(二) %})

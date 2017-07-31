@@ -32,7 +32,7 @@ End Sub
 
 当然我们还需要为`customUI`指定初始化的属性`onLoad`。以下是`xml`的示例代码：
 
-```
+```xml
 <customUI xmlns="http://schemas.microsoft.com/office/2006/01/customui" onLoad="OnRibbonLoad">
     <ribbon startFromScratch="false">
         <tabs>
@@ -61,7 +61,7 @@ End Sub
 
 接下来新建`ribbon_control`模块，写入如下的响应事件的代码：
 
-```
+```vb
 '''
 ' ribbon control
 '''
@@ -103,7 +103,7 @@ End Sub
 
 填入刷新Ribbon区域的代码：
 
-```
+```vb
 Private Sub Workbook_SheetActivate(ByVal Sh As Object)
     MyRibbonUI.Invalidate ' update status
 End Sub
@@ -119,7 +119,7 @@ End Sub
 
 首先将`hello_world.xlam`的`ThisWorkBook`模块更改为以下代码：
 
-```
+```vb
 ' ThisWorkBook in hello_world.xlam
 
 Private WithEvents App As Application ' 定义Application类型的事件监听App
@@ -135,7 +135,7 @@ End Sub
 
 最后填入强制刷新Ribbon区域的代码：
 
-```
+```vb
 Private Sub App_SheetActivate(ByVal Sh As Object)
     MyRibbonUI.Invalidate ' submit status
 End Sub

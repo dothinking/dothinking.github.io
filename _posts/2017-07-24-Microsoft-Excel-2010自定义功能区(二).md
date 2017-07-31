@@ -20,7 +20,7 @@ tags: [VBA]
 
 以下是本文简单示例的`xml`结构：
 
-```
+```xml
 <customUI xmlns="http://schemas.microsoft.com/office/2006/01/customui">
     <ribbon startFromScratch="false">
         <tabs>
@@ -67,7 +67,7 @@ tags: [VBA]
 
 **2.2 在`.rels`文件最后一个`</Relationships>`标签之前添加如下内容，保存并在提示更新压缩文件时选择确定。**
 
-```
+```xml
 <Relationship Id="customUIRelID" 
     Type="http://schemas.microsoft.com/office/2006/relationships/ui/extensibility" 
     Target="customUI/customUI.xml"/>
@@ -82,7 +82,7 @@ tags: [VBA]
 
 `xml`中为`say hello world`指定的回调函数是`user_fun`，所以最后完成该子过程即可。新建模块（module）重命名为`user_function`，在其中写入以下代码：
 
-```
+```vb
 Sub user_fun(Control As IRibbonControl)
     MsgBox "Hello world."
 End Sub

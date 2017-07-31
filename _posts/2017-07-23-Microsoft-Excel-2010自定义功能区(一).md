@@ -14,7 +14,7 @@ tags: [VBA]
 
 假设自定义的功能是`say Hello World`：
 
-```
+```vb
 Sub user_fun()
     MsgBox "Hello world."
 End Sub

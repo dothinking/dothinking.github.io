@@ -56,7 +56,7 @@ tags: [VBA]
 
 **1.2 以解压缩软件例如`7-zip`直接打开`hello_world.xlam`，然后将整个`customUI`文件夹拖入到压缩文件中并保存。**
 
-<div align='center'><img src="{{ "/images/2017-07-24-01.png" | prepend: site.baseurl }}"></div>
+<div align='center'><img src="{{ "images/2017-07-24-01.png" | prepend: site.baseurl }}"></div>
 
 
 ## 2 修改`.res`文件
@@ -75,18 +75,20 @@ tags: [VBA]
 
 完成以上步骤后打开`hello_world.xlam`得到如下效果：
 
-<div align='center'><img src="{{ "/images/2017-07-24-02.png" | prepend: site.baseurl }}"></div>
+<div align='center'><img src="{{ "images/2017-07-24-02.png" | prepend: site.baseurl }}"></div>
 
 
 ## 3 编辑`VBA`代码
 
-`xml`中为`say hello world`指定的回调函数是`user_fun`，所以最后完成该子过程即可。特别注意，该过程需要带参数`control As IRibbon`：
+`xml`中为`say hello world`指定的回调函数是`user_fun`，所以最后完成该子过程即可。新建模块（module）重命名为`user_function`，在其中写入以下代码：
 
 ```
 Sub user_fun(Control As IRibbonControl)
     MsgBox "Hello world."
 End Sub
 ```
+
+特别注意，该过程需要带参数`control As IRibbon`。
 
 ##  扩展阅读
 

@@ -59,7 +59,7 @@ PPT模板 | .potx
 
 ## 何为`全局模板`?
 
-以Word为例，位于`C:\Users\username\AppData\Roaming\Microsoft\Word\Startup`下的模板文件（`.dot, .dotx, .dotm`）将在Word启动后完成加载，因此称为全局模板。
+以Word为例，位于`C:\\Users\\username\\AppData\Roaming\\Microsoft\\Word\\Startup`下的模板文件（`.dot, .dotx, .dotm`）将在Word启动后完成加载，因此称为全局模板。
 
 可以通过`Developer`->`Add-Ins`查看已加载和启用的模板。当然，通过`Add...`按钮可以临时添加其他任意位置的模板文件。但是它们在下次启动Word后并不会自动完成加载，还需要手工启用。
 

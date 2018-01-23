@@ -44,7 +44,7 @@ PPT模板 | .potx
 启用宏的PPT插件 | .ppam
 
 
-## 以上类型可以归纳为普通/启用宏文档，普通/启用宏模板，插件, 主要区别何在？
+## 以上类型可以归纳为普通/启用宏文档、普通/启用宏模板、插件，主要区别何在？
 
 * 是否启用宏决定了能否保存和执行自定义VBA代码，通常以`m`结尾的文档为启用宏的类型
 * 对文档（普通/宏）的自定义Ribbon操作仅仅影响当前文档
@@ -59,7 +59,7 @@ PPT模板 | .potx
 
 ## 何为`全局模板`?
 
-以Word为例，位于`C:\\Users\\username\\AppData\Roaming\\Microsoft\\Word\\Startup`下的模板文件（`.dot, .dotx, .dotm`）将在Word启动后完成加载，因此称为全局模板。
+以Word为例，位于`C:\\Users\\username\\AppData\\Roaming\\Microsoft\\Word\\Startup`下的模板文件（`.dot, .dotx, .dotm`）将在Word启动后完成加载，因此称为全局模板。
 
 可以通过`Developer`->`Add-Ins`查看已加载和启用的模板。当然，通过`Add...`按钮可以临时添加其他任意位置的模板文件。但是它们在下次启动Word后并不会自动完成加载，还需要手工启用。
 

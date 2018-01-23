@@ -6,12 +6,12 @@ keywords: ribbon, add-in, word, dotm
 tags: [VBA]
 ---
 
-[前文]({{ site.baseurl }}{% post_url 2017-07-24-Microsoft-Excel-2010自定义功能区(二).md %})以`Microsoft Excel 2010`为例介绍了制作带有自定义Ribbon菜单的Excel插件的基本流程，实际上此方法通用于`MicroSoft Office`的常用组件：Word，Excel，PPT。这是因为这些Office应用程序文档都是基于`Office Open XML`格式：
+[前文]({{ site.baseurl }}{% post_url 2017-07-24-Microsoft-Excel-2010自定义功能区(二) %})以`Microsoft Excel 2010`为例介绍了制作带有自定义Ribbon菜单的Excel插件的基本流程，实际上此方法通用于`MicroSoft Office`的常用组件：Word，Excel，PPT。这是因为这些Office应用程序文档都是基于`Office Open XML`格式：
 
 > Office Open XML (also informally known as OOXML or Microsoft Open XML (MOX)) is a zipped, XML-based file format developed by Microsoft for representing spreadsheets, charts, presentations and word processing documents.
 > -- Wikipedia
 
-正是因为它们是以`zip`压缩文件格式组织的，并且其中`XML`部分控制了UI，才使得[前文]({{ site.baseurl }}{% post_url 2017-07-24-Microsoft-Excel-2010自定义功能区(二).md %})的方法有迹可寻。
+正是因为它们是以`zip`压缩文件格式组织的，并且其中`XML`部分控制了UI，才使得[前文]({{ site.baseurl }}{% post_url 2017-07-24-Microsoft-Excel-2010自定义功能区(二) %})的方法有迹可寻。
 
 ---
 
@@ -59,12 +59,12 @@ PPT模板 | .potx
 
 ## 何为`全局模板`?
 
-以Word为例，位于`C:\\Users\\username\\AppData\\Roaming\\Microsoft\\Word\\Startup`下的模板文件（`.dot, .dotx, .dotm`）将在Word启动后完成加载，因此称为全局模板。
+以Word为例，位于`C:\Users\username\AppData\Roaming\Microsoft\Word\Startup`下的模板文件（`.dot, .dotx, .dotm`）将在Word启动后完成加载，因此称为全局模板。
 
 可以通过`Developer`->`Add-Ins`查看已加载和启用的模板。当然，通过`Add...`按钮可以临时添加其他任意位置的模板文件。但是它们在下次启动Word后并不会自动完成加载，还需要手工启用。
 
 ## 以Word为例演示带有自定义Ribbon菜单的插件的制作？
 
 * 新建Word文档另存为启用宏的模板`.dotm`文件，编写相应VBA代码
-* 按照[前文]({{ site.baseurl }}{% post_url 2017-07-24-Microsoft-Excel-2010自定义功能区(二).md %})流程完成自定义Ribbon操作
+* 按照[前文]({{ site.baseurl }}{% post_url 2017-07-24-Microsoft-Excel-2010自定义功能区(二) %})流程完成自定义Ribbon操作
 * 将制作好的`.dotm`模板文件置于`Startup`目录自动加载或者手工按需加载

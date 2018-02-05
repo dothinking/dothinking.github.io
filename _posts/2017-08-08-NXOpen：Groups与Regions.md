@@ -44,7 +44,6 @@ NX FEM与Simulation部分经常会遇到两个概念`Groups`与`Regions`，它�
 - Element Edge
 - Node
 - Element
-- 
 
 ## 小结
 

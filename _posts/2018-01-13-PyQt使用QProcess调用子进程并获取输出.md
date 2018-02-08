@@ -64,7 +64,9 @@ sys.stderr.flush()
 ``` python
 # coding:utf-8
 # file: called.py
+
 import time, sys
+
 try:
     # 获取标准输入
     N = int(sys.stdin.readline())   
@@ -79,6 +81,7 @@ else:
         sys.stdout.write("%d\n" %i)     
         sys.stdout.flush()
         time.sleep(1)
+
     exit(0)
 ```
 
@@ -86,16 +89,17 @@ else:
 
 ``` python
 import subprocess, shlex
+
 command = "python called.py"
 p = subprocess.Popen(shlex.split(command), stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-# 为子进程传递参数
+
 p.stdin.write('5\n') 
-# 实时获取输出
+
 while p.poll() == None:
     out = p.stdout.readline().strip()
     if out:
         print "sub process output: ", out
-# 子进程返回值
+
 print "return code: ", p.returncode
 ```
 

@@ -11,28 +11,44 @@ tags: [C++]
 - 考虑到C++的`Name Mangling`，可以使用`extern "C" {...}`修饰需要导出的函数
 
 ``` c++
+
 // interface.h
+
 # ifndef INTERFACE_H
+
 # define INTERFACE_H
 
 # ifdef _WIN32
+
 #     ifdef INTERFACE_LIB
+
 #          define INTERFACE_EXPORT __declspec(dllexport)
+
 #     else
+
 #          define INTERFACE_EXPORT __declspec(dllimport)
+
 #     endif
+
 #     define INTERFACE_EXPORT_C __stdcall
+
 # endif
 
 # ifdef linux
+
 #     define INTERFACE_EXPORT
+
 #     define INTERFACE_EXPORT_C
+
 # endif
 
 // exported class
+
 class INTERFACE_EXPORT FOO{ ... };
 
+
 // exported functions
+
 extern "C" {
     void INTERFACE_EXPORT_C bar();
 }
@@ -41,14 +57,19 @@ extern "C" {
 ```
 
 ``` c++
+
 // interface.cpp
+
 # define INTERFACE_LIB
+
 # include "interface.h"
 
 // exported class
+
 FOO::FOO() { ... }
 void FOO::foo() { ... }
 
 // exported functions
+
 void INTERFACE_EXPORT_C bar() { ... }
 ```

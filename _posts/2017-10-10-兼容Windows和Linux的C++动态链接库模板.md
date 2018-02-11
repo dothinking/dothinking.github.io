@@ -10,7 +10,7 @@ tags: [C++]
 - Linux平台无需指定导入导出类时无需指定以上修饰名称
 - 考虑到C++的`Name Mangling`，可以使用`extern "C" {...}`修饰需要导出的函数
 
-```c++
+```c
 // interface.h
 # ifndef INTERFACE_H
 # define INTERFACE_H
@@ -40,7 +40,7 @@ extern "C" {
 # endif
 ```
 
-```c++
+```c
 // interface.cpp
 # define INTERFACE_LIB
 # include "interface.h"

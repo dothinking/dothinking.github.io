@@ -20,23 +20,15 @@ NX FEM与Simulation部分经常会遇到两个概念`Groups`与`Regions`，它�
 
 ## 存储对象类型
 
-`Groups`对象通常可以存储以下类型
+`Groups`和`Regions`中存储对象的类型包括：
 
-- Nodes, elements, meshes
-- Element edges, element faces
-- Mesh points, points
-- Polygon edges, polygon faces, polygon bodies
-- Curves
-- Coordinate systems
-
-因为需要导出为`CAE`模型，`Regions`是与求解器相关的。总的来说，`Regions`存储对象的类型有：
-
-- Edge
-- Surface
-- Element Face
-- Element Edge
-- Node
-- Element
+Group | Region
+---|---
+Node, Element, Element edge, Element face
+Polygon edges/faces/bodies | Polygon edges/faces
+meshes, Mesh points | -
+Curves, Points | -
+Coordinate systems | -
 
 ## 使用环境
 
@@ -48,10 +40,23 @@ NX FEM与Simulation部分经常会遇到两个概念`Groups`与`Regions`，它�
 
 - 当前工作部件为`FEM Part`时，`Simulation`环境创建的`Groups`则会显示于`Simulation Navigator`。因此，`Simulation Groups`可用于`FEM`环境下网格划分区域的设置。
 
+## 导出求解文件
+
+存储在`Group`与`Region`中的元素都可以导出为有限元求解文件，以下是它们的一些异同点：
+
+- 使用NX内置的`File->Export->Export Simulation`将当前模型导出为有限元输入文件`*.inp`时，`Group`中存储的`Node`和`Element`类型对象默认将被自动导出为以组名命名的集合，；而`Region`中的对象则不会被导出。但是，如果在导出对话框中关闭导出`Group`的选项，则不再导出`Group`。
+
+- `Group`中的`Node`和`Element`类型对象将分别导出为节点和单元，其他几何对象如`Polygon Face`、`Polygon Edge`则导出为空；`Region`中所有类型对象，即便存储的是`Element`，都将被导出为离散后后的节点集合。
+
+- 修改几何模型将导致网格的更新，此时`Group`和`Region`中存储的`Node`及`Element`类型对象都将失效，表现为集合为空；而`Polygon Face`、`Polygon Edge`类型依旧可以保持正确的对应关系，所以可以导出为更新后的节点集合。
 
 ## 小结
 
-`Groups`是`FEM`或`Simulation`环境下一系列可重用对象的集合，方便后续作为整体进行统一管理。`Regions`是以CAE中施加边界条件为目的而组织的CAE元素的集合。概括而言，`Groups`通用性更强，`Regions`主要面向CAE边界条件的施加。
+- `Groups`是`FEM`或`Simulation`环境下一系列可重用对象的集合，方便后续作为整体进行统一管理。`Regions`是以CAE中施加边界条件为目的而组织的CAE元素的集合。概括而言，`Groups`可存储的类型更多，`Regions`主要面向CAE边界条件的施加。
+
+- `Group`中的`Node`、`Element`对象将自动导出为相应类型集合，`Region`中所有类型可以手动导出为节点的集合。
+
+- 模型更新后，无论`Group`还是`Region`中的`Node`及`Element`类新对象都将失效，而`Polygon`类型对象将自动更新。
 
 ## 参考资料
 

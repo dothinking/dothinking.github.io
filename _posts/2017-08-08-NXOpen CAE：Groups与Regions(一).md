@@ -24,7 +24,8 @@ NX FEM与Simulation部分经常会遇到两个概念`Groups`与`Regions`，它�
 
 Group | Region
 ---|---
-Node, Element, Element edge, Element face
+Node, Element | Node, Element
+Element edge/face | Element edge/face
 Polygon edges/faces/bodies | Polygon edges/faces
 meshes, Mesh points | -
 Curves, Points | -

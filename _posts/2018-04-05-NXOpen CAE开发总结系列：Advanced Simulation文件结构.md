@@ -118,6 +118,8 @@ tag_t UF_SF_map_object_to_current_part(tag_t object_tag /*Tag of a object to be 
 
 基本思路：FEM Part的`SmartSelectionManager`可以根据`MeshPoint`获取`Node`，需要注意的是此处的`MeshPoint`必须是FEM Part中的`Prototype`。由于Group中存储的`Occurrence`，直接使用`Prototype()`获取即可。
 
+*创建MeshPoint后应更新FEModel，此后才建立MeshPoint与Node的对应关系，CreateRelatedNodeMethod()方法也才生效。但是，当模型十分复杂时，为避免更新FEModel造成的等待时间，亦可遍历节点坐标来获取重合节点。*
+
 
 
 

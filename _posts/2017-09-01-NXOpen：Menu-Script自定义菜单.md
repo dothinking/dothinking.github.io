@@ -223,3 +223,7 @@ BUTTON TEST_MENU_FEM_2
 最后将本例脚本文件和基本流程图示为：
 
 <div align='center'><img src="{{ "/images/2017-09-01-02.png" | prepend: site.baseurl }}"></div>
+
+## 附件
+
+本文涉及菜单脚本及其组织结构的附件：[menuscripts]({{ "uploads/menuscripts.zip" | prepend: site.baseurl }})。

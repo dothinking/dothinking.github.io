@@ -8,7 +8,7 @@ tags: [NX,NXOpen]
 
 我们已经知道`Idealized Part`、`FEM Part`、`SIM Part`中的几何元素具有一定的关联，例如前者的Body对象对应了后两者的Polygon Body，那么它们的名称即Name属性在关联关系上有何注意事项呢？
 
-- `Idealized Part`中Body的Name属性绝对了其在`FEM Part`中对应的Polygon body的Name属性。
+- `Idealized Part`中Body的Name属性决定了其在`FEM Part`中对应的Polygon body的Name属性。
 
 - Polygon body的Name属性有两种等效的维护途径：
 

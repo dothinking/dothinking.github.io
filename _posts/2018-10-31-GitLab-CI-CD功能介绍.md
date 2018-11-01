@@ -6,13 +6,13 @@ keywords: GitLab, CI CD
 tags: GitLab
 ---
 
-持续集成（Continuous Integration）是为了配合敏捷开发的速度和效率而产生的一个用于编译、测试、发布、部署的工具。开发人员的每一次代码提交，都将触发预先定义的任务，自动进行编译、测试、部署等。如果成功则接受这次提交，否则提示集成失败。本篇介绍GitLab提供的持续集（CI/CD）成功能。
+持续集成（Continuous Integration）是为了配合敏捷开发的速度和效率而产生的一个用于编译、测试、发布、部署的工具。开发人员的每一次代码提交，都将触发预先定义的任务，自动进行编译、测试、部署等。如果成功则接受这次提交，否则提示集成失败。本篇介绍GitLab提供的持续集成（CI/CD）功能。
 
 ## 基本流程
 
 自GitLab 8.0版本起，`Continuous Integration`功能被集成到GitLab基本配置中，并且默认对所有项目生效。以下是官方提供的一个非常简明实用的入门参考：
 
->> [Getting started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/README.html)
+> [Getting started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/README.html)
 
 总结为两步实现GitLab的CI/CD服务：
 
@@ -21,7 +21,7 @@ tags: GitLab
 
 `.gitlab-ci.yml`文件按照`YAML`文件格式定义了需要自动化执行的任务列表，每个任务由一系列命令行代码完成；`Runner`是GitLab默认配置好的服务器（一般是Linux环境），或者自行手动添加的服务器（例如自己的主机）。
 
-通过提交代码等触发CI/CD服务后，GitLab按一定原则分配`Runner`。注意每个任务都将依次被分配给一个具备相对独立环境的`Runner`，即便两个任务被先后分配到了同一个`Runner`。
+通过提交代码等触发CI/CD服务后，GitLab按一定原则分配`Runner`。注意每个任务都将被分配给一个具备相对独立环境的`Runner`，即便两个任务被先后分配到了同一个`Runner`。
 
 `Runner`接到任务后，将远程仓库下载到`Runner`本地，然后执行该任务定义的指令。
 
@@ -52,6 +52,7 @@ Test Project
 
 ```cpp
 // cpp/main.cpp
+
 #include <iostream>
 using namespace std;
 int main()
@@ -108,6 +109,7 @@ class Test(unittest.TestCase):
 ```yaml
 # 定义任务执行阶段
 # 默认分为build, test, deploy三个阶段，亦可自定义其他阶段，按顺序执行
+# 定义在相同stage的jobs会被并行执行
 stages:
   - build
   - test
@@ -190,7 +192,7 @@ Job succeeded
 
 以上任务使用通用环境即可完成，例如`g++`编译和`python`环境，但有时可能需要特定的环境，例如`Visual Studio`或者第三方库如`NXOpen C++`，此时需要配置专用的服务器。GitLab提供了Linux/MacOS/Windows等一系列平台的配置方法：
 
->> [Install GitLab Runner](https://docs.gitlab.com/runner/install/)
+> [Install GitLab Runner](https://docs.gitlab.com/runner/install/)
 
 流程很简明：下载`gitlab-runner`文件，注册`Runner`，安装和启动服务。配置成功后即可在仓库的`Settings->CI/CD->Runners->Specific Runners`下发现自己的`Runner`，注意设置`tag`以便可以在`.gitlab-ci.yml`中指定在此`Runner`执行任务。
 

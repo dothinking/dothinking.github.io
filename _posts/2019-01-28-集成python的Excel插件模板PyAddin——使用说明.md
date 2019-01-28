@@ -33,7 +33,7 @@ tags: [VBA, python]
 
 以上自定义Ribbon菜单由`pyAddin.xlam`内置的XML文件和VBA控制，两个菜单项的响应函数如下所示：
 
-```vba
+```vb
 Sub callback_cal(control As IRibbonControl)
 
     '''
@@ -119,7 +119,7 @@ def division(a, b):
 
 响应菜单点击事件的回调函数的基本格式为：
 
-```vba
+```vb
 Sub callback_name(control As IRibbonControl)
     ...
     RunPython("package.module.method", args, res)
@@ -129,7 +129,7 @@ End Sub
 
 函数体中使用`RunPython()`函数调用python脚本来处理具体事务，函数说明参考`pyAddin.xlam`的`general_function`模块： 
 
-```vba
+```vb
 Function RunPython(method_name As String, args, ByRef res As String) As Boolean
     '''
     ' :param method_name: a string refer to the called python method -> package.module.method
@@ -154,3 +154,7 @@ from .utility import udf
 def user_function(*args):
     pass
 ```
+
+内置的python也支持第三方库，但考虑到减小体积并未预置`pip`。如果需要安装第三方库，可以先安装`pip`,然后`python -m pip install xxx`安装需要的库。最后发布给用户使用时，可以删除`pip`以减小体积，且不影响已经安装的库。
+
+> [嵌入式Python : 如何在U盘安装绿色版 Python](https://baijiahao.baidu.com/s?id=1592976804446590381)

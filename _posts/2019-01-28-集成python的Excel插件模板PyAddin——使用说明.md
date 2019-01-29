@@ -68,7 +68,6 @@ End Sub
 从上一步可以看出VBA获取Excel数据，将其作为参数调用python脚本执行实际的工作，并获取其返回值进行相应的处理。`RunPython()`函数的第一个参数`"scripts.test.division"`指明了被调用的python方法——`scripts`包下的`test.py`模块的`dicision()`方法：
 
 ```python
-@udf
 def division(a, b):
     assert a!='', 'cell A1 is empty'
     assert b!='', 'cell A2 is empty'
@@ -144,13 +143,9 @@ End Function
 
 3. 在`scripts`文件夹下创建python脚本
 
-推荐在`scripts`文件夹下创建python脚本，注意一个合法的python回调函数应该使用`@udf`装饰器。该装饰器保持VBA主调函数`RunPython()`与python脚本返回值的默认交互方式。
-
 ```python
 # scripts/test.py
-from .utility import udf
 
-@udf
 def user_function(*args):
     pass
 ```

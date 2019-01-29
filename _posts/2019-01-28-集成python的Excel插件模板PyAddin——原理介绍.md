@@ -86,59 +86,50 @@ End Function
 
 ## main.py
 
-`main.py`是`RunPython`直接调用的函数，它根据传入的方法名称参数`method_name`调用相应的函数。
+`main.py`是`RunPython`直接调用的函数，它根据传入的方法名称参数`method_name`调用相应的用户自定义python脚本。为了使VBA主调函数能够获取到python脚本的返回值，需要将标准输出和标准错误重定向到文件。`main.py`的主函数如下： 
 
-- `__import__()`根据字符串路径导入模块，注意设置`fromlist=True`以导入多层次的模块，例如`package.module`
-
-- `hasattr()`和`getattr()`判断模块中是否存在指定的方法，存在则调用该方法
-
-- `Logger()`类分别重定向`sys.stdout`和`sys.stderr`到文件`output.log`和`errors.log`，目的是便于`RunPython`函数读取返回值
-
+- 首先重定向标准输出/错误：正常返回重定向到`output.log`，错误信息重定向到`errors.log`
+- 然后动态调用指定的python脚本，并传入参数
 
 ```python
-import sys
-import os
-
-main_path = os.path.dirname(os.path.abspath(__file__)) 
-sys.path.append(main_path)
-
-from scripts.utility import Logger
-
-# redirect output/error to files
-sys.stdout = Logger(os.path.join(main_path, 'temp', "output.log"), sys.stdout)
-sys.stderr = Logger(os.path.join(main_path, 'temp', "errors.log"), sys.stderr)
-
 if __name__ == '__main__':
 
-    # python main.py package.module.method *args
-    key, *args = sys.argv[1:]
+	# redirect output/error to output.log/errors.log
+	sys.stdout = Logger(os.path.join(main_path, 'temp', "output.log"), sys.stdout)
+	sys.stderr = Logger(os.path.join(main_path, 'temp', "errors.log"), sys.stderr)
 
-    m = key.split('.')
-    module_file = os.path.join(main_path, '{0}.py'.format('/'.join(m[:-1])))
-    if os.path.exists(module_file):
-
-        # import module dynamically
-        module = __import__('.'.join(m[:-1]), fromlist=True)
-
-        # import method
-        if hasattr(module, m[-1]):
-            f = getattr(module, m[-1])
-            if hasattr(f, 'UDF'):
-                f(*args)
-            else:
-                sys.stderr.write('Please decorate your callback function with @udf')
-        else:
-            sys.stderr.write('Error Python method "{0}"'.format(m[-1]))
-    else:
-        sys.stderr.write('Error Python module "{0}"'.format('.'.join(m[:-1])))
+	# python main.py package.module.method *args
+	run_python_method(sys.argv[1], *sys.argv[2:])
 ```
 
-## @udf装饰器
-
-`main.py`中`hasattr(f, 'UDF')`对被调用的python方法是否具备自定义的`UDF`属性作了检测，目的是要求所有合法的自定义python函数必须经过`@udf`装饰器的装饰。该装饰器将被调用函数的正常返回重定向到`output.log`，将错误信息重定向到`errors.log`。否则，VBA主调函数将无法获取python脚本的返回值。
+### 重定向标准输出/错误
 
 ```python
-def udf(fun):
+class Logger(object):
+    '''redirect standard output/error to files, which are bridges for
+    communication between python and VBA
+    '''
+     
+    def __init__(self, log_file="out.log", terminal=sys.stdout):
+        self.terminal = terminal
+        self.log = open(log_file, "w")
+ 
+    def write(self, message):
+        self.terminal.write(message)
+        self.log.write(message)
+ 
+    def flush(self):
+        pass
+```
+
+将此类实例赋值给`sys.stdout`和`sys.stderr`，即可在标准输出/错误的基础上，同时重定向结果到指定文件。前者方便调试时查看信息，后者便于VBA主调函数获取返回值。
+
+### 重定向函数返回值
+
+定义一个装饰器函数`redirect()`对函数的返回值（正常返回/异常捕获）进行重定向输出。
+
+```python
+def redirect(fun):
     '''decorator for user defined function called by VBA'''
     
     def wrapper(*args, **kwargs):
@@ -151,8 +142,34 @@ def udf(fun):
             if res: sys.stdout.write(str(res))
         return res
 
-    # set a tag that fun is decorated
-    setattr(wrapper, 'UDF', True)
-
     return wrapper
 ```
+
+### 动态调用指定函数
+
+```python
+@redirect
+def run_python_method(key, *args):
+	'''call method specified by key with arguments: args
+	'''
+	*modules_name, method_name = key.split('.')
+	module_file = os.path.join(main_path, '{0}.py'.format('/'.join(modules_name)))
+
+	# import module dynamically if exists
+	module_path = '.'.join(modules_name)
+	assert os.path.exists(module_file), 'Error Python module "{0}"'.format(module_path)
+	module = __import__(module_path, fromlist=True)
+
+	# import method if exists
+	assert hasattr(module, method_name), 'Error Python method "{0}"'.format(method_name)
+	fun = getattr(module, method_name)
+
+	return fun(*args)
+```
+
+- `__import__()`根据字符串路径导入模块，注意设置`fromlist=True`以导入多层次的模块，例如`package.module`
+
+- `hasattr()`和`getattr()`判断模块中是否存在指定的方法，存在则调用该方法
+
+
+

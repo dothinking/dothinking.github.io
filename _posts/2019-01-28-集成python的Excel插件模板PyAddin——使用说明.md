@@ -171,6 +171,6 @@ def division(a, b):
     return float(a)/float(b)
 ```
 
-如果使用的是内置的便携式Python，也可支持第三方库的安装和使用。默认情况下考虑减小体积，便携式Python并未预置`pip`。如果需要安装第三方库，可以先安装`pip`,然后`python -m pip install xxx`安装需要的库。最后发布给用户使用时，可以删除`pip`以减小体积，且不影响已经安装的库。
+如果使用的是内置的便携式Python，也可支持第三方库的安装和使用。默认情况下考虑减小体积，便携式Python并未预置`pip`。如果需要安装第三方库，可以先安装`pip`，然后`python -m pip install xxx`安装需要的库。最后发布给用户使用时，可以删除`pip`以减小体积，且不影响已经安装的库。
 
 > [嵌入式Python : 如何在U盘安装绿色版 Python](https://baijiahao.baidu.com/s?id=1592976804446590381)

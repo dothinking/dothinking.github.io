@@ -6,9 +6,25 @@ keywords: Python, vba
 tags: [VBA, python]
 ---
 
-`PyAddin`是一个Excel插件模板，方便在VBA中调用python脚本处理主要业务。[前文]({{ site.baseurl }}{% post_url 2019-01-28-集成python的Excel插件模板PyAddin——使用说明 %})介绍了`PyAddin`的基本用法，本文简要说明设计思路及其实现。
+`PyAddin`是一个Excel插件模板，方便在VBA中调用Python脚本处理主要业务。[前文]({{ site.baseurl }}{% post_url 2019-01-28-集成python的Excel插件模板PyAddin——使用说明 %})介绍了`PyAddin`的基本用法，本文简要说明设计思路及其实现。
 
 ## 基本原理
+
+### 1. 自定义插件Ribbon界面
+
+Excel2007及更高版本的各类Excel文件，包括插件`*.xlam`实际上都是`XML`格式组织的压缩文件，其中`CustomUI.xml`定义了插件Ribbon区域的界面形式，因此可以程序化生成此文件来实现插件UI的自动化创建和更新。`CustomUI.xml`文件结构及利用该结构创建插件的方法可以参考：
+
+> [Customizing the 2007 Office Fluent Ribbon for Developers (Part 2 of 3)](https://msdn.microsoft.com/en-us/library/aa338199(v=office.12).aspx)
+> [Microsoft Excel 2010自定义功能区(二)]({{ site.baseurl }}{% post_url 2017-07-24-Microsoft-Excel-2010自定义功能区(二) %})
+
+### 2. Python自定义VBA模块
+
+创建Excel插件需要的另一个自动化操作是生成默认的菜单按钮回调函数，也就是Python操作Excel VBA的问题。这里采用Python第三方库`pywin32`来实现，具体的操作函数与VBA类似。参考链接：
+
+> [VBProject：代码操作代码之常用语句](https://blog.csdn.net/fenghome/article/details/10373393)
+
+
+### 3. VBA与Python交互
 
 VBA通过命令行执行python脚本处理主要任务，然后获取python返回值用于显示。
 
@@ -170,6 +186,5 @@ def run_python_method(key, *args):
 - `__import__()`根据字符串路径导入模块，注意设置`fromlist=True`以导入多层次的模块，例如`package.module`
 
 - `hasattr()`和`getattr()`判断模块中是否存在指定的方法，存在则调用该方法
-
 
 

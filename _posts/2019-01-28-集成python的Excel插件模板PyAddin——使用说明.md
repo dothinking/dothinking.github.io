@@ -61,31 +61,40 @@ D:\GitHub\PyAddin>cd examples
 D:\GitHub\PyAddin\examples>pyaddin init
 ```
 
-当前`examples`目录下将产生一个Ribbon区域界面设计文件`customUI.yaml`。
+当前`examples`目录下将产生一个Ribbon区域界面设计文件`CustomUI.xml`。
 
-### 2. 编辑`customUI.yaml`
+### 2. 编辑`CustomUI.xml`
 
-Ribbon区域实际上由`XML`格式文件定义，`pyAddin`中将其简化为`YAML`格式文件`customUI.yaml`。参考基本注释设计插件内容即可，本文示例如下：
+Ribbon区域由`CustomUI.xml`定义，本文示例如下：
 
-```yaml
-# configuration for ribbom tab of Excel addin
-# Examples:
+```xml
+<!--
+Add custom UI definition between <tabs> and </tabs>, e.g.
 
-PyAddin Test:
-  GROUP_1:
-    Cal_division:
-      imageMso: Calculator
-      size: large
-      onAction: callback_cal
-    Cal_multiply:
-      imageMso: ~
-      size: large
-      onAction: callback_mtp
-  HELP:
-    About:
-      imageMso: About
-      size: large
-      onAction: callback_about
+<tab id="userRibbon" label="PyAddin">
+  <group id="group_about" label="About">
+    <button id="about" imageMso="About" size="large" label="About" onAction="callback_about"/>
+  </group>
+</tab>
+
+Please refer to the link below for detail:
+https://docs.microsoft.com/en-us/previous-versions/office/developer/office-2007/aa338202(v%3doffice.12)
+ -->
+<customUI xmlns="http://schemas.microsoft.com/office/2006/01/customui">
+  <ribbon startFromScratch="false">
+    <tabs>
+      <tab id="userRibbon" label="PyAddin Test">
+        <group id="g1" label="GROUP_1">
+          <button id="g1_b1" imageMso="Calculator" size="large" label="Cal_division" onAction="callback_cal"/>
+          <button id="g1_b2" size="large" label="Cal_multiply" onAction="callback_mtp"/>
+        </group>
+        <group id="g2" label="HELP">
+          <button id="g2_b1" imageMso="About" size="large" label="About" onAction="callback_about"/>
+        </group>                
+      </tab>
+    </tabs>
+  </ribbon>
+</customUI>
 ```
 
 表示创建名称为`PyAddin Test`的Ribbon工具卡，其中包含两个分组`GROUP_1`和`HELP`。第一个分组定义了两个按钮，并分别设定相应函数为`callback_cal()`和`callback_mtp()`。
@@ -103,7 +112,7 @@ D:\GitHub\PyAddin\examples>pyaddin create --name my_first_addin
 - `scripts`文件夹作为默认的Python脚本的保存位置
 
 
-接下来转入下一步的具体业务逻辑的开发。在此过程中，如果需要增删新的功能菜单，可以回到第二步更新`customUI.yaml`，然后执行`update`命令：
+接下来转入下一步的具体业务逻辑的开发。在此过程中，如果需要增删新的功能菜单，可以回到第二步更新`CustomUI.xml`，然后执行`update`命令：
 
 ```
 D:\GitHub\PyAddin\examples>pyaddin update --name my_first_addin

@@ -14,7 +14,8 @@ tags: [VBA, python]
 
 Excel2007及更高版本的各类Excel文件，包括插件`*.xlam`实际上都是`XML`格式组织的压缩文件，其中`CustomUI.xml`定义了插件Ribbon区域的界面形式，因此可以程序化生成此文件来实现插件UI的自动化创建和更新。`CustomUI.xml`文件结构及利用该结构创建插件的方法可以参考：
 
-> [Customizing the 2007 Office Fluent Ribbon for Developers (Part 2 of 3)](https://msdn.microsoft.com/en-us/library/aa338199(v=office.12).aspx)
+> [Customizing the 2007 Office Fluent Ribbon for Developers](https://docs.microsoft.com/en-us/previous-versions/office/developer/office-2007/aa338202(v%3doffice.12))
+
 > [Microsoft Excel 2010自定义功能区(二)]({{ site.baseurl }}{% post_url 2017-07-24-Microsoft-Excel-2010自定义功能区(二) %})
 
 ### 2. Python自定义VBA模块

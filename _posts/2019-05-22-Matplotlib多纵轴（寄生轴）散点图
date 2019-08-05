@@ -3,7 +3,7 @@ layout: post
 author: Train
 description: Matplotlib多纵轴散点图
 keywords: Python, Matplotlib, Parasite Axes
-tags: python
+tags: [python]
 ---
 
 我们知道`Matplotlib`散点图的一个纵轴上可以画多条曲线，当纵轴数据属于不同类型（例如温度和压力）或者不同尺度，那就需要更多的纵轴来分别容纳。这类似于Excel图表中的次坐标轴，只不过`Matplotlib`可以呈现更多的纵轴。本文基于`Matplotlib`官网给出的实例封装了一个实现寄生轴散点图的函数。

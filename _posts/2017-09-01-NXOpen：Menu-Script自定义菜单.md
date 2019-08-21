@@ -214,16 +214,15 @@ BUTTON TEST_MENU_FEM_2
 
 ## 总结
 
+
 以上即为按模块加载的自定义菜单的基本创建流程，简要归纳为：
 
 - 在主菜单文件中定义公共菜单项或者指定按模块加载的菜单文件
 - 在按模块加载的菜单文件中定制相应的菜单项
 - 组织所有菜单项命令为相应的分组，默认分组位于`startup`，按需加载分组位于`application/profiles`
 
-最后将本例脚本文件和基本流程图示为：
+
+最后，本文涉及菜单脚本汇总于[nx_menu_script]({{ "src/nx_menu_script" | prepend: site.baseurl }})，并将其基本流程图示如下：
 
 <div align='center'><img src="{{ "/images/2017-09-01-02.png" | prepend: site.baseurl }}"></div>
 
-## 附件
-
-本文涉及菜单脚本及其组织结构的附件：[menuscripts]({{ "uploads/menuscripts.zip" | prepend: site.baseurl }})。

@@ -90,6 +90,9 @@ End Sub
 
 特别注意，该过程需要带参数`control As IRibbon`。
 
+
+最后，本文示例文件[hello_world_addin.xlam]({{ "src/excel_ribbon" | prepend: site.baseurl }})供参考。
+
 ##  扩展阅读
 
 [1] [A Guide to Customizing the Office 2007 Ribbon](https://technet.microsoft.com/en-us/library/2009.05.ribbon.aspx#id0980025)  

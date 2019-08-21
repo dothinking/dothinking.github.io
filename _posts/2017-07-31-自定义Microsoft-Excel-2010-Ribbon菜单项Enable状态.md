@@ -6,7 +6,7 @@ keywords: ribbon, add-in, Excel, xlam
 tags: [VBA]
 ---
 
-[之前的文章]({{ site.baseurl }}{% post_url 2017-07-24-Microsoft-Excel-2010自定义功能区(二) %})演示了在Excel插件中自定义菜单的基本步骤，本文将以前文的[hello_world.xlam]({{ "uploads/hello_world_2017_07_24.xlam" | prepend: site.baseurl }})为基础，记录进一步控制单个菜单项可用/禁用状态的方法。
+[之前的文章]({{ site.baseurl }}{% post_url 2017-07-24-Microsoft-Excel-2010自定义功能区(二) %})演示了在Excel插件中自定义菜单的基本步骤，本文将以前文的`hello_world_addin.xlam`为基础，记录进一步控制单个菜单项可用/禁用状态的方法。
 
 <div align='center'><img src="{{ "images/2017-07-24-02.png" | prepend: site.baseurl }}"></div>
 
@@ -141,7 +141,7 @@ Private Sub App_SheetActivate(ByVal Sh As Object)
 End Sub
 ```
 
-保存后重新打开即可实现预期效果，参考[最终的示例文件]({{ "uploads/hello_world_2017_07_31.xlam" | prepend: site.baseurl }})。
+保存后重新打开即可实现预期效果，参考示例文件[hello_world_addin_enable_status.xlam]({{ "src/excel_ribbon" | prepend: site.baseurl }})。
 
 ##  扩展阅读
 

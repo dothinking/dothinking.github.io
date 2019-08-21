@@ -141,7 +141,7 @@ Private Sub App_SheetActivate(ByVal Sh As Object)
 End Sub
 ```
 
-保存后重新打开即可实现预期效果，参考示例文件[hello_world_addin_enable_status.xlam]({{ "src/excel_ribbon" | prepend: site.baseurl }})。
+保存后重新打开即可实现预期效果，参考示例文件[hello_world_addin_enable_status.xlam](https://github.com/dothinking/blog/tree/master/src/excel_ribbon)。
 
 ##  扩展阅读
 

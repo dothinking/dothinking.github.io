@@ -222,7 +222,7 @@ BUTTON TEST_MENU_FEM_2
 - 组织所有菜单项命令为相应的分组，默认分组位于`startup`，按需加载分组位于`application/profiles`
 
 
-最后，本文涉及菜单脚本汇总于[nx_menu_script]({{ "src/nx_menu_script" | prepend: site.baseurl }})，并将其基本流程图示如下：
+最后，本文涉及菜单脚本汇总于[nx_menu_script](https://github.com/dothinking/blog/tree/master/src/nx_menu_script)，并将其基本流程图示如下：
 
 <div align='center'><img src="{{ "/images/2017-09-01-02.png" | prepend: site.baseurl }}"></div>
 

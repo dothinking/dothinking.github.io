@@ -99,9 +99,18 @@ int EXPORT_C upper_arg(const char* str, char* out, int n_size)
 
 BSTR EXPORT_C upper_bstr(const char* str)
 {
-	char* res = upper_heap(str);	
+	char* res = upper_heap(str);
+
+	// convert to BSTR -> String type in VBA
+	// SysAllocStringByteLen() gets an ANSI string, but _bstr_t() gets Unicode string
+	// e.g. ANSI "ABC" to Unicode "A B C "
+	// using StrConv(str, vbFromUnicode) in VBA for Unicode to ANSI conversion
+	//
+
 	BSTR bstr = SysAllocStringByteLen(res, strlen(res));
+	// BSTR bstr = _bstr_t(res); // return Unicode here
 	delete[] res;
+
 	return bstr;
 }
 
@@ -113,10 +122,7 @@ BSTR EXPORT_C upper_bstr_bstr(BSTR str)
 
 VARIANT EXPORT_C upper_var(const char* str)
 {
-	char* res = upper_heap(str);
-	BSTR bstr = SysAllocStringByteLen(res, strlen(res));
-	delete[] res;
-
+	BSTR bstr = upper_bstr(str);
 	VARIANT var;
 	var.vt = VT_BSTR;
 	var.bstrVal = bstr;

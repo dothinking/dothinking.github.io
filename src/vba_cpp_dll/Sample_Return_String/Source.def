@@ -2,7 +2,6 @@ LIBRARY RotorEngine
 
 EXPORTS
 upper_heap
-upper_arg
+upper_char
 upper_bstr
-upper_bstr_bstr
 upper_var

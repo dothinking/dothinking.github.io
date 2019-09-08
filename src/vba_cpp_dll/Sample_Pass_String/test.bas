@@ -1,60 +1,36 @@
-Declare Function upper_heap Lib "Sample.dll" (ByVal str$) As String
-Declare Function upper_arg Lib "Sample.dll" (ByVal str$, ByVal out$, ByVal n As Long) As Long
-Declare Function upper_bstr Lib "Sample.dll" (ByVal str$) As String
-Declare Function upper_bstr_bstr Lib "Sample.dll" (ByVal str As String) As String
-Declare Function upper_var Lib "Sample.dll" (ByVal str$) As Variant
+Declare Function upper_bstr_wchar Lib "Sample_Passing_String.dll" (ByVal str$) As String
+Declare Function upper_bstr_bstr Lib "Sample_Passing_String.dll" (ByVal str As String) As String
+Declare Function upper_bstr_var Lib "Sample_Passing_String.dll" (ByVal str As Variant) As String
 
 
 Const s As String = "abcdlk"
 
-Function upper_vba_arg(str)
-    Dim n&, out$
-    n = Len(str)
-    out = Space(n)
-    Call upper_arg(str, out, n)
-    upper_vba_arg = out
+Function upper_vba_bstr_wchar(str As String) As String
+    upper_vba_bstr_wchar = StrConv(upper_bstr_wchar(StrConv(str, vbUnicode)), vbFromUnicode)
 End Function
 
-Function upper_vba_bstr(str) As String
-    upper_vba_bstr = upper_bstr(str)
+Function upper_vba_bstr_bstr(str As String) As String
+    upper_vba_bstr_bstr = StrConv(upper_bstr_bstr(StrConv(str, vbUnicode)), vbFromUnicode)
 End Function
 
-Function upper_vba_bstr_bstr(str) As String
-    upper_vba_bstr_bstr = upper_bstr_bstr(str)
+Function upper_vba_bstr_var(str As String) As String
+    upper_vba_bstr_var = StrConv(upper_bstr_var(str), vbFromUnicode)
 End Function
 
-Function upper_vba_var(str)
-    upper_vba_var = StrConv(upper_var(str), vbUnicode)
-End Function
-
-
-Sub test1()
+Sub test_wchar()
     Dim out$
-    out = upper_heap(s)
+    out = upper_vba_bstr_wchar(s)
     Debug.Print out
 End Sub
 
-Sub test2()
-    Dim out$
-    out = upper_vba_arg(s)
-    Debug.Print out
-End Sub
-
-Sub test31()
-    Dim out$
-    out = upper_vba_bstr(s)
-    Debug.Print out
-End Sub
-
-Sub test32()
+Sub test_bstr()
     Dim out$
     out = upper_vba_bstr_bstr(s)
     Debug.Print out
 End Sub
 
-Sub test4()
+Sub test_var()
     Dim out$
-    out = upper_vba_var(s)
+    out = upper_vba_bstr_var(s)
     Debug.Print out
 End Sub
-

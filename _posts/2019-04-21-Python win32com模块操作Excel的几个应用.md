@@ -40,7 +40,9 @@ wb.ActiveSheet.Range("A1").Value = "Hello World"
 
 ```
 
-我们更关心的是如何获取API，对于简单的应用，可以参考VBA代码提示或录制的宏进行转换，但是不能保证其正确性。考虑到`win32com`是对Windows COM组件API的封装，我们可以直接参考原始API文档。如果安装了Visual Studio，可以从如下目录找到`oleview.exe`[[^2]]：
+其中使用`Dispatch()`和`EnsureDispatch()`获取`COM`对象的差别参考[[^2]]。
+
+我们更关心的是如何获取API，对于简单的应用，可以参考VBA代码提示或录制的宏进行转换，但是不能保证其正确性。考虑到`win32com`是对Windows COM组件API的封装，我们可以直接参考原始API文档。如果安装了Visual Studio，可以从如下目录找到`oleview.exe`[[^3]]：
 
 ```
 C:\Program Files (x86)\Windows Kits\8.1\bin\x64\oleview.exe
@@ -66,7 +68,7 @@ if status:
     sheet.Protect()
 ```
 
-## 开启/关闭自动计算 [[^3]-[^4]]
+## 开启/关闭自动计算 [[^4]-[^5]]
 
 Excel默认开启自动计算，那么当工作表内单元格公式非常多时，每录入一个数据都将触发相关单元格的更新计算，影响操作效率。因此此种情况下，一般先设置为手动更新，待输入完成后设置自动更新。以下为示例代码：
 
@@ -240,6 +242,7 @@ if not loaded:
 ---
 
 [^1]: [1] [Python for Windows (pywin32) Extensions](https://github.com/mhammond/pywin32)
-[^2]: [2] [OLE-COM Object Viewer](https://docs.microsoft.com/zh-cn/windows/desktop/com/ole-com-object-viewer)
-[^3]: [3] [Excel Recalculation](https://docs.microsoft.com/en-us/office/client-developer/excel/excel-recalculation)
-[^4]: [4] [Getting Excel to refresh data on sheet from within VBA](https://stackoverflow.com/questions/154434/getting-excel-to-refresh-data-on-sheet-from-within-vba)
+[^2]: [2] [win32.Dispatch vs win32.gencache in Python. What are the pros and cons?](https://stackoverflow.com/questions/50127959/win32-dispatch-vs-win32-gencache-in-python-what-are-the-pros-and-cons)
+[^3]: [3] [OLE-COM Object Viewer](https://docs.microsoft.com/zh-cn/windows/desktop/com/ole-com-object-viewer)
+[^4]: [4] [Excel Recalculation](https://docs.microsoft.com/en-us/office/client-developer/excel/excel-recalculation)
+[^5]: [5] [Getting Excel to refresh data on sheet from within VBA](https://stackoverflow.com/questions/154434/getting-excel-to-refresh-data-on-sheet-from-within-vba)

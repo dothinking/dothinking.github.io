@@ -31,7 +31,7 @@ tags: [python, VBA]
 - 64位系统： `C:\Windows\SysWOW64\config\systemprofile\`
 - 32位系统： `C:\Windows\System32\config\systemprofile\`
 
-虽然暂时解决了问题，却也不知是是何缘由。经历后来遇到的问题4才明白：Excel需要有`Interactive User`登陆才能正常运行，上面的步骤正是为其提供了用户“桌面”；然而一旦需要更多用户账户相关的设置时，就会有新的问题出现了。
+虽然暂时解决了问题，却也不知是何缘由。经历后来遇到的问题4才明白：Excel需要有`Interactive User`登陆才能正常运行，上面的步骤正是为其提供了用户“桌面”；然而一旦需要更多用户账户相关的设置时，就会有新的问题出现了。
 
 
 ### 2. Programmatic access to Visual Basic Project is not trusted
@@ -40,12 +40,16 @@ tags: [python, VBA]
 (-2147352567, 'Exception occurred.', (0, 'Microsoft Excel', 'Programmatic access to Visual Basic Project is not trusted\n', 'xlmain11.chm', 0, -2146827284), None)
 ```
 
-这个问题很明显，一旦代码需要访问VBA工程对象，例如访问`module`对象、Python动态执行VBA代码，则需要相应的许可（Excel软件信任区设置中有该选项）。解决方法可以是利用Python动态修改相应注册表项和值来允许访问VB工程，或者参考[[^2]]手工永久设置。
+这个问题很明显，一旦代码需要访问VBA工程对象，例如访问`module`对象、Python动态执行VBA代码，则需要相应的许可（Excel软件信任区设置中有该选项）。
+
+解决方法可以是利用Python动态修改相应注册表项和值来允许访问VB工程，或者参考[[^2]]手工永久设置。
 
 
 ### 3. 执行VBA代码超时
 
-这一般是因为VBA代码中存在错误。因为本文的自动化过程是由Python驱动的，一旦VBA代码出错而被挂起，Python就无法得到响应了。针对本文应用场景的解决方案是在VBA测试代码的开头加上一句`On Error Resume Nest`，即忽略VBA代码中的错误，以便Python可以正常执行后续流程。并且无需担心此举造成的错误，VBA代码存在错误必将导致后续验证输出的失败，也就表明了这个测试案例必将失败。
+这一般是因为VBA代码中存在错误。因为本文的自动化过程是由Python驱动的，一旦VBA代码出错而被挂起，Python就无法得到响应了。
+
+针对本文应用场景的解决方案是在VBA测试代码的开头加上一句`On Error Resume Nest`，即忽略VBA代码中的错误，以便Python可以正常执行后续流程。并且无需担心此举造成的错误，VBA代码存在错误必将导致后续验证输出的失败，也就表明了这个测试案例必将失败。
 
 
 ### 4. 无法正确加载VBA中调用的C++动态链接库
@@ -58,11 +62,11 @@ Declare Function xxx Lib "sample_dll_name.dll" ( arguments_list_xxx ) As xxx
 
 解决方法为通过`DCOMConfig`设置启动Excel的用户[[^3], [^4]]：
 
-1. `Windows+R` -> `dcomcnfg`打开`Component Service`
+1. `Windows+R` -> `dcomcnfg`，打开`Component Service`
 2. `Console Root` -> `Component Services` -> `My Computer` -> `DCOM Config`
-3. 从`DCOM Config`中找到`Microsoft Excel Application`，右键 -> `Properties`
-    - 选择`Identity`选项卡，选择`the launching user`，表示以登陆用户来启动Excel（这里可能会出现新的问题，参见问题5）。
-    - 选择`Security`选项卡，为指定的账户自定义`Launch and Activation Permissions`和`Access Permissions`两部分
+3. 从`DCOM Config`中找到`Microsoft Excel Application`，右键选择`Properties`
+    - 选择`Identity`选项卡，选择`the launching user`，表示以登陆用户来启动Excel（这里可能会出现新的问题，参见问题5）
+    - 选择`Security`选项卡，为指定的账户自定义`Launch and Activation Permissions`和`Access Permissions`
 
 如果上述`DCOM Config`列表中并不存在`Microsoft Excel Application`，则参考下面步骤[[^4]]：以64位Windows系统上的32位Excel为例，
 
@@ -77,7 +81,7 @@ Declare Function xxx Lib "sample_dll_name.dll" ( arguments_list_xxx ) As xxx
 (-2147467238, 'The server process could not be started because the configured identity is incorrect. Check the username and password.', None, None)
 ```
 
-当目前为止一切正常，可一旦服务器进入待机状态，就出现了上述错误。原因也很明确，因为处理问题4时设置了以当前账户来运行Excel，于是当前用户退出时系统尝试再次登陆，但我们并没有设置任何登陆口令。
+到目前为止一切正常，可一旦服务器进入待机状态，就出现了上述错误。原因也很明确，因为处理问题4时设置了以当前账户来运行Excel，于是当前用户退出时系统尝试再次登陆，但我们并没有设置任何登陆口令。
 
 解决方法为`DCOMConfig`设置`Identity`为`This User`，然后输入用户名和密码（注意域内用户需要带上域名称，例如`domain\user`）[[^5]]。
 
@@ -120,7 +124,7 @@ print(win32com.__gen_path__)
 2. `Log On` -> `This account` -> 填写`Password`和`Confirm Password`
 
 
-另外，MSDN上也有人给出了保持`DCOMConfig`中`This account`不变而是修改本地Excel文件`Security`属性的解决方法[[^8]]，本文尚未是测试。
+另外，MSDN上也有人给出了保持`DCOMConfig`中`This account`不变而修改本地Excel文件`Security`属性的解决方法[[^8]]，本文尚未是测试。
 
 ---
 

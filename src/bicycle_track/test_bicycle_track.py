@@ -3,18 +3,18 @@ from autograd import grad
 from ode import ode
 
 
-def Bike_trace(fw_x, fw_y, span, P0, L=1, err=1e-6):
+def bicycle_track(fw_x, fw_y, span, P0, L=1, err=1e-6):
     ''' 
-        solve rear wheel trace according to front wheel trace and 
+        solve rear wheel track according to front wheel track and 
         initial position of the bicycle.
 
-        The trace of front wheel is given by:
+        The track of front wheel is given by:
             x = fw_x(t)
             y = fw_y(t)
 
         Arguments:
-            fw_x: function object of front wheel trace x component
-            fw_y: function object of front wheel trace y component
+            fw_x: function object of front wheel track x component
+            fw_y: function object of front wheel track y component
             span: solving range of parameter t
             P0  : initial position of rear wheel (x, y) 
             L   : length of the bicycle -> distance between front wheel center
@@ -34,7 +34,7 @@ def Bike_trace(fw_x, fw_y, span, P0, L=1, err=1e-6):
     dfx = grad(fw_x)
     dfy = grad(fw_y)
 
-    # governing equation of the rear wheel trace
+    # governing equation of the rear wheel track
     def F(x, Y):
         y1, y2 = Y
         k = dfx(x)*(y1-fw_x(x)) + dfy(x)*(y2-fw_y(x))
@@ -53,8 +53,8 @@ def Bike_trace(fw_x, fw_y, span, P0, L=1, err=1e-6):
     return t, X, Y
 
 
-def Bike_trace_plot(plt, FX, FY, RX, RY, animation=None):
-    ''' plot trace '''
+def bicycle_track_plot(plt, FX, FY, RX, RY, animation=None):
+    ''' plot track '''
     def update(num):
         bike.set_data(([FX[num], RX[num]], [FY[num], RY[num]]))
         return bike,  
@@ -88,12 +88,12 @@ if __name__ == '__main__':
     span = [-np.pi, np.pi]
     P0 = np.array([-L, 0])
 
-    # rear wheel trace
-    t, X, Y = Bike_trace(fx, fy, span, P0, L, err=1e-6)
+    # rear wheel track
+    t, X, Y = bicycle_track(fx, fy, span, P0, L, err=1e-6)
 
-    # front wheel trace
+    # front wheel track
     X1, Y1 = fx(t), fy(t)
 
     # plot
-    ani = Bike_trace_plot(plt, X, Y, X1, Y1, animation)
+    ani = bicycle_track_plot(plt, X, Y, X1, Y1, animation)
     plt.show()

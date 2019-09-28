@@ -1,10 +1,10 @@
 '''
-Test ode.py with Tractrix problem, a special case of Bike Trace.
+Test ode.py with Tractrix problem, a special case of Bike Track.
 
 A bike with length a starts from an initial position:
 front wheel (0, 0), rear wheel (a, 0), then it moves along the positive Y-axis.
 
-The trace of rear wheel is solved as:
+The track of rear wheel is solved as:
 
 y = a * arcsech(x/a) - sqrt(a^2-x^2)
 

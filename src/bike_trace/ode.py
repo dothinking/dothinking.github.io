@@ -17,16 +17,24 @@ where:
     Y =(y1, y2, ..., yn)
 '''
 
+import numpy as np
+
 
 def ode(F, span, P0, solver=None, err=1e-6):
     '''
-        Adaptive Runge-Kutta method for ODEs Y'=F(x, Y)
+        General process solving ODEs Y'=F(x, Y) with adaptive step size.
+        The initial point `P0` may locate out of solving range `span`.
 
-        :param F      : derivative function F(x, Y)
-        :param span   : interval [x_start, x_end]
-        :param P0     : initial point (x0, Y0). x0 may out of range `span`
-        :param err    : adaptive steps defined by numeric precision
-        :returns      : [(x_start,Y0), (x1,Y1), (x2,Y2),..., (x_end,Yn)]
+        Arguments:
+            F      : derivative function F(x, Y)
+            span   : interval [x_start, x_end]
+            P0     : initial point (x0, Y0). x0 may out of range `span`
+            solver : solver function, e.g. Euler-forward, Runge-Kutta
+            err    : adaptive steps defined by numeric precision
+        
+        returns:
+            A list of points:
+                [(x_start,Y0), (x1,Y1), (x2,Y2),..., (x_end,Yn)]
     '''
 
     if solver==None: solver = Runge_Kutta4
@@ -58,7 +66,8 @@ def ode(F, span, P0, solver=None, err=1e-6):
 
 def ode_solving(F, span, Y0, solver=None, err=1e-6):
     '''
-        General process solving ODEs Y'=F(x, Y) with adaptive step size
+        General process solving ODEs Y'=F(x, Y) with adaptive step size.
+        The initial point is exactly the lower bound of span.
 
         Arguments:
             F      : derivative function F(x, Y)
@@ -172,7 +181,6 @@ def Runge_Kutta4(F, P0, h):
 
 if __name__ == '__main__':
     
-    import numpy as np
     import matplotlib.pyplot as plt
 
     span = [0, 5]

@@ -20,59 +20,22 @@ where:
 import numpy as np
 
 
-def ode(F, span, P0, solver=None, err=1e-6):
+def ode(F, span, Y0, solver=None, err=1e-6):
     '''
         General process solving ODEs Y'=F(x, Y) with adaptive step size.
-        The initial point `P0` may locate out of solving range `span`.
+
+        The initial point MUST exactly be the lower bound of span. If not, e.g. c1 <= t0 <= c2,
+        range `span` should be split and solved separately, finally combine them together. Sample
+        codes for c1 <= t0 <= c2:
+
+            left = ode(F, [t0, c1], Y0, solver, err) # solving in a reversing direction, i.e. step size < 0
+            right = ode(F, [t0, c2], Y0, solver, err)
+            res = left[::-1] + right[1:]
 
         Arguments:
             F      : derivative function F(x, Y)
             span   : interval [x_start, x_end]
-            P0     : initial point (x0, Y0). x0 may out of range `span`
-            solver : solver function, e.g. Euler-forward, Runge-Kutta
-            err    : adaptive steps defined by numeric precision
-        
-        returns:
-            A list of points:
-                [(x_start,Y0), (x1,Y1), (x2,Y2),..., (x_end,Yn)]
-    '''
-
-    if solver==None: solver = Runge_Kutta4
-
-    x0, Y0 = P0
-    c1, c2 = span
-
-    # check
-    assert c2>c1, 'range [{0}, {1}] MUST in ascend order'.format(c1, c2)
-
-    # starts from x0 tp c1, return results in range [c1, c2]
-    if x0 < c1:
-        left = ode_solving(F, [x0, c1], Y0, solver, err)
-        right = ode_solving(F, [c1, c2], left[-1][1], solver, err)
-        return right
-
-    # x0 -> c1 in reverse order and x0 -> c2
-    elif c1 <= x0 <= c2:
-        left = ode_solving(F, [x0, c1], Y0, solver, err)
-        right = ode_solving(F, [x0, c2], Y0, solver, err)
-        return left[::-1] + right[1:]
-
-    # starts from x0 to c2 in reverse order, return results in range [c1, c2]
-    else:
-        left = ode_solving(F, [x0, c2], Y0, solver, err)
-        right = ode_solving(F, [c2, c1], left[-1][1], solver, err)
-        return right[::-1]
-
-
-def ode_solving(F, span, Y0, solver=None, err=1e-6):
-    '''
-        General process solving ODEs Y'=F(x, Y) with adaptive step size.
-        The initial point is exactly the lower bound of span.
-
-        Arguments:
-            F      : derivative function F(x, Y)
-            span   : interval [x_start, x_end]
-            Y0     : initial Y0 at x0=span[0]
+            Y0     : initial Y0 at x0=span[0] (can be a vector)
             err    : adaptive steps defined by numeric precision
             solver : solver function, e.g. Euler-forward, Runge-Kutta
 
@@ -184,17 +147,15 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
 
     span = [0, 5]
-    x0 = 2
 
     F = lambda x: np.sin(x**2) * np.exp(x)
     f = lambda x,y: 2*x*np.cos(x**2)*np.exp(x) + y
 
-    res = ode(f, span, [x0, F(x0)], err=1e-4)
+    res = ode(f, span, [span[0], F(span[0])], err=1e-4)
     X,Y = zip(*res)
     X,Y = np.array(X), np.array(Y)
 
     plt.figure(1)
     plt.plot(X, F(X), 'b')
     plt.plot(X, Y, 'o')
-    plt.plot(x0, F(x0), 'r^')
     plt.show()

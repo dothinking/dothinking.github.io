@@ -1,4 +1,4 @@
-/Release
-/.vs
+Release/
+.vs/
 *.sln
 *vcxproj*

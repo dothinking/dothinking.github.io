@@ -1,76 +1,174 @@
 import autograd.numpy as np
 from autograd import grad
 from ode import ode
+from scipy.integrate import odeint
 
-
-def bicycle_track(fw_x, fw_y, span, P0, L=1, err=1e-6):
-    ''' 
-        solve rear wheel track according to front wheel track and 
+class BicycleTrack(object):
+    '''
+        Solving and  plot back wheel track according to front wheel track and 
         initial position of the bicycle.
 
         The track of front wheel is given by:
-            x = fw_x(t)
-            y = fw_y(t)
+            x = fx(t)
+            y = fy(t)
 
         Arguments:
-            fw_x: function object of front wheel track x component
-            fw_y: function object of front wheel track y component
-            span: solving range of parameter t
-            P0  : initial position of rear wheel (x, y) 
-            L   : length of the bicycle -> distance between front wheel center
-                    and rear wheel center
+            fx  : function object of front wheel track x component
+            fy  : function object of front wheel track y component
+    ''' 
+    def __init__(self, fx, fy):
 
-        Return:
-            A list of solved points in given range:
-                [(t0, (x0,y0)), (t1, (x1, y1)), ...]
-    '''
+        # front wheel track and first derivative on parameter t
+        self.front_track_x = fx
+        self.front_track_y = fy
 
-    # initial point of front wheel
-    t0 = span[0]
-    Q0 = np.array([fw_x(t0), fw_y(t0)])
-    assert np.sum((P0-Q0)**2)==L**2, "Invalid initial position of the rear wheel according to the bicycle length."
+        self.dfx = grad(fx)
+        self.dfy = grad(fy)
 
-    # first derivative of front wheel x, y components
-    dfx = grad(fw_x)
-    dfy = grad(fw_y)
-
-    # governing equation of the rear wheel track
-    def F(x, Y):
-        y1, y2 = Y
-        k = dfx(x)*(y1-fw_x(x)) + dfy(x)*(y2-fw_y(x))
-        return k / L**2 * np.array([y1-fw_x(x), y2-fw_y(x)])
-
-    # solving
-    res = ode(F, span, (t0, P0), err=err)
-
-    # parse x, y components
-    t = np.array([P[0] for P in res])
-    _ = [P[1] for P in res]
-
-    X, Y = zip(*_)
-    X, Y = np.array(X), np.array(Y)
-
-    return t, X, Y
+        # solved back track represented with t, x, y
+        self.t, self.X, self.Y = None, None, None
 
 
-def bicycle_track_plot(plt, FX, FY, RX, RY, animation=None):
-    ''' plot track '''
-    def update(num):
-        bike.set_data(([FX[num], RX[num]], [FY[num], RY[num]]))
-        return bike,  
+    def governing_equation(self, t, Y):
+        ''' ODEs of Bicycle Track Problem '''
+        x, y = Y
+        k1 = np.array([self.dfx(t), self.dfy(t)])
+        k2 = np.array([x-self.front_track_x(t), y-self.front_track_y(t)])        
+        return np.sum(k1*k2) * k2 / self.L**2
 
-    fig = plt.figure(tight_layout=True)
-    plt.plot(FX, FY, 'b--')
-    plt.plot(RX, RY, 'r--')
-    plt.axis('equal')
+    
+    def solve(self, span, P0, err=1e-6):
+        ''' 
+            solve back wheel track according to front wheel track and 
+            initial position of the bicycle.
 
-    if animation:
-        bike, = plt.plot([FX[0], RX[0]], [FY[0], RY[0]], 'black')
-        ani = animation.FuncAnimation(fig, update, FX.shape[0]-1, interval=150, blit=True)
-    else:
-        ani = None
+            Arguments:
+                span: solving range of parameter t
+                P0  : initial position of back wheel (x, y)
+        '''
 
-    return ani
+        t0, t1 = span
+
+        # initial point of back wheel
+        P0 = np.array(P0)
+
+        # initial point of front wheel is defined by parametric equations
+        Q0 = np.array([self.front_track_x(t0), self.front_track_y(t0)])
+
+        # frame length is defined by P0 and Q0
+        self.L = np.sum((P0-Q0)**2)**0.5
+
+        # solving
+        res = ode(self.governing_equation, span, (t0, P0), err=err)
+
+        # parse x, y components
+        self.t = np.array([P[0] for P in res])
+        XY = [P[1] for P in res]
+        X, Y = zip(*XY)
+        self.X, self.Y = np.array(X), np.array(Y)
+
+
+    def bicycle_pos(self, P, Q, tyre_ratio=0.4, handle_ratio=0.5):
+        '''
+            Solve control points of bicycle illustration 
+            based on front wheel center Q(x,y) and back wheel P(x1, y1).
+
+            Return:
+                control points of bicycle components, e.g. frame, wheels, handlebar.
+        '''
+
+        x, y = Q
+        x1, y1 = P
+
+        # length
+        r_tyre = tyre_ratio * self.L / 2.0
+        r_handle = handle_ratio * self.L / 2.0
+
+        # parallel direction with frame: wheels
+        vx, vy = (x-x1)/self.L, (y-y1)/self.L
+
+        # vertical direction to frame: handle bar
+        fx, fy = vy, -vx
+
+        # frame:
+        frame_pos = ([x, x1], [y, y1])
+
+        # front_wheel:
+        front_pos = ([x+r_tyre*vx, x-r_tyre*vx], [y+r_tyre*vy, y-r_tyre*vy])
+
+        # back_wheel:
+        back_pos = ([x1+r_tyre*vx, x1-r_tyre*vx], [y1+r_tyre*vy, y1-r_tyre*vy])
+
+        # handlebar:
+        handle_pos = ([x+r_handle*fx, x-r_handle*fx], [y+r_handle*fy, y-r_handle*fy])
+
+        return frame_pos, front_pos, back_pos, handle_pos
+
+
+    def update_bicycle_pos(self, PQ, lines):
+        ''' 
+            Update bicycle position by setting new data.
+
+            Argument:
+                P: tuple (x,y,x1,y1) represents coordinates of front and back wheels
+                lines: line objects representing bicycle components, e.g. frame, wheel, handlebar
+
+            Return:
+                pre-defined line objects
+        '''
+        x1,y1,x,y = PQ
+        frame, front, back, handle, front_track, back_track = lines
+
+        # get new positions
+        frame_pos, front_pos, back_pos, handle_pos = self.bicycle_pos((x1, y1), (x, y))
+
+        # update bicycle positions
+        if frame: frame.set_data(*frame_pos)
+        if front: front.set_data(*front_pos)
+        if back: back.set_data(*back_pos)
+        if handle: handle.set_data(*handle_pos)
+
+        # update track
+        if front_track:
+            fx, fy = front_track.get_data()
+            front_track.set_data(np.append(fx, x), np.append(fy, y))
+
+        if back_track:
+            bx, by = back_track.get_data()
+            back_track.set_data(np.append(bx, x1), np.append(by, y1))
+
+        return lines
+
+
+    def bicycle_track_plot(self, plt, animation, color_fw='deepskyblue', color_bw='tomato'):
+        ''' plot track animation '''
+
+        assert self.t is not None, 'No results to plot'
+
+        # front wheel track
+        FX, FY = self.front_track_x(self.t), self.front_track_y(self.t)
+
+        # solved tracks in background
+        fig = plt.figure(tight_layout=True)
+        plt.plot(FX, FY, 'b--', color ='lightgray', linewidth=1)
+        plt.plot(self.X, self.Y, 'r--', color ='lightgray', linewidth=1)
+        plt.axis('equal')
+
+        # line components to be updated
+        front_track, = plt.plot([], [], color =color_fw, linewidth=1)
+        back_track, = plt.plot([], [], color =color_bw, linewidth=1)
+        front, = plt.plot([], [], color ='silver', linewidth=4)
+        back, = plt.plot([], [], color ='silver', linewidth=4)    
+        frame, = plt.plot([], [], 'k', linewidth=1)
+        handle, = plt.plot([], [], 'c', linewidth=1)
+
+        # animation
+        self.animation = animation.FuncAnimation(fig, 
+            self.update_bicycle_pos, 
+            list(zip(self.X, self.Y, FX, FY)),
+            fargs=((frame, front, back, handle, front_track, back_track),), 
+            interval=100, 
+            repeat=False)
 
 
 if __name__ == '__main__':    
@@ -84,16 +182,10 @@ if __name__ == '__main__':
     def fy(x):
         return 5*np.sin(x)
 
-    L = 8
     span = [-np.pi, np.pi]
-    P0 = np.array([-L, 0])
+    P0 = np.array([-3, 0])
 
-    # rear wheel track
-    t, X, Y = bicycle_track(fx, fy, span, P0, L, err=1e-6)
-
-    # front wheel track
-    X1, Y1 = fx(t), fy(t)
-
-    # plot
-    ani = bicycle_track_plot(plt, X, Y, X1, Y1, animation)
+    BT = BicycleTrack(fx, fy)
+    BT.solve(span, P0, err=1e-6)
+    BT.bicycle_track_plot(plt, animation)
     plt.show()

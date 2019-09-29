@@ -27,6 +27,7 @@ class BicycleTrack(object):
 
         # solved back track represented with t, x, y
         self.t, self.X, self.Y = None, None, None
+        self.FX, self.FY = None, None
 
 
     def governing_equation(self, t, Y):
@@ -59,16 +60,64 @@ class BicycleTrack(object):
         self.L = np.sum((P0-Q0)**2)**0.5
 
         # solving
-        res = ode(self.governing_equation, span, (t0, P0), err=err)
+        res = ode(self.governing_equation, span, P0, err=err)
 
-        # parse x, y components
-        self.t = np.array([P[0] for P in res])
+        # solved back track
         XY = [P[1] for P in res]
         X, Y = zip(*XY)
         self.X, self.Y = np.array(X), np.array(Y)
 
+        # front wheel track
+        self.t = np.array([P[0] for P in res])
+        self.FX, self.FY = self.front_track_x(self.t), self.front_track_y(self.t)
 
-    def bicycle_pos(self, P, Q, tyre_ratio=0.4, handle_ratio=0.5):
+
+    def plot(self, plt, front_style='-', front_color='deepskyblue', back_style='-', back_color='tomato'):
+        ''' Plot front / back wheel tracks '''
+
+        assert self.t is not None, 'No results to plot'
+
+        # tracks
+        plt.plot(self.FX, self.FY, front_style, color=front_color, linewidth=1,label='$Front Wheel Track$')
+        plt.plot(self.X, self.Y, back_style, color=back_color, linewidth=1, label='$Back Wheel Track$')
+        plt.xlabel('$x$')
+        plt.ylabel('$y$')
+        plt.legend()
+        plt.axis('equal')
+
+
+    def animate(self, plt, animation, front_color='deepskyblue', back_color='tomato'):
+        '''
+            Plot track animation:
+            1) update bicycle position
+            2) update passed track
+        '''
+
+        # solved tracks in background
+        fig = plt.figure(tight_layout=True)
+        self.plot(plt, '--', 'lightgray', '--', 'lightgray')
+
+        # line components to be updated
+        front_track, = plt.plot([], [], color=front_color, linewidth=1)
+        back_track, = plt.plot([], [], color=back_color, linewidth=1)
+
+        front, = plt.plot([], [], color ='silver', linewidth=4)
+        back, = plt.plot([], [], color ='silver', linewidth=4)
+
+        frame, = plt.plot([], [], 'k', linewidth=1)
+        handle, = plt.plot([], [], 'c', linewidth=1)
+
+        plt.legend((front_track, back_track), ('$Front Wheel Track$', '$Back Wheel Track$'))
+
+        # animation
+        self.animation = animation.FuncAnimation(fig, 
+            self.__update_pos, 
+            list(zip(self.X, self.Y, self.FX, self.FY)),
+            fargs=((frame, front, back, handle, front_track, back_track),), 
+            interval=100)
+
+
+    def __pos(self, P, Q, tyre_ratio=0.4, handle_ratio=0.5):
         '''
             Solve control points of bicycle illustration 
             based on front wheel center Q(x,y) and back wheel P(x1, y1).
@@ -105,7 +154,7 @@ class BicycleTrack(object):
         return frame_pos, front_pos, back_pos, handle_pos
 
 
-    def update_bicycle_pos(self, PQ, lines):
+    def __update_pos(self, PQ, lines):
         ''' 
             Update bicycle position by setting new data.
 
@@ -120,7 +169,7 @@ class BicycleTrack(object):
         frame, front, back, handle, front_track, back_track = lines
 
         # get new positions
-        frame_pos, front_pos, back_pos, handle_pos = self.bicycle_pos((x1, y1), (x, y))
+        frame_pos, front_pos, back_pos, handle_pos = self.__pos((x1, y1), (x, y))
 
         # update bicycle positions
         if frame: frame.set_data(*frame_pos)
@@ -128,47 +177,22 @@ class BicycleTrack(object):
         if back: back.set_data(*back_pos)
         if handle: handle.set_data(*handle_pos)
 
-        # update track
+        # update tracks
+        # the animation is repeating, so needn't to update the track once finished in a loop
         if front_track:
             fx, fy = front_track.get_data()
-            front_track.set_data(np.append(fx, x), np.append(fy, y))
+            # add new track point in the first loop
+            fx = np.append(fx, x) if fx.shape[0]<=self.FX.shape[0] else fx
+            fy = np.append(fy, y) if fy.shape[0]<=self.FY.shape[0] else fy
+            front_track.set_data(fx, fy)
 
         if back_track:
             bx, by = back_track.get_data()
-            back_track.set_data(np.append(bx, x1), np.append(by, y1))
+            bx = np.append(bx, x1) if bx.shape[0]<=self.X.shape[0] else bx
+            by = np.append(by, y1) if by.shape[0]<=self.Y.shape[0] else by
+            back_track.set_data(bx, by)
 
         return lines
-
-
-    def bicycle_track_plot(self, plt, animation, color_fw='deepskyblue', color_bw='tomato'):
-        ''' plot track animation '''
-
-        assert self.t is not None, 'No results to plot'
-
-        # front wheel track
-        FX, FY = self.front_track_x(self.t), self.front_track_y(self.t)
-
-        # solved tracks in background
-        fig = plt.figure(tight_layout=True)
-        plt.plot(FX, FY, 'b--', color ='lightgray', linewidth=1)
-        plt.plot(self.X, self.Y, 'r--', color ='lightgray', linewidth=1)
-        plt.axis('equal')
-
-        # line components to be updated
-        front_track, = plt.plot([], [], color =color_fw, linewidth=1)
-        back_track, = plt.plot([], [], color =color_bw, linewidth=1)
-        front, = plt.plot([], [], color ='silver', linewidth=4)
-        back, = plt.plot([], [], color ='silver', linewidth=4)    
-        frame, = plt.plot([], [], 'k', linewidth=1)
-        handle, = plt.plot([], [], 'c', linewidth=1)
-
-        # animation
-        self.animation = animation.FuncAnimation(fig, 
-            self.update_bicycle_pos, 
-            list(zip(self.X, self.Y, FX, FY)),
-            fargs=((frame, front, back, handle, front_track, back_track),), 
-            interval=100, 
-            repeat=False)
 
 
 if __name__ == '__main__':    
@@ -186,6 +210,13 @@ if __name__ == '__main__':
     P0 = np.array([-3, 0])
 
     BT = BicycleTrack(fx, fy)
-    BT.solve(span, P0, err=1e-6)
-    BT.bicycle_track_plot(plt, animation)
+
+    fig = plt.figure(tight_layout=True)
+    for i in range(4):
+        BT.solve(span, np.array([-4-i, 0]), err=1e-6)
+        plt.subplot(221+i)
+        BT.plot(plt)
+
+    BT.animate(plt, animation)
+
     plt.show()

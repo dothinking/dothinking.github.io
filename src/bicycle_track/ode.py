@@ -146,16 +146,40 @@ if __name__ == '__main__':
     
     import matplotlib.pyplot as plt
 
+    # -------------------------------
+    # test case 1: ODE
+    # -------------------------------
     span = [0, 5]
 
     F = lambda x: np.sin(x**2) * np.exp(x)
     f = lambda x,y: 2*x*np.cos(x**2)*np.exp(x) + y
 
-    res = ode(f, span, [span[0], F(span[0])], err=1e-4)
+    res = ode(f, span, F(span[0]), err=1e-4)
     X,Y = zip(*res)
     X,Y = np.array(X), np.array(Y)
 
-    plt.figure(1)
+    plt.figure(tight_layout=True)
+    plt.subplot(121)
     plt.plot(X, F(X), 'b')
     plt.plot(X, Y, 'o')
+
+
+    # -------------------------------
+    # test case 2: ODEs
+    # -------------------------------
+    span = [0, 2*np.pi]
+    def F(x, Y):
+        y1, y2 = Y
+        return np.array([-np.sin(x), np.cos(x)])
+
+    res = ode(F, span, np.array([0,0]), err=1e-6)    
+    res = [x[1] for x in res]
+    X,Y = zip(*res)
+    X,Y = np.array(X), np.array(Y)
+
+    plt.subplot(122)
+    plt.plot(X, Y, 'o')
+    plt.axis('equal')
     plt.show()
+
+    

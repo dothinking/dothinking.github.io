@@ -27,7 +27,7 @@ def f(t, Y):
     return np.array([(y2-t)*y1/a**2, (y2-t)**2/a**2])
 
 span = [0, 10]
-P0 = (0.0, np.array([a, 0]))
+P0 = np.array([a, 0])
 res = ode(f, span, P0, err=1e-6)
 
 XY = [p[1] for p in res]

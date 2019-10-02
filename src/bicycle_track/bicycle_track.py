@@ -1,10 +1,21 @@
+'''
+Solving and plot back wheel track according to front wheel track and 
+initial position of the bicycle.
+
+---
+Requirements:
+    pip install autograd
+    pip install scipy
+'''
+
 import autograd.numpy as np
 from autograd import grad
 from scipy.integrate import odeint
 
-class BicycleTrack(object):
+
+class BicycleTrack:
     '''
-        Solving and  plot back wheel track according to front wheel track and 
+        Solving and plot back wheel track according to front wheel track and 
         initial position of the bicycle.
 
         The track of front wheel is given by:
@@ -15,21 +26,22 @@ class BicycleTrack(object):
             fx  : function object of front wheel track x component
             fy  : function object of front wheel track y component
     ''' 
-    def __init__(self, fx, fy):
 
-        # front wheel track and first derivative on parameter t
+    def __init__(self, fx, fy):
+        # front wheel track
         self.front_track_x = fx
         self.front_track_y = fy
 
+        # first derivative of front wheel track on parameter t
         self.dfx = grad(fx)
         self.dfy = grad(fy)
 
         # solved back track represented with t, x, y
-        self.t, self.X, self.Y = None, None, None
-        self.FX, self.FY = None, None
+        self.t, self.X, self.Y = None, None, None  # back track
+        self.FX, self.FY = None, None              # front track
 
 
-    def governing_equation(self, Y, t):
+    def governing_equation(self, t, Y):
         ''' ODEs of Bicycle Track Problem '''
         x, y = Y
         k1 = np.array([self.dfx(t), self.dfy(t)])
@@ -45,14 +57,13 @@ class BicycleTrack(object):
             Arguments:
                 span: solving range of parameter t
                 P0  : initial position of back wheel (x, y)
-        '''
-
-        t0, t1 = span
+        '''        
 
         # initial point of back wheel
         P0 = np.array(P0)
 
         # initial point of front wheel is defined by parametric equations
+        t0, t1 = span
         Q0 = np.array([self.front_track_x(t0), self.front_track_y(t0)])
 
         # frame length is defined by P0 and Q0
@@ -60,7 +71,7 @@ class BicycleTrack(object):
 
         # solving
         self.t = np.linspace(t0, t1, num)
-        res = odeint(self.governing_equation, P0, self.t)
+        res = odeint(self.governing_equation, P0, self.t, tfirst=True)
 
         # solved back track
         self.X, self.Y = res[:, 0], res[:, 1]
@@ -75,8 +86,14 @@ class BicycleTrack(object):
         assert self.t is not None, 'No results to plot'
 
         # tracks
-        plt.plot(self.FX, self.FY, front_style, color=front_color, linewidth=1,label='$Front Wheel Track$')
-        plt.plot(self.X, self.Y, back_style, color=back_color, linewidth=1, label='$Back Wheel Track$')
+        plt.plot(self.FX, self.FY, front_style, 
+            color=front_color, 
+            linewidth=1,
+            label='$Front Wheel Track$')
+        plt.plot(self.X, self.Y, back_style, 
+            color=back_color, 
+            linewidth=1, 
+            label='$Back Wheel Track$')
         plt.xlabel('$x$')
         plt.ylabel('$y$')
         plt.legend()
@@ -178,14 +195,14 @@ class BicycleTrack(object):
         if front_track:
             fx, fy = front_track.get_data()
             # add new track point in the first loop
-            fx = np.append(fx, x) if fx.shape[0]<=self.FX.shape[0] else fx
-            fy = np.append(fy, y) if fy.shape[0]<=self.FY.shape[0] else fy
+            fx = np.append(fx, x) if fx.shape[0]<self.FX.shape[0] else np.array([])
+            fy = np.append(fy, y) if fy.shape[0]<self.FY.shape[0] else np.array([])
             front_track.set_data(fx, fy)
 
         if back_track:
             bx, by = back_track.get_data()
-            bx = np.append(bx, x1) if bx.shape[0]<=self.X.shape[0] else bx
-            by = np.append(by, y1) if by.shape[0]<=self.Y.shape[0] else by
+            bx = np.append(bx, x1) if bx.shape[0]<self.X.shape[0] else np.array([])
+            by = np.append(by, y1) if by.shape[0]<self.Y.shape[0] else np.array([])
             back_track.set_data(bx, by)
 
         return lines
@@ -196,23 +213,28 @@ if __name__ == '__main__':
     import matplotlib.pyplot as plt
     import matplotlib.animation as animation
 
-    def fx(x):
-        return 5+5*np.cos(x)
+    a, L = 5, 6
 
-    def fy(x):
-        return 5*np.sin(x)
+    def f_half_circle(t):
+        return 2*a*(1+np.cos(t)), 2*a*np.sin(t)
 
-    span = [-np.pi, np.pi]
-    P0 = np.array([-3, 0])
+    def f_whole_circle(t):
+        return a/2*(5+3*np.cos(t)), 3*a/2*np.sin(t)
+
+    def f_line(t):
+        return 4*a, a*(t-2*np.pi)
+
+    def fx(t):
+        return (t<=0)*f_half_circle(t)[0] + (t>0)*(t<=2*np.pi)*f_whole_circle(t)[0] + (t>2*np.pi)*f_line(t)[0]
+
+    def fy(t):
+        return (t<=0)*f_half_circle(t)[1] + (t>0)*(t<=2*np.pi)*f_whole_circle(t)[1] + (t>2*np.pi)*f_line(t)[1]
+
+    span = [-np.pi, 3*np.pi]
+    P0 = np.array([-L, 0])
 
     BT = BicycleTrack(fx, fy)
-
-    fig = plt.figure(tight_layout=True)
-    for i in range(4):
-        BT.solve(span, np.array([(-4-i)/5, 0]))
-        plt.subplot(221+i)
-        BT.plot(plt)
-
+    BT.solve(span, P0)
     BT.animate(plt, animation)
 
     plt.show()

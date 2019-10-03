@@ -1,3 +1,8 @@
+'''
+plot a graph for Bicycle Track Problem modeling process
+
+'''
+
 from bicycle_track import BicycleTrack
 import numpy as np
 import matplotlib

@@ -13,11 +13,15 @@ basetag: python
 repo: https://github.com/dothinking/blog
 
 # Build settings
+# Github page accept Rouge only for code highlighter
+# Rouge could also use pygments style with css class name changed from the default .highlight to .syntax
 markdown    : kramdown
+highlighter : rouge
 kramdown:
   input: GFM
-# highlighter : rouge
-highlighter : pygments
+  syntax_highlighter_opts:
+    default_lang: python
+    css_class   : 'syntax'
 
 source: ./
 destination: ./_site

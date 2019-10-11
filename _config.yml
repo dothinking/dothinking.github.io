@@ -16,7 +16,8 @@ repo: https://github.com/dothinking/blog
 markdown    : kramdown
 kramdown:
   input: GFM
-highlighter : rouge
+# highlighter : rouge
+highlighter : pygments
 
 source: ./
 destination: ./_site

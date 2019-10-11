@@ -48,9 +48,11 @@ code.highlighter-rouge{
     }
   }
 
-  // pygments stylesheets
+  /**
+  * Syntax highlighting styles
+  */
   .hll { background-color: #49483e }
-   { background: #272822; color: #f8f8f2 }
+  pre { background: #272822; color: #f8f8f2 }
   .c { color: #75715e } /* Comment */
   .err { color: #960050; background-color: #1e0010 } /* Error */
   .k { color: #66d9ef } /* Keyword */

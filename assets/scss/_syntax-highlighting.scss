@@ -10,10 +10,13 @@
 /**
 * Syntax highlighting styles
 */
+/*inline*/
 code.highlighter-rouge{
   padding: 2px 4px;
   color: #d14;
 }
+
+/*code block*/
 .highlight {
   margin: $base-spacing 0;
   padding: 0;
@@ -38,6 +41,7 @@ code.highlighter-rouge{
     color: #f8f8f2;
 
     code {
+      background: #272822;
       white-space: pre;
       padding: 0 !important;
 

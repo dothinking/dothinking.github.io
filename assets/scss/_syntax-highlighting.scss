@@ -34,6 +34,9 @@ code.highlighter-rouge{
     word-break: inherit;
     word-wrap: inherit;
 
+    background: #272822; 
+    color: #f8f8f2;
+
     code {
       white-space: pre;
       padding: 0 !important;
@@ -42,7 +45,6 @@ code.highlighter-rouge{
       * Syntax highlighting styles
       */
       .hll { background-color: #49483e }
-      pre { background: #272822; color: #f8f8f2 }
       .c { color: #75715e } /* Comment */
       .err { color: #960050; background-color: #1e0010 } /* Error */
       .k { color: #66d9ef } /* Keyword */

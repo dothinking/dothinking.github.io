@@ -111,8 +111,18 @@ print(win32com.__gen_path__)
 - 对于本地账户执行的代码：`C:\Users\<my username>\AppData\Local\Temp\gen_py`
 - 对于系统服务执行的代码：`C:\Windows\Temp\gen_py`
 
+*如果`GitLab-runner`是系统服务以本地账户形式运行的（如问题8解决方案的情况），则同样对应本地账户目录而非系统目录。*
 
-### 7. Cannot use object linking and embedding
+
+### 7. This COM object can not automate the makepy process - please run makepy manually for this object
+
+与问题6删除缓存相反，这个错误表明无法自动产生`gen_py`文件夹，而这正是`win32com`以`EnsureDispatch()`方式启动Excel所必须的。所以按照提示，手动运行`makepy.py`即可。
+
+1. 在`Lib\site-packages\win32com\client`目录下执行`python makepy.py -d`
+2. 在弹出的`select library`对话框中选择Excel相关的项目即可，例如`Microsoft Excel 16.0 Object Library (1.9)`
+3. 用户`Temp`文件夹下即可产生`gen_py`文件夹
+
+### 8. Cannot use object linking and embedding
 
 在正常工作了几天后，突然出现了此问题，具体原因尚不明确。实际上，这是本地账户打开Excel时的错误提示，在`GitLab-Runner`上执行Excel自动化脚本时表现为失去响应直至超时，即卡在打开Excel工作簿上。
 

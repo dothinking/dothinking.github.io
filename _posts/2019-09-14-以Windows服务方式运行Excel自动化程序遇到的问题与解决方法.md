@@ -6,7 +6,7 @@ keywords: python, win32com, gitlab-runner
 tags: [python, VBA]
 ---
 
-利用[前文]({{ site.baseurl }}{% post_url 2019-04-21-Python win32com模块操作Excel的几个应用 %})记录的Python操作Excel的示例代码，可以进行Excel的自动化操作，例如Excel VBA的自动化测试；将其作为Windows服务运行，则可以方便为网络中的其他机器调用。本文正是记录配置Excel自动化服务过程中遇到的问题与相应解决措施。
+参考前文关于`win32com`模块的示例代码可以进行Excel的自动化操作，例如Excel VBA的自动化测试；将其作为Windows服务运行，则可以方便为网络中的其他机器调用。本文正是记录配置Excel自动化服务过程中遇到的问题与相应解决措施。
 
 ## 问题描述
 

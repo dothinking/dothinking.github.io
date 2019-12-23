@@ -8,7 +8,7 @@ tags: [python, VBA]
 
 Python有很多强大的第三方库可以读写Excel，例如`xlrd`、`xlwt`、`xlutils`、`openpyxl`、`xlwings`等，它们主要在读写方面具备优势，但论起对Excel操作的全面性和基础性，则首推`win32com`，它是`pywin32`库[[^1]]的一部分。本文记录使用`win32com`操作Excel的几个案例，例如一般的读写、工作表保护、自动计算、引用管理等。
 
-> 关于VBA宏的读写运行操作，单独列为一篇：[2019-09-13-Python win32com模块操作Excel的几个应用(二)]({{ site.baseurl }}{% post_url 2019-09-13-Python win32com模块操作Excel的几个应用(二) %})　
+> 关于VBA宏的读写运行操作，单独列为一篇：[2019-09-13-Python win32com模块操作Excel的几个应用(二)]({{ site.baseurl }}{% post_url 2019-09-13-Python-win32com模块操作Excel的几个应用（二） %})
 
 
 ## 安装

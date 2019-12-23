@@ -41,7 +41,9 @@ pip install pywin32
 
 关于`win32com`操作Excel的基本代码可以参考
 
->> [Python win32com模块操作Excel的几个应用]({{ site.baseurl }}{% post_url 2019-04-21-Python win32com模块操作Excel的几个应用 %})
+>> [Python win32com模块操作Excel的几个应用（一）]({{ site.baseurl }}{% post_url 2019-04-21-Python-win32com模块操作Excel的几个应用（一） %})
+
+>> [Python win32com模块操作Excel的几个应用（二）]({{ site.baseurl }}{% post_url 2019-09-13-Python-win32com模块操作Excel的几个应用（二） %})
 
 
 ## 当前工作表内的引用

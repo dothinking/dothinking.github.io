@@ -58,7 +58,7 @@ kill_excel:
 
 首先想到的自然是`after_script`——在主要脚本执行完毕之后杀掉`Excel`进程。
 
-```ymal
+```yaml
 ...
 build:
   stage: build  
@@ -77,7 +77,7 @@ build:
 
 那就只能考虑`before_script`——在下次正常提交后、开始执行主脚本前进行杀掉`Excel`进程。
 
-```ymal
+```yaml
 ...
 build:
   stage: build
@@ -119,7 +119,7 @@ Run after_script ...
 
 索性`GitLab`果然提供了`git clean`的开关参数`GIT_CLEAN_FLAGS `[[^3]]，将其设置为`none`即可跳过这一步。于是，最终的`.gitlab-ci.yml`（局部）为：
 
-```ymal
+```yaml
 ...
 variables:
   GIT_CLEAN_FLAGS: none

@@ -10,11 +10,7 @@ tags: GitLab
 
 ## 基本流程
 
-自GitLab 8.0版本起，`Continuous Integration`功能被集成到GitLab基本配置中，并且默认对所有项目生效。以下是官方提供的一个非常简明实用的入门参考：
-
-> [Getting started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/README.html)
-
-总结为两步实现GitLab的CI/CD服务：
+自GitLab 8.0版本起，`Continuous Integration`功能被集成到GitLab基本配置中，并且默认对所有项目生效。两步实现GitLab的CI/CD服务[[^1]]：
 
 - 在代码仓库根目录创建`.gitlab-ci.yml`文件
 - 配置执行任务的`Runner`
@@ -26,7 +22,7 @@ tags: GitLab
 `Runner`接到任务后，将远程仓库下载到`Runner`本地，然后执行该任务定义的指令。
 
 
-## 测试案例
+## 测试案例一
 
 为了自动化持续集成，需要确保可以按脚本/命令执行目标任务。例如：
 
@@ -188,17 +184,109 @@ OK
 Job succeeded
 ```
 
+## 测试案例二
+
+案例一仅仅作为示意，实际操作中更多的是针对同一个工程定义`build`和`test`阶段的`job`。注意到每个`job`都是独立的：
+
+- 同一工程的两个`job`可能被分配到不同的`Runner`上执行
+- 即便定义了相同的`Runner`，执行任务之前**默认**都执行了`git clean`，也就是默认从相同的状态开始执行`build`和`test`阶段的任务
+
+但是，实际操作中我希望`build`阶段的任务编译完成的工程，例如动态链接库文件，可以直接用于`test`阶段的任务；而非在`test`阶段的任务中又重新编译一遍。
+
+这就需要用到`artifacts`和`dependencies`，示例二：
+
+```yaml
+variables:
+  PROJECT: $CI_PROJECT_NAME
+  BRANCH: $CI_COMMIT_REF_NAME
+  TAG: $CI_COMMIT_TAG
+  REF: $CI_COMMIT_SHA
+
+# stages
+stages:
+  - build
+  - test
+
+# jobs
+build:
+  stage: build
+  script:
+    - make build
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 hour
+  tags:
+    - xxxx
+
+test:
+  stage: test
+  dependencies:
+    - build
+  script:
+    - make test
+  tags:
+    - xxxx
+```
+
+注意两处细节：
+
+- `build`阶段的任务将`dist`目录下的所有文件作为`artifacts`
+- `test`阶段的任务将`build`任务作为`dependencies`
+
+其效果是`build`的`artifacts`也就是`dist`，将在`test`阶段仓库初始化完成后下载到工作目录下。因此，`test`任务可以直接使用`build`完成的文件。
+
+
+
 ## 自定义Runner
 
-以上任务使用通用环境即可完成，例如`g++`编译和`python`环境，但有时可能需要特定的环境，例如`Visual Studio`或者第三方库如`NXOpen C++`，此时需要配置专用的服务器。GitLab提供了Linux/MacOS/Windows等一系列平台的配置方法：
-
-> [Install GitLab Runner](https://docs.gitlab.com/runner/install/)
+以上任务使用通用环境即可完成，例如`g++`编译和`python`环境，但有时可能需要特定的环境，例如`Visual Studio`或者第三方库如`NXOpen C++`，此时需要配置专用的服务器。GitLab提供了Linux/MacOS/Windows等一系列平台的配置方法[[^3]]。
 
 流程很简明：下载`gitlab-runner`文件，注册`Runner`，安装和启动服务。配置成功后即可在仓库的`Settings->CI/CD->Runners->Specific Runners`下发现自己的`Runner`，注意设置`tag`以便可以在`.gitlab-ci.yml`中指定在此`Runner`执行任务。
 
+### 设置`git bash`为默认的`shell`
+
+Windows系统的`GitLab Runner`默认以`Powershell`作为运行的`shell`，但我们有时更倾向于使用`git bash`。具体做法为修改`gitlab-runner.exe`同目录下的配置文件`config.toml`：
+
+1. 暂停gitlab-runner服务，备份原始config.toml
+2. 将原始文件的`shell = "powershell"`行修改为：
+    - `shell`切换为`bash`，注意确保`git bash`已经添加到`PATH`环境变量中
+    - `builds_dir`切换为`gitlab-runner.exe`所在目录下的`builds`，注意采用Linux的路径分隔符 [[^4]]
+3. 启动gitlab-runner服务
+
+```toml
+concurrent = 1
+check_interval = 0
+
+[session_server]
+  session_timeout = 1800
+
+[[runners]]
+  name = "Example Server"
+  url = "https://xxx.yyy.com/"
+  token = "xxxx"
+  executor = "shell"
+  shell = "bash"
+  builds_dir="/path/to/runner/builds/"
+  [runners.custom_build_dir]
+  [runners.cache]
+    [runners.cache.s3]
+[runners.cache.gcs]
+```
+
+
 ## 总结
 
-- 在仓库根目录`.gitlab-ci.yml`文件中定义任务如build，uinit test，提交代码触发`CI/CD`服务，自动在共享或者自定义的`Runner`上依次执行任务
-- `Runner`克隆远程仓库到本地后执行自定义脚本
+- 在仓库根目录`.gitlab-ci.yml`文件中定义任务，提交代码触发`CI/CD`服务，自动在共享或者自定义的`Runner`上依次执行任务
+- `Runner`克隆远程仓库到本地->清除未追踪的文件->执行自定义脚本
 - `job`定义中的`tags`关键字可以筛选`Runner`，仅分配该任务到具备指定`tag`的`Runner`服务器
+- `artifacts`和`dependencies`实现跨任务级别共享文件
 - 如果通用`Runner`不能满足开发环境需求，可以添加自定义`Runner`
+
+
+---
+
+[^1]: [1] [Getting started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/README.html)
+[^2]: [2] [GitLab CI/CD Pipeline Configuration Reference](https://docs.gitlab.com/ee/ci/yaml/README.html)
+[^3]: [3] [Install GitLab Runner](https://docs.gitlab.com/runner/install/)
+[^4]: [4] [Windows GitLab CI Runner using Bash](https://stackoverflow.com/questions/41733406/windows-gitlab-ci-runner-using-bash)

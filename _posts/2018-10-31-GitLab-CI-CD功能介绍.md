@@ -236,6 +236,14 @@ test:
 
 其效果是`build`的`artifacts`也就是`dist`，将在`test`阶段仓库初始化完成后下载到工作目录下。因此，`test`任务可以直接使用`build`完成的文件。
 
+下面列出了执行`test`任务过程中相应的日志信息：
+
+```
+Downloading artifacts for build (20220274)...
+Runtime platform                                    arch=amd64 os=windows pid=24332 revision=577f813d version=12.5.0
+WARNING: Failed to load system CertPool: crypto/x509: system root pool is not available on Windows 
+Downloading artifacts from coordinator... ok        id=20220274 responseStatus=200 OK token=xxxxx
+```
 
 
 ## 自定义Runner

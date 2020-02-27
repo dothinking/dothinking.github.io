@@ -13,8 +13,8 @@ tags: [TensorFlow]
 `TFRecord`是一种存储二进制记录序列的简单格式，可以有效地进行**线性读取**数据。从创建到使用`TFRecord`文件的全流程：
 
 - 获取源数据
-- 写入`TFRecord`
-- 读取和解析`TFRecord`
+- 写入`TFRecord`文件
+- 读取和解析`TFRecord`文件
 
 本文侧重点在获取源数据和拆分训练/测试数据集，读写`TFRecord`则直接参考官方示例[[^1]]的标准流程。
 
@@ -69,7 +69,7 @@ def _split_train_test(file_pattern, test_rate, buffer_size):
 
 基本套路：
 
-- 准备`tf.train.Example`格式数据[[^3]]，类似于字典`{"string": tf.train.Feature}`。其中`tf.train.Feature`存储具体数据，例如本例中的图片二进制字节和验证码字符串，当然也可以是数字格式的宽度、高度等。
+- 准备`tf.train.Example`格式数据[[^3]]，类似于字典`{"string": tf.train.Feature}`。其中`tf.train.Feature`存储具体数据，例如本例中的图片二进制字节和验证码字符串，当然也可以是数字格式的图片宽度、图片高度等。
 
 ```python
 def _image_example(path):
@@ -168,7 +168,7 @@ def _parse_image_function(example_proto, image_size, label_prefix, grayscale):
     return image_data, dict_labels
 ```
 
-- 最后转换图片二进制码为`RGB`数据、转换验证码各个字符为相应数字编码，最后模型训练的最终数据。
+- 最后转换图片二进制码为`RGB`数据、转换验证码各个字符为相应数字编码，作为模型训练的数据。
 
 ```python
 def _decode_image(image, resize, grayscale):

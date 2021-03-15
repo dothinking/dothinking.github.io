@@ -1,6 +1,3 @@
-_site/
-.sass-cache/
-.jekyll-cache/
-.bundle/
-.idea/
+site/
 __pycache__/
+_mkdocs.yml

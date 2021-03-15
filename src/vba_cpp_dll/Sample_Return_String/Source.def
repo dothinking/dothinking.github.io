@@ -1,0 +1,7 @@
+LIBRARY RotorEngine
+
+EXPORTS
+upper_heap
+upper_char
+upper_bstr
+upper_var

@@ -1,0 +1,36 @@
+VERSION 139
+
+EDIT UG_GATEWAY_MAIN_MENUBAR
+
+!-------------------------------------------------
+! user defined menu
+!-------------------------------------------------
+BEFORE UG_HELP
+	CASCADE_BUTTON TEST_MENU
+	LABEL Main test menu
+END_OF_BEFORE
+
+!-------------------------------------------------
+! contents of user defined menu
+! ------------------------------------------------
+MENU TEST_MENU
+
+	SEPARATOR
+
+	BUTTON TEST_MENU_MODELING_1
+	LABEL Modeling Button 1
+
+	BUTTON TEST_MENU_MODELING_2
+	LABEL Modeling Button 2
+	SENSITIVITY OFF
+
+	BUTTON TEST_MENU_MODELING_3
+	LABEL Modeling Button 3
+	SENSITIVITY OFF
+
+	SEPARATOR
+
+	BUTTON TEST_MENU_FEM_1
+	LABEL FEM Button 1
+
+END_OF_MENU

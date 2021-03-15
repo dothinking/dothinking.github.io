@@ -1,0 +1,11 @@
+!-------------------------------------------------
+! scripts for new style RIBBON UI!
+! toolbar files will be transfered to ribbon groups
+!-------------------------------------------------
+
+TITLE TEST MENU
+VERSION 170
+
+GROUP test_public.tbr
+GROUP test_modeling.tbr
+GROUP test_fem.tbr

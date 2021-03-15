@@ -1,0 +1,14 @@
+<header class="site-header">
+    <div class="container">
+        <h1 class="logo"><a href="{{ site.baseurl }}">{{ site.title }}</a></h1>
+        <span class="description">{{ site.description }}</span>
+
+        <input class="burger-check" id="burger-check" type="checkbox">
+        <label for="burger-check" class="burger"></label>
+        <ul class="navbar">
+            <li><a href="{{ site.baseurl }}">Home</a></li>
+            <li><a href="{{ site.basetag | prepend: 'tagged#' | prepend: site.baseurl }}">Tags</a></li>
+            <li><a href="{{ 'about' | prepend: site.baseurl }}">About</a></li>
+        </ul>
+    </div>
+</header>

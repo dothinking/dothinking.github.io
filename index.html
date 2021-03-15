@@ -1,11 +1,52 @@
 ---
 layout: default
-title: 格物致知
+title: Home
 ---
-<h2>{{ page.title }}</h2>
-<p>最新文章</p>
-<ul>
-	{% for post in site.posts %}
-		<li>{{ post.date | date_to_string }} <a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
-	{% endfor %}
-</ul>
+
+<div class="post-list">
+    {% for post in paginator.posts %}
+
+        {% unless post.next %}
+            <h2 class="category-title">{{ post.date | date: '%Y' }}</h2>
+        {% else %}
+            {% capture year %}{{ post.date | date: '%Y' }}{% endcapture %}
+            {% capture nyear %}{{ post.next.date | date: '%Y' }}{% endcapture %}
+            {% if year != nyear %}
+                <h2 class="category-title">{{ post.date | date: '%Y' }}</h2>
+            {% endif %}
+        {% endunless %}
+
+        <article class="post-item">
+            <span class="post-meta date-label">{{ post.date | date: "%b %d" }}</span>
+            <div class="article-title">
+                <a class="post-link" href="{{ post.url | prepend: site.baseurl | replace: '//','/' }}">{{ post.title}}</a>
+            </div>
+        </article>
+
+    {% endfor %}
+</div>
+
+<!-- 分页链接 -->
+{% if paginator.total_pages > 1 %}
+    <nav class="pagination" role="pagination">
+        <ul>
+            <li><a class="prev" href="{{ site.baseurl }}" title="Articles new">&laquo; 首页</a></li>
+
+            {% if paginator.previous_page %}
+            <li><a class="prev" href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}" title="Articles new">&lt; 上一页</a></li>
+            {% else %}
+            <li><span class="prev disabled">&lt; 上一页</span></li>
+            {% endif %}
+
+            <li><span class="page-number">第 {{paginator.page}} / {{paginator.total_pages}} 页</span></li>
+
+            {% if paginator.next_page %}
+            <li><a class="next" href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}" title="Articles old">下一页&gt;</a></li>
+            {% else %}
+            <li><span class="next disabled">下一页 &gt;</span></li>
+            {% endif %}
+
+            <li><a class="prev" href="{{ site.paginate_path | prepend: site.baseurl | replace: '//', '/' | replace: ':num', paginator.total_pages }}" title="Articles new">末页 &raquo;</a></li>
+        </ul>
+    </nav>
+{% endif %}

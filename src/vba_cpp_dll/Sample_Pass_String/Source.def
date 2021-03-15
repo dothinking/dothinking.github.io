@@ -1,0 +1,6 @@
+LIBRARY RotorEngine
+
+EXPORTS
+upper_bstr_wchar
+upper_bstr_bstr
+upper_bstr_var

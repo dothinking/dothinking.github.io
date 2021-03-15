@@ -1,1 +1,59 @@
-baseurl: /blog
+#local setting
+port: 4444
+
+
+# SEO settings
+title: 格致
+title2: "" # default: ""
+description: Thinking and recording
+keywords: ''
+baseurl: /blog/ # apply repo name if use it under gh-pages branch
+basetag: python
+
+repo: https://github.com/dothinking/blog
+
+# Build settings
+# Github page accept Rouge only for code highlighter, but pygments stylesheets are still compatible
+markdown    : kramdown
+highlighter : rouge
+kramdown:
+  input: GFM
+  syntax_highlighter_opts:
+    default_lang: python
+
+source: ./
+destination: ./_site
+
+# Sass configuration
+sass:
+  sass_dir: assets/scss
+  style: compressed # expanded
+
+# Author settings
+author:
+  name     : "Train"
+  job      : "PHD candidate"
+  bio      : "正心诚意 格物致知"
+  # thumb    : /images/author.jpg
+  email    : train8808@gmail.com
+  url      : https://dothinking.github.io
+  github   : https://github.com/dothinking
+
+gems:
+  - bourbon
+  - jekyll-redirect-from
+  - jekyll-paginate
+
+paginate: 20
+paginate_path: "/page:num/"
+# permalink   : /:year/:title/ # 如果需要分页，则必须注释掉permalink 
+
+# navbar pages
+# navbar:
+#   - slug : about
+#     title: About
+#   - slug : blog
+#     title: Blog
+
+exclude: ["gulp", "node_modules", "bower", "bower_components", "config.rb", "src", "Gemfile", "Gemfile.lock", ".rvmrc", ".rbenv-version", "package.json", "gulpfile.js", "README.md", "Rakefile", "changelog.md"]
+

@@ -1,0 +1,48 @@
+---
+layout: default
+title: Tags
+---
+
+<section class="post-list">
+    <div class="container">
+        <!--all tags-->
+
+        {% if site.tags %}
+        <div class="tag-cloud tag-cloud-small" id="Tags">
+            {% assign sort_tags = site.tags | sort %}
+            {% for tag in sort_tags%}
+            <a class="tag-anchor" id="tag_{{ tag[0] | slugify }}" href="#{{ tag[0] | slugify }}">
+                <i class="fa fa-tag muted" aria-hidden="true"></i>
+                {{ tag[0] }} <sup>{{ tag[1].size }}</sup>
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!--posts in each tag-->
+
+        <div class="posts">
+        {% for tag in site.tags %}
+
+            <style>
+                #{{ tag[0] | slugify }} {transition: opacity 0.5s ease-out;opacity: 0;height: 0;overflow: hidden;}
+                #{{ tag[0] | slugify }}:target {opacity: 1;height: auto;}
+            </style>
+
+            <div id="{{ tag[0] | slugify }}">
+                <h2 class="year" ><i class="fa fa-hashtag muted" aria-hidden="true"></i>{{ tag[0] }}</h2>
+
+                {% for post in tag[1] %}
+                    <article class="post-item">
+                        <span class="post-meta date-label">{{ post.date | date: "%b %d" }}</span>
+                        <div class="article-title">
+                            <a class="post-link" href="{{ post.url | prepend: site.baseurl | replace: '//','/' }}" target="_blank">{{ post.title }}</a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+
+        {% endfor %}
+        </div>
+    </div>
+</section>

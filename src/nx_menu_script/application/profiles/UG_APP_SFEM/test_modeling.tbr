@@ -1,0 +1,10 @@
+!-------------------------------------------------
+! Buttons defined in *.men can be used directly
+! - *.tbr under STARTUP will always be loaded
+! - *.tbr under APPLICATION/PROFILES will be loaded
+!    according to specified application
+!-------------------------------------------------
+TITLE MODELING
+VERSION 170
+
+BUTTON TEST_MENU_MODELING_1

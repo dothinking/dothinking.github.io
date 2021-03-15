@@ -1,10 +1,16 @@
+---
+layout: compress
+---
 <!DOCTYPE html>
 <html>
-<head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<title>{{ page.title }}</title>
-</head>
+{% include head.html %}
 <body>
-	{{ content }}
+<main class="wrapper">
+    {% include header.html %}
+    <div class="container">
+        {{ content }}
+    </div>
+    {% include footer.html %}
+</main>
 </body>
 </html>

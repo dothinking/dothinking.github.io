@@ -1,0 +1,38 @@
+VERSION 170
+
+EDIT UG_GATEWAY_MAIN_MENUBAR
+
+!-------------------------------------------------
+! user defined menu
+!-------------------------------------------------
+BEFORE UG_HELP
+	CASCADE_BUTTON TEST_MENU
+	LABEL TEST MENU
+END_OF_BEFORE
+
+!-------------------------------------------------
+! contents of user defined menu
+! ------------------------------------------------
+
+! public menus show in all applications
+
+MENU TEST_MENU
+
+	BUTTON TEST_MENU_PUBLIC
+	LABEL Public Button
+
+END_OF_MENU
+
+
+! Application dependent menus show 
+! in specified application
+
+MODIFY
+	APPLICATION_BUTTON UG_APP_MODELING
+	MENU_FILES test_modeling.men
+END_OF_MODIFY
+
+MODIFY
+	APPLICATION_BUTTON UG_APP_SFEM
+	MENU_FILES test_fem.men
+END_OF_MODIFY

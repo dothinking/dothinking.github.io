@@ -1,0 +1,49 @@
+site_name: 格致
+site_url: https://dothinking.github.io/
+repo_name: null
+repo_url: https://github.com/dothinking/dothinking.github.io
+copyright: 'Copyright &copy; 2016 - 2021 Dothinking'
+
+
+theme:
+  name: material
+  feature:
+    tabs: false
+  palette:
+    primary: 'black'
+    accent: 'light blue'
+
+
+markdown_extensions:
+  - admonition
+  - codehilite:
+      guess_lang: false
+      linenums: false
+  - toc:
+      permalink: true
+  - footnotes
+  - meta
+  - def_list
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_png
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist
+  - pymdownx.tilde
+
+
+plugins: ['search']
+
+nav:
+  - Home: index.md
+  - 2012: 
+    - '2012-10-18-MSC.MARC-2010表格之创建方式': 2012-10-18-MSC.MARC-2010表格之创建方式.md

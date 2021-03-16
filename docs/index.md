@@ -1,17 +1,13 @@
-# Welcome to MkDocs
+# 格致
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+这是我的博客，记录工作和学习过程中思考和解决的问题。
 
-## Commands
+个人兴趣涉及Python、数值计算、CAD/CAE及二次开发，以及正在尝试的机器学习。`Github`上分享的一些小项目：
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+- [PDF转Word：pdf2docx](https://github.com/dothinking/pdf2docx)
+- [PyQt5应用：个人知识管理工具tagit](https://github.com/dothinking/tagit)
+- [Excel插件：结合Python和VBA](https://github.com/dothinking/PyAddin)
+- [Python遗传算法练习](https://github.com/dothinking/basicGA)
 
-## Project layout
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+![Dothinking's Github Stats](https://github-readme-stats.vercel.app/api?username=dothinking&show_icons=true_color=fff&icon_color=79ff97&text_color=151515&bg_color=fffeee)

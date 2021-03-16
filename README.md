@@ -1,5 +1,5 @@
 
-# [格致](https://dothinking.github.io/)：基于[Material for MkDocs](https://squidfunk.github.io/mkdocs-material/)搭建的个人博客
+# [格致](https://dothinking.github.io/)：基于[MkDocs](https://www.mkdocs.org/)搭建的个人博客
 
 * `Markdown`语法编辑文章
 * 支持`Latex`公式（MathJex）
@@ -9,7 +9,7 @@
 
 ## 使用
 
-- 修改[mkdocs.yml](./mkdocs.yml)定义博客信息及主题样式
+- 修改[mkdocs.yml](./mkdocs.yml)定义博客信息
 - 在[docs](./docs)文件夹下创建文章。为便于自动按年份归档，文件名格式`yyyy-mm-dd-xxx.md`
 - 提交更新到远程`master`分支，触发`Github Action`自动部署
     - 根据[docs](./docs)下文件名生成按年份归档信息
@@ -23,7 +23,6 @@
 
 ```bash
 $ pip install mkdocs
-$ pip install mkdocs-material
 $ pip install pymdown-extensions
 ```
 

@@ -1,0 +1,53 @@
+site_name: 格致
+site_description: Thinking & Writing
+site_author: dothinking
+site_url: https://dothinking.github.io/
+repo_name: null
+repo_url: https://github.com/dothinking/dothinking.github.io
+copyright: 'Copyright &copy; 2016 - 2021 Dothinking'
+
+
+markdown_extensions:
+  - admonition  # 提示块
+  - footnotes  # 脚注
+  - meta  # 定义元数据，通过文章上下文控制，如disqus
+  - pymdownx.caret  # 下划线上标
+  - pymdownx.tilde  # 删除线下标
+  - pymdownx.critic  # 增加删除修改高亮注释，可修饰行内或段落
+  - pymdownx.details  # 提示块可折叠
+  - pymdownx.inlinehilite  # 行内代码高亮
+  - pymdownx.mark  # 文本高亮
+  - pymdownx.smartsymbols  # 符号转换
+  - pymdownx.superfences  # 代码嵌套在列表里
+  - codehilite    # 代码高亮，显示行号
+  - toc:  # 锚点
+      permalink: true  
+      separator: " "
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.tasklist
+
+
+extra_css:
+    - css/extra.css
+
+
+extra_javascript:
+  - 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'
+
+
+plugins: ['search']
+
+
+# 手动添加导航结构，作为博客按年份归档的主目录。
+# 如果按`年-月-日-文件名.md`格式命名文章，则可利用脚本自动生成归档结构。
+# nav:
+#   - 2021: 
+#     - 'foo': foo.md
+#     - 'bar': bar.md
+#   - 2020: 
+#     - 'foo': foo.md
+#     - 'bar': bar.md

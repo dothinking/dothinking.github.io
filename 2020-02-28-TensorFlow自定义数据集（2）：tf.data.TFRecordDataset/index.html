@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2020-02-28-TensorFlow%E8%87%AA%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E9%9B%86%EF%BC%882%EF%BC%89%EF%BC%9Atf.data.TFRecordDataset/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>2020 02 28 TensorFlow自定义数据集（2）：tf.data.TFRecordDataset - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">格致</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-05-21-%E4%B8%80%E8%B7%AF%E8%B5%B0%E6%9D%A5/" class="nav-link">一路走来</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-07-10-Marc%E8%B0%83%E7%94%A8Python%E8%84%9A%E6%9C%AC%E7%A8%8B%E5%BA%8F%E4%B8%AD%E5%85%B3%E4%BA%8E%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C%E7%9A%84%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98/" class="nav-link">Marc调用Python脚本程序中关于目录操作的几个问题</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-07-26-Windows%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8F%90%E4%BA%A4Marc%E8%AE%A1%E7%AE%97%E4%BB%BB%E5%8A%A1/" class="nav-link">Windows命令行提交Marc计算任务</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-07-27-MSC-Marc2011%E5%8D%95%E6%9C%BA%E5%A4%9A%E6%A0%B8%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97%E7%A4%BA%E4%BE%8B/" class="nav-link">MSC-Marc 2011单机多核并行计算示例</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-10-10-%E5%AE%9E%E4%BE%8B%E8%AF%B4%E6%98%8EVS2005%E3%80%81Python%E7%A8%8B%E5%BA%8F%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6%E6%97%B6%E7%9A%84%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/" class="nav-link">实例说明VS2005、Python程序读写文件时的字符编码问题</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-10-18-MSC.MARC-2010%E8%A1%A8%E6%A0%BC%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B9%E5%BC%8F/" class="nav-link">MSC.MARC 2010表格之创建方式</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-10-20-MSC.MARC-2010%E8%A1%A8%E6%A0%BC%E4%B9%8B%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%BC%8F/" class="nav-link">MSC.MARC 2010表格之数据模式</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-10-21-MSC.MARC-2010%E5%88%9A%E6%80%A7%E6%8E%A5%E8%A7%A6%E4%BD%93%E8%BF%90%E5%8A%A8%E8%AE%BE%E7%BD%AE/" class="nav-link">MSC.MARC 2010刚性接触体运动设置</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-06-13-UG%E8%BF%90%E5%8A%A8%E4%BB%BF%E7%9C%9F%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" class="nav-link">UG运动仿真学习记录</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-07-29-Levy-Mises%E7%90%86%E8%AE%BA%E7%9A%84%E6%80%9D%E8%80%83/" class="nav-link">Levy Mises理论的思考</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-07-30-%E5%BA%94%E5%8A%9B%E5%BC%A0%E9%87%8F%E7%9A%84%E8%AE%A4%E8%AF%86%E4%B9%8B%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" class="nav-link">应力张量的认识之基本概念</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-07-30-%E5%BA%94%E5%8A%9B%E5%BC%A0%E9%87%8F%E7%9A%84%E8%AE%A4%E8%AF%86%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2/" class="nav-link">应力张量的认识之线性变换</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-07-31-%E5%BA%94%E5%8A%9B%E5%BC%A0%E9%87%8F%E7%9A%84%E8%AE%A4%E8%AF%86%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2%E7%9A%84%E8%AF%81%E6%98%8E/" class="nav-link">应力张量的认识之线性变换的证明</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-08-05-UG-NX-%E8%A7%92%E8%89%B2%E5%AE%9A%E5%88%B6%E4%B8%8E%E5%BA%94%E7%94%A8/" class="nav-link">UG NX角色定制与应用</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-09-28-ThinkPHP%E8%87%AA%E5%8A%A8%E9%AA%8C%E8%AF%81%E4%B9%8Bunique%E8%A7%84%E5%88%99%E7%9A%84%E9%97%AE%E9%A2%98%E5%92%8C%E7%90%86%E8%A7%A3/" class="nav-link">ThinkPHP自动验证之unique规则的问题和理解</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-10-19-ThinkPHP%E6%A1%86%E6%9E%B6%E4%B8%8BMySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E7%B1%BB/" class="nav-link">ThinkPHP框架下MySQL数据库备份还原类</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-10-31-Sublime-Text-2%E4%B8%AD%E8%BF%90%E8%A1%8CPython%E7%A8%8B%E5%BA%8F/" class="nav-link">Sublime Text 2中运行Python程序</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-07-02-Sublime-Text-%E8%87%AA%E5%AE%9A%E4%B9%89%E9%A2%9C%E8%89%B2%E4%B8%BB%E9%A2%98/" class="nav-link">Sublime Text 自定义颜色主题</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-11-28-%E4%B8%8A%E9%99%90%E6%B3%95%E5%A1%91%E6%80%A7%E5%8A%9F%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86%E7%AE%97%E4%BE%8B%E4%B9%8B%E4%BA%8C%E9%87%8D%E7%A7%AF%E5%88%86/" class="nav-link">上限法塑性功数值积分算例之二重积分</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-12-19-Gauss-Legendre%E4%BA%8C%E9%87%8D%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86/" class="nav-link">Gauss Legendre二重数值积分</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-12-22-NumPy%E5%BA%93frompyfunc%E4%B8%8Evectorize%E7%9A%84%E6%AF%94%E8%BE%83/" class="nav-link">NumPy库frompyfunc与vectorize的比较</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-12-24-%E4%B8%8A%E9%99%90%E6%B3%95%E5%A1%91%E6%80%A7%E5%8A%9F%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86%E7%AE%97%E4%BE%8B%E4%B9%8B%E4%B8%89%E9%87%8D%E7%A7%AF%E5%88%86/" class="nav-link">上限法塑性功数值积分算例之三重积分</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2015-06-16-SAE%E7%8E%AF%E5%A2%83%E4%B8%8B%E4%BD%BF%E7%94%A8MySQLReback%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9FMySQL%E6%95%B0%E6%8D%AE%E5%BA%93/" class="nav-link">SAE环境下使用MySQLReback备份还原MySQL数据库</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2015-06-17-SAE%E7%8E%AF%E5%A2%83%E4%B8%8B%E4%BD%BF%E7%94%A8PHPExcel%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE/" class="nav-link">SAE环境下使用PHPExcel导入数据</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2015-11-04-%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0%E7%A4%BE%E4%BC%9A%E6%A0%B8%E7%AE%97%E7%9F%A9%E9%98%B5%EF%BC%88SAM%EF%BC%89%E7%9A%84%E8%B4%A6%E6%88%B7%E9%9B%86%E7%BB%93%E4%B8%8E%E5%B9%B3%E8%A1%A1/" class="nav-link">程序实现社会核算矩阵（SAM）的账户集结与平衡</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2015-11-15-python%E4%B8%AD%E4%BD%BF%E7%94%A8mlab%E5%BA%93%E5%AE%9E%E7%8E%B0%E4%B8%8EMATLAB%E4%BA%A4%E4%BA%92/" class="nav-link">python中使用mlab库实现与MATLAB交互</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2016-01-20-%E4%BD%BF%E7%94%A8Python%E5%AF%BC%E5%87%BAMSC.Marc%E5%90%8E%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE/" class="nav-link">使用Python导出MSC.Marc后处理数据</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2016-11-05-%E6%95%B4%E5%90%88UEditor%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0%E6%A8%A1%E5%9D%97%E4%B8%BA%E4%B8%8A%E4%BC%A0%E6%8F%92%E4%BB%B6/" class="nav-link">整合UEditor图片上传模块为上传插件</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-01-07-%E5%AD%A6%E4%BD%8D%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C%E4%B8%AD%E7%9A%84%E8%BD%AF%E4%BB%B6%E7%BB%84%E5%90%88/" class="nav-link">学位论文写作中的软件组合</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-03-08-%E7%90%83%E9%9D%A2%E8%B7%9D%E7%A6%BB%E4%B8%8E%E6%96%B9%E4%BD%8D%E8%A7%92%E5%85%AC%E5%BC%8F%E7%9A%84%E6%8E%A8%E5%AF%BC%EF%BC%9A%E8%A7%A3%E4%B8%89%E8%A7%92%E5%BD%A2%E6%B3%95/" class="nav-link">球面距离与方位角公式的推导：解三角形法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-03-09-%E7%90%83%E9%9D%A2%E8%B7%9D%E7%A6%BB%E4%B8%8E%E6%96%B9%E4%BD%8D%E8%A7%92%E5%85%AC%E5%BC%8F%E7%9A%84%E6%8E%A8%E5%AF%BC%EF%BC%9A%E5%90%91%E9%87%8F%E4%BB%A3%E6%95%B0%E6%B3%95/" class="nav-link">球面距离与方位角公式的推导：向量代数法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-04-24-Selenium%2BPhantomJS%E6%97%A0%E6%B3%95%E8%BE%93%E5%85%A5%E6%96%87%E6%9C%AC%E5%8F%8A%E5%85%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="nav-link">Selenium PhantomJS无法输入文本及其解决方法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-04-24-Selenium-Python%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%A4%87%E5%BF%98/" class="nav-link">Selenium Python基本操作备忘</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-07-23-Microsoft-Excel-2010%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8A%9F%E8%83%BD%E5%8C%BA%28%E4%B8%80%29/" class="nav-link">Microsoft Excel 2010自定义功能区(一)</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-07-24-Microsoft-Excel-2010%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8A%9F%E8%83%BD%E5%8C%BA%28%E4%BA%8C%29/" class="nav-link">Microsoft Excel 2010自定义功能区(二)</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-07-31-%E8%87%AA%E5%AE%9A%E4%B9%89Microsoft-Excel-2010-Ribbon%E8%8F%9C%E5%8D%95%E9%A1%B9Enable%E7%8A%B6%E6%80%81/" class="nav-link">自定义Microsoft Excel 2010 Ribbon菜单项Enable状态</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-08-08-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9AGroups%E4%B8%8ERegions/" class="nav-link">NXOpen CAE开发总结系列：Groups与Regions</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-08-27-NXOpen%EF%BC%9A%E5%AF%B9%E8%AF%9D%E6%A1%86%E7%9A%84%E8%AE%A4%E8%AF%86/" class="nav-link">NXOpen：对话框的认识</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-09-01-NXOpen%EF%BC%9AMenu-Script%E8%87%AA%E5%AE%9A%E4%B9%89%E8%8F%9C%E5%8D%95/" class="nav-link">NXOpen：Menu Script自定义菜单</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-10-10-%E5%85%BC%E5%AE%B9Windows%E5%92%8CLinux%E7%9A%84C%2B%2B%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E6%A8%A1%E6%9D%BF/" class="nav-link">兼容Windows和Linux的C++动态链接库模板</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-11-25-VBA%E8%AE%BE%E7%BD%AE%E7%94%A8%E6%88%B7%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" class="nav-link">VBA设置用户环境变量</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-11-30-VBA%E8%B0%83%E7%94%A8C%2B%2B%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/" class="nav-link">VBA调用C++动态链接库</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-12-12-NXOpen%EF%BC%9AExpression%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%9F%BA%E6%9C%AC%E5%8D%95%E4%BD%8D/" class="nav-link">NXOpen：Expression类型与基本单位</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-01-12-%E4%BD%BF%E7%94%A8subprocess%E6%A8%A1%E5%9D%97%E8%B0%83%E7%94%A8%E5%AD%90%E8%BF%9B%E7%A8%8B%E5%B9%B6%E8%8E%B7%E5%8F%96%E8%BE%93%E5%87%BA/" class="nav-link">2018 01 12 使用subprocess模块调用子进程并获取输出</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-01-13-PyQt%E4%BD%BF%E7%94%A8QProcess%E8%B0%83%E7%94%A8%E5%AD%90%E8%BF%9B%E7%A8%8B%E5%B9%B6%E8%8E%B7%E5%8F%96%E8%BE%93%E5%87%BA/" class="nav-link">2018 01 13 PyQt使用QProcess调用子进程并获取输出</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-01-23-%E8%87%AA%E5%AE%9A%E4%B9%89Microsoft-Office-Ribbon%E5%8C%BA%E5%9F%9F/" class="nav-link">2018 01 23 自定义Microsoft Office Ribbon区域</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-02-07-Python3%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%9A%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="nav-link">2018 02 07 Python3代码示例：基本操作</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-02-08-Python3%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C/" class="nav-link">2018 02 08 Python3代码示例：字符串操作</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-02-09-Python3%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%9A%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C/" class="nav-link">2018 02 09 Python3代码示例：文件目录操作</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-04-05-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9AAdvanced-Simulation%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/" class="nav-link">2018 04 05 NXOpen CAE开发总结系列：Advanced Simulation文件结构</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-05-04-NXOpen%EF%BC%9A%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7%E6%93%8D%E4%BD%9C/" class="nav-link">2018 05 04 NXOpen：对象属性操作</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-05-06-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9A%E4%B8%BB%E8%A6%81%E7%B1%BB%E7%BB%93%E6%9E%84%E5%9B%BE/" class="nav-link">2018 05 06 NXOpen CAE开发总结系列：主要类结构图</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-06-25-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9AFEM-SIM%E6%A8%A1%E5%9E%8B%E4%B8%ADPolygon-Body%E7%9A%84%E5%90%8D%E7%A7%B0/" class="nav-link">2018 06 25 NXOpen CAE开发总结系列：FEM SIM模型中Polygon Body的名称</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-07-01-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9A%E4%BB%8EANSYS-APDL%E8%A7%92%E5%BA%A6%E7%9C%8B%E5%BE%85Mesh/" class="nav-link">2018 07 01 NXOpen CAE开发总结系列：从ANSYS APDL角度看待Mesh</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-09-28-NXOpen%EF%BC%9A%E7%A6%81%E7%94%A8%E8%8F%9C%E5%8D%95%E9%A1%B9/" class="nav-link">2018 09 28 NXOpen：禁用菜单项</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-21-Python-Package-__init__%E8%A7%A3%E6%9E%90/" class="nav-link">2018 10 21 Python Package   init  解析</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-21-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%E5%8F%8APython%E5%AE%9E%E7%8E%B0/" class="nav-link">2018 10 21 遗传算法：基本原理及Python实现</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-25-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E6%94%B9%E8%BF%9B%E6%96%B9%E5%90%91%E4%B9%8B%E8%87%AA%E9%80%82%E5%BA%94%E7%AD%96%E7%95%A5/" class="nav-link">2018 10 25 遗传算法：改进方向之自适应策略</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-27-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E6%94%B9%E8%BF%9B%E6%96%B9%E5%90%91%E4%B9%8B%E7%B2%BE%E8%8B%B1%E7%AD%96%E7%95%A5/" class="nav-link">2018 10 27 遗传算法：改进方向之精英策略</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-31-GitLab-CI-CD%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D/" class="nav-link">2018 10 31 GitLab CI CD功能介绍</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-11-05-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E6%B5%8B%E8%AF%95%E6%A1%88%E4%BE%8B%E4%B9%8B%E5%87%BD%E6%95%B0%E6%9E%81%E5%80%BC/" class="nav-link">2018 11 05 遗传算法：测试案例之函数极值</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-01-28-%E9%9B%86%E6%88%90python%E7%9A%84Excel%E6%8F%92%E4%BB%B6%E6%A8%A1%E6%9D%BFPyAddin%E2%80%94%E2%80%94%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" class="nav-link">2019 01 28 集成python的Excel插件模板PyAddin——使用说明</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-01-28-%E9%9B%86%E6%88%90python%E7%9A%84Excel%E6%8F%92%E4%BB%B6%E6%A8%A1%E6%9D%BFPyAddin%E2%80%94%E2%80%94%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D/" class="nav-link">2019 01 28 集成python的Excel插件模板PyAddin——原理介绍</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-03-24-PyQt5%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5%E4%B9%8B%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7Tagit/" class="nav-link">2019 03 24 PyQt5应用实践之个人知识管理工具Tagit</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-04-20-VBA%E8%B0%83%E7%94%A8%E5%A4%96%E9%83%A8%E5%87%BD%E6%95%B0%EF%BC%88%E5%B7%A5%E4%BD%9C%E7%B0%BF-COM%E9%93%BE%E6%8E%A5%E5%BA%93-C%E9%93%BE%E6%8E%A5%E5%BA%93%EF%BC%89%E6%96%B9%E6%B3%95/" class="nav-link">2019 04 20 VBA调用外部函数（工作簿 COM链接库 C链接库）方法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-04-21-Python-win32com%E6%A8%A1%E5%9D%97%E6%93%8D%E4%BD%9CExcel%E7%9A%84%E5%87%A0%E4%B8%AA%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%80%EF%BC%89/" class="nav-link">2019 04 21 Python win32com模块操作Excel的几个应用（一）</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-05-02-%E8%8E%B7%E5%8F%96Excel%E5%85%AC%E5%BC%8F%E7%9A%84%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%EF%BC%88Python%E5%AE%9E%E7%8E%B0%EF%BC%89/" class="nav-link">2019 05 02 获取Excel公式的依赖关系（Python实现）</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-05-22-Matplotlib%E5%A4%9A%E7%BA%B5%E8%BD%B4%EF%BC%88%E5%AF%84%E7%94%9F%E8%BD%B4%EF%BC%89%E6%95%A3%E7%82%B9%E5%9B%BE/" class="nav-link">2019 05 22 Matplotlib多纵轴（寄生轴）散点图</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-08-18-C%2B%2B-DLL%E4%B8%8EVBA%E4%B9%8B%E9%97%B4%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BC%A0%E9%80%92%EF%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89%E8%BF%94%E5%9B%9E%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="nav-link">2019 08 18 C++ DLL与VBA之间的字符串传递：（一）返回字符串</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-08-31-C%2B%2B-DLL%E4%B8%8EVBA%E4%B9%8B%E9%97%B4%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BC%A0%E9%80%92%EF%BC%9A%EF%BC%88%E4%BA%8C%EF%BC%89%E4%BC%A0%E5%85%A5%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="nav-link">2019 08 31 C++ DLL与VBA之间的字符串传递：（二）传入字符串</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-09-13-Python-win32com%E6%A8%A1%E5%9D%97%E6%93%8D%E4%BD%9CExcel%E7%9A%84%E5%87%A0%E4%B8%AA%E5%BA%94%E7%94%A8%EF%BC%88%E4%BA%8C%EF%BC%89/" class="nav-link">2019 09 13 Python win32com模块操作Excel的几个应用（二）</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-09-14-%E4%BB%A5Windows%E6%9C%8D%E5%8A%A1%E6%96%B9%E5%BC%8F%E8%BF%90%E8%A1%8CExcel%E8%87%AA%E5%8A%A8%E5%8C%96%E7%A8%8B%E5%BA%8F%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="nav-link">2019 09 14 以Windows服务方式运行Excel自动化程序遇到的问题与解决方法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-10-01-Python%E6%B1%82%E8%A7%A3%E8%87%AA%E8%A1%8C%E8%BD%A6%E5%89%8D%E5%90%8E%E8%BD%AE%E8%BD%A8%E8%BF%B9%E9%97%AE%E9%A2%98/" class="nav-link">Python求解自行车前后轮轨迹问题</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-12-29-GitLab-CI-CD%E4%B9%8Bbefore_script%E5%92%8Cafter_script/" class="nav-link">2019 12 29 GitLab CI CD之before script和after script</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-02-27-TensorFlow%E8%87%AA%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E9%9B%86%EF%BC%881%EF%BC%89%EF%BC%9Atf.data.Dataset/" class="nav-link">2020 02 27 TensorFlow自定义数据集（1）：tf.data.Dataset</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">2020 02 28 TensorFlow自定义数据集（2）：tf.data.TFRecordDataset</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-03-01-2020%E8%AF%BB%E4%B9%A6%E8%AE%A1%E5%88%92%EF%BC%881%EF%BC%89%EF%BC%9ATensorFlow%E6%8A%80%E6%9C%AF%E8%A7%A3%E6%9E%90%E4%B8%8E%E5%AE%9E%E6%88%98/" class="nav-link">2020 03 01 2020读书计划（1）：TensorFlow技术解析与实战</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-07-13-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81/" class="nav-link">2020 07 13 pdf2docx开发概要</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-09-27-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%E4%B9%8B%E5%AF%B9%E9%BD%90%E9%9A%90%E5%BC%8F%E8%A1%A8%E6%A0%BC%E7%BA%BF/" class="nav-link">2020 09 27 pdf2docx开发概要之对齐隐式表格线</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-10-01-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%E4%B9%8B%E7%9F%A2%E9%87%8F%E5%9B%BE%E5%A4%84%E7%90%86/" class="nav-link">2020 10 01 pdf2docx开发概要之矢量图处理</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-10-15-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%E4%B9%8B%E8%8E%B7%E5%8F%96%E5%9B%BE%E7%89%87%E5%8F%8A%E5%85%B6%E4%BD%8D%E7%BD%AE/" class="nav-link">2020 10 15 pdf2docx开发概要之获取图片及其位置</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-10-25-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%B5%AE%E5%8A%A8%E5%9B%BE%E7%89%87/" class="nav-link">2020 10 25 pdf2docx开发概要之创建浮动图片</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2021-01-02-Python%E5%A4%84%E7%90%86PDF%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E5%AF%B9%E6%AF%94/" class="nav-link">2021 01 02 Python处理PDF的第三方库对比</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Categories <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/2012/" class="dropdown-item">2012</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2013/" class="dropdown-item">2013</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2014/" class="dropdown-item">2014</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2015/" class="dropdown-item">2015</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2016/" class="dropdown-item">2016</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2017/" class="dropdown-item">2017</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2018/" class="dropdown-item">2018</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2019/" class="dropdown-item">2019</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2020/" class="dropdown-item">2020</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2021/" class="dropdown-item">2021</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../2020-02-27-TensorFlow%E8%87%AA%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E9%9B%86%EF%BC%881%EF%BC%89%EF%BC%9Atf.data.Dataset/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../2020-03-01-2020%E8%AF%BB%E4%B9%A6%E8%AE%A1%E5%88%92%EF%BC%881%EF%BC%89%EF%BC%9ATensorFlow%E6%8A%80%E6%9C%AF%E8%A7%A3%E6%9E%90%E4%B8%8E%E5%AE%9E%E6%88%98/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2020-02-28-TensorFlow自定义数据集（2）：tf.data.TFRecordDataset.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#0" class="nav-link">0. 基本流程</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#1" class="nav-link">1. 拆分数据集</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#2 tfrecord" class="nav-link">2. 写入TFRecord 文件</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#3 tfrecord" class="nav-link">3. 读取TFRecord文件</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p>前文使用<code>tf.data.Dataset.list_files</code>创建文件路径<code>Dataset</code>并逐步载入图片数据的方式解决无法一次性加载所有图片数据到内存的问题，但依然存在频繁读文件的问题。本文参考TensorFlow官方文档读写图片例子[<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>]，将原来的图片数据以<code>TFRecord</code>文件形式进行存储，并重新载入<code>Dataset</code>和解析数据。</p>
+<h2 id="0">0. 基本流程<a class="headerlink" href="#0" title="Permanent link">&para;</a></h2>
+<p><code>TFRecord</code>是一种存储二进制记录序列的简单格式，可以有效地进行**线性读取**数据。从创建到使用<code>TFRecord</code>文件的全流程：</p>
+<ul>
+<li>获取源数据</li>
+<li>写入<code>TFRecord</code>文件</li>
+<li>读取和解析<code>TFRecord</code>文件</li>
+</ul>
+<p>本文侧重点在获取源数据和拆分训练/测试数据集，读写<code>TFRecord</code>则直接参考官方示例[<sup id="fnref2:1"><a class="footnote-ref" href="#fn:1">1</a></sup>]的标准流程。</p>
+<h2 id="1">1. 拆分数据集<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>习惯会按照一定比例，例如9:1拆分为训练和测试集。<code>Dataset</code>的<code>take</code>、<code>skip</code>、<code>shard</code>方法可以用于这个任务，但是或多或少存在一些不足：</p>
+<ul>
+<li><code>take</code>和<code>skip</code>组合最为直接，但是需要知道数据集大小</li>
+<li><code>shard</code>可以按间隔挑出一个子集，但是无法得到剩下的部分</li>
+</ul>
+<p><strong>注意</strong>：<code>take</code>和<code>skip</code>需要在<code>shuffle</code>之前或者设置<code>shuffle</code>的<code>reshuffle_each_iteration=False</code>。否则不同的循环中，原来的<code>Dataset</code>已经改变顺序了，那么由此得到的<code>take</code>和<code>skip</code>会出现重叠元素。</p>
+<p>以下参考思路[<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>]：</p>
+<ul>
+<li><code>enumerate</code>得到元素的序号组合<code>(index, element)</code></li>
+<li><code>filter</code>筛选序号，利用两个相反的判断拆分为训练/测试两组（此时元素为<code>(index, element)</code>）</li>
+<li><code>map</code>分别从拆分的两组中去掉辅助作用的序号</li>
+</ul>
+<pre class="highlight"><code class="language-python">def _split_train_test(file_pattern, test_rate, buffer_size):
+    # by default, tf.data.Dataset.list_files always shuffles order during iteration
+    # so set it false explicitly
+    dataset = tf.data.Dataset.list_files(file_pattern, shuffle=False)
+
+    # shuffle first and stop shuffling during each iteration
+    # buffer_size is reccommanded to be larger than dataset size
+    dataset = dataset.shuffle(buffer_size, reshuffle_each_iteration=False)
+
+    # split train / test sets
+    if test_rate:
+        # define split interval
+        sep = int(1.0/test_rate)
+        is_test = lambda x, y: x % sep == 0
+        is_train = lambda x, y: not is_test(x, y)
+        recover = lambda x,y: y
+
+        # split train/test set, and reset buffle mode: 
+        # keep shuffle order different during iteration
+        test_dataset = dataset.enumerate(start=1).filter(is_test).map(recover)
+        train_dataset = dataset.enumerate(start=1).filter(is_train).map(recover)
+    else:
+        test_dataset, test_dataset = dataset, None
+
+    return train_dataset, test_dataset</code></pre>
+<h2 id="2 tfrecord">2. 写入<code>TFRecord</code> 文件<a class="headerlink" href="#2 tfrecord" title="Permanent link">&para;</a></h2>
+<p>基本套路：</p>
+<ul>
+<li>准备<code>tf.train.Example</code>格式数据[<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>]，类似于字典<code>{"string": tf.train.Feature}</code>。其中<code>tf.train.Feature</code>存储具体数据，例如本例中的图片二进制字节和验证码字符串，当然也可以是数字格式的图片宽度、图片高度等。</li>
+</ul>
+<pre class="highlight"><code class="language-python">def _image_example(path):
+    """Create a dictionary with features: image raw data, label
+        path: image path, e.g. b'test\\lcrh.jpg
+    '"""
+    # get image raw data and labels
+    image_string = open(path, 'rb').read()
+    image_labels = tf.strings.substr(path, -8, 4)
+
+    # preparation for tf.train.Example
+    feature = {
+      'labels'   : tf.train.Feature(bytes_list=tf.train.BytesList(value=[image_labels.numpy()])),
+      'image_raw': tf.train.Feature(bytes_list=tf.train.BytesList(value=[image_string]))
+    }
+
+    return tf.train.Example(features=tf.train.Features(feature=feature))</code></pre>
+<ul>
+<li><code>tf.io.TFRecordWriter</code>将<code>tf.train.Example</code>序列化的值写入文件</li>
+</ul>
+<pre class="highlight"><code class="language-python"># --------------------------------------------
+# Write raw image data to `images.tfrecords`
+# --------------------------------------------
+def write_images_to_tfrecord(image_file_pattern, # e.g. 'samples/*.jpg'
+    dir_record, # folder for storing TFRecord files
+    prefix_record='sample',
+    split_test=0.1,  # split train/test rate
+    buffer_size=10000):
+    ''' load images and save to TFRecord file
+            - get image raw data and labels (filename)
+            - split into train / test sets
+            - write to TFRecord file
+    '''
+    # split path dataset
+    train_dataset, test_dataset = _split_train_test(image_file_pattern, split_test, buffer_size)
+
+    # read image in train set and save to TFRecord file
+    train_record = os.path.join(dir_record, f'{prefix_record}_train.tfrecords')
+    with tf.io.TFRecordWriter(train_record) as writer:
+        for path in train_dataset.as_numpy_iterator():
+            tf_example = _image_example(path)
+            writer.write(tf_example.SerializeToString())
+
+    # read image in test set and save to TFRecord file
+    if test_dataset:
+        test_record = os.path.join(dir_record, f'{prefix_record}_test.tfrecords')
+        with tf.io.TFRecordWriter(test_record) as writer:
+            for path in test_dataset.as_numpy_iterator():
+                tf_example = _image_example(path)
+                writer.write(tf_example.SerializeToString())
+    else:
+        test_record = None
+
+    return train_record, test_record</code></pre>
+<h2 id="3 tfrecord">3. 读取<code>TFRecord</code>文件<a class="headerlink" href="#3 tfrecord" title="Permanent link">&para;</a></h2>
+<ul>
+<li>读入<code>TFRecord</code>文件得到<code>tf.data.TFRecordDataset</code>对象，继承自<code>tf.data.Dataset</code>。进而可以进行<code>map</code>、<code>shuffle</code>、<code>batch</code>等链式操作。</li>
+</ul>
+<pre class="highlight"><code class="language-python"># --------------------------------------------
+# create dataset from TFRecord file
+# --------------------------------------------
+def create_dataset_from_tfrecord(record_file, 
+    batch_size=32, 
+    image_size=(60, 120), 
+    label_prefix='labels',
+    buffer_size=10000,
+    grayscale=False): # load image and convert to grayscale
+    '''create image/labels dataset from TFRecord file'''          
+    return tf.data.TFRecordDataset(record_file).map(
+        lambda example_proto: _parse_image_function(example_proto, image_size, label_prefix, grayscale),
+        num_parallel_calls=tf.data.experimental.AUTOTUNE # -1 any available CPUs
+    ).shuffle(buffer_size).batch(batch_size)</code></pre>
+<ul>
+<li><code>TFRecordDataset</code>中的元素是序列化后的<code>tf.train.Example</code>，配合<code>tf.io.parse_single_example</code>进行解析。上面代码块中的<code>_parse_image_function</code>即对其进行解析，得到存储其中的图片二进制文件流及验证码字符串<code>Tensor</code>。</li>
+</ul>
+<pre class="highlight"><code class="language-python">def _parse_image_function(example_proto, image_size, label_prefix, grayscale):
+    '''Parse the input tf.Example protocal using the dictionary describing the features'''
+    image_feature_description = {
+        'labels'   : tf.io.FixedLenFeature([], tf.string),
+        'image_raw': tf.io.FixedLenFeature([], tf.string)
+    }
+    image_features = tf.io.parse_single_example(example_proto, image_feature_description)
+
+    # decode image array and labels
+    image_data = _decode_image(image_features['image_raw'], image_size, grayscale)
+    dict_labels = _decode_labels(image_features['labels'], label_prefix)
+
+    return image_data, dict_labels</code></pre>
+<ul>
+<li>最后转换图片二进制码为<code>RGB</code>数据、转换验证码各个字符为相应数字编码，作为模型训练的数据。</li>
+</ul>
+<pre class="highlight"><code class="language-python">def _decode_image(image, resize, grayscale):
+    '''preprocess image with given raw data
+        - image: image raw data
+    '''
+    image = tf.image.decode_jpeg(image, channels=3)
+
+    # convert to floats in the [0,1] range.
+    image = tf.image.convert_image_dtype(image, tf.float32)
+    image = tf.image.resize(image, resize)
+
+    # RGB to grayscale -&gt; channels=1
+    if grayscale:
+        image = tf.image.rgb_to_grayscale(image) # shape=(h, w, 1)
+
+    return image # (h, w, c)
+
+
+def _decode_labels(labels, prefix):
+    ''' this function is used within dataset.map(), 
+        where eager execution is disables by default:
+            check tf.executing_eagerly() returns False.
+        So any Tensor.numpy() is not allowed in this function.
+    '''
+    dict_labels = {}
+    for i in range(4):
+        c = tf.strings.substr(labels, i, 1) # labels example: b'abcd'
+        label = tf.strings.unicode_decode(c, input_encoding='utf-8') - ord('a')
+        dict_labels[f'{prefix}{i}'] = label
+
+    return dict_labels</code></pre>
+<hr />
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>[1] <a href="https://tensorflow.google.cn/tutorials/load_data/tfrecord#walkthrough_reading_and_writing_image_data">Walkthrough: Reading and writing image data</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>[2] <a href="https://stackoverflow.com/questions/51125266/how-do-i-split-tensorflow-datasets/51126863#51126863">How do I split Tensorflow datasets?</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>[3] <a href="https://tensorflow.google.cn/tutorials/load_data/tfrecord#tfexample">Data types for tf.Example</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

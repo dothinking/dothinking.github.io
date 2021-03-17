@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2018-02-07-Python3%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%9A%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>2018 02 07 Python3代码示例：基本操作 - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">格致</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-05-21-%E4%B8%80%E8%B7%AF%E8%B5%B0%E6%9D%A5/" class="nav-link">一路走来</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-07-10-Marc%E8%B0%83%E7%94%A8Python%E8%84%9A%E6%9C%AC%E7%A8%8B%E5%BA%8F%E4%B8%AD%E5%85%B3%E4%BA%8E%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C%E7%9A%84%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98/" class="nav-link">Marc调用Python脚本程序中关于目录操作的几个问题</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-07-26-Windows%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8F%90%E4%BA%A4Marc%E8%AE%A1%E7%AE%97%E4%BB%BB%E5%8A%A1/" class="nav-link">Windows命令行提交Marc计算任务</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-07-27-MSC-Marc2011%E5%8D%95%E6%9C%BA%E5%A4%9A%E6%A0%B8%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97%E7%A4%BA%E4%BE%8B/" class="nav-link">MSC-Marc 2011单机多核并行计算示例</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-10-10-%E5%AE%9E%E4%BE%8B%E8%AF%B4%E6%98%8EVS2005%E3%80%81Python%E7%A8%8B%E5%BA%8F%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6%E6%97%B6%E7%9A%84%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/" class="nav-link">实例说明VS2005、Python程序读写文件时的字符编码问题</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-10-18-MSC.MARC-2010%E8%A1%A8%E6%A0%BC%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B9%E5%BC%8F/" class="nav-link">MSC.MARC 2010表格之创建方式</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-10-20-MSC.MARC-2010%E8%A1%A8%E6%A0%BC%E4%B9%8B%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%BC%8F/" class="nav-link">MSC.MARC 2010表格之数据模式</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-10-21-MSC.MARC-2010%E5%88%9A%E6%80%A7%E6%8E%A5%E8%A7%A6%E4%BD%93%E8%BF%90%E5%8A%A8%E8%AE%BE%E7%BD%AE/" class="nav-link">MSC.MARC 2010刚性接触体运动设置</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-06-13-UG%E8%BF%90%E5%8A%A8%E4%BB%BF%E7%9C%9F%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" class="nav-link">UG运动仿真学习记录</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-07-29-Levy-Mises%E7%90%86%E8%AE%BA%E7%9A%84%E6%80%9D%E8%80%83/" class="nav-link">Levy Mises理论的思考</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-07-30-%E5%BA%94%E5%8A%9B%E5%BC%A0%E9%87%8F%E7%9A%84%E8%AE%A4%E8%AF%86%E4%B9%8B%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" class="nav-link">应力张量的认识之基本概念</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-07-30-%E5%BA%94%E5%8A%9B%E5%BC%A0%E9%87%8F%E7%9A%84%E8%AE%A4%E8%AF%86%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2/" class="nav-link">应力张量的认识之线性变换</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-07-31-%E5%BA%94%E5%8A%9B%E5%BC%A0%E9%87%8F%E7%9A%84%E8%AE%A4%E8%AF%86%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2%E7%9A%84%E8%AF%81%E6%98%8E/" class="nav-link">应力张量的认识之线性变换的证明</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-08-05-UG-NX-%E8%A7%92%E8%89%B2%E5%AE%9A%E5%88%B6%E4%B8%8E%E5%BA%94%E7%94%A8/" class="nav-link">UG NX角色定制与应用</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-09-28-ThinkPHP%E8%87%AA%E5%8A%A8%E9%AA%8C%E8%AF%81%E4%B9%8Bunique%E8%A7%84%E5%88%99%E7%9A%84%E9%97%AE%E9%A2%98%E5%92%8C%E7%90%86%E8%A7%A3/" class="nav-link">ThinkPHP自动验证之unique规则的问题和理解</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-10-19-ThinkPHP%E6%A1%86%E6%9E%B6%E4%B8%8BMySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E7%B1%BB/" class="nav-link">ThinkPHP框架下MySQL数据库备份还原类</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-10-31-Sublime-Text-2%E4%B8%AD%E8%BF%90%E8%A1%8CPython%E7%A8%8B%E5%BA%8F/" class="nav-link">Sublime Text 2中运行Python程序</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-07-02-Sublime-Text-%E8%87%AA%E5%AE%9A%E4%B9%89%E9%A2%9C%E8%89%B2%E4%B8%BB%E9%A2%98/" class="nav-link">Sublime Text 自定义颜色主题</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-11-28-%E4%B8%8A%E9%99%90%E6%B3%95%E5%A1%91%E6%80%A7%E5%8A%9F%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86%E7%AE%97%E4%BE%8B%E4%B9%8B%E4%BA%8C%E9%87%8D%E7%A7%AF%E5%88%86/" class="nav-link">上限法塑性功数值积分算例之二重积分</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-12-19-Gauss-Legendre%E4%BA%8C%E9%87%8D%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86/" class="nav-link">Gauss Legendre二重数值积分</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-12-22-NumPy%E5%BA%93frompyfunc%E4%B8%8Evectorize%E7%9A%84%E6%AF%94%E8%BE%83/" class="nav-link">NumPy库frompyfunc与vectorize的比较</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-12-24-%E4%B8%8A%E9%99%90%E6%B3%95%E5%A1%91%E6%80%A7%E5%8A%9F%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86%E7%AE%97%E4%BE%8B%E4%B9%8B%E4%B8%89%E9%87%8D%E7%A7%AF%E5%88%86/" class="nav-link">上限法塑性功数值积分算例之三重积分</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2015-06-16-SAE%E7%8E%AF%E5%A2%83%E4%B8%8B%E4%BD%BF%E7%94%A8MySQLReback%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9FMySQL%E6%95%B0%E6%8D%AE%E5%BA%93/" class="nav-link">SAE环境下使用MySQLReback备份还原MySQL数据库</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2015-06-17-SAE%E7%8E%AF%E5%A2%83%E4%B8%8B%E4%BD%BF%E7%94%A8PHPExcel%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE/" class="nav-link">SAE环境下使用PHPExcel导入数据</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2015-11-04-%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0%E7%A4%BE%E4%BC%9A%E6%A0%B8%E7%AE%97%E7%9F%A9%E9%98%B5%EF%BC%88SAM%EF%BC%89%E7%9A%84%E8%B4%A6%E6%88%B7%E9%9B%86%E7%BB%93%E4%B8%8E%E5%B9%B3%E8%A1%A1/" class="nav-link">程序实现社会核算矩阵（SAM）的账户集结与平衡</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2015-11-15-python%E4%B8%AD%E4%BD%BF%E7%94%A8mlab%E5%BA%93%E5%AE%9E%E7%8E%B0%E4%B8%8EMATLAB%E4%BA%A4%E4%BA%92/" class="nav-link">python中使用mlab库实现与MATLAB交互</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2016-01-20-%E4%BD%BF%E7%94%A8Python%E5%AF%BC%E5%87%BAMSC.Marc%E5%90%8E%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE/" class="nav-link">使用Python导出MSC.Marc后处理数据</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2016-11-05-%E6%95%B4%E5%90%88UEditor%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0%E6%A8%A1%E5%9D%97%E4%B8%BA%E4%B8%8A%E4%BC%A0%E6%8F%92%E4%BB%B6/" class="nav-link">整合UEditor图片上传模块为上传插件</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-01-07-%E5%AD%A6%E4%BD%8D%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C%E4%B8%AD%E7%9A%84%E8%BD%AF%E4%BB%B6%E7%BB%84%E5%90%88/" class="nav-link">学位论文写作中的软件组合</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-03-08-%E7%90%83%E9%9D%A2%E8%B7%9D%E7%A6%BB%E4%B8%8E%E6%96%B9%E4%BD%8D%E8%A7%92%E5%85%AC%E5%BC%8F%E7%9A%84%E6%8E%A8%E5%AF%BC%EF%BC%9A%E8%A7%A3%E4%B8%89%E8%A7%92%E5%BD%A2%E6%B3%95/" class="nav-link">球面距离与方位角公式的推导：解三角形法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-03-09-%E7%90%83%E9%9D%A2%E8%B7%9D%E7%A6%BB%E4%B8%8E%E6%96%B9%E4%BD%8D%E8%A7%92%E5%85%AC%E5%BC%8F%E7%9A%84%E6%8E%A8%E5%AF%BC%EF%BC%9A%E5%90%91%E9%87%8F%E4%BB%A3%E6%95%B0%E6%B3%95/" class="nav-link">球面距离与方位角公式的推导：向量代数法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-04-24-Selenium%2BPhantomJS%E6%97%A0%E6%B3%95%E8%BE%93%E5%85%A5%E6%96%87%E6%9C%AC%E5%8F%8A%E5%85%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="nav-link">Selenium PhantomJS无法输入文本及其解决方法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-04-24-Selenium-Python%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%A4%87%E5%BF%98/" class="nav-link">Selenium Python基本操作备忘</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-07-23-Microsoft-Excel-2010%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8A%9F%E8%83%BD%E5%8C%BA%28%E4%B8%80%29/" class="nav-link">Microsoft Excel 2010自定义功能区(一)</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-07-24-Microsoft-Excel-2010%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8A%9F%E8%83%BD%E5%8C%BA%28%E4%BA%8C%29/" class="nav-link">Microsoft Excel 2010自定义功能区(二)</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-07-31-%E8%87%AA%E5%AE%9A%E4%B9%89Microsoft-Excel-2010-Ribbon%E8%8F%9C%E5%8D%95%E9%A1%B9Enable%E7%8A%B6%E6%80%81/" class="nav-link">自定义Microsoft Excel 2010 Ribbon菜单项Enable状态</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-08-08-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9AGroups%E4%B8%8ERegions/" class="nav-link">NXOpen CAE开发总结系列：Groups与Regions</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-08-27-NXOpen%EF%BC%9A%E5%AF%B9%E8%AF%9D%E6%A1%86%E7%9A%84%E8%AE%A4%E8%AF%86/" class="nav-link">NXOpen：对话框的认识</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-09-01-NXOpen%EF%BC%9AMenu-Script%E8%87%AA%E5%AE%9A%E4%B9%89%E8%8F%9C%E5%8D%95/" class="nav-link">NXOpen：Menu Script自定义菜单</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-10-10-%E5%85%BC%E5%AE%B9Windows%E5%92%8CLinux%E7%9A%84C%2B%2B%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E6%A8%A1%E6%9D%BF/" class="nav-link">兼容Windows和Linux的C++动态链接库模板</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-11-25-VBA%E8%AE%BE%E7%BD%AE%E7%94%A8%E6%88%B7%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" class="nav-link">VBA设置用户环境变量</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-11-30-VBA%E8%B0%83%E7%94%A8C%2B%2B%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/" class="nav-link">VBA调用C++动态链接库</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-12-12-NXOpen%EF%BC%9AExpression%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%9F%BA%E6%9C%AC%E5%8D%95%E4%BD%8D/" class="nav-link">NXOpen：Expression类型与基本单位</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-01-12-%E4%BD%BF%E7%94%A8subprocess%E6%A8%A1%E5%9D%97%E8%B0%83%E7%94%A8%E5%AD%90%E8%BF%9B%E7%A8%8B%E5%B9%B6%E8%8E%B7%E5%8F%96%E8%BE%93%E5%87%BA/" class="nav-link">2018 01 12 使用subprocess模块调用子进程并获取输出</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-01-13-PyQt%E4%BD%BF%E7%94%A8QProcess%E8%B0%83%E7%94%A8%E5%AD%90%E8%BF%9B%E7%A8%8B%E5%B9%B6%E8%8E%B7%E5%8F%96%E8%BE%93%E5%87%BA/" class="nav-link">2018 01 13 PyQt使用QProcess调用子进程并获取输出</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-01-23-%E8%87%AA%E5%AE%9A%E4%B9%89Microsoft-Office-Ribbon%E5%8C%BA%E5%9F%9F/" class="nav-link">2018 01 23 自定义Microsoft Office Ribbon区域</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">2018 02 07 Python3代码示例：基本操作</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-02-08-Python3%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C/" class="nav-link">2018 02 08 Python3代码示例：字符串操作</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-02-09-Python3%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%9A%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C/" class="nav-link">2018 02 09 Python3代码示例：文件目录操作</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-04-05-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9AAdvanced-Simulation%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/" class="nav-link">2018 04 05 NXOpen CAE开发总结系列：Advanced Simulation文件结构</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-05-04-NXOpen%EF%BC%9A%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7%E6%93%8D%E4%BD%9C/" class="nav-link">2018 05 04 NXOpen：对象属性操作</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-05-06-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9A%E4%B8%BB%E8%A6%81%E7%B1%BB%E7%BB%93%E6%9E%84%E5%9B%BE/" class="nav-link">2018 05 06 NXOpen CAE开发总结系列：主要类结构图</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-06-25-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9AFEM-SIM%E6%A8%A1%E5%9E%8B%E4%B8%ADPolygon-Body%E7%9A%84%E5%90%8D%E7%A7%B0/" class="nav-link">2018 06 25 NXOpen CAE开发总结系列：FEM SIM模型中Polygon Body的名称</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-07-01-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9A%E4%BB%8EANSYS-APDL%E8%A7%92%E5%BA%A6%E7%9C%8B%E5%BE%85Mesh/" class="nav-link">2018 07 01 NXOpen CAE开发总结系列：从ANSYS APDL角度看待Mesh</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-09-28-NXOpen%EF%BC%9A%E7%A6%81%E7%94%A8%E8%8F%9C%E5%8D%95%E9%A1%B9/" class="nav-link">2018 09 28 NXOpen：禁用菜单项</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-21-Python-Package-__init__%E8%A7%A3%E6%9E%90/" class="nav-link">2018 10 21 Python Package   init  解析</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-21-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%E5%8F%8APython%E5%AE%9E%E7%8E%B0/" class="nav-link">2018 10 21 遗传算法：基本原理及Python实现</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-25-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E6%94%B9%E8%BF%9B%E6%96%B9%E5%90%91%E4%B9%8B%E8%87%AA%E9%80%82%E5%BA%94%E7%AD%96%E7%95%A5/" class="nav-link">2018 10 25 遗传算法：改进方向之自适应策略</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-27-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E6%94%B9%E8%BF%9B%E6%96%B9%E5%90%91%E4%B9%8B%E7%B2%BE%E8%8B%B1%E7%AD%96%E7%95%A5/" class="nav-link">2018 10 27 遗传算法：改进方向之精英策略</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-31-GitLab-CI-CD%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D/" class="nav-link">2018 10 31 GitLab CI CD功能介绍</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-11-05-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E6%B5%8B%E8%AF%95%E6%A1%88%E4%BE%8B%E4%B9%8B%E5%87%BD%E6%95%B0%E6%9E%81%E5%80%BC/" class="nav-link">2018 11 05 遗传算法：测试案例之函数极值</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-01-28-%E9%9B%86%E6%88%90python%E7%9A%84Excel%E6%8F%92%E4%BB%B6%E6%A8%A1%E6%9D%BFPyAddin%E2%80%94%E2%80%94%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" class="nav-link">2019 01 28 集成python的Excel插件模板PyAddin——使用说明</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-01-28-%E9%9B%86%E6%88%90python%E7%9A%84Excel%E6%8F%92%E4%BB%B6%E6%A8%A1%E6%9D%BFPyAddin%E2%80%94%E2%80%94%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D/" class="nav-link">2019 01 28 集成python的Excel插件模板PyAddin——原理介绍</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-03-24-PyQt5%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5%E4%B9%8B%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7Tagit/" class="nav-link">2019 03 24 PyQt5应用实践之个人知识管理工具Tagit</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-04-20-VBA%E8%B0%83%E7%94%A8%E5%A4%96%E9%83%A8%E5%87%BD%E6%95%B0%EF%BC%88%E5%B7%A5%E4%BD%9C%E7%B0%BF-COM%E9%93%BE%E6%8E%A5%E5%BA%93-C%E9%93%BE%E6%8E%A5%E5%BA%93%EF%BC%89%E6%96%B9%E6%B3%95/" class="nav-link">2019 04 20 VBA调用外部函数（工作簿 COM链接库 C链接库）方法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-04-21-Python-win32com%E6%A8%A1%E5%9D%97%E6%93%8D%E4%BD%9CExcel%E7%9A%84%E5%87%A0%E4%B8%AA%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%80%EF%BC%89/" class="nav-link">2019 04 21 Python win32com模块操作Excel的几个应用（一）</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-05-02-%E8%8E%B7%E5%8F%96Excel%E5%85%AC%E5%BC%8F%E7%9A%84%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%EF%BC%88Python%E5%AE%9E%E7%8E%B0%EF%BC%89/" class="nav-link">2019 05 02 获取Excel公式的依赖关系（Python实现）</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-05-22-Matplotlib%E5%A4%9A%E7%BA%B5%E8%BD%B4%EF%BC%88%E5%AF%84%E7%94%9F%E8%BD%B4%EF%BC%89%E6%95%A3%E7%82%B9%E5%9B%BE/" class="nav-link">2019 05 22 Matplotlib多纵轴（寄生轴）散点图</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-08-18-C%2B%2B-DLL%E4%B8%8EVBA%E4%B9%8B%E9%97%B4%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BC%A0%E9%80%92%EF%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89%E8%BF%94%E5%9B%9E%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="nav-link">2019 08 18 C++ DLL与VBA之间的字符串传递：（一）返回字符串</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-08-31-C%2B%2B-DLL%E4%B8%8EVBA%E4%B9%8B%E9%97%B4%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BC%A0%E9%80%92%EF%BC%9A%EF%BC%88%E4%BA%8C%EF%BC%89%E4%BC%A0%E5%85%A5%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="nav-link">2019 08 31 C++ DLL与VBA之间的字符串传递：（二）传入字符串</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-09-13-Python-win32com%E6%A8%A1%E5%9D%97%E6%93%8D%E4%BD%9CExcel%E7%9A%84%E5%87%A0%E4%B8%AA%E5%BA%94%E7%94%A8%EF%BC%88%E4%BA%8C%EF%BC%89/" class="nav-link">2019 09 13 Python win32com模块操作Excel的几个应用（二）</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-09-14-%E4%BB%A5Windows%E6%9C%8D%E5%8A%A1%E6%96%B9%E5%BC%8F%E8%BF%90%E8%A1%8CExcel%E8%87%AA%E5%8A%A8%E5%8C%96%E7%A8%8B%E5%BA%8F%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="nav-link">2019 09 14 以Windows服务方式运行Excel自动化程序遇到的问题与解决方法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-10-01-Python%E6%B1%82%E8%A7%A3%E8%87%AA%E8%A1%8C%E8%BD%A6%E5%89%8D%E5%90%8E%E8%BD%AE%E8%BD%A8%E8%BF%B9%E9%97%AE%E9%A2%98/" class="nav-link">Python求解自行车前后轮轨迹问题</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-12-29-GitLab-CI-CD%E4%B9%8Bbefore_script%E5%92%8Cafter_script/" class="nav-link">2019 12 29 GitLab CI CD之before script和after script</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-02-27-TensorFlow%E8%87%AA%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E9%9B%86%EF%BC%881%EF%BC%89%EF%BC%9Atf.data.Dataset/" class="nav-link">2020 02 27 TensorFlow自定义数据集（1）：tf.data.Dataset</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-02-28-TensorFlow%E8%87%AA%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E9%9B%86%EF%BC%882%EF%BC%89%EF%BC%9Atf.data.TFRecordDataset/" class="nav-link">2020 02 28 TensorFlow自定义数据集（2）：tf.data.TFRecordDataset</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-03-01-2020%E8%AF%BB%E4%B9%A6%E8%AE%A1%E5%88%92%EF%BC%881%EF%BC%89%EF%BC%9ATensorFlow%E6%8A%80%E6%9C%AF%E8%A7%A3%E6%9E%90%E4%B8%8E%E5%AE%9E%E6%88%98/" class="nav-link">2020 03 01 2020读书计划（1）：TensorFlow技术解析与实战</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-07-13-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81/" class="nav-link">2020 07 13 pdf2docx开发概要</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-09-27-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%E4%B9%8B%E5%AF%B9%E9%BD%90%E9%9A%90%E5%BC%8F%E8%A1%A8%E6%A0%BC%E7%BA%BF/" class="nav-link">2020 09 27 pdf2docx开发概要之对齐隐式表格线</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-10-01-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%E4%B9%8B%E7%9F%A2%E9%87%8F%E5%9B%BE%E5%A4%84%E7%90%86/" class="nav-link">2020 10 01 pdf2docx开发概要之矢量图处理</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-10-15-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%E4%B9%8B%E8%8E%B7%E5%8F%96%E5%9B%BE%E7%89%87%E5%8F%8A%E5%85%B6%E4%BD%8D%E7%BD%AE/" class="nav-link">2020 10 15 pdf2docx开发概要之获取图片及其位置</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-10-25-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%B5%AE%E5%8A%A8%E5%9B%BE%E7%89%87/" class="nav-link">2020 10 25 pdf2docx开发概要之创建浮动图片</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2021-01-02-Python%E5%A4%84%E7%90%86PDF%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E5%AF%B9%E6%AF%94/" class="nav-link">2021 01 02 Python处理PDF的第三方库对比</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Categories <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/2012/" class="dropdown-item">2012</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2013/" class="dropdown-item">2013</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2014/" class="dropdown-item">2014</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2015/" class="dropdown-item">2015</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2016/" class="dropdown-item">2016</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2017/" class="dropdown-item">2017</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2018/" class="dropdown-item">2018</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2019/" class="dropdown-item">2019</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2020/" class="dropdown-item">2020</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2021/" class="dropdown-item">2021</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../2018-01-23-%E8%87%AA%E5%AE%9A%E4%B9%89Microsoft-Office-Ribbon%E5%8C%BA%E5%9F%9F/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../2018-02-08-Python3%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2018-02-07-Python3代码示例：基本操作.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">链式比较</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">解压可迭代对象</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">遍历列表/元组</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#_4" class="nav-link">遍历字典</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#_5" class="nav-link">集合运算</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#_6" class="nav-link">列表推导式</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#_7" class="nav-link">命名切片</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#else" class="nav-link">else子句</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#_8" class="nav-link">上下文管理器</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#_9" class="nav-link">自定义比较/排序</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h2 id="_1">链式比较<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>区间判断时可以使用更为直观的链式比较：</p>
+<pre class="highlight"><code class="language-python">score = 88
+if 80&lt;score&lt;90:
+    print("come on...")
+# come on...</code></pre>
+<h2 id="_2">解压可迭代对象<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>使用赋值语句可以解压可迭代对象（元组、列表、字符串等）并将各个元素分别赋值给多个变量。变量的数量必须跟序列元素的数量一样，否则会产生<code>ValueError</code>异常。</p>
+<pre class="highlight"><code class="language-python">x,y = 3,5
+x,y = y,x
+# x=5, y=3
+x,y = y, x+y
+# x=3, y=8
+
+L = [1,2,(3,4)]
+a,b,c = L
+# a=1,b=2,c=(3,4)
+
+p = (4, 5)
+x, y, z = p
+Traceback (most recent call last):
+File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+ValueError: need more than 2 values to unpack</code></pre>
+<p>当确实需要以较少数量的变量去解压更多元素的可迭代对象时，可以使用**星号表达式**。其效果类似于函数的可变位置参数<code>*argv</code>。</p>
+<pre class="highlight"><code class="language-python">x,*y,z = [3,5,7,9]
+# x=3, y=[5,7], z=9
+
+# 注意解压出的变量y为列表类型，即便元素数量可能为0
+x,*y,z = [3,5]
+# x=3, y=[], z=5
+
+# *x将x解压为(1,2,3), (4,5,6), (7,8,9)
+# 然后作为zip的参数
+x=[[1,2,3],[4,5,6],[7,8,9]]
+[list(item) for item in zip(*x)]
+# [[1, 4, 7], [2, 5, 8], [3, 6, 9]]</code></pre>
+<p>如果只想解压一部分而丢弃其他的值，可以使用任意变量名占位：</p>
+<pre class="highlight"><code class="language-python">L = [1,2,(3,4)]
+_, _, x = L
+# x=(3,4)</code></pre>
+<h2 id="_3">遍历列表/元组<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>直接使用<code>for...in</code>语句遍历，结合<code>reversed()</code>和<code>sorted()</code>函数可以按照需求顺序遍历：</p>
+<pre class="highlight"><code class="language-python">colors = ['red', 'green', 'blue', 'yellow']
+
+# 遍历列表
+for color in colors:
+    print(color)
+
+# 反向遍历
+for color in reversed(colors):
+    print(color)
+
+# 按字母排序遍历
+for color in sorted(colors):
+    print(color)
+
+# 按字母逆序遍历
+for color in sorted(colors, reverse=True):
+    print(color)
+
+# 自定义排序（例如字符串长度）遍历
+for color in sorted(colors, key=len): # key可以使用lambda表达式
+    print(color)    </code></pre>
+<p>使用<code>enumerate()</code>获取遍历元素的索引，使用<code>zip()</code>同时遍历多个列表：</p>
+<pre class="highlight"><code class="language-python">colors = ['red', 'green', 'blue', 'yellow']
+bodies = ['sphere', 'cylinder', 'block']
+
+for i, color in enumerate(colors, start=100):
+    print(i, '---&gt;', color)    
+# 100 ---&gt; red
+# 101 ---&gt; green
+# 102 ---&gt; blue
+# 103 ---&gt; yellow
+
+for body, color in zip(bodies, colors):
+    print(body, '---&gt;', color)
+# sphere ---&gt; red
+# cylinder ---&gt; green
+# block ---&gt; blue</code></pre>
+<h2 id="_4">遍历字典<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<pre class="highlight"><code class="language-python"># 从两个列表创建字典
+colors = ['red', 'green', 'blue', 'yellow']
+bodies = ['sphere', 'cylinder', 'block']
+d = dict(zip(bodies, colors))
+# d = {'sphere':'red', 'cylinder':'green', 'block':'blue'}
+
+# 遍历字典
+for k, v in d.items():
+    print(k, '---&gt;', v)</code></pre>
+<h2 id="_5">集合运算<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>集合的交、差、并运算：</p>
+<pre class="highlight"><code class="language-python">x=set([1,2,4])
+y=set([3,4,5])
+
+x&amp;y # 交集
+# {4}
+x-y # 差集
+# {1, 2}
+x|y # 并集
+# {1, 2, 3, 4, 5}</code></pre>
+<p>字典是**键集合**与**值集合**的映射关系。字典的<code>keys()</code>方法返回一个展现键集合的键视图对象。键视图也支持集合操作，所以可以直接使用键视图对象执行普通的集合操作。</p>
+<pre class="highlight"><code class="language-python">a = {'x' : 1, 'y' : 2, 'z' : 3}
+b = {'w' : 10, 'x' : 11, 'y' : 2}
+
+# 两个字典的公共键
+a.keys() &amp; b.keys() # { 'x', 'y' }
+
+# 仅在字典a中存在的键
+a.keys() - b.keys() # { 'z' }
+
+# 两个字典的公共元素
+a.items() &amp; b.items() # { ('y', 2) }</code></pre>
+<p>字典的<code>items()</code>方法同理，但是由于不能保证<code>values()</code>方法的所有值互不相同，故不能直接进行集合操作——不过可以先将值集合转换成 <code>set</code>，然后再执行集合运算。</p>
+<h2 id="_6">列表推导式<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<p>列表推导式（List Comprehensions）是Python内置的一种生成列表的简洁方式，同理可以使用字典推导式、集合推导式。注意不存在元组推导式。</p>
+<pre class="highlight"><code class="language-python"># 列表推导式：生成1-100的奇数
+odd = [i for i in range(1, 100) if i%2]
+
+# 字典推导式：统计字符数
+word = 'hello word'
+letter_counts = {letter: word.count(letter) for letter in word if letter.strip()}
+# {'d': 1, 'w': 1, 'e': 1, 'r': 1, 'o': 2, 'l': 2, 'h': 1}
+
+# 生成器推导式
+# 
+num_generator = (number for number in range(1, 6))
+type(num_generator) # &lt;class 'generotor'&gt;
+for number in num_generator:
+    print(number)</code></pre>
+<p>列表推导式的一个潜在缺陷是当输入非常大时会产生一个非常大的结果集，占用大量内存；对应措施为使用生成器（generator）表达式。</p>
+<ul>
+<li>生成器表达式的一个非常优雅的应用是先转换或过滤数据，然后作为聚集函数如<code>sum()</code>、<code>min()</code>、<code>max()</code>的参数进行计算</li>
+<li>生成器仅在运行中产生值，再次使用时已被擦除</li>
+</ul>
+<pre class="highlight"><code class="language-python"># 求平方和
+nums = [1, 2, 3, 4, 5]
+s = sum(x * x for x in nums)
+
+# 判断是否存在某类型文件
+import os
+files = os.listdir('dirname')
+if any(name.endswith('.py') for name in files):
+    print('There be python!')
+else:
+    print('Sorry, no python.')   </code></pre>
+<p>当过滤规则比较复杂，不能简单地在列表推导式或生成器表达式中表达出来（例如过滤规则涉及异常）时，可以将过滤代码放到一个函数中，然后使用内建的<code>filter()</code>函数。<code>filter()</code>函数返回一个迭代器。</p>
+<pre class="highlight"><code class="language-python">values = ['1', '2', '-3', '-', '4', 'N/A', '5']
+def is_int(val):
+    try:
+        x = int(val)
+        return True
+    except ValueError:
+        return False
+
+ivals = list(filter(is_int, values))
+# ['1', '2', '-3', '4', '5']</code></pre>
+<h2 id="_7">命名切片<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p>过多的硬编码索引值将导致代码可读性和可维护性降低，使用内置的slice()函数创建切片对象，可以用在任何允许进行切片操作的地方。</p>
+<pre class="highlight"><code class="language-python">items = [0, 1, 2, 3, 4, 5, 6]
+last_two = slice(-2, None)
+items[last_two]
+# [5, 6]</code></pre>
+<h2 id="else">else子句<a class="headerlink" href="#else" title="Permanent link">&para;</a></h2>
+<p><code>for</code>/<code>while</code>/<code>try</code>语句中的<code>else</code>子句将在循环/异常检测正常运行结束，即不是通过<code>break</code>/<code>return</code>语句或是异常退出时执行。</p>
+<pre class="highlight"><code class="language-python">pools = [2,4,6]
+for num in pools:
+    if num%2:
+        break
+else:
+    print("nothing found...")
+# nothing found...    </code></pre>
+<pre class="highlight"><code class="language-python"># 如果try块仅需要防守dangerous_call()可能出现的错误，
+# 那么为了清晰明确，after_call()应放在else子句执行
+try：
+    dangerous_call()
+    after_call()
+except OSError:
+    log('OSError...')
+
+# better    
+try:
+    dangerous_call()
+except OSError:
+    log('OSError...')
+else:
+    after_call()</code></pre>
+<h2 id="_8">上下文管理器<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<p>我们通常使用<code>with...as</code>语句来自动处理文件的打开和关闭，并且**上下文管理器可以同时管理多个资源**。</p>
+<pre class="highlight"><code class="language-python">with open('input.txt', 'r') as source, open('output.txt', 'w') as target:
+    target.write(source.read())</code></pre>
+<p>备注一下以上<code>open()</code>函数对于不同操作系统换行符的识别问题：</p>
+<p>Unix和Windows中的换行符分别是<code>\n</code>和<code>\r\n</code>，Python默认会以统一模式处理换行符——读取文本的时候，识别所有的普通换行符并将其转换为单个<code>\n</code>字符；输出文本时，将换行符<code>\n</code>转换为系统默认的换行符。</p>
+<p>如果不希望这种默认的处理方式，可以给<code>open()</code>函数传入参数<code>newline=''</code>。例如Linux下执行如下代码：</p>
+<pre class="highlight"><code class="language-python">with open('hello.txt', 'rt') as f:
+    print(f.read())
+# 'hello world!\n'
+
+with open('hello.txt', 'rt', newline='') as f:
+    print(f.read())
+# 'hello world!\r\n'</code></pre>
+<h2 id="_9">自定义比较/排序<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p><code>max()</code>/<code>min()</code>/<code>sorted()</code>等全局函数可以通过<code>key</code>关键字指定比较/排序的标准。list的内置函数<code>sort</code>也具有类似使用方式：</p>
+<pre class="highlight"><code class="language-python"># 统计列表中频数最高的元素
+num = [1,2,2,3,3,3,4,4,4,4]
+x = max(set(num), key=num.count)
+# x=4
+
+# 排序列表并获取排序后对应原来的索引
+data = [2,4,5,3]
+zip_data = list(zip(data, range(len(data))))
+zip_data.sort(key=lambda x: x[0])
+sorted_data, sorted_index = zip(*zip_data)
+# sorted_data=(2, 3, 4, 5)
+# sorted_index=(0, 3, 1, 2)</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2018-10-31-GitLab-CI-CD%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>2018 10 31 GitLab CI CD功能介绍 - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">格致</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-05-21-%E4%B8%80%E8%B7%AF%E8%B5%B0%E6%9D%A5/" class="nav-link">一路走来</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-07-10-Marc%E8%B0%83%E7%94%A8Python%E8%84%9A%E6%9C%AC%E7%A8%8B%E5%BA%8F%E4%B8%AD%E5%85%B3%E4%BA%8E%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C%E7%9A%84%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98/" class="nav-link">Marc调用Python脚本程序中关于目录操作的几个问题</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-07-26-Windows%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8F%90%E4%BA%A4Marc%E8%AE%A1%E7%AE%97%E4%BB%BB%E5%8A%A1/" class="nav-link">Windows命令行提交Marc计算任务</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-07-27-MSC-Marc2011%E5%8D%95%E6%9C%BA%E5%A4%9A%E6%A0%B8%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97%E7%A4%BA%E4%BE%8B/" class="nav-link">MSC-Marc 2011单机多核并行计算示例</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-10-10-%E5%AE%9E%E4%BE%8B%E8%AF%B4%E6%98%8EVS2005%E3%80%81Python%E7%A8%8B%E5%BA%8F%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6%E6%97%B6%E7%9A%84%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/" class="nav-link">实例说明VS2005、Python程序读写文件时的字符编码问题</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-10-18-MSC.MARC-2010%E8%A1%A8%E6%A0%BC%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B9%E5%BC%8F/" class="nav-link">MSC.MARC 2010表格之创建方式</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-10-20-MSC.MARC-2010%E8%A1%A8%E6%A0%BC%E4%B9%8B%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%BC%8F/" class="nav-link">MSC.MARC 2010表格之数据模式</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-10-21-MSC.MARC-2010%E5%88%9A%E6%80%A7%E6%8E%A5%E8%A7%A6%E4%BD%93%E8%BF%90%E5%8A%A8%E8%AE%BE%E7%BD%AE/" class="nav-link">MSC.MARC 2010刚性接触体运动设置</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-06-13-UG%E8%BF%90%E5%8A%A8%E4%BB%BF%E7%9C%9F%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" class="nav-link">UG运动仿真学习记录</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-07-29-Levy-Mises%E7%90%86%E8%AE%BA%E7%9A%84%E6%80%9D%E8%80%83/" class="nav-link">Levy Mises理论的思考</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-07-30-%E5%BA%94%E5%8A%9B%E5%BC%A0%E9%87%8F%E7%9A%84%E8%AE%A4%E8%AF%86%E4%B9%8B%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" class="nav-link">应力张量的认识之基本概念</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-07-30-%E5%BA%94%E5%8A%9B%E5%BC%A0%E9%87%8F%E7%9A%84%E8%AE%A4%E8%AF%86%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2/" class="nav-link">应力张量的认识之线性变换</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-07-31-%E5%BA%94%E5%8A%9B%E5%BC%A0%E9%87%8F%E7%9A%84%E8%AE%A4%E8%AF%86%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2%E7%9A%84%E8%AF%81%E6%98%8E/" class="nav-link">应力张量的认识之线性变换的证明</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-08-05-UG-NX-%E8%A7%92%E8%89%B2%E5%AE%9A%E5%88%B6%E4%B8%8E%E5%BA%94%E7%94%A8/" class="nav-link">UG NX角色定制与应用</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-09-28-ThinkPHP%E8%87%AA%E5%8A%A8%E9%AA%8C%E8%AF%81%E4%B9%8Bunique%E8%A7%84%E5%88%99%E7%9A%84%E9%97%AE%E9%A2%98%E5%92%8C%E7%90%86%E8%A7%A3/" class="nav-link">ThinkPHP自动验证之unique规则的问题和理解</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-10-19-ThinkPHP%E6%A1%86%E6%9E%B6%E4%B8%8BMySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E7%B1%BB/" class="nav-link">ThinkPHP框架下MySQL数据库备份还原类</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-10-31-Sublime-Text-2%E4%B8%AD%E8%BF%90%E8%A1%8CPython%E7%A8%8B%E5%BA%8F/" class="nav-link">Sublime Text 2中运行Python程序</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-07-02-Sublime-Text-%E8%87%AA%E5%AE%9A%E4%B9%89%E9%A2%9C%E8%89%B2%E4%B8%BB%E9%A2%98/" class="nav-link">Sublime Text 自定义颜色主题</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-11-28-%E4%B8%8A%E9%99%90%E6%B3%95%E5%A1%91%E6%80%A7%E5%8A%9F%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86%E7%AE%97%E4%BE%8B%E4%B9%8B%E4%BA%8C%E9%87%8D%E7%A7%AF%E5%88%86/" class="nav-link">上限法塑性功数值积分算例之二重积分</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-12-19-Gauss-Legendre%E4%BA%8C%E9%87%8D%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86/" class="nav-link">Gauss Legendre二重数值积分</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-12-22-NumPy%E5%BA%93frompyfunc%E4%B8%8Evectorize%E7%9A%84%E6%AF%94%E8%BE%83/" class="nav-link">NumPy库frompyfunc与vectorize的比较</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-12-24-%E4%B8%8A%E9%99%90%E6%B3%95%E5%A1%91%E6%80%A7%E5%8A%9F%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86%E7%AE%97%E4%BE%8B%E4%B9%8B%E4%B8%89%E9%87%8D%E7%A7%AF%E5%88%86/" class="nav-link">上限法塑性功数值积分算例之三重积分</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2015-06-16-SAE%E7%8E%AF%E5%A2%83%E4%B8%8B%E4%BD%BF%E7%94%A8MySQLReback%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9FMySQL%E6%95%B0%E6%8D%AE%E5%BA%93/" class="nav-link">SAE环境下使用MySQLReback备份还原MySQL数据库</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2015-06-17-SAE%E7%8E%AF%E5%A2%83%E4%B8%8B%E4%BD%BF%E7%94%A8PHPExcel%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE/" class="nav-link">SAE环境下使用PHPExcel导入数据</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2015-11-04-%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0%E7%A4%BE%E4%BC%9A%E6%A0%B8%E7%AE%97%E7%9F%A9%E9%98%B5%EF%BC%88SAM%EF%BC%89%E7%9A%84%E8%B4%A6%E6%88%B7%E9%9B%86%E7%BB%93%E4%B8%8E%E5%B9%B3%E8%A1%A1/" class="nav-link">程序实现社会核算矩阵（SAM）的账户集结与平衡</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2015-11-15-python%E4%B8%AD%E4%BD%BF%E7%94%A8mlab%E5%BA%93%E5%AE%9E%E7%8E%B0%E4%B8%8EMATLAB%E4%BA%A4%E4%BA%92/" class="nav-link">python中使用mlab库实现与MATLAB交互</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2016-01-20-%E4%BD%BF%E7%94%A8Python%E5%AF%BC%E5%87%BAMSC.Marc%E5%90%8E%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE/" class="nav-link">使用Python导出MSC.Marc后处理数据</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2016-11-05-%E6%95%B4%E5%90%88UEditor%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0%E6%A8%A1%E5%9D%97%E4%B8%BA%E4%B8%8A%E4%BC%A0%E6%8F%92%E4%BB%B6/" class="nav-link">整合UEditor图片上传模块为上传插件</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-01-07-%E5%AD%A6%E4%BD%8D%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C%E4%B8%AD%E7%9A%84%E8%BD%AF%E4%BB%B6%E7%BB%84%E5%90%88/" class="nav-link">学位论文写作中的软件组合</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-03-08-%E7%90%83%E9%9D%A2%E8%B7%9D%E7%A6%BB%E4%B8%8E%E6%96%B9%E4%BD%8D%E8%A7%92%E5%85%AC%E5%BC%8F%E7%9A%84%E6%8E%A8%E5%AF%BC%EF%BC%9A%E8%A7%A3%E4%B8%89%E8%A7%92%E5%BD%A2%E6%B3%95/" class="nav-link">球面距离与方位角公式的推导：解三角形法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-03-09-%E7%90%83%E9%9D%A2%E8%B7%9D%E7%A6%BB%E4%B8%8E%E6%96%B9%E4%BD%8D%E8%A7%92%E5%85%AC%E5%BC%8F%E7%9A%84%E6%8E%A8%E5%AF%BC%EF%BC%9A%E5%90%91%E9%87%8F%E4%BB%A3%E6%95%B0%E6%B3%95/" class="nav-link">球面距离与方位角公式的推导：向量代数法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-04-24-Selenium%2BPhantomJS%E6%97%A0%E6%B3%95%E8%BE%93%E5%85%A5%E6%96%87%E6%9C%AC%E5%8F%8A%E5%85%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="nav-link">Selenium PhantomJS无法输入文本及其解决方法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-04-24-Selenium-Python%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%A4%87%E5%BF%98/" class="nav-link">Selenium Python基本操作备忘</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-07-23-Microsoft-Excel-2010%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8A%9F%E8%83%BD%E5%8C%BA%28%E4%B8%80%29/" class="nav-link">Microsoft Excel 2010自定义功能区(一)</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-07-24-Microsoft-Excel-2010%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8A%9F%E8%83%BD%E5%8C%BA%28%E4%BA%8C%29/" class="nav-link">Microsoft Excel 2010自定义功能区(二)</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-07-31-%E8%87%AA%E5%AE%9A%E4%B9%89Microsoft-Excel-2010-Ribbon%E8%8F%9C%E5%8D%95%E9%A1%B9Enable%E7%8A%B6%E6%80%81/" class="nav-link">自定义Microsoft Excel 2010 Ribbon菜单项Enable状态</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-08-08-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9AGroups%E4%B8%8ERegions/" class="nav-link">NXOpen CAE开发总结系列：Groups与Regions</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-08-27-NXOpen%EF%BC%9A%E5%AF%B9%E8%AF%9D%E6%A1%86%E7%9A%84%E8%AE%A4%E8%AF%86/" class="nav-link">NXOpen：对话框的认识</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-09-01-NXOpen%EF%BC%9AMenu-Script%E8%87%AA%E5%AE%9A%E4%B9%89%E8%8F%9C%E5%8D%95/" class="nav-link">NXOpen：Menu Script自定义菜单</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-10-10-%E5%85%BC%E5%AE%B9Windows%E5%92%8CLinux%E7%9A%84C%2B%2B%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E6%A8%A1%E6%9D%BF/" class="nav-link">兼容Windows和Linux的C++动态链接库模板</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-11-25-VBA%E8%AE%BE%E7%BD%AE%E7%94%A8%E6%88%B7%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" class="nav-link">VBA设置用户环境变量</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-11-30-VBA%E8%B0%83%E7%94%A8C%2B%2B%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/" class="nav-link">VBA调用C++动态链接库</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-12-12-NXOpen%EF%BC%9AExpression%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%9F%BA%E6%9C%AC%E5%8D%95%E4%BD%8D/" class="nav-link">NXOpen：Expression类型与基本单位</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-01-12-%E4%BD%BF%E7%94%A8subprocess%E6%A8%A1%E5%9D%97%E8%B0%83%E7%94%A8%E5%AD%90%E8%BF%9B%E7%A8%8B%E5%B9%B6%E8%8E%B7%E5%8F%96%E8%BE%93%E5%87%BA/" class="nav-link">2018 01 12 使用subprocess模块调用子进程并获取输出</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-01-13-PyQt%E4%BD%BF%E7%94%A8QProcess%E8%B0%83%E7%94%A8%E5%AD%90%E8%BF%9B%E7%A8%8B%E5%B9%B6%E8%8E%B7%E5%8F%96%E8%BE%93%E5%87%BA/" class="nav-link">2018 01 13 PyQt使用QProcess调用子进程并获取输出</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-01-23-%E8%87%AA%E5%AE%9A%E4%B9%89Microsoft-Office-Ribbon%E5%8C%BA%E5%9F%9F/" class="nav-link">2018 01 23 自定义Microsoft Office Ribbon区域</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-02-07-Python3%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%9A%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="nav-link">2018 02 07 Python3代码示例：基本操作</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-02-08-Python3%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C/" class="nav-link">2018 02 08 Python3代码示例：字符串操作</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-02-09-Python3%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%9A%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C/" class="nav-link">2018 02 09 Python3代码示例：文件目录操作</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-04-05-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9AAdvanced-Simulation%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/" class="nav-link">2018 04 05 NXOpen CAE开发总结系列：Advanced Simulation文件结构</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-05-04-NXOpen%EF%BC%9A%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7%E6%93%8D%E4%BD%9C/" class="nav-link">2018 05 04 NXOpen：对象属性操作</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-05-06-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9A%E4%B8%BB%E8%A6%81%E7%B1%BB%E7%BB%93%E6%9E%84%E5%9B%BE/" class="nav-link">2018 05 06 NXOpen CAE开发总结系列：主要类结构图</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-06-25-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9AFEM-SIM%E6%A8%A1%E5%9E%8B%E4%B8%ADPolygon-Body%E7%9A%84%E5%90%8D%E7%A7%B0/" class="nav-link">2018 06 25 NXOpen CAE开发总结系列：FEM SIM模型中Polygon Body的名称</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-07-01-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9A%E4%BB%8EANSYS-APDL%E8%A7%92%E5%BA%A6%E7%9C%8B%E5%BE%85Mesh/" class="nav-link">2018 07 01 NXOpen CAE开发总结系列：从ANSYS APDL角度看待Mesh</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-09-28-NXOpen%EF%BC%9A%E7%A6%81%E7%94%A8%E8%8F%9C%E5%8D%95%E9%A1%B9/" class="nav-link">2018 09 28 NXOpen：禁用菜单项</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-21-Python-Package-__init__%E8%A7%A3%E6%9E%90/" class="nav-link">2018 10 21 Python Package   init  解析</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-21-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%E5%8F%8APython%E5%AE%9E%E7%8E%B0/" class="nav-link">2018 10 21 遗传算法：基本原理及Python实现</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-25-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E6%94%B9%E8%BF%9B%E6%96%B9%E5%90%91%E4%B9%8B%E8%87%AA%E9%80%82%E5%BA%94%E7%AD%96%E7%95%A5/" class="nav-link">2018 10 25 遗传算法：改进方向之自适应策略</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-27-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E6%94%B9%E8%BF%9B%E6%96%B9%E5%90%91%E4%B9%8B%E7%B2%BE%E8%8B%B1%E7%AD%96%E7%95%A5/" class="nav-link">2018 10 27 遗传算法：改进方向之精英策略</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">2018 10 31 GitLab CI CD功能介绍</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-11-05-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E6%B5%8B%E8%AF%95%E6%A1%88%E4%BE%8B%E4%B9%8B%E5%87%BD%E6%95%B0%E6%9E%81%E5%80%BC/" class="nav-link">2018 11 05 遗传算法：测试案例之函数极值</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-01-28-%E9%9B%86%E6%88%90python%E7%9A%84Excel%E6%8F%92%E4%BB%B6%E6%A8%A1%E6%9D%BFPyAddin%E2%80%94%E2%80%94%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" class="nav-link">2019 01 28 集成python的Excel插件模板PyAddin——使用说明</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-01-28-%E9%9B%86%E6%88%90python%E7%9A%84Excel%E6%8F%92%E4%BB%B6%E6%A8%A1%E6%9D%BFPyAddin%E2%80%94%E2%80%94%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D/" class="nav-link">2019 01 28 集成python的Excel插件模板PyAddin——原理介绍</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-03-24-PyQt5%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5%E4%B9%8B%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7Tagit/" class="nav-link">2019 03 24 PyQt5应用实践之个人知识管理工具Tagit</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-04-20-VBA%E8%B0%83%E7%94%A8%E5%A4%96%E9%83%A8%E5%87%BD%E6%95%B0%EF%BC%88%E5%B7%A5%E4%BD%9C%E7%B0%BF-COM%E9%93%BE%E6%8E%A5%E5%BA%93-C%E9%93%BE%E6%8E%A5%E5%BA%93%EF%BC%89%E6%96%B9%E6%B3%95/" class="nav-link">2019 04 20 VBA调用外部函数（工作簿 COM链接库 C链接库）方法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-04-21-Python-win32com%E6%A8%A1%E5%9D%97%E6%93%8D%E4%BD%9CExcel%E7%9A%84%E5%87%A0%E4%B8%AA%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%80%EF%BC%89/" class="nav-link">2019 04 21 Python win32com模块操作Excel的几个应用（一）</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-05-02-%E8%8E%B7%E5%8F%96Excel%E5%85%AC%E5%BC%8F%E7%9A%84%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%EF%BC%88Python%E5%AE%9E%E7%8E%B0%EF%BC%89/" class="nav-link">2019 05 02 获取Excel公式的依赖关系（Python实现）</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-05-22-Matplotlib%E5%A4%9A%E7%BA%B5%E8%BD%B4%EF%BC%88%E5%AF%84%E7%94%9F%E8%BD%B4%EF%BC%89%E6%95%A3%E7%82%B9%E5%9B%BE/" class="nav-link">2019 05 22 Matplotlib多纵轴（寄生轴）散点图</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-08-18-C%2B%2B-DLL%E4%B8%8EVBA%E4%B9%8B%E9%97%B4%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BC%A0%E9%80%92%EF%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89%E8%BF%94%E5%9B%9E%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="nav-link">2019 08 18 C++ DLL与VBA之间的字符串传递：（一）返回字符串</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-08-31-C%2B%2B-DLL%E4%B8%8EVBA%E4%B9%8B%E9%97%B4%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BC%A0%E9%80%92%EF%BC%9A%EF%BC%88%E4%BA%8C%EF%BC%89%E4%BC%A0%E5%85%A5%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="nav-link">2019 08 31 C++ DLL与VBA之间的字符串传递：（二）传入字符串</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-09-13-Python-win32com%E6%A8%A1%E5%9D%97%E6%93%8D%E4%BD%9CExcel%E7%9A%84%E5%87%A0%E4%B8%AA%E5%BA%94%E7%94%A8%EF%BC%88%E4%BA%8C%EF%BC%89/" class="nav-link">2019 09 13 Python win32com模块操作Excel的几个应用（二）</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-09-14-%E4%BB%A5Windows%E6%9C%8D%E5%8A%A1%E6%96%B9%E5%BC%8F%E8%BF%90%E8%A1%8CExcel%E8%87%AA%E5%8A%A8%E5%8C%96%E7%A8%8B%E5%BA%8F%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="nav-link">2019 09 14 以Windows服务方式运行Excel自动化程序遇到的问题与解决方法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-10-01-Python%E6%B1%82%E8%A7%A3%E8%87%AA%E8%A1%8C%E8%BD%A6%E5%89%8D%E5%90%8E%E8%BD%AE%E8%BD%A8%E8%BF%B9%E9%97%AE%E9%A2%98/" class="nav-link">Python求解自行车前后轮轨迹问题</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-12-29-GitLab-CI-CD%E4%B9%8Bbefore_script%E5%92%8Cafter_script/" class="nav-link">2019 12 29 GitLab CI CD之before script和after script</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-02-27-TensorFlow%E8%87%AA%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E9%9B%86%EF%BC%881%EF%BC%89%EF%BC%9Atf.data.Dataset/" class="nav-link">2020 02 27 TensorFlow自定义数据集（1）：tf.data.Dataset</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-02-28-TensorFlow%E8%87%AA%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E9%9B%86%EF%BC%882%EF%BC%89%EF%BC%9Atf.data.TFRecordDataset/" class="nav-link">2020 02 28 TensorFlow自定义数据集（2）：tf.data.TFRecordDataset</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-03-01-2020%E8%AF%BB%E4%B9%A6%E8%AE%A1%E5%88%92%EF%BC%881%EF%BC%89%EF%BC%9ATensorFlow%E6%8A%80%E6%9C%AF%E8%A7%A3%E6%9E%90%E4%B8%8E%E5%AE%9E%E6%88%98/" class="nav-link">2020 03 01 2020读书计划（1）：TensorFlow技术解析与实战</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-07-13-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81/" class="nav-link">2020 07 13 pdf2docx开发概要</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-09-27-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%E4%B9%8B%E5%AF%B9%E9%BD%90%E9%9A%90%E5%BC%8F%E8%A1%A8%E6%A0%BC%E7%BA%BF/" class="nav-link">2020 09 27 pdf2docx开发概要之对齐隐式表格线</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-10-01-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%E4%B9%8B%E7%9F%A2%E9%87%8F%E5%9B%BE%E5%A4%84%E7%90%86/" class="nav-link">2020 10 01 pdf2docx开发概要之矢量图处理</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-10-15-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%E4%B9%8B%E8%8E%B7%E5%8F%96%E5%9B%BE%E7%89%87%E5%8F%8A%E5%85%B6%E4%BD%8D%E7%BD%AE/" class="nav-link">2020 10 15 pdf2docx开发概要之获取图片及其位置</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-10-25-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%B5%AE%E5%8A%A8%E5%9B%BE%E7%89%87/" class="nav-link">2020 10 25 pdf2docx开发概要之创建浮动图片</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2021-01-02-Python%E5%A4%84%E7%90%86PDF%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E5%AF%B9%E6%AF%94/" class="nav-link">2021 01 02 Python处理PDF的第三方库对比</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Categories <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/2012/" class="dropdown-item">2012</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2013/" class="dropdown-item">2013</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2014/" class="dropdown-item">2014</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2015/" class="dropdown-item">2015</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2016/" class="dropdown-item">2016</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2017/" class="dropdown-item">2017</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2018/" class="dropdown-item">2018</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2019/" class="dropdown-item">2019</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2020/" class="dropdown-item">2020</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2021/" class="dropdown-item">2021</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../2018-10-27-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E6%94%B9%E8%BF%9B%E6%96%B9%E5%90%91%E4%B9%8B%E7%B2%BE%E8%8B%B1%E7%AD%96%E7%95%A5/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../2018-11-05-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E6%B5%8B%E8%AF%95%E6%A1%88%E4%BE%8B%E4%B9%8B%E5%87%BD%E6%95%B0%E6%9E%81%E5%80%BC/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2018-10-31-GitLab-CI-CD功能介绍.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">基本流程</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">测试案例一</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">测试案例二</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#runner" class="nav-link">自定义Runner</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#_4" class="nav-link">总结</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p>持续集成（Continuous Integration）是为了配合敏捷开发的速度和效率而产生的一个用于编译、测试、发布、部署的工具。开发人员的每一次代码提交，都将触发预先定义的任务，自动进行编译、测试、部署等。如果成功则接受这次提交，否则提示集成失败。本篇介绍GitLab提供的持续集成（CI/CD）功能。</p>
+<h2 id="_1">基本流程<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>自GitLab 8.0版本起，<code>Continuous Integration</code>功能被集成到GitLab基本配置中，并且默认对所有项目生效。两步实现GitLab的CI/CD服务[<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>]：</p>
+<ul>
+<li>在代码仓库根目录创建<code>.gitlab-ci.yml</code>文件</li>
+<li>配置执行任务的<code>Runner</code></li>
+</ul>
+<p><code>.gitlab-ci.yml</code>文件按照<code>YAML</code>文件格式定义了需要自动化执行的任务列表，每个任务由一系列命令行代码完成；<code>Runner</code>是GitLab默认配置好的服务器（一般是Linux环境），或者自行手动添加的服务器（例如自己的主机）。</p>
+<p>通过提交代码等触发CI/CD服务后，GitLab按一定原则分配<code>Runner</code>。注意每个任务都将被分配给一个具备相对独立环境的<code>Runner</code>，即便两个任务被先后分配到了同一个<code>Runner</code>。</p>
+<p><code>Runner</code>接到任务后，将远程仓库下载到<code>Runner</code>本地，然后执行该任务定义的指令。</p>
+<h2 id="_2">测试案例一<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>为了自动化持续集成，需要确保可以按脚本/命令执行目标任务。例如：</p>
+<ul>
+<li>在项目中准备好<code>makefile</code>，使用<code>make</code>或<code>nmake</code>编译C++代码</li>
+<li>准备好单元测试的Python脚本，使用<code>python -m unittest test_file_name</code>执行单元测试</li>
+</ul>
+<p>以下是GitLab仓库的文件结构，其中<code>cpp</code>文件夹用于测试编译C++项目，<code>python</code>文件夹用于测试Python单元测试，<code>.gitlab-ci.yml</code>即为定义相应任务的文件。</p>
+<pre class="highlight"><code>Test Project
+  +-+cpp
+  |   + main.cpp
+  |   + makefile
+  |
+  +-+python
+  |   + abs_fun.py
+  |   + test.py
+  |
+  +-+.gitlab-ci.yml</code></pre>
+<p>示例代码如下：</p>
+<pre class="highlight"><code class="language-cpp">// cpp/main.cpp
+
+#include &lt;iostream&gt;
+using namespace std;
+int main()
+{
+    std::cout &lt;&lt; "Hello World" &lt;&lt; std::endl;
+}</code></pre>
+<pre class="highlight"><code># cpp/makefile
+main:main.o
+    g++ -o main main.o</code></pre>
+<pre class="highlight"><code class="language-python"># python/abs_fun.py
+# module to be tested
+def ABS(x):
+    '''to get absolute value of input'''
+    if type(x) in [int, float]:
+        return x if x&gt;=0 else -x
+    else:
+        raise ValueError('Input value should be int or float')</code></pre>
+<pre class="highlight"><code class="language-python"># python/test.py
+# example for python unit test
+import unittest
+from abs_fun import ABS
+
+class Test(unittest.TestCase):
+
+    def test_positive(self):
+        for x in [1, 1.5]:
+            self.assertEqual(ABS(x), x)
+
+    def test_negtive(self):
+        for x in [-1, -1.5]:
+            self.assertEqual(ABS(x), -x)
+
+    def test_zero(self):
+        for x in [0, 0.0]:
+            self.assertEqual(ABS(x), x)
+
+    def test_valueerror(self):
+        for x in ['123', [123], {'k':123}]:
+            with self.assertRaises(ValueError):
+                res = ABS(x)</code></pre>
+<p>如果在本地进行测试，分别在命令行使用<code>make</code>和<code>python -m unittest test</code>即可。如果要在<code>Runner</code>执行，核心指令也是一样的。参考例子：</p>
+<pre class="highlight"><code class="language-yaml"># 定义任务执行阶段
+# 默认分为build, test, deploy三个阶段，亦可自定义其他阶段，按顺序执行
+# 定义在相同stage的jobs会被并行执行
+stages:
+  - build
+  - test
+  - deploy
+
+# 任务列表
+# script：必须关键字，即需要执行的指令
+# stage：可选，任务所属阶段
+# tags：可选，用以筛选Runner，仅考虑将此任务分配给带有相应tag的Runner
+job1:
+  stage: test
+  tags:
+    - DOCKER
+  script:
+    - echo "Python Project Unit Test..."
+    - cd ./python
+    - python -m unittest test
+
+# 虽然job2定义在job1之后，但job2所属的build阶段在job1的test阶段之前，
+# 故job2执行通过后才会执行job1，否则任务失败
+job2:
+  stage: build
+  tags:
+    - DOCKER
+  script:
+    - echo "Building CPP Project from makefile..."
+    - cd ./cpp
+    - make
+    - ./main</code></pre>
+<p>提交代码触发<code>CI/CD</code>功能后即可在<code>CI/CD-&gt;jobs</code>页面观察执行进度，点击相应任务的<code>Status</code>按钮即可观察具体的执行日志：</p>
+<pre class="highlight"><code>Running with gitlab-runner 11.3.1 (v11.3.1)
+  on xxxxx e18fb335
+Using Docker executor with image xxxxx ...
+Pulling docker image xxxxx ...
+Using docker image sha256:1806e9341a6601f388c0666996de0c96b98244d684e6fb52c90c75670a6ec63f for xxxxx ...
+Running on runner-e18fb335-project-44214-concurrent-0 via xxxxx...
+Cloning repository...
+Cloning into '/builds/test_project'...
+Checking out 432e5cb0 as master...
+Skipping Git submodules setup
+$ echo "Building CPP Project from makefile..."
+Building CPP Project from makefile...
+$ cd ./cpp
+$ make
+g++    -c -o main.o main.cpp
+g++ -o main main.o
+$ ./main
+Hello World
+Job succeeded</code></pre>
+<pre class="highlight"><code>Running with gitlab-runner 11.3.1 (v11.3.1)
+  on xxxxx e18fb335
+Using Docker executor with image xxxxx ...
+Pulling docker image xxxxx ...
+Using docker image sha256:1806e9341a6601f388c0666996de0c96b98244d684e6fb52c90c75670a6ec63f for xxxxx ...
+Running on runner-e18fb335-project-44214-concurrent-0 via xxxxx...
+Cloning repository...
+Cloning into '/builds/test_project'...
+Checking out 432e5cb0 as master...
+Skipping Git submodules setup
+$ echo "Python Project Unit Test..."
+Python Project Unit Test...
+$ cd ./python
+$ python -m unittest test
+....
+----------------------------------------------------------------------
+Ran 4 tests in 0.000s
+
+OK
+Job succeeded</code></pre>
+<h2 id="_3">测试案例二<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>案例一仅仅作为示意，实际操作中更多的是针对同一个工程定义<code>build</code>和<code>test</code>阶段的<code>job</code>。注意到每个<code>job</code>都是独立的：</p>
+<ul>
+<li>同一工程的两个<code>job</code>可能被分配到不同的<code>Runner</code>上执行</li>
+<li>即便定义了相同的<code>Runner</code>，执行任务之前**默认**都执行了<code>git clean</code>，也就是默认从相同的状态开始执行<code>build</code>和<code>test</code>阶段的任务</li>
+</ul>
+<p>但是，实际操作中我希望<code>build</code>阶段的任务编译完成的工程，例如动态链接库文件，可以直接用于<code>test</code>阶段的任务；而非在<code>test</code>阶段的任务中又重新编译一遍。</p>
+<p>这就需要用到<code>artifacts</code>和<code>dependencies</code>，示例二：</p>
+<pre class="highlight"><code class="language-yaml">variables:
+  PROJECT: $CI_PROJECT_NAME
+  BRANCH: $CI_COMMIT_REF_NAME
+  TAG: $CI_COMMIT_TAG
+  REF: $CI_COMMIT_SHA
+
+# stages
+stages:
+  - build
+  - test
+
+# jobs
+build:
+  stage: build
+  script:
+    - make build
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 hour
+  tags:
+    - xxxx
+
+test:
+  stage: test
+  dependencies:
+    - build
+  script:
+    - make test
+  tags:
+    - xxxx</code></pre>
+<p>注意两处细节：</p>
+<ul>
+<li><code>build</code>阶段的任务将<code>dist</code>目录下的所有文件作为<code>artifacts</code></li>
+<li><code>test</code>阶段的任务将<code>build</code>任务作为<code>dependencies</code></li>
+</ul>
+<p>其效果是<code>build</code>的<code>artifacts</code>也就是<code>dist</code>，将在<code>test</code>阶段仓库初始化完成后下载到工作目录下。因此，<code>test</code>任务可以直接使用<code>build</code>完成的文件。</p>
+<p>下面列出了执行<code>test</code>任务过程中相应的日志信息：</p>
+<pre class="highlight"><code>Downloading artifacts for build (20220274)...
+Runtime platform                                    arch=amd64 os=windows pid=24332 revision=577f813d version=12.5.0
+WARNING: Failed to load system CertPool: crypto/x509: system root pool is not available on Windows 
+Downloading artifacts from coordinator... ok        id=20220274 responseStatus=200 OK token=xxxxx</code></pre>
+<h2 id="runner">自定义Runner<a class="headerlink" href="#runner" title="Permanent link">&para;</a></h2>
+<p>以上任务使用通用环境即可完成，例如<code>g++</code>编译和<code>python</code>环境，但有时可能需要特定的环境，例如<code>Visual Studio</code>或者第三方库如<code>NXOpen C++</code>，此时需要配置专用的服务器。GitLab提供了Linux/MacOS/Windows等一系列平台的配置方法[<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>]。</p>
+<p>流程很简明：下载<code>gitlab-runner</code>文件，注册<code>Runner</code>，安装和启动服务。配置成功后即可在仓库的<code>Settings-&gt;CI/CD-&gt;Runners-&gt;Specific Runners</code>下发现自己的<code>Runner</code>，注意设置<code>tag</code>以便可以在<code>.gitlab-ci.yml</code>中指定在此<code>Runner</code>执行任务。</p>
+<h3 id="git bashshell">设置<code>git bash</code>为默认的<code>shell</code><a class="headerlink" href="#git bashshell" title="Permanent link">&para;</a></h3>
+<p>Windows系统的<code>GitLab Runner</code>默认以<code>Powershell</code>作为运行的<code>shell</code>，但我们有时更倾向于使用<code>git bash</code>。具体做法为修改<code>gitlab-runner.exe</code>同目录下的配置文件<code>config.toml</code>：</p>
+<ol>
+<li>暂停gitlab-runner服务，备份原始config.toml</li>
+<li>将原始文件的<code>shell = "powershell"</code>行修改为：<ul>
+<li><code>shell</code>切换为<code>bash</code>，注意确保<code>git bash</code>已经添加到<code>PATH</code>环境变量中</li>
+<li><code>builds_dir</code>切换为<code>gitlab-runner.exe</code>所在目录下的<code>builds</code>，注意采用Linux的路径分隔符 [<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>]</li>
+</ul>
+</li>
+<li>启动gitlab-runner服务</li>
+</ol>
+<pre class="highlight"><code class="language-toml">concurrent = 1
+check_interval = 0
+
+[session_server]
+  session_timeout = 1800
+
+[[runners]]
+  name = "Example Server"
+  url = "https://xxx.yyy.com/"
+  token = "xxxx"
+  executor = "shell"
+  shell = "bash"
+  builds_dir="/path/to/runner/builds/"
+  [runners.custom_build_dir]
+  [runners.cache]
+    [runners.cache.s3]
+[runners.cache.gcs]</code></pre>
+<h2 id="_4">总结<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<ul>
+<li>在仓库根目录<code>.gitlab-ci.yml</code>文件中定义任务，提交代码触发<code>CI/CD</code>服务，自动在共享或者自定义的<code>Runner</code>上依次执行任务</li>
+<li><code>Runner</code>克隆远程仓库到本地-&gt;清除未追踪的文件-&gt;执行自定义脚本</li>
+<li><code>job</code>定义中的<code>tags</code>关键字可以筛选<code>Runner</code>，仅分配该任务到具备指定<code>tag</code>的<code>Runner</code>服务器</li>
+<li><code>artifacts</code>和<code>dependencies</code>实现跨任务级别共享文件</li>
+<li>如果通用<code>Runner</code>不能满足开发环境需求，可以添加自定义<code>Runner</code></li>
+</ul>
+<hr />
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>[1] <a href="https://docs.gitlab.com/ee/ci/quick_start/README.html">Getting started with GitLab CI/CD</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>[2] <a href="https://docs.gitlab.com/ee/ci/yaml/README.html">GitLab CI/CD Pipeline Configuration Reference</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>[3] <a href="https://docs.gitlab.com/runner/install/">Install GitLab Runner</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>[4] <a href="https://stackoverflow.com/questions/41733406/windows-gitlab-ci-runner-using-bash">Windows GitLab CI Runner using Bash</a>&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

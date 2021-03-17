@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2019-03-24-PyQt5%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5%E4%B9%8B%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7Tagit/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>2019 03 24 PyQt5应用实践之个人知识管理工具Tagit - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">格致</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-05-21-%E4%B8%80%E8%B7%AF%E8%B5%B0%E6%9D%A5/" class="nav-link">一路走来</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-07-10-Marc%E8%B0%83%E7%94%A8Python%E8%84%9A%E6%9C%AC%E7%A8%8B%E5%BA%8F%E4%B8%AD%E5%85%B3%E4%BA%8E%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C%E7%9A%84%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98/" class="nav-link">Marc调用Python脚本程序中关于目录操作的几个问题</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-07-26-Windows%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8F%90%E4%BA%A4Marc%E8%AE%A1%E7%AE%97%E4%BB%BB%E5%8A%A1/" class="nav-link">Windows命令行提交Marc计算任务</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-07-27-MSC-Marc2011%E5%8D%95%E6%9C%BA%E5%A4%9A%E6%A0%B8%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97%E7%A4%BA%E4%BE%8B/" class="nav-link">MSC-Marc 2011单机多核并行计算示例</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-10-10-%E5%AE%9E%E4%BE%8B%E8%AF%B4%E6%98%8EVS2005%E3%80%81Python%E7%A8%8B%E5%BA%8F%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6%E6%97%B6%E7%9A%84%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/" class="nav-link">实例说明VS2005、Python程序读写文件时的字符编码问题</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-10-18-MSC.MARC-2010%E8%A1%A8%E6%A0%BC%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B9%E5%BC%8F/" class="nav-link">MSC.MARC 2010表格之创建方式</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-10-20-MSC.MARC-2010%E8%A1%A8%E6%A0%BC%E4%B9%8B%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%BC%8F/" class="nav-link">MSC.MARC 2010表格之数据模式</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-10-21-MSC.MARC-2010%E5%88%9A%E6%80%A7%E6%8E%A5%E8%A7%A6%E4%BD%93%E8%BF%90%E5%8A%A8%E8%AE%BE%E7%BD%AE/" class="nav-link">MSC.MARC 2010刚性接触体运动设置</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-06-13-UG%E8%BF%90%E5%8A%A8%E4%BB%BF%E7%9C%9F%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" class="nav-link">UG运动仿真学习记录</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-07-29-Levy-Mises%E7%90%86%E8%AE%BA%E7%9A%84%E6%80%9D%E8%80%83/" class="nav-link">Levy Mises理论的思考</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-07-30-%E5%BA%94%E5%8A%9B%E5%BC%A0%E9%87%8F%E7%9A%84%E8%AE%A4%E8%AF%86%E4%B9%8B%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" class="nav-link">应力张量的认识之基本概念</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-07-30-%E5%BA%94%E5%8A%9B%E5%BC%A0%E9%87%8F%E7%9A%84%E8%AE%A4%E8%AF%86%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2/" class="nav-link">应力张量的认识之线性变换</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-07-31-%E5%BA%94%E5%8A%9B%E5%BC%A0%E9%87%8F%E7%9A%84%E8%AE%A4%E8%AF%86%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2%E7%9A%84%E8%AF%81%E6%98%8E/" class="nav-link">应力张量的认识之线性变换的证明</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-08-05-UG-NX-%E8%A7%92%E8%89%B2%E5%AE%9A%E5%88%B6%E4%B8%8E%E5%BA%94%E7%94%A8/" class="nav-link">UG NX角色定制与应用</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-09-28-ThinkPHP%E8%87%AA%E5%8A%A8%E9%AA%8C%E8%AF%81%E4%B9%8Bunique%E8%A7%84%E5%88%99%E7%9A%84%E9%97%AE%E9%A2%98%E5%92%8C%E7%90%86%E8%A7%A3/" class="nav-link">ThinkPHP自动验证之unique规则的问题和理解</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-10-19-ThinkPHP%E6%A1%86%E6%9E%B6%E4%B8%8BMySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E7%B1%BB/" class="nav-link">ThinkPHP框架下MySQL数据库备份还原类</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-10-31-Sublime-Text-2%E4%B8%AD%E8%BF%90%E8%A1%8CPython%E7%A8%8B%E5%BA%8F/" class="nav-link">Sublime Text 2中运行Python程序</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-07-02-Sublime-Text-%E8%87%AA%E5%AE%9A%E4%B9%89%E9%A2%9C%E8%89%B2%E4%B8%BB%E9%A2%98/" class="nav-link">Sublime Text 自定义颜色主题</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-11-28-%E4%B8%8A%E9%99%90%E6%B3%95%E5%A1%91%E6%80%A7%E5%8A%9F%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86%E7%AE%97%E4%BE%8B%E4%B9%8B%E4%BA%8C%E9%87%8D%E7%A7%AF%E5%88%86/" class="nav-link">上限法塑性功数值积分算例之二重积分</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-12-19-Gauss-Legendre%E4%BA%8C%E9%87%8D%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86/" class="nav-link">Gauss Legendre二重数值积分</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-12-22-NumPy%E5%BA%93frompyfunc%E4%B8%8Evectorize%E7%9A%84%E6%AF%94%E8%BE%83/" class="nav-link">NumPy库frompyfunc与vectorize的比较</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-12-24-%E4%B8%8A%E9%99%90%E6%B3%95%E5%A1%91%E6%80%A7%E5%8A%9F%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86%E7%AE%97%E4%BE%8B%E4%B9%8B%E4%B8%89%E9%87%8D%E7%A7%AF%E5%88%86/" class="nav-link">上限法塑性功数值积分算例之三重积分</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2015-06-16-SAE%E7%8E%AF%E5%A2%83%E4%B8%8B%E4%BD%BF%E7%94%A8MySQLReback%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9FMySQL%E6%95%B0%E6%8D%AE%E5%BA%93/" class="nav-link">SAE环境下使用MySQLReback备份还原MySQL数据库</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2015-06-17-SAE%E7%8E%AF%E5%A2%83%E4%B8%8B%E4%BD%BF%E7%94%A8PHPExcel%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE/" class="nav-link">SAE环境下使用PHPExcel导入数据</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2015-11-04-%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0%E7%A4%BE%E4%BC%9A%E6%A0%B8%E7%AE%97%E7%9F%A9%E9%98%B5%EF%BC%88SAM%EF%BC%89%E7%9A%84%E8%B4%A6%E6%88%B7%E9%9B%86%E7%BB%93%E4%B8%8E%E5%B9%B3%E8%A1%A1/" class="nav-link">程序实现社会核算矩阵（SAM）的账户集结与平衡</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2015-11-15-python%E4%B8%AD%E4%BD%BF%E7%94%A8mlab%E5%BA%93%E5%AE%9E%E7%8E%B0%E4%B8%8EMATLAB%E4%BA%A4%E4%BA%92/" class="nav-link">python中使用mlab库实现与MATLAB交互</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2016-01-20-%E4%BD%BF%E7%94%A8Python%E5%AF%BC%E5%87%BAMSC.Marc%E5%90%8E%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE/" class="nav-link">使用Python导出MSC.Marc后处理数据</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2016-11-05-%E6%95%B4%E5%90%88UEditor%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0%E6%A8%A1%E5%9D%97%E4%B8%BA%E4%B8%8A%E4%BC%A0%E6%8F%92%E4%BB%B6/" class="nav-link">整合UEditor图片上传模块为上传插件</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-01-07-%E5%AD%A6%E4%BD%8D%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C%E4%B8%AD%E7%9A%84%E8%BD%AF%E4%BB%B6%E7%BB%84%E5%90%88/" class="nav-link">学位论文写作中的软件组合</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-03-08-%E7%90%83%E9%9D%A2%E8%B7%9D%E7%A6%BB%E4%B8%8E%E6%96%B9%E4%BD%8D%E8%A7%92%E5%85%AC%E5%BC%8F%E7%9A%84%E6%8E%A8%E5%AF%BC%EF%BC%9A%E8%A7%A3%E4%B8%89%E8%A7%92%E5%BD%A2%E6%B3%95/" class="nav-link">球面距离与方位角公式的推导：解三角形法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-03-09-%E7%90%83%E9%9D%A2%E8%B7%9D%E7%A6%BB%E4%B8%8E%E6%96%B9%E4%BD%8D%E8%A7%92%E5%85%AC%E5%BC%8F%E7%9A%84%E6%8E%A8%E5%AF%BC%EF%BC%9A%E5%90%91%E9%87%8F%E4%BB%A3%E6%95%B0%E6%B3%95/" class="nav-link">球面距离与方位角公式的推导：向量代数法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-04-24-Selenium%2BPhantomJS%E6%97%A0%E6%B3%95%E8%BE%93%E5%85%A5%E6%96%87%E6%9C%AC%E5%8F%8A%E5%85%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="nav-link">Selenium PhantomJS无法输入文本及其解决方法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-04-24-Selenium-Python%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%A4%87%E5%BF%98/" class="nav-link">Selenium Python基本操作备忘</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-07-23-Microsoft-Excel-2010%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8A%9F%E8%83%BD%E5%8C%BA%28%E4%B8%80%29/" class="nav-link">Microsoft Excel 2010自定义功能区(一)</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-07-24-Microsoft-Excel-2010%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8A%9F%E8%83%BD%E5%8C%BA%28%E4%BA%8C%29/" class="nav-link">Microsoft Excel 2010自定义功能区(二)</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-07-31-%E8%87%AA%E5%AE%9A%E4%B9%89Microsoft-Excel-2010-Ribbon%E8%8F%9C%E5%8D%95%E9%A1%B9Enable%E7%8A%B6%E6%80%81/" class="nav-link">自定义Microsoft Excel 2010 Ribbon菜单项Enable状态</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-08-08-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9AGroups%E4%B8%8ERegions/" class="nav-link">NXOpen CAE开发总结系列：Groups与Regions</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-08-27-NXOpen%EF%BC%9A%E5%AF%B9%E8%AF%9D%E6%A1%86%E7%9A%84%E8%AE%A4%E8%AF%86/" class="nav-link">NXOpen：对话框的认识</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-09-01-NXOpen%EF%BC%9AMenu-Script%E8%87%AA%E5%AE%9A%E4%B9%89%E8%8F%9C%E5%8D%95/" class="nav-link">NXOpen：Menu Script自定义菜单</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-10-10-%E5%85%BC%E5%AE%B9Windows%E5%92%8CLinux%E7%9A%84C%2B%2B%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E6%A8%A1%E6%9D%BF/" class="nav-link">兼容Windows和Linux的C++动态链接库模板</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-11-25-VBA%E8%AE%BE%E7%BD%AE%E7%94%A8%E6%88%B7%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" class="nav-link">VBA设置用户环境变量</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-11-30-VBA%E8%B0%83%E7%94%A8C%2B%2B%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/" class="nav-link">VBA调用C++动态链接库</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-12-12-NXOpen%EF%BC%9AExpression%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%9F%BA%E6%9C%AC%E5%8D%95%E4%BD%8D/" class="nav-link">NXOpen：Expression类型与基本单位</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-01-12-%E4%BD%BF%E7%94%A8subprocess%E6%A8%A1%E5%9D%97%E8%B0%83%E7%94%A8%E5%AD%90%E8%BF%9B%E7%A8%8B%E5%B9%B6%E8%8E%B7%E5%8F%96%E8%BE%93%E5%87%BA/" class="nav-link">2018 01 12 使用subprocess模块调用子进程并获取输出</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-01-13-PyQt%E4%BD%BF%E7%94%A8QProcess%E8%B0%83%E7%94%A8%E5%AD%90%E8%BF%9B%E7%A8%8B%E5%B9%B6%E8%8E%B7%E5%8F%96%E8%BE%93%E5%87%BA/" class="nav-link">2018 01 13 PyQt使用QProcess调用子进程并获取输出</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-01-23-%E8%87%AA%E5%AE%9A%E4%B9%89Microsoft-Office-Ribbon%E5%8C%BA%E5%9F%9F/" class="nav-link">2018 01 23 自定义Microsoft Office Ribbon区域</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-02-07-Python3%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%9A%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="nav-link">2018 02 07 Python3代码示例：基本操作</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-02-08-Python3%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C/" class="nav-link">2018 02 08 Python3代码示例：字符串操作</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-02-09-Python3%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%9A%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C/" class="nav-link">2018 02 09 Python3代码示例：文件目录操作</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-04-05-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9AAdvanced-Simulation%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/" class="nav-link">2018 04 05 NXOpen CAE开发总结系列：Advanced Simulation文件结构</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-05-04-NXOpen%EF%BC%9A%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7%E6%93%8D%E4%BD%9C/" class="nav-link">2018 05 04 NXOpen：对象属性操作</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-05-06-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9A%E4%B8%BB%E8%A6%81%E7%B1%BB%E7%BB%93%E6%9E%84%E5%9B%BE/" class="nav-link">2018 05 06 NXOpen CAE开发总结系列：主要类结构图</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-06-25-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9AFEM-SIM%E6%A8%A1%E5%9E%8B%E4%B8%ADPolygon-Body%E7%9A%84%E5%90%8D%E7%A7%B0/" class="nav-link">2018 06 25 NXOpen CAE开发总结系列：FEM SIM模型中Polygon Body的名称</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-07-01-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9A%E4%BB%8EANSYS-APDL%E8%A7%92%E5%BA%A6%E7%9C%8B%E5%BE%85Mesh/" class="nav-link">2018 07 01 NXOpen CAE开发总结系列：从ANSYS APDL角度看待Mesh</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-09-28-NXOpen%EF%BC%9A%E7%A6%81%E7%94%A8%E8%8F%9C%E5%8D%95%E9%A1%B9/" class="nav-link">2018 09 28 NXOpen：禁用菜单项</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-21-Python-Package-__init__%E8%A7%A3%E6%9E%90/" class="nav-link">2018 10 21 Python Package   init  解析</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-21-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%E5%8F%8APython%E5%AE%9E%E7%8E%B0/" class="nav-link">2018 10 21 遗传算法：基本原理及Python实现</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-25-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E6%94%B9%E8%BF%9B%E6%96%B9%E5%90%91%E4%B9%8B%E8%87%AA%E9%80%82%E5%BA%94%E7%AD%96%E7%95%A5/" class="nav-link">2018 10 25 遗传算法：改进方向之自适应策略</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-27-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E6%94%B9%E8%BF%9B%E6%96%B9%E5%90%91%E4%B9%8B%E7%B2%BE%E8%8B%B1%E7%AD%96%E7%95%A5/" class="nav-link">2018 10 27 遗传算法：改进方向之精英策略</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-31-GitLab-CI-CD%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D/" class="nav-link">2018 10 31 GitLab CI CD功能介绍</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-11-05-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E6%B5%8B%E8%AF%95%E6%A1%88%E4%BE%8B%E4%B9%8B%E5%87%BD%E6%95%B0%E6%9E%81%E5%80%BC/" class="nav-link">2018 11 05 遗传算法：测试案例之函数极值</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-01-28-%E9%9B%86%E6%88%90python%E7%9A%84Excel%E6%8F%92%E4%BB%B6%E6%A8%A1%E6%9D%BFPyAddin%E2%80%94%E2%80%94%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" class="nav-link">2019 01 28 集成python的Excel插件模板PyAddin——使用说明</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-01-28-%E9%9B%86%E6%88%90python%E7%9A%84Excel%E6%8F%92%E4%BB%B6%E6%A8%A1%E6%9D%BFPyAddin%E2%80%94%E2%80%94%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D/" class="nav-link">2019 01 28 集成python的Excel插件模板PyAddin——原理介绍</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">2019 03 24 PyQt5应用实践之个人知识管理工具Tagit</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-04-20-VBA%E8%B0%83%E7%94%A8%E5%A4%96%E9%83%A8%E5%87%BD%E6%95%B0%EF%BC%88%E5%B7%A5%E4%BD%9C%E7%B0%BF-COM%E9%93%BE%E6%8E%A5%E5%BA%93-C%E9%93%BE%E6%8E%A5%E5%BA%93%EF%BC%89%E6%96%B9%E6%B3%95/" class="nav-link">2019 04 20 VBA调用外部函数（工作簿 COM链接库 C链接库）方法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-04-21-Python-win32com%E6%A8%A1%E5%9D%97%E6%93%8D%E4%BD%9CExcel%E7%9A%84%E5%87%A0%E4%B8%AA%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%80%EF%BC%89/" class="nav-link">2019 04 21 Python win32com模块操作Excel的几个应用（一）</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-05-02-%E8%8E%B7%E5%8F%96Excel%E5%85%AC%E5%BC%8F%E7%9A%84%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%EF%BC%88Python%E5%AE%9E%E7%8E%B0%EF%BC%89/" class="nav-link">2019 05 02 获取Excel公式的依赖关系（Python实现）</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-05-22-Matplotlib%E5%A4%9A%E7%BA%B5%E8%BD%B4%EF%BC%88%E5%AF%84%E7%94%9F%E8%BD%B4%EF%BC%89%E6%95%A3%E7%82%B9%E5%9B%BE/" class="nav-link">2019 05 22 Matplotlib多纵轴（寄生轴）散点图</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-08-18-C%2B%2B-DLL%E4%B8%8EVBA%E4%B9%8B%E9%97%B4%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BC%A0%E9%80%92%EF%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89%E8%BF%94%E5%9B%9E%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="nav-link">2019 08 18 C++ DLL与VBA之间的字符串传递：（一）返回字符串</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-08-31-C%2B%2B-DLL%E4%B8%8EVBA%E4%B9%8B%E9%97%B4%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BC%A0%E9%80%92%EF%BC%9A%EF%BC%88%E4%BA%8C%EF%BC%89%E4%BC%A0%E5%85%A5%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="nav-link">2019 08 31 C++ DLL与VBA之间的字符串传递：（二）传入字符串</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-09-13-Python-win32com%E6%A8%A1%E5%9D%97%E6%93%8D%E4%BD%9CExcel%E7%9A%84%E5%87%A0%E4%B8%AA%E5%BA%94%E7%94%A8%EF%BC%88%E4%BA%8C%EF%BC%89/" class="nav-link">2019 09 13 Python win32com模块操作Excel的几个应用（二）</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-09-14-%E4%BB%A5Windows%E6%9C%8D%E5%8A%A1%E6%96%B9%E5%BC%8F%E8%BF%90%E8%A1%8CExcel%E8%87%AA%E5%8A%A8%E5%8C%96%E7%A8%8B%E5%BA%8F%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="nav-link">2019 09 14 以Windows服务方式运行Excel自动化程序遇到的问题与解决方法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-10-01-Python%E6%B1%82%E8%A7%A3%E8%87%AA%E8%A1%8C%E8%BD%A6%E5%89%8D%E5%90%8E%E8%BD%AE%E8%BD%A8%E8%BF%B9%E9%97%AE%E9%A2%98/" class="nav-link">Python求解自行车前后轮轨迹问题</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-12-29-GitLab-CI-CD%E4%B9%8Bbefore_script%E5%92%8Cafter_script/" class="nav-link">2019 12 29 GitLab CI CD之before script和after script</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-02-27-TensorFlow%E8%87%AA%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E9%9B%86%EF%BC%881%EF%BC%89%EF%BC%9Atf.data.Dataset/" class="nav-link">2020 02 27 TensorFlow自定义数据集（1）：tf.data.Dataset</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-02-28-TensorFlow%E8%87%AA%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E9%9B%86%EF%BC%882%EF%BC%89%EF%BC%9Atf.data.TFRecordDataset/" class="nav-link">2020 02 28 TensorFlow自定义数据集（2）：tf.data.TFRecordDataset</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-03-01-2020%E8%AF%BB%E4%B9%A6%E8%AE%A1%E5%88%92%EF%BC%881%EF%BC%89%EF%BC%9ATensorFlow%E6%8A%80%E6%9C%AF%E8%A7%A3%E6%9E%90%E4%B8%8E%E5%AE%9E%E6%88%98/" class="nav-link">2020 03 01 2020读书计划（1）：TensorFlow技术解析与实战</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-07-13-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81/" class="nav-link">2020 07 13 pdf2docx开发概要</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-09-27-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%E4%B9%8B%E5%AF%B9%E9%BD%90%E9%9A%90%E5%BC%8F%E8%A1%A8%E6%A0%BC%E7%BA%BF/" class="nav-link">2020 09 27 pdf2docx开发概要之对齐隐式表格线</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-10-01-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%E4%B9%8B%E7%9F%A2%E9%87%8F%E5%9B%BE%E5%A4%84%E7%90%86/" class="nav-link">2020 10 01 pdf2docx开发概要之矢量图处理</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-10-15-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%E4%B9%8B%E8%8E%B7%E5%8F%96%E5%9B%BE%E7%89%87%E5%8F%8A%E5%85%B6%E4%BD%8D%E7%BD%AE/" class="nav-link">2020 10 15 pdf2docx开发概要之获取图片及其位置</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-10-25-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%B5%AE%E5%8A%A8%E5%9B%BE%E7%89%87/" class="nav-link">2020 10 25 pdf2docx开发概要之创建浮动图片</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2021-01-02-Python%E5%A4%84%E7%90%86PDF%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E5%AF%B9%E6%AF%94/" class="nav-link">2021 01 02 Python处理PDF的第三方库对比</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Categories <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/2012/" class="dropdown-item">2012</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2013/" class="dropdown-item">2013</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2014/" class="dropdown-item">2014</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2015/" class="dropdown-item">2015</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2016/" class="dropdown-item">2016</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2017/" class="dropdown-item">2017</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2018/" class="dropdown-item">2018</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2019/" class="dropdown-item">2019</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2020/" class="dropdown-item">2020</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2021/" class="dropdown-item">2021</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../2019-01-28-%E9%9B%86%E6%88%90python%E7%9A%84Excel%E6%8F%92%E4%BB%B6%E6%A8%A1%E6%9D%BFPyAddin%E2%80%94%E2%80%94%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../2019-04-20-VBA%E8%B0%83%E7%94%A8%E5%A4%96%E9%83%A8%E5%87%BD%E6%95%B0%EF%BC%88%E5%B7%A5%E4%BD%9C%E7%B0%BF-COM%E9%93%BE%E6%8E%A5%E5%BA%93-C%E9%93%BE%E6%8E%A5%E5%BA%93%EF%BC%89%E6%96%B9%E6%B3%95/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2019-03-24-PyQt5应用实践之个人知识管理工具Tagit.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">主要特征</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#modelview framework" class="nav-link">模型/视图框架（Model/View Framework）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#drag and drop" class="nav-link">拖拽（Drag and Drop）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#painter" class="nav-link">绘图（Painter）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<p>我们通常使用文件夹结构来分类管理文档/个人知识，但单一的目录结构难以有效组织具有交叉关系的内容。例如，以电影类型例如科幻片、战争片、剧情片来命名分类文件夹是个不错的选择，但同时我们很可能希望将同一导演/演员的作品组织在一起，于是不得不按照这个标准重新建立分类文件夹，并且需要重复复制文档。</p>
+<p>针对此类问题，考虑**以虚拟的目录结构和标签来管理硬盘上实际存储的文档**（文本/多媒体）。作者近期正在学习<code>Qt</code>相关知识，于是正好作为<code>PyQt5</code>的一个应用实践——这便是本文介绍的对象<code>Tagit</code>。区别于笔记类应用，<code>Tagit</code>并不创建和编辑文档实体，而是侧重以逻辑分类和标签来管理已经存在的文档；它更倾向于文献管理类软件，但不涉及文献格式方面的功能，而是着重于分类组织的能力。</p>
+<p>本文简要介绍<code>Tagit</code>的主要功能及其实现所对应的<code>Qt</code>基础知识。 <a href="https://github.com/dothinking/Tagit">项目地址</a></p>
+<div align='center'><img src="{{ "/images/2019-03-24-01.png" | prepend: site.baseurl }}"></div>
+
+<h2 id="_1">主要特征<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><code>分类</code>、<code>标签</code>和<code>条目</code>是<code>Tagit</code>的主要对象。条目是<code>Tagit</code>中虚拟的文档记录，与真实的源文档一一对应；分类是虚拟的目录层次，可以根据需求进行自定义，类比为文件夹/目录；标签是对条目（映射真实文档）内容的标记，一个条目可以打上任意的标签。</p>
+<ul>
+<li>
+<p>分类管理（Group）</p>
+<ul>
+<li>支持无限级分类</li>
+<li>创建/修改/删除</li>
+<li>分类下条目数量统计</li>
+</ul>
+</li>
+<li>
+<p>标签管理（Tag）</p>
+<ul>
+<li>自定义标签颜色</li>
+<li>创建/修改/删除</li>
+<li>标签下条目数量统计</li>
+</ul>
+</li>
+<li>
+<p>条目管理（Item）</p>
+<ul>
+<li>建立与源文档的映射</li>
+<li>添加/修改分类（一个条目属于唯一分类）</li>
+<li>添加/修改标签（一个条目可以添加多个标签）</li>
+<li>拖拽条目添加分类/标签</li>
+<li>按分类/标签筛选条目</li>
+<li>关键字筛选条目    </li>
+<li>数据存储（目前采用<code>pickle</code>直接存储数据）</li>
+</ul>
+</li>
+<li>
+<p>用户界面</p>
+<ul>
+<li>自定义UI样式（目前支持<code>default</code>和<code>dark</code>风格）</li>
+</ul>
+</li>
+</ul>
+<p><code>Qt</code>布局、基本控件、信号/槽机制等基础知识暂且略过，下面将列出<code>Qt</code>模型/视图方面的相关知识——因为<code>Tagit</code>的核心对象分类/标签/条目采用的是<code>QTreeView</code>和<code>QTableView</code>来呈现的。</p>
+<h2 id="modelview framework">模型/视图框架（Model/View Framework）<a class="headerlink" href="#modelview framework" title="Permanent link">&para;</a></h2>
+<p><code>Qt</code>模型/视图模式框架[<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>]包含了模型（Model）、视图（View）、委托（Delegate）和代理（Proxy），有助于底层数据与渲染显示解耦。</p>
+<ul>
+<li>模型持有数据（严格来说，通过模型中的自定义属性来存储数据）</li>
+<li>视图从模型读取和渲染原始数据</li>
+<li>委托定义模型在编辑状态的样式，并且可以自定义样式渲染视图</li>
+<li>代理介于视图和源模型之间，方便对源模型数据进行排序、过滤等操作</li>
+</ul>
+<p>采用此模式的典型控件有列表结构、表格结构和层次结构（树）等。在<code>Tagit</code>应用如下：</p>
+<ul>
+<li>分类数据采用<code>QTreeview</code>呈现，具体数据由子类化<code>QAbstractItemModel</code>的模型管理</li>
+<li>标签和条目数据采用<code>QTableView</code>显示，具体数据由子类化<code>QAbstractTableModel</code>的模型管理</li>
+<li>条目标签的渲染委托<code>QStyledItemDelegate</code>实现</li>
+<li>条目数据的分类筛选通过子类化<code>QSortFilterProxyModel</code>代理实现</li>
+</ul>
+<p>模型/视图框架的各个组件通过预定义好的接口进行协作，例如视图通过<code>data()</code>方法向模型请求数据以便显示，所以用户在使用过程中只需要子类化相应的基类，然后根据业务需求实现相应的接口。以<code>QAbstractItemModel</code>为例[<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>]，当继承该类来实现一个树形结构的模型时，至少需要实现5个接口：<code>index()</code>、 <code>parent()</code>、 <code>rowCount()</code>、 <code>columnCount()</code>及<code>data()</code>，它们保证了视图可以从模型中正确获取指定的数据。当然，这仅仅实现了只读属性，如果需要修改功能的话，则还需实现<code>flags()</code>和<code>setData()</code>接口，前者指定某一项是否允许修改，后者实现具体的修改方法。 如果子类化表格结构的模型<code>QAbstractTableModel</code>[<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>]，同理需要实现上述接口，只不过<code>QAbstractTableModel</code>已针对表格结构进行了部分实现。例如，对于只读的表格，用户只需实现除了<code>index()</code>和<code>parent()</code>之外的3个接口即可。</p>
+<p>下面从宏观角度归纳总结了子类化树、表格、列表结构模型时需要实现的接口[<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>]：</p>
+<h3 id="_2">数据处理接口<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>这是所有模型的基础，以便保证视图/委托能够从模型中正确获取数据。具体地又可以分为读取数据、修改内容、增删数据等几类。</p>
+<p><strong>读取数据</strong> </p>
+<ul>
+<li><code>flags()</code>表明数据项状态，例如是否有效、是否可以选中</li>
+<li><code>data()</code>获取数据项存储的某一类型/角色的数据，例如表格单元格中的数据，可以获取其文本内容、字体属性等</li>
+<li><code>headerData()</code>获取表头内容</li>
+<li><code>rowCount()</code>获取行数</li>
+<li><code>columnCount()</code>获取列数，对于列表模型<code>QAbstractListModel</code>而言，其列数始终为1，故无需实现</li>
+</ul>
+<p><strong>修改内容</strong></p>
+<ul>
+<li><code>flags()</code>设置<code>Qt::ItemIsEditable</code>状态才允许修改数据项</li>
+<li><code>setData()</code>设置数据包括内容、颜色、图标等，需要显式释放<code>dataChanged</code>信号，以通知视图进行显示刷新</li>
+<li><code>setHeaderData()</code>修改表头内容，同理释放<code>headerDataChanged</code>信号通知视图更新</li>
+</ul>
+<p><strong>增删数据项</strong></p>
+<ul>
+<li><code>insertRows()</code>和<code>removeRows()</code>添加和删除行</li>
+<li><code>insertColumns()</code>和<code>removeColumns()</code>添加和删除列</li>
+</ul>
+<h3 id="_3">数据索引接口<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>视图中的每一项，例如树结构的结点、表格结构的单元格、列表结构的行，都对应一个索引<code>QModelIndex</code>。表格和列表相对树结构来说，其层次结构都较为简单，因此本类的两个函数在树型结构中应用较多。</p>
+<ul>
+<li><code>index()</code>根据父节点及位置获取子项目的索引，便于遍历子项目</li>
+<li><code>parent()</code>获取父节点索引</li>
+</ul>
+<h3 id="_4">拖拽功能接口<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>mimeTypes()</code>默认MIME类型为<code>application/x-qabstractitemmodeldatalist</code>，支持自定义以便在应用时进行过滤</li>
+<li><code>mimeData()</code>设置存储在相应MIME类型中的数据，以便进行拖拽过程的数据传递</li>
+<li><code>supportedDropActions()</code>指定支持的拖拽类型，是否允许拖动和释放</li>
+<li><code>dropMimeData()</code>释放拖拽后的响应方法</li>
+</ul>
+<p>注意，拖拽功能的实现需要数据处理相关接口的支持，例如修改数据内容、新增、删除行/列等。</p>
+<h2 id="drag and drop">拖拽（Drag and Drop）<a class="headerlink" href="#drag and drop" title="Permanent link">&para;</a></h2>
+<p><code>Tagit</code>的拖拽分类功能希望从<code>QTableView</code>拖拽条目到分类<code>QTreeView</code>上，从而完成添加分类操作。模型/视图框架提供了拖拽相关的接口，只需在模型类中重新实现相应的函数即可，而拖拽的显示效果则由视图自动维护。例如[<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup>]，</p>
+<ul>
+<li><code>flags()</code>方法中<code>Qt.ItemIsDragEnabled</code>和<code>Qt.ItemIsDropEnabled</code>指明是否允许拖拽和释放</li>
+<li><code>canDropMimeData()</code>确定允许释放拖拽对象的条件</li>
+<li><code>dropMimeData()</code>实现释放拖拽对象后执行的动作</li>
+</ul>
+<p>当然，也可以在视图中重载拖拽事件函数来手动实现相应效果，例如[<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup>]：</p>
+<ul>
+<li><code>dragEnterEvent</code>和<code>dragLeaveEvent</code>决定进入和离开拖拽对象区域过程中是否接受拖拽对象</li>
+<li><code>dragMoveEvent</code>决定在拖拽过程中鼠标位置是否是否接受释放对象（drop）</li>
+<li><code>dropEvent</code>定义释放拖拽后需要进行的动作</li>
+</ul>
+<p>这样功能上也能实现<code>Tagit</code>的拖拽分类，然而离预期还差一步——只能通过当前光标的位置观察条目将要被拖放到哪个分类上，而没有突出显示该分类。于是需要在处理拖拽事件的过程中通知刷新视图，并且在视图中借助<code>paintEvent</code>事件手工定义好目标对象的显示例如高亮样式。</p>
+<h2 id="painter">绘图（Painter）<a class="headerlink" href="#painter" title="Permanent link">&para;</a></h2>
+<p>开篇<code>Tagit</code>预览界面条目表格中<code>Item Title</code>所示的标签是在委托<code>QStyledItemDelegate</code>中借助<code>QPainter</code>自定义绘制的。<code>QPainter</code>提供了底层的绘图能力，可以绘制图形或控件[<sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup>]。</p>
+<ul>
+<li>默认坐标原点在左上角，可以计算全局坐标后画图；也可以移动坐标系（<code>translate()</code>/<code>rotate()</code>）后采用局部坐标画图</li>
+<li>设置画笔（<code>setPen()</code>）自定义绘制对象的边框样式</li>
+<li>设置画刷（<code>setBrush()</code>）自定义绘制对象的填充样式</li>
+</ul>
+<hr />
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>[1] <a href="https://doc.qt.io/qt-5/model-view-programming.html">Model/View Programming</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>[2] <a href="https://doc.qt.io/qt-5/qabstractitemmodel.html#details">QAbstractItemModel Class</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>[3] <a href="https://doc.qt.io/qt-5/qabstracttablemodel.html#details">QAbstractTableModel Class</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>[4] <a href="https://doc.qt.io/qt-5/model-view-programming.html#model-subclassing-reference">Model Subclassing Reference</a>&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>[5] <a href="https://doc.qt.io/qt-5/model-view-programming.html#using-drag-and-drop-with-item-views">Using Drag and Drop with Item Views</a>&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p>[6] <a href="https://doc.qt.io/qt-5/dnd.html">Drag and Drop</a>&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:7">
+<p>[7] <a href="https://doc.qt.io/qt-5/qpainter.html#details">QPainter Class</a>&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

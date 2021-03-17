@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2013-07-31-%E5%BA%94%E5%8A%9B%E5%BC%A0%E9%87%8F%E7%9A%84%E8%AE%A4%E8%AF%86%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2%E7%9A%84%E8%AF%81%E6%98%8E/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>应力张量的认识之线性变换的证明 - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">格致</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-05-21-%E4%B8%80%E8%B7%AF%E8%B5%B0%E6%9D%A5/" class="nav-link">一路走来</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-07-10-Marc%E8%B0%83%E7%94%A8Python%E8%84%9A%E6%9C%AC%E7%A8%8B%E5%BA%8F%E4%B8%AD%E5%85%B3%E4%BA%8E%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C%E7%9A%84%E5%87%A0%E4%B8%AA%E9%97%AE%E9%A2%98/" class="nav-link">Marc调用Python脚本程序中关于目录操作的几个问题</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-07-26-Windows%E5%91%BD%E4%BB%A4%E8%A1%8C%E6%8F%90%E4%BA%A4Marc%E8%AE%A1%E7%AE%97%E4%BB%BB%E5%8A%A1/" class="nav-link">Windows命令行提交Marc计算任务</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-07-27-MSC-Marc2011%E5%8D%95%E6%9C%BA%E5%A4%9A%E6%A0%B8%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97%E7%A4%BA%E4%BE%8B/" class="nav-link">MSC-Marc 2011单机多核并行计算示例</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-10-10-%E5%AE%9E%E4%BE%8B%E8%AF%B4%E6%98%8EVS2005%E3%80%81Python%E7%A8%8B%E5%BA%8F%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6%E6%97%B6%E7%9A%84%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98/" class="nav-link">实例说明VS2005、Python程序读写文件时的字符编码问题</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-10-18-MSC.MARC-2010%E8%A1%A8%E6%A0%BC%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%96%B9%E5%BC%8F/" class="nav-link">MSC.MARC 2010表格之创建方式</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-10-20-MSC.MARC-2010%E8%A1%A8%E6%A0%BC%E4%B9%8B%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%BC%8F/" class="nav-link">MSC.MARC 2010表格之数据模式</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2012-10-21-MSC.MARC-2010%E5%88%9A%E6%80%A7%E6%8E%A5%E8%A7%A6%E4%BD%93%E8%BF%90%E5%8A%A8%E8%AE%BE%E7%BD%AE/" class="nav-link">MSC.MARC 2010刚性接触体运动设置</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-06-13-UG%E8%BF%90%E5%8A%A8%E4%BB%BF%E7%9C%9F%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" class="nav-link">UG运动仿真学习记录</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-07-29-Levy-Mises%E7%90%86%E8%AE%BA%E7%9A%84%E6%80%9D%E8%80%83/" class="nav-link">Levy Mises理论的思考</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-07-30-%E5%BA%94%E5%8A%9B%E5%BC%A0%E9%87%8F%E7%9A%84%E8%AE%A4%E8%AF%86%E4%B9%8B%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/" class="nav-link">应力张量的认识之基本概念</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-07-30-%E5%BA%94%E5%8A%9B%E5%BC%A0%E9%87%8F%E7%9A%84%E8%AE%A4%E8%AF%86%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2/" class="nav-link">应力张量的认识之线性变换</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">应力张量的认识之线性变换的证明</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-08-05-UG-NX-%E8%A7%92%E8%89%B2%E5%AE%9A%E5%88%B6%E4%B8%8E%E5%BA%94%E7%94%A8/" class="nav-link">UG NX角色定制与应用</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-09-28-ThinkPHP%E8%87%AA%E5%8A%A8%E9%AA%8C%E8%AF%81%E4%B9%8Bunique%E8%A7%84%E5%88%99%E7%9A%84%E9%97%AE%E9%A2%98%E5%92%8C%E7%90%86%E8%A7%A3/" class="nav-link">ThinkPHP自动验证之unique规则的问题和理解</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-10-19-ThinkPHP%E6%A1%86%E6%9E%B6%E4%B8%8BMySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E7%B1%BB/" class="nav-link">ThinkPHP框架下MySQL数据库备份还原类</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2013-10-31-Sublime-Text-2%E4%B8%AD%E8%BF%90%E8%A1%8CPython%E7%A8%8B%E5%BA%8F/" class="nav-link">Sublime Text 2中运行Python程序</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-07-02-Sublime-Text-%E8%87%AA%E5%AE%9A%E4%B9%89%E9%A2%9C%E8%89%B2%E4%B8%BB%E9%A2%98/" class="nav-link">Sublime Text 自定义颜色主题</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-11-28-%E4%B8%8A%E9%99%90%E6%B3%95%E5%A1%91%E6%80%A7%E5%8A%9F%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86%E7%AE%97%E4%BE%8B%E4%B9%8B%E4%BA%8C%E9%87%8D%E7%A7%AF%E5%88%86/" class="nav-link">上限法塑性功数值积分算例之二重积分</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-12-19-Gauss-Legendre%E4%BA%8C%E9%87%8D%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86/" class="nav-link">Gauss Legendre二重数值积分</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-12-22-NumPy%E5%BA%93frompyfunc%E4%B8%8Evectorize%E7%9A%84%E6%AF%94%E8%BE%83/" class="nav-link">NumPy库frompyfunc与vectorize的比较</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2014-12-24-%E4%B8%8A%E9%99%90%E6%B3%95%E5%A1%91%E6%80%A7%E5%8A%9F%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86%E7%AE%97%E4%BE%8B%E4%B9%8B%E4%B8%89%E9%87%8D%E7%A7%AF%E5%88%86/" class="nav-link">上限法塑性功数值积分算例之三重积分</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2015-06-16-SAE%E7%8E%AF%E5%A2%83%E4%B8%8B%E4%BD%BF%E7%94%A8MySQLReback%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9FMySQL%E6%95%B0%E6%8D%AE%E5%BA%93/" class="nav-link">SAE环境下使用MySQLReback备份还原MySQL数据库</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2015-06-17-SAE%E7%8E%AF%E5%A2%83%E4%B8%8B%E4%BD%BF%E7%94%A8PHPExcel%E5%AF%BC%E5%85%A5%E6%95%B0%E6%8D%AE/" class="nav-link">SAE环境下使用PHPExcel导入数据</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2015-11-04-%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0%E7%A4%BE%E4%BC%9A%E6%A0%B8%E7%AE%97%E7%9F%A9%E9%98%B5%EF%BC%88SAM%EF%BC%89%E7%9A%84%E8%B4%A6%E6%88%B7%E9%9B%86%E7%BB%93%E4%B8%8E%E5%B9%B3%E8%A1%A1/" class="nav-link">程序实现社会核算矩阵（SAM）的账户集结与平衡</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2015-11-15-python%E4%B8%AD%E4%BD%BF%E7%94%A8mlab%E5%BA%93%E5%AE%9E%E7%8E%B0%E4%B8%8EMATLAB%E4%BA%A4%E4%BA%92/" class="nav-link">python中使用mlab库实现与MATLAB交互</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2016-01-20-%E4%BD%BF%E7%94%A8Python%E5%AF%BC%E5%87%BAMSC.Marc%E5%90%8E%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE/" class="nav-link">使用Python导出MSC.Marc后处理数据</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2016-11-05-%E6%95%B4%E5%90%88UEditor%E5%9B%BE%E7%89%87%E4%B8%8A%E4%BC%A0%E6%A8%A1%E5%9D%97%E4%B8%BA%E4%B8%8A%E4%BC%A0%E6%8F%92%E4%BB%B6/" class="nav-link">整合UEditor图片上传模块为上传插件</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-01-07-%E5%AD%A6%E4%BD%8D%E8%AE%BA%E6%96%87%E5%86%99%E4%BD%9C%E4%B8%AD%E7%9A%84%E8%BD%AF%E4%BB%B6%E7%BB%84%E5%90%88/" class="nav-link">学位论文写作中的软件组合</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-03-08-%E7%90%83%E9%9D%A2%E8%B7%9D%E7%A6%BB%E4%B8%8E%E6%96%B9%E4%BD%8D%E8%A7%92%E5%85%AC%E5%BC%8F%E7%9A%84%E6%8E%A8%E5%AF%BC%EF%BC%9A%E8%A7%A3%E4%B8%89%E8%A7%92%E5%BD%A2%E6%B3%95/" class="nav-link">球面距离与方位角公式的推导：解三角形法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-03-09-%E7%90%83%E9%9D%A2%E8%B7%9D%E7%A6%BB%E4%B8%8E%E6%96%B9%E4%BD%8D%E8%A7%92%E5%85%AC%E5%BC%8F%E7%9A%84%E6%8E%A8%E5%AF%BC%EF%BC%9A%E5%90%91%E9%87%8F%E4%BB%A3%E6%95%B0%E6%B3%95/" class="nav-link">球面距离与方位角公式的推导：向量代数法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-04-24-Selenium%2BPhantomJS%E6%97%A0%E6%B3%95%E8%BE%93%E5%85%A5%E6%96%87%E6%9C%AC%E5%8F%8A%E5%85%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="nav-link">Selenium PhantomJS无法输入文本及其解决方法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-04-24-Selenium-Python%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C%E5%A4%87%E5%BF%98/" class="nav-link">Selenium Python基本操作备忘</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-07-23-Microsoft-Excel-2010%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8A%9F%E8%83%BD%E5%8C%BA%28%E4%B8%80%29/" class="nav-link">Microsoft Excel 2010自定义功能区(一)</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-07-24-Microsoft-Excel-2010%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8A%9F%E8%83%BD%E5%8C%BA%28%E4%BA%8C%29/" class="nav-link">Microsoft Excel 2010自定义功能区(二)</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-07-31-%E8%87%AA%E5%AE%9A%E4%B9%89Microsoft-Excel-2010-Ribbon%E8%8F%9C%E5%8D%95%E9%A1%B9Enable%E7%8A%B6%E6%80%81/" class="nav-link">自定义Microsoft Excel 2010 Ribbon菜单项Enable状态</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-08-08-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9AGroups%E4%B8%8ERegions/" class="nav-link">NXOpen CAE开发总结系列：Groups与Regions</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-08-27-NXOpen%EF%BC%9A%E5%AF%B9%E8%AF%9D%E6%A1%86%E7%9A%84%E8%AE%A4%E8%AF%86/" class="nav-link">NXOpen：对话框的认识</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-09-01-NXOpen%EF%BC%9AMenu-Script%E8%87%AA%E5%AE%9A%E4%B9%89%E8%8F%9C%E5%8D%95/" class="nav-link">NXOpen：Menu Script自定义菜单</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-10-10-%E5%85%BC%E5%AE%B9Windows%E5%92%8CLinux%E7%9A%84C%2B%2B%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E6%A8%A1%E6%9D%BF/" class="nav-link">兼容Windows和Linux的C++动态链接库模板</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-11-25-VBA%E8%AE%BE%E7%BD%AE%E7%94%A8%E6%88%B7%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/" class="nav-link">VBA设置用户环境变量</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-11-30-VBA%E8%B0%83%E7%94%A8C%2B%2B%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/" class="nav-link">VBA调用C++动态链接库</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2017-12-12-NXOpen%EF%BC%9AExpression%E7%B1%BB%E5%9E%8B%E4%B8%8E%E5%9F%BA%E6%9C%AC%E5%8D%95%E4%BD%8D/" class="nav-link">NXOpen：Expression类型与基本单位</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-01-12-%E4%BD%BF%E7%94%A8subprocess%E6%A8%A1%E5%9D%97%E8%B0%83%E7%94%A8%E5%AD%90%E8%BF%9B%E7%A8%8B%E5%B9%B6%E8%8E%B7%E5%8F%96%E8%BE%93%E5%87%BA/" class="nav-link">2018 01 12 使用subprocess模块调用子进程并获取输出</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-01-13-PyQt%E4%BD%BF%E7%94%A8QProcess%E8%B0%83%E7%94%A8%E5%AD%90%E8%BF%9B%E7%A8%8B%E5%B9%B6%E8%8E%B7%E5%8F%96%E8%BE%93%E5%87%BA/" class="nav-link">2018 01 13 PyQt使用QProcess调用子进程并获取输出</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-01-23-%E8%87%AA%E5%AE%9A%E4%B9%89Microsoft-Office-Ribbon%E5%8C%BA%E5%9F%9F/" class="nav-link">2018 01 23 自定义Microsoft Office Ribbon区域</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-02-07-Python3%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%9A%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="nav-link">2018 02 07 Python3代码示例：基本操作</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-02-08-Python3%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C/" class="nav-link">2018 02 08 Python3代码示例：字符串操作</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-02-09-Python3%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%9A%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C/" class="nav-link">2018 02 09 Python3代码示例：文件目录操作</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-04-05-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9AAdvanced-Simulation%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/" class="nav-link">2018 04 05 NXOpen CAE开发总结系列：Advanced Simulation文件结构</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-05-04-NXOpen%EF%BC%9A%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7%E6%93%8D%E4%BD%9C/" class="nav-link">2018 05 04 NXOpen：对象属性操作</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-05-06-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9A%E4%B8%BB%E8%A6%81%E7%B1%BB%E7%BB%93%E6%9E%84%E5%9B%BE/" class="nav-link">2018 05 06 NXOpen CAE开发总结系列：主要类结构图</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-06-25-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9AFEM-SIM%E6%A8%A1%E5%9E%8B%E4%B8%ADPolygon-Body%E7%9A%84%E5%90%8D%E7%A7%B0/" class="nav-link">2018 06 25 NXOpen CAE开发总结系列：FEM SIM模型中Polygon Body的名称</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-07-01-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9A%E4%BB%8EANSYS-APDL%E8%A7%92%E5%BA%A6%E7%9C%8B%E5%BE%85Mesh/" class="nav-link">2018 07 01 NXOpen CAE开发总结系列：从ANSYS APDL角度看待Mesh</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-09-28-NXOpen%EF%BC%9A%E7%A6%81%E7%94%A8%E8%8F%9C%E5%8D%95%E9%A1%B9/" class="nav-link">2018 09 28 NXOpen：禁用菜单项</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-21-Python-Package-__init__%E8%A7%A3%E6%9E%90/" class="nav-link">2018 10 21 Python Package   init  解析</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-21-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%E5%8F%8APython%E5%AE%9E%E7%8E%B0/" class="nav-link">2018 10 21 遗传算法：基本原理及Python实现</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-25-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E6%94%B9%E8%BF%9B%E6%96%B9%E5%90%91%E4%B9%8B%E8%87%AA%E9%80%82%E5%BA%94%E7%AD%96%E7%95%A5/" class="nav-link">2018 10 25 遗传算法：改进方向之自适应策略</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-27-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E6%94%B9%E8%BF%9B%E6%96%B9%E5%90%91%E4%B9%8B%E7%B2%BE%E8%8B%B1%E7%AD%96%E7%95%A5/" class="nav-link">2018 10 27 遗传算法：改进方向之精英策略</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-10-31-GitLab-CI-CD%E5%8A%9F%E8%83%BD%E4%BB%8B%E7%BB%8D/" class="nav-link">2018 10 31 GitLab CI CD功能介绍</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2018-11-05-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E6%B5%8B%E8%AF%95%E6%A1%88%E4%BE%8B%E4%B9%8B%E5%87%BD%E6%95%B0%E6%9E%81%E5%80%BC/" class="nav-link">2018 11 05 遗传算法：测试案例之函数极值</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-01-28-%E9%9B%86%E6%88%90python%E7%9A%84Excel%E6%8F%92%E4%BB%B6%E6%A8%A1%E6%9D%BFPyAddin%E2%80%94%E2%80%94%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" class="nav-link">2019 01 28 集成python的Excel插件模板PyAddin——使用说明</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-01-28-%E9%9B%86%E6%88%90python%E7%9A%84Excel%E6%8F%92%E4%BB%B6%E6%A8%A1%E6%9D%BFPyAddin%E2%80%94%E2%80%94%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D/" class="nav-link">2019 01 28 集成python的Excel插件模板PyAddin——原理介绍</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-03-24-PyQt5%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5%E4%B9%8B%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7Tagit/" class="nav-link">2019 03 24 PyQt5应用实践之个人知识管理工具Tagit</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-04-20-VBA%E8%B0%83%E7%94%A8%E5%A4%96%E9%83%A8%E5%87%BD%E6%95%B0%EF%BC%88%E5%B7%A5%E4%BD%9C%E7%B0%BF-COM%E9%93%BE%E6%8E%A5%E5%BA%93-C%E9%93%BE%E6%8E%A5%E5%BA%93%EF%BC%89%E6%96%B9%E6%B3%95/" class="nav-link">2019 04 20 VBA调用外部函数（工作簿 COM链接库 C链接库）方法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-04-21-Python-win32com%E6%A8%A1%E5%9D%97%E6%93%8D%E4%BD%9CExcel%E7%9A%84%E5%87%A0%E4%B8%AA%E5%BA%94%E7%94%A8%EF%BC%88%E4%B8%80%EF%BC%89/" class="nav-link">2019 04 21 Python win32com模块操作Excel的几个应用（一）</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-05-02-%E8%8E%B7%E5%8F%96Excel%E5%85%AC%E5%BC%8F%E7%9A%84%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB%EF%BC%88Python%E5%AE%9E%E7%8E%B0%EF%BC%89/" class="nav-link">2019 05 02 获取Excel公式的依赖关系（Python实现）</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-05-22-Matplotlib%E5%A4%9A%E7%BA%B5%E8%BD%B4%EF%BC%88%E5%AF%84%E7%94%9F%E8%BD%B4%EF%BC%89%E6%95%A3%E7%82%B9%E5%9B%BE/" class="nav-link">2019 05 22 Matplotlib多纵轴（寄生轴）散点图</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-08-18-C%2B%2B-DLL%E4%B8%8EVBA%E4%B9%8B%E9%97%B4%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BC%A0%E9%80%92%EF%BC%9A%EF%BC%88%E4%B8%80%EF%BC%89%E8%BF%94%E5%9B%9E%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="nav-link">2019 08 18 C++ DLL与VBA之间的字符串传递：（一）返回字符串</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-08-31-C%2B%2B-DLL%E4%B8%8EVBA%E4%B9%8B%E9%97%B4%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BC%A0%E9%80%92%EF%BC%9A%EF%BC%88%E4%BA%8C%EF%BC%89%E4%BC%A0%E5%85%A5%E5%AD%97%E7%AC%A6%E4%B8%B2/" class="nav-link">2019 08 31 C++ DLL与VBA之间的字符串传递：（二）传入字符串</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-09-13-Python-win32com%E6%A8%A1%E5%9D%97%E6%93%8D%E4%BD%9CExcel%E7%9A%84%E5%87%A0%E4%B8%AA%E5%BA%94%E7%94%A8%EF%BC%88%E4%BA%8C%EF%BC%89/" class="nav-link">2019 09 13 Python win32com模块操作Excel的几个应用（二）</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-09-14-%E4%BB%A5Windows%E6%9C%8D%E5%8A%A1%E6%96%B9%E5%BC%8F%E8%BF%90%E8%A1%8CExcel%E8%87%AA%E5%8A%A8%E5%8C%96%E7%A8%8B%E5%BA%8F%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="nav-link">2019 09 14 以Windows服务方式运行Excel自动化程序遇到的问题与解决方法</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-10-01-Python%E6%B1%82%E8%A7%A3%E8%87%AA%E8%A1%8C%E8%BD%A6%E5%89%8D%E5%90%8E%E8%BD%AE%E8%BD%A8%E8%BF%B9%E9%97%AE%E9%A2%98/" class="nav-link">Python求解自行车前后轮轨迹问题</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2019-12-29-GitLab-CI-CD%E4%B9%8Bbefore_script%E5%92%8Cafter_script/" class="nav-link">2019 12 29 GitLab CI CD之before script和after script</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-02-27-TensorFlow%E8%87%AA%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E9%9B%86%EF%BC%881%EF%BC%89%EF%BC%9Atf.data.Dataset/" class="nav-link">2020 02 27 TensorFlow自定义数据集（1）：tf.data.Dataset</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-02-28-TensorFlow%E8%87%AA%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E9%9B%86%EF%BC%882%EF%BC%89%EF%BC%9Atf.data.TFRecordDataset/" class="nav-link">2020 02 28 TensorFlow自定义数据集（2）：tf.data.TFRecordDataset</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-03-01-2020%E8%AF%BB%E4%B9%A6%E8%AE%A1%E5%88%92%EF%BC%881%EF%BC%89%EF%BC%9ATensorFlow%E6%8A%80%E6%9C%AF%E8%A7%A3%E6%9E%90%E4%B8%8E%E5%AE%9E%E6%88%98/" class="nav-link">2020 03 01 2020读书计划（1）：TensorFlow技术解析与实战</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-07-13-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81/" class="nav-link">2020 07 13 pdf2docx开发概要</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-09-27-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%E4%B9%8B%E5%AF%B9%E9%BD%90%E9%9A%90%E5%BC%8F%E8%A1%A8%E6%A0%BC%E7%BA%BF/" class="nav-link">2020 09 27 pdf2docx开发概要之对齐隐式表格线</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-10-01-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%E4%B9%8B%E7%9F%A2%E9%87%8F%E5%9B%BE%E5%A4%84%E7%90%86/" class="nav-link">2020 10 01 pdf2docx开发概要之矢量图处理</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-10-15-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%E4%B9%8B%E8%8E%B7%E5%8F%96%E5%9B%BE%E7%89%87%E5%8F%8A%E5%85%B6%E4%BD%8D%E7%BD%AE/" class="nav-link">2020 10 15 pdf2docx开发概要之获取图片及其位置</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2020-10-25-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%E4%B9%8B%E5%88%9B%E5%BB%BA%E6%B5%AE%E5%8A%A8%E5%9B%BE%E7%89%87/" class="nav-link">2020 10 25 pdf2docx开发概要之创建浮动图片</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../2021-01-02-Python%E5%A4%84%E7%90%86PDF%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E5%AF%B9%E6%AF%94/" class="nav-link">2021 01 02 Python处理PDF的第三方库对比</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Categories <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/2012/" class="dropdown-item">2012</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2013/" class="dropdown-item">2013</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2014/" class="dropdown-item">2014</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2015/" class="dropdown-item">2015</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2016/" class="dropdown-item">2016</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2017/" class="dropdown-item">2017</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2018/" class="dropdown-item">2018</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2019/" class="dropdown-item">2019</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2020/" class="dropdown-item">2020</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2021/" class="dropdown-item">2021</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../2013-07-30-%E5%BA%94%E5%8A%9B%E5%BC%A0%E9%87%8F%E7%9A%84%E8%AE%A4%E8%AF%86%E4%B9%8B%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../2013-08-05-UG-NX-%E8%A7%92%E8%89%B2%E5%AE%9A%E5%88%B6%E4%B8%8E%E5%BA%94%E7%94%A8/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2013-07-31-应力张量的认识之线性变换的证明.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#_1" class="nav-link">应力张量的认识之线性变换的证明</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">局部坐标系的基及过渡矩阵</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">线性变换在基下的矩阵</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_4" class="nav-link">相似关系</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_5" class="nav-link">线性空间的证明</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_8" class="nav-link">线性变换的证明</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_9" class="nav-link">总结</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="_1">应力张量的认识之线性变换的证明<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<hr />
+<p>前面两部分分别介绍了应力张量的基础和对其本质的思考，最终得出了应力张量的本质是一个线性变换的结论。这一部分是对上述结论的验证计算和关于严谨性方面的补充证明。</p>
+<p>为了加深对应力张量是线性变换的矩阵的理解，进行如下计算：<strong>从线性变换的角度求出变换矩阵（即应力张量），并验证其相似性</strong>。</p>
+<p>为了计算方便又不失一般性，取如下图所示的计算条件：</p>
+<p><img alt="计算坐标系" src="../images/2013-07-31-01.png" /></p>
+<p><span><span class="MathJax_Preview">S_1</span><script type="math/tex">S_1</script></span>、<span><span class="MathJax_Preview">S_2</span><script type="math/tex">S_2</script></span>分别为全局绝对坐标系<span><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span>下的两个局部坐标系（他们由截取<span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点的两两相互垂直的平面的法向决定），<span><span class="MathJax_Preview">S_1</span><script type="math/tex">S_1</script></span>和全局坐标系重合，<span><span class="MathJax_Preview">S_2</span><script type="math/tex">S_2</script></span>为全局坐标系绕<span><span class="MathJax_Preview">z</span><script type="math/tex">z</script></span>轴逆时针旋转90°得到。<span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点应力状态在<span><span class="MathJax_Preview">S_1</span><script type="math/tex">S_1</script></span>、<span><span class="MathJax_Preview">S_2</span><script type="math/tex">S_2</script></span>系下，分别用一个应力张量表示，并且是相似的。接下来就从线性变换角度进行计算说明。</p>
+<h2 id="_2">局部坐标系的基及过渡矩阵<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>根据局部坐标轴在全局坐标系下的方向余弦容易得到他们的基分别为：</p>
+<p>\[
+\alpha = \left(\alpha_1,\,\alpha_2,\,\alpha_3\right) = 
+\begin{pmatrix}
+1 &amp; 0 &amp; 0 \\\
+0 &amp; 1 &amp; 0 \\\
+0 &amp; 0 &amp; 1
+\end{pmatrix}
+\\\
+\beta = \left(\beta_1,\,\beta_2,\,\beta_3\right) = 
+\begin{pmatrix}
+0 &amp; -1 &amp; 0 \\\
+1 &amp; 0 &amp; 0 \\\
+0 &amp; 0 &amp; 1
+\end{pmatrix}
+\]</p>
+<p><span><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>基到<span><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>基的过渡矩阵<span><span class="MathJax_Preview">W</span><script type="math/tex">W</script></span>满足</p>
+<div>
+<div class="MathJax_Preview">\beta = \alpha\,W</div>
+<script type="math/tex; mode=display">\beta = \alpha\,W</script>
+</div>
+<p>同理<span><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>基到<span><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>基的过渡矩阵<span><span class="MathJax_Preview">W^{-1}</span><script type="math/tex">W^{-1}</script></span>满足</p>
+<div>
+<div class="MathJax_Preview">\alpha = \beta\,W^{-1}</div>
+<script type="math/tex; mode=display">\alpha = \beta\,W^{-1}</script>
+</div>
+<p>解得：</p>
+<p>\[
+W = \alpha^{-1}\,\beta = 
+\begin{pmatrix}
+0 &amp; -1 &amp; 0 \\\
+1 &amp; 0 &amp; 0 \\\
+0 &amp; 0 &amp; 1
+\end{pmatrix}
+\\\
+W^{-1} = \beta^{-1}\,\alpha = 
+\begin{pmatrix}
+0 &amp; 1 &amp; 0 \\\
+-1 &amp; 0 &amp; 0 \\\
+0 &amp; 0 &amp; 1
+\end{pmatrix}
+\]</p>
+<h2 id="_3">线性变换在基下的矩阵<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>设全局坐标系描述下，应力张量表示为</p>
+<p>\[
+\sigma = 
+\begin{pmatrix}
+\sigma_{11} &amp; \sigma_{12} &amp; \sigma_{13} \\\
+\sigma_{21} &amp; \sigma_{22} &amp; \sigma_{23} \\\
+\sigma_{31} &amp; \sigma_{32} &amp; \sigma_{33}
+\end{pmatrix}
+\]</p>
+<p>设<span><span class="MathJax_Preview">T</span><script type="math/tex">T</script></span>表示应力张量对应的线性变换，<span><span class="MathJax_Preview">T(\alpha_1)</span><script type="math/tex">T(\alpha_1)</script></span>表示<span><span class="MathJax_Preview">\alpha_1</span><script type="math/tex">\alpha_1</script></span>截面上的应力，显然</p>
+<div>
+<div class="MathJax_Preview">T(\alpha_1) = \left(\sigma_{11},\,\sigma_{12},\,\sigma_{13}\right)^T</div>
+<script type="math/tex; mode=display">T(\alpha_1) = \left(\sigma_{11},\,\sigma_{12},\,\sigma_{13}\right)^T</script>
+</div>
+<p><span><span class="MathJax_Preview">T(\beta_1)</span><script type="math/tex">T(\beta_1)</script></span>表示<span><span class="MathJax_Preview">S_2</span><script type="math/tex">S_2</script></span>坐标系下<span><span class="MathJax_Preview">\beta_1</span><script type="math/tex">\beta_1</script></span>截面上的应力，对应的是全局坐标系下<span><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span>截面的应力</p>
+<div>
+<div class="MathJax_Preview">T(\beta_1) = \left(\sigma_{21},\,\sigma_{22},\,\sigma_{23}\right)^T</div>
+<script type="math/tex; mode=display">T(\beta_1) = \left(\sigma_{21},\,\sigma_{22},\,\sigma_{23}\right)^T</script>
+</div>
+<p>类似处理其他截面的应力，进而得到</p>
+<p>\[
+T(\alpha) = T\left(\alpha_1,\,\alpha_2,\,\alpha_3\right) = 
+\begin{pmatrix}
+\sigma_{11} &amp; \sigma_{21} &amp; \sigma_{31} \\\
+\sigma_{12} &amp; \sigma_{22} &amp; \sigma_{32} \\\
+\sigma_{13} &amp; \sigma_{23} &amp; \sigma_{33}
+\end{pmatrix}
+\\\
+T(\beta) = T\left(\beta_1,\,\beta_2,\,\beta_3\right) = 
+\begin{pmatrix}
+\sigma_{21} &amp; -\sigma_{11} &amp; \sigma_{31} \\\
+\sigma_{22} &amp; -\sigma_{12} &amp; \sigma_{32} \\\
+\sigma_{23} &amp; -\sigma_{13} &amp; \sigma_{33}
+\end{pmatrix}
+\]</p>
+<p>根据<span><span class="MathJax_Preview">T(\alpha) = \alpha\,A</span><script type="math/tex">T(\alpha) = \alpha\,A</script></span>，<span><span class="MathJax_Preview">T(\beta) = \beta\,B</span><script type="math/tex">T(\beta) = \beta\,B</script></span>，得到线性变换在基<span><span class="MathJax_Preview">\alpha,\,\beta</span><script type="math/tex">\alpha,\,\beta</script></span>下的矩阵分别为</p>
+<p>\[
+A = \alpha^{-1}\,T(\alpha) = 
+\begin{pmatrix}
+\sigma_{11} &amp; \sigma_{21} &amp; \sigma_{31} \\\
+\sigma_{12} &amp; \sigma_{22} &amp; \sigma_{32} \\\
+\sigma_{13} &amp; \sigma_{23} &amp; \sigma_{33}
+\end{pmatrix}
+\\\
+B = \beta^{-1}\,T(\beta) = 
+\begin{pmatrix}
+\sigma_{22} &amp; -\sigma_{12} &amp; \sigma_{32} \\\
+-\sigma_{21} &amp; \sigma_{11} &amp; -\sigma_{31} \\\
+\sigma_{23} &amp; -\sigma_{13} &amp; \sigma_{33}
+\end{pmatrix}
+\]</p>
+<p>也就是<span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点在<span><span class="MathJax_Preview">S_1</span><script type="math/tex">S_1</script></span>、<span><span class="MathJax_Preview">S_2</span><script type="math/tex">S_2</script></span>坐标系下的应力张量。由于表示上的缘故，这里为转置关系。</p>
+<h2 id="_4">相似关系<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>验证可知<span><span class="MathJax_Preview">W^{-1}\,A\,W=B</span><script type="math/tex">W^{-1}\,A\,W=B</script></span>，即<span><span class="MathJax_Preview">A \sim B</span><script type="math/tex">A \sim B</script></span></p>
+<p>\[
+\begin{align*}
+W^{-1}\,A\,W &amp;=
+\begin{pmatrix}
+0 &amp; 1 &amp; 0 \\\
+-1 &amp; 0 &amp; 0 \\\
+0 &amp; 0 &amp; 1
+\end{pmatrix}\,
+\begin{pmatrix}
+\sigma_{11} &amp; \sigma_{21} &amp; \sigma_{31} \\\
+\sigma_{12} &amp; \sigma_{22} &amp; \sigma_{32} \\\
+\sigma_{13} &amp; \sigma_{23} &amp; \sigma_{33}
+\end{pmatrix}\,
+\begin{pmatrix}
+0 &amp; -1 &amp; 0 \\\
+1 &amp; 0 &amp; 0 \\\
+0 &amp; 0 &amp; 1
+\end{pmatrix}\\\
+&amp;=\begin{pmatrix}
+\sigma_{22} &amp; -\sigma_{12} &amp; \sigma_{32} \\\
+-\sigma_{21} &amp; \sigma_{11} &amp; -\sigma_{31} \\\
+\sigma_{23} &amp; -\sigma_{13} &amp; \sigma_{33}
+\end{pmatrix}\\\
+&amp;= B
+\end{align*}
+\]</p>
+<p>至此，可以清晰看出不同坐标系下应力张量与不同基下线性变换矩阵的等价关系。</p>
+<h2 id="_5">线性空间的证明<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>上述关于线性变换的理解都是基于<span><span class="MathJax_Preview">\sigma_{ij}\,n_j=p_i</span><script type="math/tex">\sigma_{ij}\,n_j=p_i</script></span>的形式而推出的，显得还不够严谨。比如，没有证明截面位置、截面应力可以做成一个线性空间，也没有证明从截面位置到截面应力的变换是线性变换。</p>
+<p>本着彻底打通这条思路的心思，下面开始这两个问题的分析。</p>
+<h3 id="_6">线性空间的定义<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>设<span><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>是一个非空集合，<span><span class="MathJax_Preview">R</span><script type="math/tex">R</script></span>为实数域。如果对于<span><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>中任意两个元素<span><span class="MathJax_Preview">\alpha,\,\beta</span><script type="math/tex">\alpha,\,\beta</script></span>，<span><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>中总有唯一的一个元素<span><span class="MathJax_Preview">\gamma</span><script type="math/tex">\gamma</script></span>与之对应，称为<span><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>与<span><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>的和，记作<span><span class="MathJax_Preview">\gamma = \alpha+\beta</span><script type="math/tex">\gamma = \alpha+\beta</script></span>；又对于<span><span class="MathJax_Preview">R</span><script type="math/tex">R</script></span>中任一数<span><span class="MathJax_Preview">\lambda</span><script type="math/tex">\lambda</script></span>与<span><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>中任一元素<span><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>，<span><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>中总有唯一的一个元素<span><span class="MathJax_Preview">\delta</span><script type="math/tex">\delta</script></span>与之对应，称为<span><span class="MathJax_Preview">\lambda</span><script type="math/tex">\lambda</script></span>与<span><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>的积，记作<span><span class="MathJax_Preview">\delta = \lambda\,\alpha</span><script type="math/tex">\delta = \lambda\,\alpha</script></span>。</p>
+<p>并且这两种运算满足以下八条运算规律（其中<span><span class="MathJax_Preview">\alpha,\,\beta,\,\gamma \in V</span><script type="math/tex">\alpha,\,\beta,\,\gamma \in V</script></span>，<span><span class="MathJax_Preview">\lambda,\,\mu \in R</span><script type="math/tex">\lambda,\,\mu \in R</script></span>）：</p>
+<blockquote>
+<ol>
+<li><span><span class="MathJax_Preview">\alpha+\beta=\beta+\alpha</span><script type="math/tex">\alpha+\beta=\beta+\alpha</script></span>  </li>
+<li><span><span class="MathJax_Preview">(\alpha+\beta)+\gamma = \alpha + (\beta+\gamma)</span><script type="math/tex">(\alpha+\beta)+\gamma = \alpha + (\beta+\gamma)</script></span>  </li>
+<li>在<span><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>中存在零元素<span><span class="MathJax_Preview">0</span><script type="math/tex">0</script></span>，对任何<span><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>都满足<span><span class="MathJax_Preview">\alpha+0=\alpha</span><script type="math/tex">\alpha+0=\alpha</script></span>  </li>
+<li>对任何<span><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>，都有<span><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>的负元素<span><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>满足<span><span class="MathJax_Preview">\alpha+\beta=0</span><script type="math/tex">\alpha+\beta=0</script></span>  </li>
+<li><span><span class="MathJax_Preview">1\cdot\alpha=\alpha</span><script type="math/tex">1\cdot\alpha=\alpha</script></span>  </li>
+<li><span><span class="MathJax_Preview">\lambda\,(\mu\,\alpha) = (\lambda\,\mu)\,\alpha</span><script type="math/tex">\lambda\,(\mu\,\alpha) = (\lambda\,\mu)\,\alpha</script></span>  </li>
+<li><span><span class="MathJax_Preview">(\lambda+\mu)\,\alpha = \lambda\,\alpha+\mu\,\alpha</span><script type="math/tex">(\lambda+\mu)\,\alpha = \lambda\,\alpha+\mu\,\alpha</script></span>  </li>
+<li><span><span class="MathJax_Preview">\lambda\,(\alpha+\beta) = \lambda\,\alpha + \lambda\,\beta</span><script type="math/tex">\lambda\,(\alpha+\beta) = \lambda\,\alpha + \lambda\,\beta</script></span></li>
+</ol>
+</blockquote>
+<p>那么，<span><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>就称为实数域<span><span class="MathJax_Preview">R</span><script type="math/tex">R</script></span>上的线性空间（或向量空间）。</p>
+<h3 id="_7">线性空间的证明<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p>截面应力空间显然是一个线性空间，因为它是一个一般的三维向量空间。对于截面位置空间，需要证明其对于某种定义的加法和乘法运算封闭，且满足上述运算律。</p>
+<p>截面位置空间是由方向余弦描述的，</p>
+<p>\[
+\begin{align*}
+\alpha &amp;= \left(n_1,\,n_2,\,n_3\right) = \left(\cos\langle{\vec{n},\,x}\rangle,\,\cos\langle{\vec{n},\,y}\rangle,\,\cos\langle{\vec{n},\,z}\rangle\right) \\\
+\beta &amp;= \left(m_1,\,m_2,\,m_3\right) = \left(\cos\langle{\vec{m},\,x}\rangle,\,\cos\langle{\vec{m},\,y}\rangle,\,\cos\langle{\vec{m},\,z}\rangle\right)
+\end{align*}
+\]</p>
+<p>其中，<span><span class="MathJax_Preview">\langle{\vec{n},\,x}\rangle</span><script type="math/tex">\langle{\vec{n},\,x}\rangle</script></span>表示截面法线与x轴的夹角，其余以此类推。</p>
+<p><span><span class="MathJax_Preview">n_1,\,n_2,\,n_3</span><script type="math/tex">n_1,\,n_2,\,n_3</script></span>取值范围为<span><span class="MathJax_Preview">[-1,\,1]</span><script type="math/tex">[-1,\,1]</script></span>，且满足<span><span class="MathJax_Preview">n_1^2+n_2^2+n_3^2=1</span><script type="math/tex">n_1^2+n_2^2+n_3^2=1</script></span>。显然常规的加法和数乘运算不满足封闭条件。</p>
+<p>考虑到截面空间的描述特征，采用 <strong>球坐标系下角度的代数加法和数乘运算</strong> 来定义。</p>
+<p><img alt="球坐标系" src="../images/2013-07-31-02.png" /></p>
+<p>球坐标系下，</p>
+<p>\[
+\begin{align*}
+\alpha &amp;= \left(n_1,\,n_2,\,n_3\right) 
+= \left(\sin\varphi_1\,\cos\theta_1,\,\sin\varphi_1\,\sin\theta_1,\,\cos\varphi_1\right) \\\
+\beta &amp;= \left(m_1,\,m_2,\,m_3\right) 
+= \left(\sin\varphi_2\,\cos\theta_2,\,\sin\varphi_2\,\sin\theta_2,\,\cos\varphi_2\right)
+\end{align*}
+\]</p>
+<p>定义加法和数乘运算</p>
+<p>\[
+\begin{align*}
+\alpha + \beta &amp;\triangleq \Biggl(\sin(\varphi_1+\varphi_2)\,\cos(\theta_1+\theta_2),\,\sin(\varphi_1+\varphi_2)\,\sin(\theta_1+\theta_2),\,\cos(\varphi_1-\varphi_2)\Biggr) \\\
+\lambda\,\alpha &amp;\triangleq \Biggl(\sin(\lambda\,\varphi_1)\,\cos(\lambda\,\theta_1),\,\sin(\lambda\,\varphi_1)\,\sin(\lambda\,\theta_1),\,\cos(\lambda\,\varphi_1)\Biggr)
+\end{align*}
+\]</p>
+<p>在这种加法和数乘运算的定义下，显然对元素是封闭的，并且简单验证就可知同时满足加法的两个运算律、数乘的三个运算律。</p>
+<ul>
+<li>
+<p>零元素：取<span><span class="MathJax_Preview">\varphi=\theta=0</span><script type="math/tex">\varphi=\theta=0</script></span>可得零元素<span><span class="MathJax_Preview">(0,\,0,\,1)</span><script type="math/tex">(0,\,0,\,1)</script></span></p>
+</li>
+<li>
+<p>负元素：取<span><span class="MathJax_Preview">\beta=\left(-\sin\varphi_1\,\cos\theta_1,\,-\sin\varphi_1\,\sin\theta_1,\,\cos\varphi_1\right)</span><script type="math/tex">\beta=\left(-\sin\varphi_1\,\cos\theta_1,\,-\sin\varphi_1\,\sin\theta_1,\,\cos\varphi_1\right)</script></span>，可得<span><span class="MathJax_Preview">\alpha+\beta=(0,\,0,\,1)</span><script type="math/tex">\alpha+\beta=(0,\,0,\,1)</script></span>为零元素</p>
+</li>
+<li>
+<p>单位1：显然1即为单位元素</p>
+</li>
+</ul>
+<p>综上可知，截面位置对于如上定义的运算可以作为一个线性空间。</p>
+<h2 id="_8">线性变换的证明<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<p>线性变换的证明只需证明变换满足线性运算，对于此变换<span><span class="MathJax_Preview">T(n)=\sigma\,n</span><script type="math/tex">T(n)=\sigma\,n</script></span>满足</p>
+<p>\[
+\begin{align*}
+T(\alpha + \beta) &amp;= \sigma\,(\alpha+\beta) = \sigma\,\alpha+\sigma\,\beta = T(\alpha)+T(\beta) \\\
+T(\lambda\,\alpha) &amp;= \sigma(\lambda\,\alpha) = \lambda\,(\sigma\,\alpha) = \lambda\,T(\alpha)
+\end{align*}
+\]</p>
+<h2 id="_9">总结<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p>本文是对关于应力张量与线性变换之间等价关系的验证和证明，主要是线性空间与线性变换的内容，由此也可体会相关知识的贯通性。主要知识点：</p>
+<ul>
+<li>
+<p>线性变换对应矩阵的求法。</p>
+</li>
+<li>
+<p>线性空间的证明方法：对定义的加法和数乘运算封闭且满足八条运算规则。</p>
+</li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

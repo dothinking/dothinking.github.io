@@ -6,15 +6,18 @@ keywords: ribbon, add-in, Excel, xlam
 tags: [VBA]
 ---
 
-[之前的文章]({{ site.baseurl }}{% post_url 2017-07-24-Microsoft-Excel-2010自定义功能区(二) %})演示了在Excel插件中自定义菜单的基本步骤，本文将以前文的`hello_world_addin.xlam`为基础，记录进一步控制单个菜单项可用/禁用状态的方法。
+# 自定义Microsoft Excel 2010 Ribbon菜单项Enable状态
 
-<div align='center'><img src="{{ "images/2017-07-24-02.png" | prepend: site.baseurl }}"></div>
+---
+
+[之前的文章](2017-07-24-Microsoft-Excel-2010自定义功能区(二).md)演示了在Excel插件中自定义菜单的基本步骤，本文将以前文的`hello_world_addin.xlam`为基础，记录进一步控制单个菜单项可用/禁用状态的方法。
+
+![](images/2017-07-24-02.png)
 
 假设目标需求是：只有当前WorkSheet的名字是`hello`时，才允许点击`say hello world`。换言之，自定义菜单项`say hello world`一直处于禁用状态，除非当前工作表名称为`hello`。
 
 这实际上涉及两个方面的问题：菜单项状态的控制和工作表事件的监听。
 
----
 
 ## 菜单项状态控制
 
@@ -89,7 +92,8 @@ End Sub
 
 此时任意打开一个工作簿，然后双击加载插件`hello_world.xlam`，效果如下：
 
-<div align='center'><img src="{{ "images/2017-07-31-01.png" | prepend: site.baseurl }}"></div>
+![](images/2017-07-31-01.png)
+
 
 如果加载插件时，当前工作表恰好是`hello`，则`say hello world`菜单项始终处于可用状态；否则将处于禁用状态。并且无论如何切换工作表，`say hello world`一直保持初始状态不变。这是因为当前代码只在初始化Ribbon区域时根据当前工作表名称更新了一次状态。
 
@@ -99,7 +103,7 @@ End Sub
 
 在`hello_world.xlam`的`ThisWorkBook`模块下插入工作表激活事件`Workbook_SheetActivate`：
 
-<div align='center'><img src="{{ "images/2017-07-31-02.png" | prepend: site.baseurl }}"></div>
+![](images/2017-07-31-02.png)
 
 填入刷新Ribbon区域的代码：
 
@@ -131,7 +135,8 @@ End Sub
 
 此时，即可在代码窗口顶部的左侧下拉菜单中，选择刚刚创建的`App`对象，然后在右侧下拉菜单选择对应的`SheetActivate`事件：
 
-<div align='center'><img src="{{ "images/2017-07-31-03.png" | prepend: site.baseurl }}"></div>
+![](images/2017-07-31-03.png)
+
 
 最后填入强制刷新Ribbon区域的代码：
 
@@ -141,12 +146,13 @@ Private Sub App_SheetActivate(ByVal Sh As Object)
 End Sub
 ```
 
-保存后重新打开即可实现预期效果，参考示例文件[hello_world_addin_enable_status.xlam](https://github.com/dothinking/blog/tree/master/src/excel_ribbon)。
+保存后重新打开即可实现预期效果，参考示例文件[hello_world_addin_enable_status.xlam](https://github.com/dothinking/dothinking.github.io/tree/master/samples/excel_ribbon)。
+
 
 ##  扩展阅读
 
-[1] [How to enable/disable buttons on the Excel ribbon via VBA](https://stackoverflow.com/questions/37643470/how-to-enable-disable-buttons-on-the-excel-ribbon-via-vba)  
+- [How to enable/disable buttons on the Excel ribbon via VBA](https://stackoverflow.com/questions/37643470/how-to-enable-disable-buttons-on-the-excel-ribbon-via-vba)  
 
-[2] [Application Events](http://www.cpearson.com/excel/AppEvent.aspx)
+- [Application Events](http://www.cpearson.com/excel/AppEvent.aspx)
 
-[3] [Events And Event Procedures In VBA](http://www.cpearson.com/excel/Events.aspx)
+- [Events And Event Procedures In VBA](http://www.cpearson.com/excel/Events.aspx)

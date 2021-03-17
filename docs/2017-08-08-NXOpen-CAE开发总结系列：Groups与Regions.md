@@ -6,6 +6,10 @@ keywords: NX, NXOpen, Groups, Regions
 tags: [NX, NXOpen]
 ---
 
+# NXOpen CAE开发总结系列：Groups与Regions
+
+---
+
 NX FEM与Simulation部分经常会遇到两个概念`Groups`与`Regions`，它们都可以用来存储一些可重用的对象，便于统一管理。那么，二者有何区别？本文以NX帮助文档为基础，介绍Groups与Regions的概念及其差异，以作学习记录和备忘。
 
 ## 定义
@@ -45,7 +49,7 @@ Coordinate systems | -
 
 存储在`Groups`与`Regions`中的元素都可以导出为有限元求解文件，以下是它们的一些异同点：
 
-- 使用NX内置的`File->Export->Export Simulation`将当前模型导出为有限元输入文件`*.inp`时，Groups中存储的Node和Element类型对象默认将被自动导出为以组名命名的集合；而Regions中的对象则不会被导出。但是，如果在导出对话框中关闭导出Group的选项，则不再导出Group。
+- 使用NX内置的`File`->`Export`->`Export Simulation`将当前模型导出为有限元输入文件`*.inp`时，Groups中存储的Node和Element类型对象默认将被自动导出为以组名命名的集合；而Regions中的对象则不会被导出。但是，如果在导出对话框中关闭导出Group的选项，则不再导出Group。
 
 - Groups中的Node和Element类型对象将分别导出为节点和单元，其他几何对象如Polygon Face、Polygon Edge则导出为空；Regions中所有类型对象，即便是Elements，都将被导出为离散后后的节点集合。
 
@@ -61,8 +65,8 @@ Coordinate systems | -
 
 ## 参考资料
 
-[1] [Simcenter 3D (CAE)Simcenter Pre/PostGroups](https://docs.plm.automation.siemens.com/tdoc/nx/12/nx_help#uid:xid1128419:index_advanced:xid1159750:id625201)  
+- [Simcenter 3D (CAE)Simcenter Pre/PostGroups](https://docs.plm.automation.siemens.com/tdoc/nx/12/nx_help#uid:xid1128419:index_advanced:xid1159750:id625201)  
 
-[2] [Working with reusable regions](https://docs.plm.automation.siemens.com/tdoc/nx/12/nx_help/#uid:id911964) 
+- [Working with reusable regions](https://docs.plm.automation.siemens.com/tdoc/nx/12/nx_help/#uid:id911964) 
 
-[3] [Region dialog box (Samcef)](https://docs.plm.automation.siemens.com/tdoc/nx/12/nx_help/#uid:xid919887)  
+- [Region dialog box (Samcef)](https://docs.plm.automation.siemens.com/tdoc/nx/12/nx_help/#uid:xid919887)  

@@ -6,7 +6,7 @@ TOPDIR	:=$(shell pwd)
 DOCS	:=$(TOPDIR)/docs
 BUILD	:=$(TOPDIR)/site
 TEMPCFG	:=$(TOPDIR)/_mkdocs.yml
-TEMPDIR :=_categories
+TEMPDIR :=categories
 
 .PHONY: serve
 

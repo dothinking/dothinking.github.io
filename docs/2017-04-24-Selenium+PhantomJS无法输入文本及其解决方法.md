@@ -6,6 +6,10 @@ keywords: selenium, phantomjs, chrome, send_keys, execute_script
 tags: [python, spider]
 ---
 
+# Selenium PhantomJS无法输入文本及其解决方法
+
+---
+
 `Selenium`是一个Web应用程序自动化测试工具，可以结合不同的webDriver（如Chrome、Firefox、Opera、PhantomJs）进行程序功能、兼容性方面的测试，也可进行爬虫相关的页面获取和分析。
 
 本文记录使用Selenium Python的`send_keys`方法进行文本输入时遇到的问题及其解决方法。
@@ -23,13 +27,13 @@ from selenium.webdriver.support.ui import WebDriverWait
 driver = webdriver.PhantomJS()
 # driver = webdriver.Chrome()
 
-# 窗口最大化①
+# 窗口最大化 ①
 driver.maximize_window()
 
 # 获取页面
 driver.get("https://zhidao.baidu.com/question/524279537996642125.html")
 
-# 等待页面加载完毕②
+# 等待页面加载完毕 ②
 wait = WebDriverWait(driver, 5)
 try:
     wait.until(lambda the_driver: the_driver.find_element_by_id('ueditor_0').is_displayed())
@@ -57,18 +61,15 @@ driver.quit()
 
 使用PhantomJS和Chrome驱动的结果分别如下图所示，可见前者无法实现文本的正确输入。
 
-<div align='center'>
-    <img src="{{ "/images/2017-04-24-01.png" | prepend: site.baseurl }}">
-    <img src="{{ "/images/2017-04-24-02.png" | prepend: site.baseurl }}">
-</div>
+
+![](images/2017-04-24-01.png)
+
+![](images/2017-04-24-02.png)
+
 
 ## 原因分析
 
-一开始怀疑是为`input`，`textarea`等之外的不具备输入属性的元素使用`send_keys`方法而出现的bug，然而百度编辑器测试页面：
-
-> [UE演示](http://ueditor.baidu.com/website/onlinedemo.html)
-
-具有类似的结构，使用上述代码却可以实现文本的正常输入。因此排除`iframe`的影响，排除`body`作为输入容器的原因。
+一开始怀疑是为`input`，`textarea`等之外的不具备输入属性的元素使用`send_keys`方法而出现的bug，然而[百度编辑器测试页面](http://ueditor.baidu.com/website/onlinedemo.html)具有类似的结构，使用上述代码却可以实现文本的正常输入。因此排除`iframe`的影响，排除`body`作为输入容器的原因。
 
 具体原因暂且未知。
 

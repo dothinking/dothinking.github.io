@@ -6,6 +6,10 @@ keywords: NX, NXOpen, Expression
 tags: [NX, NXOpen]
 ---
 
+# NXOpen：Expression类型与基本单位
+
+---
+
 本文参考[NXOpen::Expression Class Reference](https://docs.plm.automation.siemens.com/data_services/resources/nx/12/nx_api/custom/en_US/open_c++_ref/a03679.html)，记录NX表达式知识及相关的NX Open C++函数。
 
 ## 表达式类型及获取值的函数
@@ -13,7 +17,7 @@ tags: [NX, NXOpen]
 常用表达式类型及获取相应表达式的值的成员函数如下表所示：
 
 类型 | 方法
---- | --- | ---
+--- | --- 
 Number | Value()
 String | StringValue()
 Integer | IntegerValue()
@@ -30,22 +34,16 @@ Vector | VectorValue()
 
 以Number表达式Unit为Pressure为例，选择单位"PresureNewtonPerSquareMillimeter"，即`N/mm^2`，亦即`MPa`，创建表达式`f=2 MPa`，使用`Value()`函数获取的结果却是`2000.0`。这是因为基本单位是"PressurePerUnitLength"，即`m*N/mm^3`，于是：
 
-```
-value = 2 m*N/mm^3 = 2000.0 MPa
-```
+    value = 2 m*N/mm^3 = 2000.0 MPa
 
 同理，对于Number类型表达式特有的`SetValue(double)`方法，也是以基本单位为参考的数值。
 
 为了避免以上问题，可以使用函数：
 
-```
-GetValueUsingUnits(Expression::UnitOption)
-```
+    GetValueUsingUnits(Expression::UnitOption)
 
 即根据指定单位返回表达式的值，其中
 
-``` cpp
-Enum UnitOption {
-    UnitOptionBase, UnitOptionExpression
-}
-```
+    Enum UnitOption {
+        UnitOptionBase, UnitOptionExpression
+    }

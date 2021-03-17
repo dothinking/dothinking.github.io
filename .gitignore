@@ -1,4 +1,4 @@
 site/
 __pycache__/
 _mkdocs.yml
-_categories/
+categories/

@@ -1,4 +1,6 @@
 site_name: 格致
+site_description: Thinking & Writing
+site_author: dothinking
 site_url: https://dothinking.github.io/
 repo_name: null
 repo_url: https://github.com/dothinking/dothinking.github.io
@@ -17,17 +19,20 @@ markdown_extensions:
   - pymdownx.mark  # 文本高亮
   - pymdownx.smartsymbols  # 符号转换
   - pymdownx.superfences  # 代码嵌套在列表里
-  - codehilite:    # 代码高亮，显示行号
-      guess_lang: false
-      linenums: true
+  - codehilite    # 代码高亮，显示行号
   - toc:  # 锚点
       permalink: true  
+      separator: " "
   - pymdownx.arithmatex
   - pymdownx.betterem:
       smart_enable: all
   - pymdownx.magiclink
   - pymdownx.mark
   - pymdownx.tasklist
+
+
+extra_css:
+    - css/extra.css
 
 
 extra_javascript:

@@ -1,0 +1,83 @@
+/* Basic page element style */
+
+body {
+    background: #f5f7f9;
+}
+
+body::before {
+    background: none;
+}
+
+div.col-md-9 {
+    padding: 40px 30px;
+    background-color: #fff;
+}
+
+div.col-md-9 p {
+    color: #555;
+    line-height: 2;
+    margin-bottom: 20px;
+}
+
+a {
+    color: #555;
+}
+
+div.col-md-9 img {
+    margin: 0 auto;
+}
+
+
+code.no-highlight {
+    color: black;
+}
+
+
+/* nav-bar & side nav-bar*/
+
+.navbar {
+    padding: 0;
+}
+
+.navbar.bg-primary {
+    background-color: black !important;
+    background-image: none;
+}
+
+div.col-md-3 ul.nav li.nav-item {
+    width: 100%;
+}
+
+
+/* title */
+
+div.col-md-9 h1:first-of-type {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+div.col-md-9 h1:first-of-type .headerlink {
+    display: none;
+}
+
+div.col-md-9 h2 {
+    font-size: 1.375rem;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+
+/* List styles */
+
+dd {
+    padding-left: 20px;
+}
+
+div.col-md-9 li {
+    margin-bottom: 10px;
+}
+
+div.col-md-9 li p {
+    margin-bottom: 10px;
+}

@@ -20,7 +20,7 @@ nav: sub_path
 	@python nav.py "$(DOCS)" $(TEMPDIR) | cat >> "$(TEMPCFG)"
 
 serve: nav
-	mkdocs serve -f "$(TEMPCFG)"
+	@mkdocs serve -f "$(TEMPCFG)"
 
 build: nav
 	@mkdocs build -f "$(TEMPCFG)"

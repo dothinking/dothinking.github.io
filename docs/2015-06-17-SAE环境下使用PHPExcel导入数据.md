@@ -6,6 +6,10 @@ keywords: SAE, ThinkPHP, PHPExcel
 tags: [ThinkPHP, web]
 ---
 
+# SAE环境下使用PHPExcel导入数据
+
+---
+
 当我们将一些涉及文件读写的项目移到云计算平台上，可能发现某些在本地运行得好好的功能会突然失效。例如，之前处理的是MySQL数据库备份还原功能在新浪云上的修改。本文将以ThinkPHP框架为例，处理SAE环境下使用PHPExcel插件导入数据的问题。
 
 本地使用PHPExcel导入数据的流程为：先上传文件到服务器，然后将文件路径提供给PHPExcel以便读取文件，最后操作Excel文件的内容。关键代码如下：
@@ -26,9 +30,8 @@ $arrExcel = $objPHPExcel->getSheet(0)->toArray();    // 单元格内容二维数
 
 ## 直接读取到TmpFS
 
-SAE上不允许写本地文件，但是提供了常量`SAE_TMP_PATH`，可以往这个目录下写入临时文件。这里的临时文件有着特别的生命周期，当前页面的请求执行完以后，这个文件就会被删除。关于TMPFS的介绍和示例参考
+SAE上不允许写本地文件，但是提供了常量`SAE_TMP_PATH`，可以往这个目录下写入临时文件。这里的临时文件有着特别的生命周期，当前页面的请求执行完以后，这个文件就会被删除。TMPFS的介绍和示例 [^1]。
 
-> [Alpha2新功能之TMPFS](http://blog.sae.sina.com.cn/archives/53#more-53)
 
 TMPFS相当于把文件读取到内存中，对应_1上传文件到服务器_的步骤。第二步，获取文件路径可参考如下代码
 
@@ -101,3 +104,5 @@ else{  // 本地环境
 $objPHPExcel = PHPExcel_IOFactory::load($filetmpname);
 $arrExcel = $objPHPExcel->getSheet(0)->toArray(); // 单元格内容二维数组
 ```
+
+[^1]: [Alpha2新功能之TMPFS](http://blog.sae.sina.com.cn/archives/53#more-53)

@@ -6,14 +6,18 @@ keywords: Marc, Python, 后处理
 tags: [python, Marc, CAE]
 ---
 
+# 使用Python导出MSC.Marc后处理数据
+
+---
+
 在Marc后处理中，我们通常希望将某些数据导出后重新绘图。对于少量数据，可以使用`PATH PLOT`和`HISTORY PLOT`采集数据，然后直接使用界面上的`SAVE`按钮保存到文件，或者使用`COPY TO CLIPBOARD`按钮复制到剪切板。
 
-> * `PATH PLOT`收集不同节点在某个时刻的后处理数据
-> * `HISTORY PLOT`收集某个节点在不同时刻的后处理数据
+* `PATH PLOT`收集不同节点在某个时刻的后处理数据
+* `HISTORY PLOT`收集某个节点在不同时刻的后处理数据
 
 然而此方法难以导出大量的不规则区域的数据。查阅Marc帮助手册的Python Manual部分，发现已经提供了使用Python脚本获取后处理数据的方法。
 
-本文即以**导出模型所有节点位移数据并重绘云图**为例，记录py_post模块的使用方法。
+本文即以 **导出模型所有节点位移数据并重绘云图** 为例，记录py_post模块的使用方法。
 
 ## PyPost介绍
 
@@ -105,4 +109,4 @@ plt.show()
 
 最终效果如下：
 
-<div align='center'><img src="{{ "/images/2016-01-20-01.png" | prepend: site.baseurl }}"></div>
+![](images/2016-01-20-01.png)

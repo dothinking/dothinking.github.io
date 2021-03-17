@@ -6,13 +6,18 @@ keywords: ThinkPHP, MySQL, 备份还原
 tags: [ThinkPHP, web]
 ---
 
+# ThinkPHP框架下MySQL数据库备份还原类
+
+---
+
 最近在用ThinkPHP框架写一个实验预约网站，到了数据库备份与还原一步，在网上找了一个现成的`MySQLReback`类，以.sql文件方式备份和还原数据库。本文记录使用过程以作备忘。
 
 备份还原页面总体思路为：
 
 该模块的`bacover()`方法读取备份目录中的文件列表显示在静态页面，备份/还原/删除文件等操作则异步提交给同模块的`dobacover()`方法，该方法使用`MySQLReback`类的方法完成数据库的相应操作。
 
-<div align='center'><img src="{{ "/images/2013-10-19-01.png" | prepend: site.baseurl }}"></div>
+![](images/2013-10-19-01.png)
+
 
 ## MySQLReback类文件
 
@@ -30,91 +35,87 @@ import("ORG.Backup.MySQLReback");
 
 * `bacover()`：查找备份目录，读取文件以供前台显示
 
-```php
-    /* 
-    ** 备份还原数据静态页面
-    */ 
-    public function bacover(){
-        $DataDir = "./Public/backup/"; // 设置服务器上的备份目录
-        // 查找目录下文件、
-        $FilePath = opendir($DataDir);
-        while (false !== ($filename = readdir($FilePath))) {
-            $FileAndFolderAyy[] = $filename;
-        }
-        sort($FileAndFolderAyy);  // 逆序排列 rsort($FileAndFolderAyy);
-        foreach ($FileAndFolderAyy as $i => $n){
-            if($i>1){ // 0,1分别为当前及上级目录，2才是当前文件开始
-                $list[$i-2]['FileName'] = $n;
-                $list[$i-2]['FileTime'] = date('Y-m-d H:i:s',filemtime($DataDir.$n));
-                $FileSize = filesize($DataDir.$n)/1024;
-                if ($FileSize < 1024){
-                    $list[$i-2]['FileSize'] = number_format($FileSize,2).' KB';
-                }
-                else {
-                    $list[$i-2]['FileSize'] = number_format($FileSize/1024,2).' MB';
+        /* 
+        ** 备份还原数据静态页面
+        */ 
+        public function bacover(){
+            $DataDir = "./Public/backup/"; // 设置服务器上的备份目录
+            // 查找目录下文件、
+            $FilePath = opendir($DataDir);
+            while (false !== ($filename = readdir($FilePath))) {
+                $FileAndFolderAyy[] = $filename;
+            }
+            sort($FileAndFolderAyy);  // 逆序排列 rsort($FileAndFolderAyy);
+            foreach ($FileAndFolderAyy as $i => $n){
+                if($i>1){ // 0,1分别为当前及上级目录，2才是当前文件开始
+                    $list[$i-2]['FileName'] = $n;
+                    $list[$i-2]['FileTime'] = date('Y-m-d H:i:s',filemtime($DataDir.$n));
+                    $FileSize = filesize($DataDir.$n)/1024;
+                    if ($FileSize < 1024){
+                        $list[$i-2]['FileSize'] = number_format($FileSize,2).' KB';
+                    }
+                    else {
+                        $list[$i-2]['FileSize'] = number_format($FileSize/1024,2).' MB';
+                    }
                 }
             }
+            $this->assign('list',$list);
+            $this->display();
         }
-        $this->assign('list',$list);
-        $this->display();
-    }
-```
 
 * `dobacover()`：读取前台信息，调用`MySQLReback()`方法完成操作
 
-```php
-/* 
-** 备份还原数据操作
-*/ 
-public function dobacover(){
-    $DataDir = "./Public/backup/"; // 设置服务器上的备份目录
-    $action = I("action");
-    $file = I("file");
-    if (!empty($action)) {
-        import("ORG.Backup.MySQLReback"); // 第三方备份还原类
-        // 从配置文件读取数据库连接信息，默认要求配置文件中式分项配置的，而不是'DB_DSN'
-        $config = array(
-            'host' => C('DB_HOST'),
-            'port' => C('DB_PORT'),
-            'userName' => C('DB_USER'),
-            'userPassword' => C('DB_PWD'),
-            'dbprefix' => C('DB_PREFIX'),
-            'charset' => 'UTF8',
-            'path' => $DataDir,
-            'isCompress' => 0, //是否开启gzip压缩
-            'isDownload' => 0  
-        );
-        $mr = new MySQLReback($config);
-        $mr->setDBName(C('DB_NAME'));
-        if ($action == 'backup') {
-            $mr->backup();                
-            $this->ajaxReturn('','备份数据库成功！',2);
-        }
-        elseif ($action == 'recover') {
-            $mr->recover($file);                
-            $this->ajaxReturn('','还原数据库成功！',2);
-        }
-        elseif ($action == 'delete') {
-            if (@unlink($DataDir . $file)) {
-                $this->ajaxReturn('','删除数据库备份文件成功！',2);
-            } else {                    
-                $this->ajaxReturn('','删除数据库备份文件失败！',1);
+        /* 
+        ** 备份还原数据操作
+        */ 
+        public function dobacover(){
+            $DataDir = "./Public/backup/"; // 设置服务器上的备份目录
+            $action = I("action");
+            $file = I("file");
+            if (!empty($action)) {
+                import("ORG.Backup.MySQLReback"); // 第三方备份还原类
+                // 从配置文件读取数据库连接信息，默认要求配置文件中式分项配置的，而不是'DB_DSN'
+                $config = array(
+                    'host' => C('DB_HOST'),
+                    'port' => C('DB_PORT'),
+                    'userName' => C('DB_USER'),
+                    'userPassword' => C('DB_PWD'),
+                    'dbprefix' => C('DB_PREFIX'),
+                    'charset' => 'UTF8',
+                    'path' => $DataDir,
+                    'isCompress' => 0, //是否开启gzip压缩
+                    'isDownload' => 0  
+                );
+                $mr = new MySQLReback($config);
+                $mr->setDBName(C('DB_NAME'));
+                if ($action == 'backup') {
+                    $mr->backup();                
+                    $this->ajaxReturn('','备份数据库成功！',2);
+                }
+                elseif ($action == 'recover') {
+                    $mr->recover($file);                
+                    $this->ajaxReturn('','还原数据库成功！',2);
+                }
+                elseif ($action == 'delete') {
+                    if (@unlink($DataDir . $file)) {
+                        $this->ajaxReturn('','删除数据库备份文件成功！',2);
+                    } else {                    
+                        $this->ajaxReturn('','删除数据库备份文件失败！',1);
+                    }
+                }
+                if($action == 'download') {
+                    $fileName = $DataDir . $file;
+                    ob_end_clean();
+                    header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
+                    header('Content-Description: File Transfer');
+                    header('Content-Type: application/octet-stream');
+                    header('Content-Length: ' . filesize($fileName));
+                    header('Content-Disposition: attachment; filename=' . basename($fileName));
+                    readfile($fileName);
+                    exit();
+                }
             }
         }
-        if($action == 'download') {
-            $fileName = $DataDir . $file;
-            ob_end_clean();
-            header("Cache-Control: must-revalidate, post-check=0,pre-check=0");
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
-            header('Content-Length: ' . filesize($fileName));
-            header('Content-Disposition: attachment; filename=' . basename($fileName));
-            readfile($fileName);
-            exit();
-        }
-    }
-}
-```
 
 ## 前台视图
 
@@ -179,26 +180,19 @@ public function dobacover(){
 </table>
 ```
 
-## 补充说明
+!!! warning "注意"
+    - 数据库表中某些允许为空的字段，备份导出时字段为`''`，在还原数据库时会提示如下错误：
+    
+            MySQL Error : Incorrect date value: '' for column '×××××××××' at row 1
 
-* 1 数据库表中某些允许为空的字段，备份导出时字段为`''`，在还原数据库时会提示如下错误：
+        这种问题一般出现在`mysql 5.x`以上版本，因为要求空值写为`NULL`。可以在安装mysql的时候去除默认勾选的`enable strict SQL mode`，已经安装则需要修改mysql的配置文件`my.ini`。在`my.ini`中查找`sql-mode`，将默认的
 
-```
-MySQL Error : Incorrect date value: '' for column '×××××××××' at row 1
-```
+            sql-mode="STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
 
-这种问题一般出现在`mysql 5.x`以上版本，因为要求空值写为`NULL`。可以在安装mysql的时候去除默认勾选的`enable strict SQL mode`，已经安装则需要修改mysql的配置文件`my.ini`。在`my.ini`中查找`sql-mode`，将默认的
+        修改为 
+    
+            sql-mode="NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
 
-```
-sql-mode="STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
-```
+        然后重新启动Mysql服务。
 
-修改为 
-
-```
-sql-mode="NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
-```
-
-然后重新启动Mysql服务。
-
-* 2 本文上述代码仅适用于本地开发环境，对于一些云计算平台，由于没有本地文件读写的权限，所以需要根据各自提供的API来修正文件操作。后续将以新浪云计算平台SAE为例，给出修改方案。
+    - 本文上述代码仅适用于本地开发环境，对于一些云计算平台，由于没有本地文件读写的权限，所以需要根据各自提供的API来修正文件操作。后续将以新浪云计算平台SAE为例，给出修改方案。

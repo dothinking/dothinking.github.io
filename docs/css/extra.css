@@ -36,7 +36,7 @@ code.no-highlight {
 /* nav-bar & side nav-bar*/
 
 .navbar {
-    padding: 0;
+    padding: 0 15px;
 }
 
 .navbar.bg-primary {
@@ -80,4 +80,18 @@ div.col-md-9 li {
 
 div.col-md-9 li p {
     margin-bottom: 10px;
+}
+
+/* admonition */
+
+div.col-md-9 .admonition p {
+    margin-bottom: 5px;
+}
+
+
+/* footnote */
+
+a.footnote-ref {
+    color: darkblue;
+    font-weight: bold;
 }

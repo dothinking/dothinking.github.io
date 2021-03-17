@@ -7,6 +7,10 @@ tags: [UBM, matlab, numeric analysis]
 mathjax: true
 ---
 
+# Gauss Legendre二重数值积分
+
+---
+
 数值积分一般都是机械求积，避开寻求原函数的困难，转为被积函数值的计算问题。对于插值型的求积公式，n阶积分（n+1个积分点）至少具有n阶代数精度。如果对插值节点的选取作出要求，则可进一步提高积分精度。
 
 $$
@@ -66,7 +70,7 @@ $$
 求解第$k$个积分系数$A_k$时，构造被积函数：
 
 \begin{align\*}
-f_k(x) &= \frac{(x-x_0)(x-x_1)\cdots(x-x_{k-1})(x-x_{k+1})\cdots(x-x_n)}{(x_k-x_0)(x_k-x_1)\cdots(x_k-x_{k-1})(x_k-x_{k+1})\cdots(x_k-x_n)} \\\\\\
+f_k(x) &= \frac{(x-x_0)(x-x_1)\cdots(x-x_{k-1})(x-x_{k+1})\cdots(x-x_n)}{(x_k-x_0)(x_k-x_1)\cdots(x_k-x_{k-1})(x_k-x_{k+1})\cdots(x_k-x_n)} \\\\
 &= \frac{\omega_{n+1}(x)}{(x-x_k)\,\omega'_{n+1}(x_k)}
 \end{align\*}
 
@@ -87,24 +91,24 @@ $$
 以上是`Gauss-Legendre`数值积分的基本原理，对每一层积分分别使用上述过程即可推广至一般区间上二重积分的计算。
 
 \begin{align\*}
-&\quad\int_a^b \\!\\! \int_{c(x)}^{d(x)}\,f(x,y)\,\mathrm{d}y\,\mathrm{d}x \\\\\\
-&= \int_a^b\\!\\!\int_{-1}^{1}\,\frac{d(x)-c(x)}{2}\,f\left(x,\frac{d(x)-c(x)}{2}\,v + \frac{d(x)+c(x)}{2}\right)\mathrm{d}v\,\mathrm{d}x \\\\\\
-&\approx \int_a^b \sum_{i=0}^n \left[A_i\,\frac{d(x)-c(x)}{2}\,f\left(x,\frac{d(x)-c(x)}{2}\,v_i + \frac{d(x)+c(x)}{2}\right)\right] \mathrm{d}x \\\\\\
-&= \sum_{i=0}^n\left[A_i\int_a^b \alpha(x)\,f\left(x,\alpha(x)v_i+\beta(x)\right)\mathrm{d}x\right] \\\\\\
-&= \sum_{i=0}^n\left[A_i\int_{-1}^1 \frac{b-a}{2} \alpha\left(\frac{b-a}{2}\,u + \frac{b+a}{2}\right)\,f\left(\frac{b-a}{2}\,u + \frac{b+a}{2},\alpha\left(\frac{b-a}{2}\,u + \frac{b+a}{2}\right)v_i+\beta\left(\frac{b-a}{2}\,u + \frac{b+a}{2}\right)\right)\mathrm{d}u\right] \\\\\\
-&\approx \sum_{i=0}^n\left[A_i \sum_{j=0}^m B_j \frac{b-a}{2} \alpha\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2}\right)\,f\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2},\alpha\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2}\right)v_i+\beta\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2}\right)\right)\right] \\\\\\
-&= \frac{b-a}{2}\,\sum_{i=0}^n\sum_{j=0}^m A_i\,B_j\,\alpha(U_j)\,f(U_j,V_{ji})
+&\quad\int_a^b \\!\\! \int_{c(x)}^{d(x)}\,f(x,y)\,\mathrm{d}y\,\mathrm{d}x \\\\
+&= \int_a^b\\!\\! {\int_{-1}^{1}\,\frac{d(x)-c(x)}{2}\, f\left(x,\frac{d(x)-c(x)}{2}\,v + \frac{d(x)+c(x)}{2}\right)\mathrm{d}v\,\mathrm{d}x}  \\\\
+&\approx \int_a^b \sum_{i=0}^n \left[A_i\,\frac{d(x)-c(x)}{2}\,f\left(x,\frac{d(x)-c(x)}{2}\,v_i + \frac{d(x)+c(x)}{2}\right)\right] \mathrm{d}x \\\\
+&= \sum_{i=0}^{n} \left[A_i\int_a^b \alpha(x)\,f\left(x,\alpha(x)v_i+\beta(x)\right)\mathrm{d}x\right] \\\\
+&= \sum_{i=0}^n \left[A_i\int_{-1}^1 \frac{b-a}{2} \alpha\left(\frac{b-a}{2}\,u + \frac{b+a}{2}\right)\,f\left(\frac{b-a}{2}\,u + \frac{b+a}{2},\alpha\left(\frac{b-a}{2}\,u + \frac{b+a}{2}\right)v_i+\beta\left(\frac{b-a}{2}\,u + \frac{b+a}{2}\right)\right)\mathrm{d}u\right] \\\\
+&\approx \sum_{i=0}^n \left[A_i \sum_{j=0}^m B_j \frac{b-a}{2} \alpha\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2}\right)\,f\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2},\alpha\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2}\right)v_i+\beta\left(\frac{b-a}{2}\,u_j + \frac{b+a}{2}\right)\right)\right] \\\\
+&= \frac{b-a}{2}\,\sum_{i=0}^n \sum_{j=0}^m A_i\,B_j\,\alpha(U_j)\,f(U_j,V_{ji})
 \end{align\*}
 
 其中，
 
 \begin{align\*}
-\alpha(x) &= \frac{d(x)-c(x)}{2} \\\\\\
+\alpha(x) &= \frac{d(x)-c(x)}{2} \\\\
 \beta(x) &= \frac{d(x)+c(x)}{2}
 \end{align\*}
 
 \begin{align\*}
-U_j &= \frac{b-a}{2}\,u_j + \frac{b+a}{2} \\\\\\
+U_j &= \frac{b-a}{2}\,u_j + \frac{b+a}{2} \\\\
 V_{ji} &= \alpha(U_j)\,v_i + \beta(U_j)
 \end{align\*}
 
@@ -114,47 +118,46 @@ $v_i, \, u_j$分别是$y,\, x$方向在标准区间的积分点，$n,\,m$分别�
 
 以上两节介绍了`Gauss-Legendre`数值积分中积分点、积分系数的求解方法，以及二重积分的计算方案，接下来使用Matlab实现以上过程。为减小参数个数，假设两个方向的积分点数相同，即之前式子中$m=n$。
 
-``` matlab
-function res = guasslegendre(fun, a, b, c, d, n)
-% -----------------------------------------------------------------------
-% Gauss-Legendre数值积分计算二重积分
-% 参数说明
-% fun：积分表达式函数句柄 fun=@(x,y)f(x,y)
-% a,b：外层积分区间，常数
-% c,d：内层积分区间，函数句柄 c=@(x)c(x), d=@(x)d(x)
-% n  ：积分阶数
-% 输出结果
-% res：积分结果
-% -----------------------------------------------------------------------
-% 1 计算积分点
-syms x
-p = sym2poly(diff((x^2-1)^(n+1),n+1));
-u = roots(p); 
 
-% 2 计算求积系数
-Ak = zeros(n+1,1);
-for i=1:n+1
-    t = u;
-    t(i) = [];
-    pn = poly(t);
-    fp = @(x)polyval(pn,x)/polyval(pn,u(i));
-    Ak(i)=integral(fp,-1,1);
-end
+    function res = guasslegendre(fun, a, b, c, d, n)
+    % -----------------------------------------------------------------------
+    % Gauss-Legendre数值积分计算二重积分
+    % 参数说明
+    % fun：积分表达式函数句柄 fun=@(x,y)f(x,y)
+    % a,b：外层积分区间，常数
+    % c,d：内层积分区间，函数句柄 c=@(x)c(x), d=@(x)d(x)
+    % n  ：积分阶数
+    % 输出结果
+    % res：积分结果
+    % -----------------------------------------------------------------------
+    % 1 计算积分点
+    syms x
+    p = sym2poly(diff((x^2-1)^(n+1),n+1));
+    u = roots(p); 
 
-% 3 变量代换
-fa = @(x) (d(x)-c(x))/2.0;
-fb = @(x) (d(x)+c(x))/2.0;
+    % 2 计算求积系数
+    Ak = zeros(n+1,1);
+    for i=1:n+1
+        t = u;
+        t(i) = [];
+        pn = poly(t);
+        fp = @(x)polyval(pn,x)/polyval(pn,u(i));
+        Ak(i)=integral(fp,-1,1);
+    end
 
-% 4 机械求积
-[X,Y] = meshgrid(u,u);
-[A,B] = meshgrid(Ak,Ak);
+    % 3 变量代换
+    fa = @(x) (d(x)-c(x))/2.0;
+    fb = @(x) (d(x)+c(x))/2.0;
 
-U = (b-a)/2.0*X + (b+a)/2.0;
-V = fa(U).*Y + fb(U);
-w = A.*B.*fa(U).*fun(U,V);
+    % 4 机械求积
+    [X,Y] = meshgrid(u,u);
+    [A,B] = meshgrid(Ak,Ak);
 
-res = (b-a)/2.0*sum(w(:));
-```
+    U = (b-a)/2.0*X + (b+a)/2.0;
+    V = fa(U).*Y + fb(U);
+    w = A.*B.*fa(U).*fun(U,V);
+
+    res = (b-a)/2.0*sum(w(:));
 
 作为测试，分别使用以上代码及Matlab自带的数值积分函数`integral2`对下面二重积分进行计算：
 
@@ -172,16 +175,15 @@ $$
 
 不过，以上代码仅仅是`Gauss-Legendre`数值积分基本原理的实现，若想用于实际问题，尚需进一步的改进。当积分区间跨度增大时，其计算精度将急剧下降，例如上述积分在$[-2,11]$区间进行时，计算结果如下：
 
-``` matlab
->> fun=@(x,y)exp(-x.^2-y.^2);
->> integral2(fun,-2,11,@(x)x,@(x)exp(x.^2))
 
-ans =   1.446305300237306
+    >> fun=@(x,y)exp(-x.^2-y.^2);
+    >> integral2(fun,-2,11,@(x)x,@(x)exp(x.^2))
 
->> guasslegendre(fun,-2,11,@(x)x,@(x)exp(x.^2),11)
+    ans =   1.446305300237306
 
-ans =   1.467184820337763
-```
+    >> guasslegendre(fun,-2,11,@(x)x,@(x)exp(x.^2),11)
+
+    ans =   1.467184820337763
 
 ## 改进的方向
 

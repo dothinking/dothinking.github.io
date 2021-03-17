@@ -32,7 +32,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install mkdocs pymdown-extensions
 
+      # build pages
       - name: Build and deploy pages with mkdocs
         run: |
           make build
-          mkdocs gh-deploy
+      
+      # deploy to Github Page
+      # Note: don't use `mkdocs gh-deploy` avoiding overwrite customized building
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site

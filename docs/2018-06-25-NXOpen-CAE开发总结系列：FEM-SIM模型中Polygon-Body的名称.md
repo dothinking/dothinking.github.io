@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: NX Advanced Simulation, polygon body
 keywords: NX, FEM, Simulation
 tags: [NX,NXOpen]
 ---
 
 # NXOpen CAE开发总结系列：FEM SIM模型中Polygon Body的名称
+
+2018-06-25
 
 ---
 

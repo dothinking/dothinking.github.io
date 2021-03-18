@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: 获取Excel中公式依赖的方法
 keywords: python, win32com
 tags: [python, VBA]
 ---
 
-# Python-win32com模块操作Excel：获取公式依赖关系
+# Python win32com模块操作Excel：获取公式依赖关系
+
+2019-05-02
 
 ---
 

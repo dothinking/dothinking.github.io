@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: 修改PHPExcel使其适用于SAE环境
 keywords: SAE, ThinkPHP, PHPExcel
 tags: [ThinkPHP, web]
 ---
 
 # SAE环境下使用PHPExcel导入数据
+
+2015-06-17
 
 ---
 

@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: frompyfunc()和vectorize()函数说明
 keywords: numpy, Python, 数值计算
 tags: [python, numeric analysis]
 ---
 
 # NumPy库frompyfunc与vectorize的比较
+
+2014-12-22
 
 ---
 

@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: 使用subprocess模块调用子程序并获取输出
 keywords: Python, Popen
 tags: [python]
 ---
 
 # 使用subprocess模块调用子进程并获取输出
+
+2018-01-12
 
 ---
 

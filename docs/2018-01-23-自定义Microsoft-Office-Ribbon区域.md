@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: 自定义Office选项卡
 keywords: ribbon, add-in, word, dotm
 tags: [VBA]
 ---
 
 # 自定义Microsoft Office Ribbon区域
+
+2018-01-23
 
 ---
 

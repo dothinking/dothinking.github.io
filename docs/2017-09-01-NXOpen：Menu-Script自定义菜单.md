@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: NXOpen按模块显示自定义菜单
 keywords: NX, NXOpen, MenuScript
 tags: [NX, NXOpen]
 ---
 
 # NXOpen：Menu Script自定义菜单
+
+2017-09-01
 
 ---
 

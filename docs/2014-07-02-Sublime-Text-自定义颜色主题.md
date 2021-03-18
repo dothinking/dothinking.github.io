@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: 设置Sublime Text 2编辑器颜色风格的方法
 keywords: sublime text, 颜色主题
 tags: [sublime text]
 ---
 
 # Sublime Text 自定义颜色主题
+
+2014-07-02
 
 ---
 

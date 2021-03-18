@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: NX Groups与Regions介绍与区别
 keywords: NX, NXOpen, Groups, Regions
 tags: [NX, NXOpen]
 ---
 
 # NXOpen CAE开发总结系列：Groups与Regions
+
+2017-08-08
 
 ---
 

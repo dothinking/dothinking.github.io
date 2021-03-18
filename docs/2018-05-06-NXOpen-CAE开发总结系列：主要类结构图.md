@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: NXOpen对象属性编辑操作
 keywords: NX, NXOpen, Attribute
 tags: [NX, NXOpen]
 ---
 
 # NXOpen CAE开发总结系列：主要类结构图
+
+2018-05-06
 
 ---
 

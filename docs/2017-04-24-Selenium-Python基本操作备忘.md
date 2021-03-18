@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: Selenium Python基本操作
 keywords: selenium, phantomjs, chrome
 tags: [python, spider]
 ---
 
 # Selenium Python基本操作备忘
+
+2017-04-24
 
 ---
 

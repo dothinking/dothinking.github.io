@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: GitLab Runner清理数据：before_script, after_script
 keywords: gitlab-runner
 tags: [GitLab]
 ---
 
-# GitLab CI/CD：before_script和after_script
+# GitLab CI CD：before_script和after_script
+
+2019-12-29
 
 ---
 

@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: Python处理PDF的第三方库对比
 keywords: pdf pdf-processing
 tags: [python]
 ---
 
 # Python处理PDF的第三方库对比
+
+2021-01-02
 
 ---
 

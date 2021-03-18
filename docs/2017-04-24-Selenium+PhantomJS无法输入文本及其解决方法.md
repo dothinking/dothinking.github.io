@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: 使用Selenium及PhantomJS输入文本过程中遇到的问题及其解决方法
 keywords: selenium, phantomjs, chrome, send_keys, execute_script
 tags: [python, spider]
 ---
 
-# Selenium PhantomJS无法输入文本及其解决方法
+# Selenium+PhantomJS无法输入文本及其解决方法
+
+2017-04-24
 
 ---
 

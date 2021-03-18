@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: python程序中使用mlab调用matlab计算进程的方法
 keywords: Matlab, mlab, numpy, Python, 数值计算
 tags: [python, matlab, numeric analysis]
 ---
 
 # python中使用mlab库实现与MATLAB交互
+
+2015-11-15
 
 ---
 

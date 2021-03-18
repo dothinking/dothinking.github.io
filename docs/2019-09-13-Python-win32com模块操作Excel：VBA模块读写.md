@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: Python操作Excel VBA
 keywords: python, win32com
 tags: [python, VBA]
 ---
 
 # Python win32com模块操作Excel：VBA模块读写
+
+2019-09-13
 
 ---
 

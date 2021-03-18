@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: __init__.py文件解析
 keywords: Python
 tags: [python]
 ---
 
 # Python Package __init__解析
+
+2018-10-21
 
 ---
 

@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: tf.data.Dataset准备数据集
 keywords: TensorFlow tf.data.Dataset
 tags: [TensorFlow]
 ---
 
 # TensorFlow自定义数据集：tf.data.Dataset
+
+2020-02-27
 
 ---
 

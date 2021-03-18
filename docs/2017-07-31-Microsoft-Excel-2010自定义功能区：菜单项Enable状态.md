@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: 自定义Excel命令按钮状态
 keywords: ribbon, add-in, Excel, xlam
 tags: [VBA]
 ---
 
-# Microsoft-Excel-2010自定义功能区：菜单项Enable状态
+# Microsoft Excel 2010自定义功能区：菜单项Enable状态
+
+2017-07-31
 
 ---
 

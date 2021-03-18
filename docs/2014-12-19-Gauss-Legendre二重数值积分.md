@@ -1,13 +1,12 @@
 ---
-layout: post
-author: Train
-description: Gauss-Legendre二重数值积分的推导和matlab实现
 keywords: Matlab, 数值积分
 tags: [UBM, matlab, numeric analysis]
 mathjax: true
 ---
 
 # Gauss Legendre二重数值积分
+
+2014-12-19
 
 ---
 

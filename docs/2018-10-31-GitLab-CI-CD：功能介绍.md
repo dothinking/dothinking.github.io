@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: GitLab持续集成介绍
 keywords: GitLab, CI CD
 tags: GitLab
 ---
 
-# GitLab CI/CD：功能介绍
+# GitLab CI CD：功能介绍
+
+2018-10-31
 
 ---
 

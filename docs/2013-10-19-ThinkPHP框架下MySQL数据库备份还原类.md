@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: ThinkPHP框架MySQL数据库备份还原类代码
 keywords: ThinkPHP, MySQL, 备份还原
 tags: [ThinkPHP, web]
 ---
 
 # ThinkPHP框架下MySQL数据库备份还原类
+
+2013-10-19
 
 ---
 

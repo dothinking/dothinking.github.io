@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: Marc程序调用Python脚本过程中获取当前目录方法
 keywords: Marc, Python
 tags: [Marc, python]
 ---
 
 # Marc调用Python脚本程序中关于目录操作的几个问题
+
+2012-07-10
 
 ---
 

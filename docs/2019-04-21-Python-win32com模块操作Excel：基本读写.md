@@ -6,9 +6,15 @@ keywords: python, win32com
 tags: [python, VBA]
 ---
 
-Python有很多强大的第三方库可以读写Excel，例如`xlrd`、`xlwt`、`xlutils`、`openpyxl`、`xlwings`等，它们主要在读写方面具备优势，但论起对Excel操作的全面性和基础性，则首推`win32com`，它是`pywin32`库[[^1]]的一部分。本文记录使用`win32com`操作Excel的几个案例，例如一般的读写、工作表保护、自动计算、引用管理等。
+# Python win32com模块操作Excel：基本读写
 
-> 关于VBA宏的读写运行操作，单独列为一篇：[2019-09-13-Python win32com模块操作Excel的几个应用(二)]({{ site.baseurl }}{% post_url 2019-09-13-Python-win32com模块操作Excel的几个应用（二） %})
+---
+
+Python有很多强大的第三方库可以读写Excel，例如`xlrd`、`xlwt`、`xlutils`、`openpyxl`、`xlwings`等，它们主要在读写方面具备优势，但论起对Excel操作的全面性和基础性，则首推`win32com`，它是`pywin32`库 [^1] 的一部分。本文记录使用`win32com`操作Excel的几个案例，例如一般的读写、工作表保护、自动计算、引用管理等。
+
+关于VBA宏的读写运行操作，单独列为一篇：
+
+> [2019-09-13-Python win32com模块操作Excel：VBA模块读写](2019-09-13-Python-win32com模块操作Excel：VBA模块读写.md)
 
 
 ## 安装
@@ -44,15 +50,15 @@ wb.ActiveSheet.Range("A1").Value = "Hello World"
 
 ```
 
-其中使用`Dispatch()`和`EnsureDispatch()`获取`COM`对象的差别参考[[^2]]。
+其中使用`Dispatch()`和`EnsureDispatch()`获取`COM`对象的差别参考 [^2]。
 
-我们更关心的是如何获取API，对于简单的应用，可以参考VBA代码提示或录制的宏进行转换，但是不能保证其正确性。考虑到`win32com`是对Windows COM组件API的封装，我们可以直接参考原始API文档。如果安装了Visual Studio，可以从如下目录找到`oleview.exe`[[^3]]：
+我们更关心的是如何获取API，对于简单的应用，可以参考VBA代码提示或录制的宏进行转换，但是不能保证其正确性。考虑到`win32com`是对Windows COM组件API的封装，我们可以直接参考原始API文档。如果安装了Visual Studio，可以从如下目录找到`oleview.exe` [^3]：
 
 ```
 C:\Program Files (x86)\Windows Kits\8.1\bin\x64\oleview.exe
 ```
 
-注意**以管理员方式运行该程序**，否则无法打开后续的文档。然后从左侧面板的`Type Libraries`节点查找需要的内容，例如对于Excel 2010，我们浏览找到`Microsoft Excel 14.0 Object Library (Ver 1.7)`。双击打开后即可看到详细的API文档，包括类及其属性和方法、常量等。
+注意 **以管理员方式运行该程序**，否则无法打开后续的文档。然后从左侧面板的`Type Libraries`节点查找需要的内容，例如对于Excel 2010，我们浏览找到`Microsoft Excel 14.0 Object Library (Ver 1.7)`。双击打开后即可看到详细的API文档，包括类及其属性和方法、常量等。
 
 
 ## 开启/关闭工作表保护
@@ -72,7 +78,7 @@ if status:
     sheet.Protect()
 ```
 
-## 开启/关闭自动计算 [[^4]-[^5]]
+## 开启/关闭自动计算 [^4] [^5]
 
 Excel默认开启自动计算，那么当工作表内单元格公式非常多时，每录入一个数据都将触发相关单元格的更新计算，影响操作效率。因此此种情况下，一般先设置为手动更新，待输入完成后设置自动更新。以下为示例代码：
 
@@ -126,12 +132,12 @@ if not loaded:
     wb.VBProject.References.AddFromGuid(guid, major_version, minor_version)
 ```
 
-显然，这部分代码也需要设置**允许访问VBA工程对象模型**，因为用到了`wb.VBProject`。
+显然，这部分代码也需要设置 **允许访问VBA工程对象模型**，因为用到了`wb.VBProject`。
 
----
 
-[^1]: [1] [Python for Windows (pywin32) Extensions](https://github.com/mhammond/pywin32)
-[^2]: [2] [win32.Dispatch vs win32.gencache in Python. What are the pros and cons?](https://stackoverflow.com/questions/50127959/win32-dispatch-vs-win32-gencache-in-python-what-are-the-pros-and-cons)
-[^3]: [3] [OLE-COM Object Viewer](https://docs.microsoft.com/zh-cn/windows/desktop/com/ole-com-object-viewer)
-[^4]: [4] [Excel Recalculation](https://docs.microsoft.com/en-us/office/client-developer/excel/excel-recalculation)
-[^5]: [5] [Getting Excel to refresh data on sheet from within VBA](https://stackoverflow.com/questions/154434/getting-excel-to-refresh-data-on-sheet-from-within-vba)
+
+[^1]: [Python for Windows (pywin32) Extensions](https://github.com/mhammond/pywin32)
+[^2]: [win32.Dispatch vs win32.gencache in Python. What are the pros and cons?](https://stackoverflow.com/questions/50127959/win32-dispatch-vs-win32-gencache-in-python-what-are-the-pros-and-cons)
+[^3]: [OLE-COM Object Viewer](https://docs.microsoft.com/zh-cn/windows/desktop/com/ole-com-object-viewer)
+[^4]: [Excel Recalculation](https://docs.microsoft.com/en-us/office/client-developer/excel/excel-recalculation)
+[^5]: [Getting Excel to refresh data on sheet from within VBA](https://stackoverflow.com/questions/154434/getting-excel-to-refresh-data-on-sheet-from-within-vba)

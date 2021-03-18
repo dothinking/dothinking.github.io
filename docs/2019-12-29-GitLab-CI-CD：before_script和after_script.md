@@ -6,6 +6,10 @@ keywords: gitlab-runner
 tags: [GitLab]
 ---
 
+# GitLab CI/CD：before_script和after_script
+
+---
+
 本文记录使用`before_script`和`after_script`解决`GitLab CI/CD`流程中遇到的一个问题。
 
 ## 问题描述
@@ -39,7 +43,7 @@ ERROR: Job failed: exit status 1
 
 ### 结束`Excel`进程
 
-无论哪种方式，先把终止`Excel`进程的脚本写上。参考文章[[^1]]，在主`makefile`的`cclean`命令中增加一个`kill_excel`。
+无论哪种方式，先把终止`Excel`进程的脚本写上。参考文章 [^1]，在主`makefile`的`cclean`命令中增加一个`kill_excel`。
 
 ```makefile
 .PHONY: cclean
@@ -105,7 +109,7 @@ Run after_script ...
 
 ### `Git strategy`
 
-因此有必要学习和参考一下帮助文档[[^2]]中关于`Runner`更新工作目录代码的策略——`GIT_STRATEGY`变量：
+因此有必要学习和参考一下帮助文档 [^2]中关于`Runner`更新工作目录代码的策略——`GIT_STRATEGY`变量：
 
 - `clone` 每个`job`都克隆一遍仓库，确保项目工作空间总是和仓库代码同步的，因此速度也是最慢的
 - `fetch` 重用项目工作空间的代码, 因此速度更快；分为两步：
@@ -117,7 +121,7 @@ Run after_script ...
 
 所以，解决思路为暂时不要`git clean`，改为在`before_script`中执行`make cclean`来达到撤销此前`job`操作的目的，同时也顺便杀掉`Excel`进程。
 
-索性`GitLab`果然提供了`git clean`的开关参数`GIT_CLEAN_FLAGS `[[^3]]，将其设置为`none`即可跳过这一步。于是，最终的`.gitlab-ci.yml`（局部）为：
+索性`GitLab`果然提供了`git clean`的开关参数`GIT_CLEAN_FLAGS ` [^3]，将其设置为`none`即可跳过这一步。于是，最终的`.gitlab-ci.yml`（局部）为：
 
 ```yaml
 ...
@@ -141,8 +145,7 @@ build:
 - Pipeline异常结束后并不会执行`after_script`
 - 结合`GIT_CLEAN_FLAGS`和`before_script`可以解决本问题
 
----
 
-[^1]: [1] [How to check if a process is running via a batch script](https://stackoverflow.com/questions/162291/how-to-check-if-a-process-is-running-via-a-batch-script)
-[^2]: [2] [Git strategy](https://docs.gitlab.com/ee/ci/yaml/README.html#git-strategy)
-[^3]: [3] [Git clean flags](https://docs.gitlab.com/ee/ci/yaml/README.html#git-clean-flags)
+[^1]: [How to check if a process is running via a batch script](https://stackoverflow.com/questions/162291/how-to-check-if-a-process-is-running-via-a-batch-script)
+[^2]: [Git strategy](https://docs.gitlab.com/ee/ci/yaml/README.html#git-strategy)
+[^3]: [Git clean flags](https://docs.gitlab.com/ee/ci/yaml/README.html#git-clean-flags)

@@ -6,6 +6,10 @@ keywords: Python, Popen
 tags: [python]
 ---
 
+# 使用subprocess模块调用子进程并获取输出
+
+---
+
 从python2.4开始，内置的`subprocess`模块可以创建子进程并连接子进程的标准输入/输出/错误，因此可以用来执行外部程序并获取执行结果和输出。本文示例基于Python2.7，转为Python3代码时需要考虑对`bytes`类型返回值的`decode()`转码。
 
 ## Popen类方法
@@ -16,7 +20,9 @@ tags: [python]
 -  `Popen.wait()`，`Popen.communicate()`都会阻塞父进程，直到子进程结束
 -  `Popen.communicate(input=None)`与子进程交互：向`stdin`发送数据，从`stdout`和`stderr`读取数据
 
-**创建`Popen`对象后，主程序不会自动等待子进程完成**。以上三个成员函数都可以用于等待子进程返回：`while`循环配合`Popen.poll()`、`Popen.wait()`、`Popen.communicate()`。由于后面二者都会阻塞父进程，所以无法**实时**获取子进程输出，而是等待子进程结束后一并输出所有打印信息。另外，`Popen.wait()`、`Popen.communicate()`分别将输出存放于管道和内存，前者容易超出默认大小而导致死锁，因此不推荐使用。
+**创建`Popen`对象后，主程序不会自动等待子进程完成**。
+
+以上三个成员函数都可以用于等待子进程返回：`while`循环配合`Popen.poll()`、`Popen.wait()`、`Popen.communicate()`。由于后面二者都会阻塞父进程，所以无法 **实时** 获取子进程输出，而是等待子进程结束后一并输出所有打印信息。另外，`Popen.wait()`、`Popen.communicate()`分别将输出存放于管道和内存，前者容易超出默认大小而导致死锁，因此不推荐使用。
 
 ## Popen类属性
 
@@ -102,12 +108,11 @@ print "return code: ", p.returncode
 - `stdin=subprocess.PIPE`指定子程序输入方式，接着由`p.stdin.write('5\n')`给定；子程序中使用`sys.stdin.readline()`获取
 - `stderr=subprocess.STDOUT`将标准错误重定向到标准输出，于是可以使用`p.stdout.readline()`统一获取标准输出和标准错误信息
 
+---
+
 ## 参考资料
 
-[1] [17.1. subprocess — Subprocess management](https://docs.python.org/2/library/subprocess.html)
-
-[2] [python子进程模块subprocess详解](https://hacpai.com/article/1462524113048)
-
-[3] [python子进程模块subprocess详解与应用实例 之三 ](http://blog.chinaunix.net/uid-26000296-id-4461555.html)
-
-[4] [Python中print如何刷新缓冲立刻打印输出结果](http://www.revotu.com/how-to-flush-output-of-python-print.html)
+- [17.1. subprocess — Subprocess management](https://docs.python.org/2/library/subprocess.html)
+- [python子进程模块subprocess详解](https://hacpai.com/article/1462524113048)
+- [python子进程模块subprocess详解与应用实例 之三 ](http://blog.chinaunix.net/uid-26000296-id-4461555.html)
+- [Python中print如何刷新缓冲立刻打印输出结果](http://www.revotu.com/how-to-flush-output-of-python-print.html)

@@ -6,29 +6,33 @@ keywords: Python
 tags: [python]
 ---
 
+# Python Package __init__解析
+
+---
+
 单个Python文件可以作为一个`Module`被导入重用，多个Module可以组织为`Package`。Package下一般都有一个`__init__.py`文件，而且内容可能啥也没有。本篇即解释此`__init__.py`文件的使用。
 
 ## 文件结构
 
 以下文件结构作为本篇试验测试依据：
 
-```
-+-----------------------------+ +---------------------------------+
-|  + Package                  | |# Package/Sub_Package/module_a.py|
-|  |    |                     | |x = 1                            |
-|  |    + Sub_Package         | +---------------------------------+
-|  |    |      |              |
-|  |    |      + module_a.py  | +---------------------------------+
-|  |    |      + module_b.py  | |# Package/Sub_Package/module_b.py|
-|  |    |      + __init__.py  | |from . import module_a           |
-|  |    |                     | |x = module_a.x + 1               |
-|  |    + module_c.py         | +---------------+-----------------+
-|  |    |                     |
-|  |    + __init__.py         | +---------------------+
-|  + test.py                  | |# Package/module_c.py|
-|                             | |x = 3                |
-+-----------------------------+ +---------------------+
-```
+
+    +-----------------------------+ +---------------------------------+
+    |  + Package                  | |# Package/Sub_Package/module_a.py|
+    |  |    |                     | |x = 1                            |
+    |  |    + Sub_Package         | +---------------------------------+
+    |  |    |      |              |
+    |  |    |      + module_a.py  | +---------------------------------+
+    |  |    |      + module_b.py  | |# Package/Sub_Package/module_b.py|
+    |  |    |      + __init__.py  | |from . import module_a           |
+    |  |    |                     | |x = module_a.x + 1               |
+    |  |    + module_c.py         | +---------------+-----------------+
+    |  |    |                     |
+    |  |    + __init__.py         | +---------------------+
+    |  + test.py                  | |# Package/module_c.py|
+    |                             | |x = 3                |
+    +-----------------------------+ +---------------------+
+
 
 其中，
 

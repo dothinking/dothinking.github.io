@@ -23,8 +23,13 @@ a {
     color: #555;
 }
 
+a:hover {
+    color: #0366d6;
+}
+
 div.col-md-9 img {
     margin: 0 auto;
+    display:block;
 }
 
 
@@ -67,6 +72,12 @@ div.col-md-9 h2 {
     font-weight: bold;
 }
 
+/* blockquote */
+
+div.col-md-9 blockquote {
+    padding: 0 1em;
+    border-left: .25em solid #c9d1d9;
+}
 
 /* List styles */
 
@@ -88,10 +99,13 @@ div.col-md-9 .admonition p {
     margin-bottom: 5px;
 }
 
+/* hyperlink,  footnote*/
 
-/* footnote */
+div.col-md-9 p a {
+    color: #0366d6;
+}
 
 a.footnote-ref {
-    color: darkblue;
+    color: #0366d6;
     font-weight: bold;
 }

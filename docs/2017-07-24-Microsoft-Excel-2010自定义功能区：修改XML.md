@@ -1,11 +1,10 @@
 ---
-keywords: ribbon, add-in, Excel, xlam
+categories: [process automation]
 tags: [VBA]
 ---
 
 # Microsoft Excel 2010自定义功能区：修改XML
 
-2017-07-24
 
 ---
 

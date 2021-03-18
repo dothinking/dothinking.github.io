@@ -1,11 +1,9 @@
 ---
-keywords: Marc, 命令行
+categories: [finite element analysis]
 tags: [Marc,CAE]
 ---
 
 # Windows命令行提交Marc计算任务
-
-2012-07-26
 
 ---
 

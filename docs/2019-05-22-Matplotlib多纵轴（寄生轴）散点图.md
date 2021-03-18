@@ -1,11 +1,10 @@
 ---
-keywords: Python, Matplotlib, Parasite Axes
+categories: [python/vba/c++]
 tags: [python]
 ---
 
 # Matplotlib多纵轴（寄生轴）散点图
 
-2019-05-22
 
 ---
 

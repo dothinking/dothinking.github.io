@@ -1,12 +1,10 @@
 ---
-keywords: Levy-Mises理论, 本构方程
+categories: [plasticity theory]
 tags: [plastic theory, thinking]
 mathjax: true
 ---
 
 # Levy Mises理论的思考
-
-2013-07-29
 
 ---
 

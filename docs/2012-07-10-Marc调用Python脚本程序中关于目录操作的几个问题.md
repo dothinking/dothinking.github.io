@@ -1,11 +1,9 @@
 ---
-keywords: Marc, Python
+categories: [finite element analysis]
 tags: [Marc, python]
 ---
 
 # Marc调用Python脚本程序中关于目录操作的几个问题
-
-2012-07-10
 
 ---
 

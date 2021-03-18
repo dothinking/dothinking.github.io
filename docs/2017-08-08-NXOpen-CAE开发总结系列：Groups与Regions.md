@@ -1,11 +1,10 @@
 ---
-keywords: NX, NXOpen, Groups, Regions
+categories: [CAD/CAE integration]
 tags: [NX, NXOpen]
 ---
 
 # NXOpen CAE开发总结系列：Groups与Regions
 
-2017-08-08
 
 ---
 

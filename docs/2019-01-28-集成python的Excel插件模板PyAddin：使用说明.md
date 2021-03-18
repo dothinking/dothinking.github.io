@@ -1,11 +1,10 @@
 ---
-keywords: Python, vba
+categories: [process automation, python/vba/c++]
 tags: [VBA, python]
 ---
 
 # 集成python的Excel插件模板PyAddin：使用说明
 
-2019-01-28
 
 ---
 

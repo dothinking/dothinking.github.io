@@ -1,11 +1,10 @@
 ---
-keywords: Python, Popen
+categories: [python/vba/c++]
 tags: [python]
 ---
 
 # 使用subprocess模块调用子进程并获取输出
 
-2018-01-12
 
 ---
 

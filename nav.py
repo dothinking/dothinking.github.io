@@ -2,7 +2,6 @@
 
 import os
 import re
-import datetime
 from collections import defaultdict
 
 
@@ -24,8 +23,6 @@ class Post:
 
 
 class Posts:
-
-    THIS_YEAR = datetime.datetime.now().year
 
     def __init__(self, posts:list=None) -> None:
         self._posts = defaultdict(list)
@@ -66,19 +63,24 @@ class Posts:
         top = ['\n', 'nav:']
         more = ['\n', "  - 'More':"]
         path_name = os.path.basename(sub_path)
-        for year in self._posts:
+        i = 0
+        for year in self._posts:            
+            i += 1
             # create annual posts summary page
             with open(os.path.join(sub_path, f'{year}.md'), 'w', encoding='utf-8') as f:
                 f.write(self._sub_page(year, '..'))
 
             # navigation
-            item = f"- '{year}': {path_name}/{year}.md"
-            if Posts.THIS_YEAR-int(year) < count:
+            item = f'- {year}: {path_name}/{year}.md'
+            if i <= count:
                 top.append(f'  {item}')
             else:
                 more.append(f'    {item}')
         
-        return '\n'.join(top) + '\n'.join(more)
+        # about
+        about = '\n  - 关于: about.md'
+        
+        return '\n'.join(top) + '\n'.join(more) + about
 
 
 

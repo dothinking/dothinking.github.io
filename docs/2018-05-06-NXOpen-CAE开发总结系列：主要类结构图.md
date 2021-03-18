@@ -1,11 +1,10 @@
 ---
-keywords: NX, NXOpen, Attribute
+categories: [CAD/CAE integration]
 tags: [NX, NXOpen]
 ---
 
 # NXOpen CAE开发总结系列：主要类结构图
 
-2018-05-06
 
 ---
 

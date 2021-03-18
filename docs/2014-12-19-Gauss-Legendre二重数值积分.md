@@ -1,12 +1,11 @@
 ---
-keywords: Matlab, 数值积分
+categories: [numeric calculation]
 tags: [UBM, matlab, numeric analysis]
 mathjax: true
 ---
 
 # Gauss Legendre二重数值积分
 
-2014-12-19
 
 ---
 

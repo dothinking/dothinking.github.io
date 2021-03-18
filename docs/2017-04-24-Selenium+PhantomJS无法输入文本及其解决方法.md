@@ -1,11 +1,10 @@
 ---
-keywords: selenium, phantomjs, chrome, send_keys, execute_script
+categories: [process automation, python/vba/c++]
 tags: [python, spider]
 ---
 
 # Selenium+PhantomJS无法输入文本及其解决方法
 
-2017-04-24
 
 ---
 

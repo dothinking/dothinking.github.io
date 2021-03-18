@@ -1,11 +1,10 @@
 ---
-keywords: Python
+categories: [python/vba/c++]
 tags: [python]
 ---
 
 # Python Package __init__解析
 
-2018-10-21
 
 ---
 

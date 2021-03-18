@@ -1,11 +1,10 @@
 ---
-keywords: Python, PyQt, QProcess
+categories: [python/vba/c++]
 tags: [python,PyQt]
 ---
 
 # PyQt使用QProcess调用子进程并获取输出
 
-2018-01-13
 
 ---
 

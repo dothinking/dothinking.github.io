@@ -1,11 +1,11 @@
 ---
-keywords: numpy, Python, 数值计算
+categories: [numeric calculation, python/vba/c++]
 tags: [python, numeric analysis]
 ---
 
 # NumPy库frompyfunc与vectorize的比较
 
-2014-12-22
+
 
 ---
 

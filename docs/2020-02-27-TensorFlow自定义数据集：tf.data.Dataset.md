@@ -1,11 +1,10 @@
 ---
-keywords: TensorFlow tf.data.Dataset
+categories: [machine learning]
 tags: [TensorFlow]
 ---
 
 # TensorFlow自定义数据集：tf.data.Dataset
 
-2020-02-27
 
 ---
 

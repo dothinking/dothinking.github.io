@@ -1,11 +1,10 @@
 ---
-keywords: NX, NXOpen, MenuScript
+categories: [CAD/CAE integration]
 tags: [NX, NXOpen]
 ---
 
 # NXOpen：Menu Script自定义菜单
 
-2017-09-01
 
 ---
 

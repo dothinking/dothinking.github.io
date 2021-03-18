@@ -1,7 +1,8 @@
+这是我的博客，记录工作和学习过程中思考和解决的问题，涉及数值计算、流程自动化、CAD/CAE集成等，以及正在尝试的机器学习。
 
-这是我的博客，记录工作和学习过程中思考和解决的问题。
+联系方式：train8808#gmail.com
 
-个人兴趣涉及Python、数值计算、CAD/CAE及二次开发，以及正在尝试的机器学习。`Github`上分享的一些小项目：
+我在`Github`上分享的一些小项目：
 
 - [PDF转Word：pdf2docx](https://github.com/dothinking/pdf2docx)
 - [PyQt5应用：个人知识管理工具tagit](https://github.com/dothinking/tagit)

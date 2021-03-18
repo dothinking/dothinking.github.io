@@ -1,11 +1,10 @@
 ---
-keywords: gitlab-runner
+categories: [process automation]
 tags: [GitLab]
 ---
 
 # GitLab CI CD：before_script和after_script
 
-2019-12-29
 
 ---
 

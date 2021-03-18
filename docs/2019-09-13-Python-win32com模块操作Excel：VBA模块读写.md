@@ -1,11 +1,10 @@
 ---
-keywords: python, win32com
+categories: [process automation, python/vba/c++]
 tags: [python, VBA]
 ---
 
 # Python win32com模块操作Excel：VBA模块读写
 
-2019-09-13
 
 ---
 

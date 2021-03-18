@@ -1,11 +1,10 @@
 ---
-keywords: python, win32com
+categories: [process automation, python/vba/c++]
 tags: [python, VBA]
 ---
 
 # Python win32com模块操作Excel：获取公式依赖关系
 
-2019-05-02
 
 ---
 

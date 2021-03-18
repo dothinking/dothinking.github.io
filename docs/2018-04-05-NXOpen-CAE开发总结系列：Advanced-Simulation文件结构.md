@@ -1,11 +1,10 @@
 ---
-keywords: NX, FEM, Simulation
+categories: [CAD/CAE integration]
 tags: [NX,NXOpen]
 ---
 
 # NXOpen CAE开发总结系列：Advanced Simulation文件结构
 
-2018-04-05
 
 ---
 

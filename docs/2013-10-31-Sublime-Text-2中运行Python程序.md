@@ -1,11 +1,10 @@
 ---
-keywords: Python, sublime text
+categories: [python/vba/c++]
 tags: [python, sublime text]
 ---
 
 # Sublime Text 2中运行Python程序
 
-2013-10-31
 
 ---
 

@@ -1,11 +1,10 @@
 ---
-keywords: NX, NXOpen, Expression
+categories: [CAD/CAE integration]
 tags: [NX, NXOpen]
 ---
 
 # NXOpen：Expression类型与基本单位
 
-2017-12-12
 
 ---
 

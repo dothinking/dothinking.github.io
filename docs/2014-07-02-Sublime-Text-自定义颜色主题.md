@@ -1,11 +1,10 @@
 ---
-keywords: sublime text, 颜色主题
+categories: [process automation]
 tags: [sublime text]
 ---
 
 # Sublime Text 自定义颜色主题
 
-2014-07-02
 
 ---
 

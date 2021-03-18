@@ -1,11 +1,10 @@
 ---
-keywords: MySQL, SAE, ThinkPHP, 备份还原
+categories: [web development]
 tags: [ThinkPHP, web]
 ---
 
 # SAE环境下使用MySQLReback备份还原MySQL数据库
 
-2015-06-16
 
 ---
 

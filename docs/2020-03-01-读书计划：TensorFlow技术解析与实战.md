@@ -1,11 +1,10 @@
 ---
-keywords: TensorFlow
+categories: [machine learning, feeling]
 tags: [TensorFlow, thinking, reading]
 ---
 
 # 读书计划：TensorFlow技术解析与实战
 
-2020-03-01
 
 ---
 

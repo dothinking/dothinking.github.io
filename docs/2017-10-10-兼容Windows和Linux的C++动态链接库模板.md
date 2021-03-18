@@ -1,11 +1,10 @@
 ---
-keywords: C++, 动态链接库
+categories: [python/vba/c++]
 tags: [C++]
 ---
 
 # 兼容Windows和Linux的C++动态链接库模板
 
-2017-10-10
 
 ---
 

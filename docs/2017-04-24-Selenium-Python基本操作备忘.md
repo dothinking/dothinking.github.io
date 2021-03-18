@@ -1,11 +1,10 @@
 ---
-keywords: selenium, phantomjs, chrome
+categories: [process automation, python/vba/c++]
 tags: [python, spider]
 ---
 
 # Selenium Python基本操作备忘
 
-2017-04-24
 
 ---
 

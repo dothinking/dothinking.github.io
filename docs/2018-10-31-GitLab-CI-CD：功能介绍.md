@@ -1,11 +1,10 @@
 ---
-keywords: GitLab, CI CD
+categories: [process automation]
 tags: GitLab
 ---
 
 # GitLab CI CD：功能介绍
 
-2018-10-31
 
 ---
 

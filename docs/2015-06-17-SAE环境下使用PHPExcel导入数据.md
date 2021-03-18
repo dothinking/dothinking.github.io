@@ -1,11 +1,10 @@
 ---
-keywords: SAE, ThinkPHP, PHPExcel
+categories: [web development]
 tags: [ThinkPHP, web]
 ---
 
 # SAE环境下使用PHPExcel导入数据
 
-2015-06-17
 
 ---
 

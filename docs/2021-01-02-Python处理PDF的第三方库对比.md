@@ -1,11 +1,10 @@
 ---
-keywords: pdf pdf-processing
+categories: [process automation]
 tags: [python]
 ---
 
 # Python处理PDF的第三方库对比
 
-2021-01-02
 
 ---
 

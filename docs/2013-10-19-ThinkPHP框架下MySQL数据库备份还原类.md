@@ -1,11 +1,10 @@
 ---
-keywords: ThinkPHP, MySQL, 备份还原
+categories: [web development]
 tags: [ThinkPHP, web]
 ---
 
 # ThinkPHP框架下MySQL数据库备份还原类
 
-2013-10-19
 
 ---
 

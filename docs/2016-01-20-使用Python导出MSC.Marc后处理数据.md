@@ -1,11 +1,11 @@
 ---
-keywords: Marc, Python, 后处理
+categories: [finite element analysis]
 tags: [python, Marc, CAE]
 ---
 
 # 使用Python导出MSC.Marc后处理数据
 
-2016-01-20
+
 
 ---
 

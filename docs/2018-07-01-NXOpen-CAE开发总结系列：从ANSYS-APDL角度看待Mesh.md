@@ -1,11 +1,10 @@
 ---
-keywords: NX, FEM, Simulation
+categories: [CAD/CAE integration]
 tags: [NX,NXOpen]
 ---
 
 # NXOpen CAE开发总结系列：从ANSYS APDL角度看待Mesh
 
-2018-07-01
 
 ---
 

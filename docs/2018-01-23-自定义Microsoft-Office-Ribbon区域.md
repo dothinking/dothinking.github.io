@@ -1,11 +1,10 @@
 ---
-keywords: ribbon, add-in, word, dotm
+categories: [process automation]
 tags: [VBA]
 ---
 
 # 自定义Microsoft Office Ribbon区域
 
-2018-01-23
 
 ---
 

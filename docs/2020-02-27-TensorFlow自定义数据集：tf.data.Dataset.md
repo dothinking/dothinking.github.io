@@ -6,22 +6,26 @@ keywords: TensorFlow tf.data.Dataset
 tags: [TensorFlow]
 ---
 
+# TensorFlow自定义数据集：tf.data.Dataset
+
+---
+
 当样本数据大到不能一次性载入内存时，TensorFlow推荐使用`tf.data.Dataset`创建样本的输入数据流，进而投喂给模型进行训练`model.fit(dataset)`。本文以带标签（即文件名）的验证码图片数据集为例，记录基本流程及一些备忘点。
 
-## 0. 基本流程
+## 基本流程
 
-`tf.data.Dataset`的使用遵循基本的流程[[^1]]：
+`tf.data.Dataset`的使用遵循基本的流程 [^1]：
 
 - 从输入数据创建`Dataset`，例如`from_tensor_slices`，`list_files`
 - 应用`Dataset`变换预处理数据，例如`map`、`filter`、`shuffle`、`batch`、`repeat`、`cache`等等
 - 遍历`Dataset`并生成数据
 
-针对本例中从文件夹读取图片的问题，我们直接可以从`tf.data.Dataset.list_files`开始。以下参考了TensorFlow手册[[^2]]中相关内容。
+针对本例中从文件夹读取图片的问题，我们直接可以从`tf.data.Dataset.list_files`开始。以下参考了TensorFlow手册 [^2] 中相关内容。
 
 
-## 1. 创建源数据集：`tf.data.Dataset.list_files`
+## 创建源数据集：`tf.data.Dataset.list_files`
 
-该函数返回一个`Dataset`，其元素为满足给定模式的所有文件路径，并且元素默认**随机**、**不确定**排列。**不确定**指的是每次遍历时得到的顺序都不一样。
+该函数返回一个`Dataset`，其元素为满足给定模式的所有文件路径，并且元素默认 **随机**、**不确定** 排列。**不确定** 指的是每次遍历时得到的顺序都不一样。
 
 如果需要得到固定的顺序，可以设置一个确定的`seed`或者关闭打乱选项`shuffle=False`。
 
@@ -36,7 +40,7 @@ list_files(
 - `seed` 用以打乱数据集的随机数种子
 
 
-## 2. 数据集变换预处理数据
+## 数据集变换预处理数据
 
 我们已经得到了文件名，但真正需要喂给模型的是图片本身及其标签，所以需要在这个源数据集上进行变换操作。也就是说，`Dataset`的元素应满足`(X, Y)`的形式，当包含多特征的输入或输出，例如本例中输出四位的验证码，可以以字典的形式构造`(X, Y)`元组中的`X`或`Y`：
 
@@ -49,7 +53,8 @@ list_files(
   })
 ```
 
-*当定义多输入多输出的模型结构时，输入输出的名称应与此处的定义前后一致*[[^3]]。
+!!! warning "注意"
+    当定义多输入多输出的模型结构时，输入输出的名称应与此处的定义前后一致 [^3]。
 
 
 ### `tf.data.Dataset.map`
@@ -65,7 +70,7 @@ map(
 - `map_func` 以原来`Dataset`中的元素为参数的自定义函数，返回新`Dataset`中相应的元素
 - `num_parallel_calls` 并行处理元素的个数，默认顺序执行
 
-需要注意的是`map`函数以`Graph`的形式执行自定义的`map_func`，因此`EagerTensor`的性质例如`numpy()`将不可用。如果非用不可，API文档[[^1]]中提及了使用`tf.py_function`转换的形式，但是以性能损失为代价。
+需要注意的是`map`函数以`Graph`的形式执行自定义的`map_func`，因此`EagerTensor`的性质例如`numpy()`将不可用。如果非用不可，API文档 [^1] 中提及了使用`tf.py_function`转换的形式，但是以性能损失为代价。
 
 具体到本例中，
 
@@ -91,7 +96,7 @@ shuffle(
 
 - `buffer_size` 缓冲区大小。元素被依次填入缓冲区，然后从中随机取出以达到打乱效果。因此，`buffer_size`越大，乱序效果越好，但性能随之下降。
 - `seed` 打乱用的随机数种子
-- `reshuffle_each_iteration` 是否每次遍历时都自动打乱，默认**是**。避免不同`epoch`的训练过程中，`Dataset`保持一致的顺序。
+- `reshuffle_each_iteration` 是否每次遍历时都自动打乱，默认 **是**。避免不同`epoch`的训练过程中，`Dataset`保持一致的顺序。
 
 
 ### `tf.data.Dataset.batch`
@@ -105,14 +110,14 @@ batch(
 ```
 
 - `batch_size` 批次的大小
-- `drop_remainder` 当原来样本数量不能被`batch_size`整除时，是否丢弃最后剩下的不足一个批次的样本。默认**保留**。
+- `drop_remainder` 当原来样本数量不能被`batch_size`整除时，是否丢弃最后剩下的不足一个批次的样本。默认 **保留**。
 
 
-此外，`Dataset`还有一些列实用的操作，例如`filter`筛选元素、`cache`提升性能，具体操作API文档[[^1]]。
+此外，`Dataset`还有一些列实用的操作，例如`filter`筛选元素、`cache`提升性能，具体操作API文档 [^1]。
 
 
 
-## 3. 代码汇总
+## 代码汇总
 
 ```python
 import tensorflow as tf
@@ -178,8 +183,9 @@ def _decode_labels(labels, prefix):
 
 至此可以将整个文件夹的图片喂给模型训练了，但是数十万张图片既不方便传输、频繁读文件操作也影响性能，因此下篇将所有数据写入`TFRecord`文件，然后使用`tf.data.TFRecordDataset`导入。
 
----
 
-[^1]: [1] [tf.data.Dataset](https://tensorflow.google.cn/api_docs/python/tf/data/Dataset?hl=en)
-[^2]: [2] [Load Images using tf.data](https://tensorflow.google.cn/tutorials/load_data/images#load_using_tfdata)
-[^3]: [3] [Models with multiple inputs and outputs](https://tensorflow.google.cn/guide/keras/functional#models_with_multiple_inputs_and_outputs)
+
+
+[^1]:  [tf.data.Dataset](https://tensorflow.google.cn/api_docs/python/tf/data/Dataset?hl=en)
+[^2]:  [Load Images using tf.data](https://tensorflow.google.cn/tutorials/load_data/images#load_using_tfdata)
+[^3]:  [Models with multiple inputs and outputs](https://tensorflow.google.cn/guide/keras/functional#models_with_multiple_inputs_and_outputs)

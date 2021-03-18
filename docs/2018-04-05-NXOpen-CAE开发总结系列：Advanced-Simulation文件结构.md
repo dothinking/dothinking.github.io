@@ -6,6 +6,10 @@ keywords: NX, FEM, Simulation
 tags: [NX,NXOpen]
 ---
 
+# NXOpen CAE开发总结系列：Advanced Simulation文件结构
+
+---
+
 本文从NX Open二次开发的角度，介绍NX有限元分析涉及的文件结构（Part类型）及不同部件间相关几何对象的引用关系。
 
 ## 文件/部件类型
@@ -13,8 +17,11 @@ tags: [NX,NXOpen]
 NX中根据CAD模型创建有限元分析模型过程中将涉及四种类型的文件：CAD主模型(master part)、理想化几何模型(idealized part)、有限元模型(FEM part)及仿真模型(simulation part)。它们相互关联并各司其职：
 
 - **CAD主模型** 需要分析的几何对象，并不要求具有可编辑权限
+
 - **理想化几何模型** 有限元分析前的几何清理，例如抽中面、分割部件、简化特征等。理想化几何模型关联自主模型，可以响应主模型的更新却不会反向污染主模型。
+
 - **有限元模型** 网格划分、单元设置、材料属性
+
 - **仿真模型** 边界条件设置、求解参数控制及后处理显示
 
 ## 文档结构与装配结构
@@ -51,7 +58,10 @@ NX中根据CAD模型创建有限元分析模型过程中将涉及四种类型的
 +---------------------+  +--------------------+
 ```
 
-**综合起来看，这是两个不同维度的结构，仿真文档视图组织了四类部件，而针对其中任一类部件，都有与之对应的装配树结构。这样一来，我们将同时涉及部件和同名装配组件两个概念。以当前工作部件为SIM Part为例，我们既可以从仿真导航器获取与之关联的FEM Part，又可以从装配导航器获取与之关联的FEM Component。FEM Part和FEM Component包含从NX操作上来看并无区别的几何对象，然而实际上他们在内存中却是不同的对象。**
+!!! note "总结"
+       综合起来看，这是两个不同维度的结构，仿真文档视图组织了四类部件，而针对其中任一类部件，都有与之对应的装配树结构。这样一来，我们将同时涉及部件和同名装配组件两个概念。       
+       以当前工作部件为SIM Part为例，我们既可以从仿真导航器获取与之关联的FEM Part，又可以从装配导航器获取与之关联的FEM Component。FEM Part和FEM Component包含从NX操作上来看并无区别的几何对象，然而实际上他们在内存中却是不同的对象。
+
 
 ## 部件切换与装配组件切换
 
@@ -69,7 +79,9 @@ NX中根据CAD模型创建有限元分析模型过程中将涉及四种类型的
                                  MasterCadPart()
 ```
 
-*使用成员函数进行以上切换的前提是相关部件都已经加载到Session中。*
+!!! warning "注意"
+       使用成员函数进行以上切换的前提是相关部件都已经加载到Session中。
+
 
 切换到相应部件并设为工作部件后，则可根据上述装配结构图获取相应装配体：
 
@@ -90,7 +102,9 @@ NX中根据CAD模型创建有限元分析模型过程中将涉及四种类型的
 tag_t UF_SF_map_object_to_current_part(tag_t object_tag /*Tag of a object to be mapped*/);
 ```
 
-我们还可以使用`NXOpen C++`函数实现部件与装配组件中几何对象的切换。某部件中的几何对象`G`将以`Occurrence`的形式`G'`出现在当前工作部件的装配组件中，而这个`G'`也正是`G`对应于当前部件的几何对象。例如，几何对象`MeshPoint`仅能在FEM Part中创建和删除，即真身（Prototype）存在于FEM Part中，同时它也可以出现在SIM Part中（此时可以被选择却不能被修改）。它在SIM Part中的展现形式正是FEM Part中`MeshPoint`在FEM装配组件中的`Occurrence`。下面给出两个具体的例子：
+我们还可以使用`NXOpen C++`函数实现部件与装配组件中几何对象的切换。某部件中的几何对象`G`将以`Occurrence`的形式`G'`出现在当前工作部件的装配组件中，而这个`G'`也正是`G`对应于当前部件的几何对象。例如，几何对象`MeshPoint`仅能在FEM Part中创建和删除，即真身（Prototype）存在于FEM Part中，同时它也可以出现在SIM Part中（此时可以被选择却不能被修改）。它在SIM Part中的展现形式正是FEM Part中`MeshPoint`在FEM装配组件中的`Occurrence`。
+
+下面给出两个具体的例子：
 
 ### 新建并存储MeshPoint于SIM Part的Group
 
@@ -118,7 +132,7 @@ tag_t UF_SF_map_object_to_current_part(tag_t object_tag /*Tag of a object to be 
 
 基本思路：FEM Part的`SmartSelectionManager`可以根据`MeshPoint`获取`Node`，需要注意的是此处的`MeshPoint`必须是FEM Part中的`Prototype`。由于Group中存储的`Occurrence`，直接使用`Prototype()`获取即可。
 
-*创建MeshPoint后应更新FEModel，此后才建立MeshPoint与Node的对应关系，CreateRelatedNodeMethod()方法也才生效。但是，当模型十分复杂时，为避免更新FEModel造成的等待时间，亦可遍历节点坐标来获取重合节点。*
+创建MeshPoint后应更新FEModel，此后才建立MeshPoint与Node的对应关系，CreateRelatedNodeMethod()方法也才生效。但是，当模型十分复杂时，为避免更新FEModel造成的等待时间，亦可遍历节点坐标来获取重合节点。
 
 
 

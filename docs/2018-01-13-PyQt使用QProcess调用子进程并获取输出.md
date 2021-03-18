@@ -6,6 +6,10 @@ keywords: Python, PyQt, QProcess
 tags: [python,PyQt]
 ---
 
+# PyQt使用QProcess调用子进程并获取输出
+
+---
+
 `QProcess()`类可以创建子进程执行外部程序，使用`readyReadStandardOutput`信号监听子进程中的标准输出事件，使用`readAllStandardOutput()`读取子进程标准输出；对标准错误的操作同理。本文基于Python3和PyQt5示例以上流程的代码。
 
 ## 创建QProcess并关联监听事件

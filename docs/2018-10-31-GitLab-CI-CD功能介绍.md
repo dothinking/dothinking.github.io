@@ -6,11 +6,15 @@ keywords: GitLab, CI CD
 tags: GitLab
 ---
 
+# GitLab CI/CD功能介绍
+
+---
+
 持续集成（Continuous Integration）是为了配合敏捷开发的速度和效率而产生的一个用于编译、测试、发布、部署的工具。开发人员的每一次代码提交，都将触发预先定义的任务，自动进行编译、测试、部署等。如果成功则接受这次提交，否则提示集成失败。本篇介绍GitLab提供的持续集成（CI/CD）功能。
 
 ## 基本流程
 
-自GitLab 8.0版本起，`Continuous Integration`功能被集成到GitLab基本配置中，并且默认对所有项目生效。两步实现GitLab的CI/CD服务[[^1]]：
+自GitLab 8.0版本起，`Continuous Integration`功能被集成到GitLab基本配置中，并且默认对所有项目生效。两步实现GitLab的CI/CD服务 [^1]：
 
 - 在代码仓库根目录创建`.gitlab-ci.yml`文件
 - 配置执行任务的`Runner`
@@ -139,57 +143,56 @@ job2:
 
 提交代码触发`CI/CD`功能后即可在`CI/CD->jobs`页面观察执行进度，点击相应任务的`Status`按钮即可观察具体的执行日志：
 
-```
-Running with gitlab-runner 11.3.1 (v11.3.1)
-  on xxxxx e18fb335
-Using Docker executor with image xxxxx ...
-Pulling docker image xxxxx ...
-Using docker image sha256:1806e9341a6601f388c0666996de0c96b98244d684e6fb52c90c75670a6ec63f for xxxxx ...
-Running on runner-e18fb335-project-44214-concurrent-0 via xxxxx...
-Cloning repository...
-Cloning into '/builds/test_project'...
-Checking out 432e5cb0 as master...
-Skipping Git submodules setup
-$ echo "Building CPP Project from makefile..."
-Building CPP Project from makefile...
-$ cd ./cpp
-$ make
-g++    -c -o main.o main.cpp
-g++ -o main main.o
-$ ./main
-Hello World
-Job succeeded
-```
 
-```
-Running with gitlab-runner 11.3.1 (v11.3.1)
-  on xxxxx e18fb335
-Using Docker executor with image xxxxx ...
-Pulling docker image xxxxx ...
-Using docker image sha256:1806e9341a6601f388c0666996de0c96b98244d684e6fb52c90c75670a6ec63f for xxxxx ...
-Running on runner-e18fb335-project-44214-concurrent-0 via xxxxx...
-Cloning repository...
-Cloning into '/builds/test_project'...
-Checking out 432e5cb0 as master...
-Skipping Git submodules setup
-$ echo "Python Project Unit Test..."
-Python Project Unit Test...
-$ cd ./python
-$ python -m unittest test
-....
-----------------------------------------------------------------------
-Ran 4 tests in 0.000s
+    Running with gitlab-runner 11.3.1 (v11.3.1)
+    on xxxxx e18fb335
+    Using Docker executor with image xxxxx ...
+    Pulling docker image xxxxx ...
+    Using docker image sha256:1806e9341a6601f388c0666996de0c96b98244d684e6fb52c90c75670a6ec63f for xxxxx ...
+    Running on runner-e18fb335-project-44214-concurrent-0 via xxxxx...
+    Cloning repository...
+    Cloning into '/builds/test_project'...
+    Checking out 432e5cb0 as master...
+    Skipping Git submodules setup
+    $ echo "Building CPP Project from makefile..."
+    Building CPP Project from makefile...
+    $ cd ./cpp
+    $ make
+    g++    -c -o main.o main.cpp
+    g++ -o main main.o
+    $ ./main
+    Hello World
+    Job succeeded
 
-OK
-Job succeeded
-```
+
+    Running with gitlab-runner 11.3.1 (v11.3.1)
+    on xxxxx e18fb335
+    Using Docker executor with image xxxxx ...
+    Pulling docker image xxxxx ...
+    Using docker image sha256:1806e9341a6601f388c0666996de0c96b98244d684e6fb52c90c75670a6ec63f for xxxxx ...
+    Running on runner-e18fb335-project-44214-concurrent-0 via xxxxx...
+    Cloning repository...
+    Cloning into '/builds/test_project'...
+    Checking out 432e5cb0 as master...
+    Skipping Git submodules setup
+    $ echo "Python Project Unit Test..."
+    Python Project Unit Test...
+    $ cd ./python
+    $ python -m unittest test
+    ....
+    ----------------------------------------------------------------------
+    Ran 4 tests in 0.000s
+
+    OK
+    Job succeeded
+
 
 ## 测试案例二
 
 案例一仅仅作为示意，实际操作中更多的是针对同一个工程定义`build`和`test`阶段的`job`。注意到每个`job`都是独立的：
 
 - 同一工程的两个`job`可能被分配到不同的`Runner`上执行
-- 即便定义了相同的`Runner`，执行任务之前**默认**都执行了`git clean`，也就是默认从相同的状态开始执行`build`和`test`阶段的任务
+- 即便定义了相同的`Runner`，执行任务之前 **默认** 都执行了`git clean`，也就是默认从相同的状态开始执行`build`和`test`阶段的任务
 
 但是，实际操作中我希望`build`阶段的任务编译完成的工程，例如动态链接库文件，可以直接用于`test`阶段的任务；而非在`test`阶段的任务中又重新编译一遍。
 
@@ -238,17 +241,16 @@ test:
 
 下面列出了执行`test`任务过程中相应的日志信息：
 
-```
-Downloading artifacts for build (20220274)...
-Runtime platform                                    arch=amd64 os=windows pid=24332 revision=577f813d version=12.5.0
-WARNING: Failed to load system CertPool: crypto/x509: system root pool is not available on Windows 
-Downloading artifacts from coordinator... ok        id=20220274 responseStatus=200 OK token=xxxxx
-```
+    Downloading artifacts for build (20220274)...
+    Runtime platform                                    arch=amd64 os=windows pid=24332 revision=577f813d version=12.5.0
+    WARNING: Failed to load system CertPool: crypto/x509: system root pool is not available on Windows 
+    Downloading artifacts from coordinator... ok        id=20220274 responseStatus=200 OK token=xxxxx
+
 
 
 ## 自定义Runner
 
-以上任务使用通用环境即可完成，例如`g++`编译和`python`环境，但有时可能需要特定的环境，例如`Visual Studio`或者第三方库如`NXOpen C++`，此时需要配置专用的服务器。GitLab提供了Linux/MacOS/Windows等一系列平台的配置方法[[^3]]。
+以上任务使用通用环境即可完成，例如`g++`编译和`python`环境，但有时可能需要特定的环境，例如`Visual Studio`或者第三方库如`NXOpen C++`，此时需要配置专用的服务器。GitLab提供了Linux/MacOS/Windows等一系列平台的配置方法 [^3]。
 
 流程很简明：下载`gitlab-runner`文件，注册`Runner`，安装和启动服务。配置成功后即可在仓库的`Settings->CI/CD->Runners->Specific Runners`下发现自己的`Runner`，注意设置`tag`以便可以在`.gitlab-ci.yml`中指定在此`Runner`执行任务。
 
@@ -256,32 +258,29 @@ Downloading artifacts from coordinator... ok        id=20220274 responseStatus=2
 
 Windows系统的`GitLab Runner`默认以`Powershell`作为运行的`shell`，但我们有时更倾向于使用`git bash`。具体做法为修改`gitlab-runner.exe`同目录下的配置文件`config.toml`：
 
+    concurrent = 1
+    check_interval = 0
+
+    [session_server]
+    session_timeout = 1800
+
+    [[runners]]
+    name = "Example Server"
+    url = "https://xxx.yyy.com/"
+    token = "xxxx"
+    executor = "shell"
+    shell = "bash"
+    builds_dir="/path/to/runner/builds/"
+    [runners.custom_build_dir]
+    [runners.cache]
+        [runners.cache.s3]
+    [runners.cache.gcs]
+
 1. 暂停gitlab-runner服务，备份原始config.toml
 2. 将原始文件的`shell = "powershell"`行修改为：
     - `shell`切换为`bash`，注意确保`git bash`已经添加到`PATH`环境变量中
-    - `builds_dir`切换为`gitlab-runner.exe`所在目录下的`builds`，注意采用Linux的路径分隔符 [[^4]]
+    - `builds_dir`切换为`gitlab-runner.exe`所在目录下的`builds`，注意采用Linux的路径分隔符 [^4]
 3. 启动gitlab-runner服务
-
-```toml
-concurrent = 1
-check_interval = 0
-
-[session_server]
-  session_timeout = 1800
-
-[[runners]]
-  name = "Example Server"
-  url = "https://xxx.yyy.com/"
-  token = "xxxx"
-  executor = "shell"
-  shell = "bash"
-  builds_dir="/path/to/runner/builds/"
-  [runners.custom_build_dir]
-  [runners.cache]
-    [runners.cache.s3]
-[runners.cache.gcs]
-```
-
 
 ## 总结
 
@@ -292,9 +291,8 @@ check_interval = 0
 - 如果通用`Runner`不能满足开发环境需求，可以添加自定义`Runner`
 
 
----
 
-[^1]: [1] [Getting started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/README.html)
-[^2]: [2] [GitLab CI/CD Pipeline Configuration Reference](https://docs.gitlab.com/ee/ci/yaml/README.html)
-[^3]: [3] [Install GitLab Runner](https://docs.gitlab.com/runner/install/)
-[^4]: [4] [Windows GitLab CI Runner using Bash](https://stackoverflow.com/questions/41733406/windows-gitlab-ci-runner-using-bash)
+[^1]: [Getting started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/README.html)
+[^2]: [GitLab CI/CD Pipeline Configuration Reference](https://docs.gitlab.com/ee/ci/yaml/README.html)
+[^3]: [Install GitLab Runner](https://docs.gitlab.com/runner/install/)
+[^4]: [Windows GitLab CI Runner using Bash](https://stackoverflow.com/questions/41733406/windows-gitlab-ci-runner-using-bash)

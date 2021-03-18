@@ -6,21 +6,23 @@ keywords: NX, FEM, Simulation
 tags: [NX,NXOpen]
 ---
 
+# NXOpen CAE开发总结系列：从ANSYS APDL角度看待Mesh
+
+---
+
 在NX中创建Simulation时需要指定求解器类型，本文在指定ANSYS求解器的前提下，分析FEM模块Mesh相关操作与最终导出的ANSYS input文件之间的对应关系。
 
 ## APDL单元类型号命令
 
 APDL设置单元类型号命令：
 
-```
-ET, N, PLANE183 ! 设置第N号单元类型（Element Type）为PLANE183
-```
+    ET, N, PLANE183 ! 设置第N号单元类型（Element Type）为PLANE183
+
 
 为指定的Element Type设置关键参数`KEYOPT`：
 
-```
-KEYOPT, N, 3, 1 ! ET=N的KEYOPT(3)=1，即轴对称类型
-```
+    KEYOPT, N, 3, 1 ! ET=N的KEYOPT(3)=1，即轴对称类型
+
 
 ## NX Mesh相关操作
 
@@ -28,32 +30,33 @@ KEYOPT, N, 3, 1 ! ET=N的KEYOPT(3)=1，即轴对称类型
 - 在仿真导航器中选择Mesh节点后，可以在右键菜单中编辑`Mesh associated data`，其中包含`Name`、`Label`，`KEYOPT`等属性。
 - File->Export->Simulation，设置导出类型为ANSYS
 
-```
-+-------------------------+
-|  Mesh Collector         |
-|     +--+ 2d_mesh(1)     |   mesh associated
-|     +--+ 2d_mesh(2) +------+data
-|              Simulation |      |
-+--------+----------------+      |
-         |               +-------v----------+
-         |               | Name   : ---     |
-         |               | Label  : 2       |
-         |               | KEYOPTS: +-+     |
-         |               +------------------+
-         +---------+-------------+
-                   |
-            +------v------+
-            |ET,2,PLANE183|
-            |...          |
-            +------+------+
-                   |
-+------------------v------------------------+
-|   !MAT ET R XSec Eds EL Nodes             |
-|   ..........                              |
-|   ..........                              |
-|                                 ansys.inp |
-+-------------------------------------------+
-```
+关系示意图：
+
+    +-------------------------+
+    |  Mesh Collector         |
+    |     +--+ 2d_mesh(1)     |   mesh associated
+    |     +--+ 2d_mesh(2) +------+data
+    |              Simulation |      |
+    +--------+----------------+      |
+            |               +-------v----------+
+            |               | Name   : ---     |
+            |               | Label  : 2       |
+            |               | KEYOPTS: +-+     |
+            |               +------------------+
+            +---------+-------------+
+                    |
+                +------v------+
+                |ET,2,PLANE183|
+                |...          |
+                +------+------+
+                    |
+    +------------------v------------------------+
+    |   !MAT ET R XSec Eds EL Nodes             |
+    |   ..........                              |
+    |   ..........                              |
+    |                                 ansys.inp |
+    +-------------------------------------------+
+
 
 ## 对应关系
 

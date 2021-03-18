@@ -6,10 +6,13 @@ keywords: python, win32com
 tags: [python, VBA]
 ---
 
-Python有很多强大的第三方库可以读写Excel，例如`xlrd`、`xlwt`、`xlutils`、`openpyxl`、`xlwings`等，它们主要在读写方面具备优势，但论起对Excel操作的全面性和基础性，则首推`win32com`，它是`pywin32`库[[^1]]的一部分。本文以代码片段方式记录使用`win32com`读写、运行VBA宏代码。
+# Python win32com模块操作Excel的几个应用（二）
 
+---
 
-正如直接在Excel VBA工程中操作一样，`win32com`可以导出或者导入工作簿中的VBA模块，也可以运行其中的宏。同理，这些操作也受到Excel宏安全性设置的影响，因此这一部分从导入/导出宏和运行宏两部分介绍几本代码及相应的宏设置。
+Python有很多强大的第三方库可以读写Excel，例如`xlrd`、`xlwt`、`xlutils`、`openpyxl`、`xlwings`等，它们主要在读写方面具备优势，但论起对Excel操作的全面性和基础性，则首推`win32com`，它是`pywin32`库 [^1] 的一部分。本文以代码片段方式记录使用`win32com`读写、运行VBA宏代码。
+
+正如直接在Excel VBA工程中操作一样，`win32com`可以导出或者导入工作簿中的VBA模块，也可以运行其中的宏。同理，这些操作也受到Excel宏安全性设置的影响，因此这一部分从导入/导出宏和运行宏两部分介绍基本代码及相应的宏设置。
 
 ## 导入/导出模块
 
@@ -118,7 +121,7 @@ def run_macro(wb, macro_name):
 
 ### 操作宏的Excel设置
 
-成功使用`win32com`操作宏的前提是**允许访问VBA工程对象模型**——`File` -> `Option` -> `Trust Center Setting...` -> `Macro Settings`。否则，提示无权获取VBA工程的模块。
+成功使用`win32com`操作宏的前提是 **允许访问VBA工程对象模型**：`File` -> `Option` -> `Trust Center Setting...` -> `Macro Settings`。否则，提示无权获取VBA工程的模块。
 
 ```
 Programmatic access to Visual Basic Project is not trusted.
@@ -177,7 +180,7 @@ app.Application.AutomationSecurity = origin_val
 
 上面更新模块代码的函数`set_module(wb, name, code)`，有时会出现莫名其妙的问题：在`name`模块的末尾多出了一对括号`()`。也就是说准备设置`code`，结果却是`code`+`()`。
 
-根据`stackoverflow`上的一个提问[[^2]]，原因在于：**`win32com`处理VBA时无法完全正确地识别VBA的续行符`_`**。
+根据`stackoverflow`上的一个提问 [^2]，原因在于：**`win32com`处理VBA时无法完全正确地识别VBA的续行符`_`**。
 
 例如，当`code`中包含下面片段时：
 
@@ -192,7 +195,6 @@ Private Declare PtrSafe Function foo Lib "bar.dll" _
 
 所以尽量避免出现上述写法，或者强制将末尾的`_`删除并合并相应的两行。
 
----
 
-[^1]: [1] [Python for Windows (pywin32) Extensions](https://github.com/mhammond/pywin32)
-[^2]: [2] [Problem with AddFromString function of CodeModule in VBA](https://stackoverflow.com/questions/58019991/problem-with-addfromstring-function-of-codemodule-in-vba)
+[^1]: [Python for Windows (pywin32) Extensions](https://github.com/mhammond/pywin32)
+[^2]: [Problem with AddFromString function of CodeModule in VBA](https://stackoverflow.com/questions/58019991/problem-with-addfromstring-function-of-codemodule-in-vba)

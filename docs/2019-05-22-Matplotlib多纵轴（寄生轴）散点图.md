@@ -6,6 +6,10 @@ keywords: Python, Matplotlib, Parasite Axes
 tags: [python]
 ---
 
+# Matplotlib多纵轴（寄生轴）散点图
+
+---
+
 我们知道`Matplotlib`散点图的一个纵轴上可以画多条曲线，当纵轴数据属于不同类型（例如温度和压力）或者不同尺度，那就需要更多的纵轴来分别容纳。这类似于Excel图表中的次坐标轴，只不过`Matplotlib`可以呈现更多的纵轴。本文基于`Matplotlib`官网给出的实例封装了一个实现寄生轴散点图的函数。
 
 ## 概述
@@ -17,9 +21,9 @@ tags: [python]
 
 `Matplotlib`官网给出了三个实例，分别采用了普通孪生轴，基于`parasite_axes`下`host_subplot`的孪生轴，以及`parasite_axes`下寄生轴的方法：
 
-1. [Multiple Yaxis With Spines](https://matplotlib.org/3.1.1/gallery/ticks_and_spines/multiple_yaxis_with_spines.html)
-2. [Demo Parasite Axes2](https://matplotlib.org/3.1.1/gallery/axisartist/demo_parasite_axes2.html)
-3. [Parasite Axes demo](https://matplotlib.org/3.1.1/gallery/axisartist/demo_parasite_axes.html)
+> 1. [Multiple Yaxis With Spines](https://matplotlib.org/3.1.1/gallery/ticks_and_spines/multiple_yaxis_with_spines.html)
+> 2. [Demo Parasite Axes2](https://matplotlib.org/3.1.1/gallery/axisartist/demo_parasite_axes2.html)
+> 3. [Parasite Axes demo](https://matplotlib.org/3.1.1/gallery/axisartist/demo_parasite_axes.html)
 
 
 ## 代码
@@ -166,4 +170,4 @@ if __name__ == '__main__':
 
 测试实例显示结果如下：
 
-<div align='center'><img src="{{ "/images/2019-05-22-01.png" | prepend: site.baseurl }}"></div>
+![](images/2019-05-22-01.png)

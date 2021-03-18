@@ -6,6 +6,10 @@ keywords: python, win32com
 tags: [python, VBA]
 ---
 
+# 获取Excel公式的依赖关系（Python实现）
+
+---
+
 Excel中某个单元格的计算结果可以作为其他单元格计算公式的一部分，即二者存在依赖/引用的关系。尤其是对于复杂的表格，这种依赖关系可以方便我们追踪数据的相互作用。Excel已经在`Formula`->`Formula Auditing`组提供了可视化公式引用关系的功能：`Trace Precedents`和`Trace Dependents`，同时也可以通过相应的API来编程获取引用关系。本文即记录使用Python的`win32com`模块来实现之。
 
 ## 问题描述
@@ -41,9 +45,9 @@ pip install pywin32
 
 关于`win32com`操作Excel的基本代码可以参考
 
->> [Python win32com模块操作Excel的几个应用（一）]({{ site.baseurl }}{% post_url 2019-04-21-Python-win32com模块操作Excel的几个应用（一） %})
+> [Python win32com模块操作Excel的几个应用（一）](2019-04-21-Python-win32com模块操作Excel的几个应用（一）.md)
 
->> [Python win32com模块操作Excel的几个应用（二）]({{ site.baseurl }}{% post_url 2019-09-13-Python-win32com模块操作Excel的几个应用（二） %})
+> [Python win32com模块操作Excel的几个应用（二）](2019-09-13-Python-win32com模块操作Excel的几个应用（二）.md)
 
 
 ## 当前工作表内的引用
@@ -79,7 +83,7 @@ def get_direct_dependents(rng):
 
 ## 工作簿内的引用
 
-本例中，如何才能获取到sheet2工作表中`B1`对sheet1中`A1`的引用关系呢？我们需要使用更一般的获取引用关系的函数`NavigateArrow`[[^1]]：
+本例中，如何才能获取到sheet2工作表中`B1`对sheet1中`A1`的引用关系呢？我们需要使用更一般的获取引用关系的函数`NavigateArrow` [^1]：
 
 ```
 Range.NavigateArrow (TowardPrecedent, ArrowNumber, LinkNumber)
@@ -182,6 +186,5 @@ def get_all_dependents(xlApp, rng):
 
 `yield`关键字可以方便地将普通函数转为生成器，需要注意的是转换递归函数时，需要显式地迭代生成器，否则它不会自动计算下一个值。
 
----
 
-[^1]: [1] [Range.NavigateArrow method (Excel)](https://docs.microsoft.com/en-us/office/vba/api/Excel.Range.NavigateArrow)
+[^1]: [Range.NavigateArrow method (Excel)](https://docs.microsoft.com/en-us/office/vba/api/Excel.Range.NavigateArrow)

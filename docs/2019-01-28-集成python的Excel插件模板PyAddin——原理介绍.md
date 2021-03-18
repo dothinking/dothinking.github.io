@@ -6,7 +6,11 @@ keywords: Python, vba
 tags: [VBA, python]
 ---
 
-`PyAddin`是一个Excel插件模板，方便在VBA中调用Python脚本处理主要业务。[前文]({{ site.baseurl }}{% post_url 2019-01-28-集成python的Excel插件模板PyAddin——使用说明 %})介绍了`PyAddin`的基本用法，本文简要说明设计思路及其实现。
+# 集成python的Excel插件模板PyAddin——原理介绍
+
+---
+
+`PyAddin`是一个Excel插件模板，方便在VBA中调用Python脚本处理主要业务。[前文](2019-01-28-集成python的Excel插件模板PyAddin——使用说明.md)介绍了`PyAddin`的基本用法，本文简要说明设计思路及其实现。
 
 ## 基本原理
 
@@ -15,8 +19,8 @@ tags: [VBA, python]
 Excel2007及更高版本的各类Excel文件，包括插件`*.xlam`实际上都是`XML`格式组织的压缩文件，其中`CustomUI.xml`定义了插件Ribbon区域的界面形式，因此可以程序化生成此文件来实现插件UI的自动化创建和更新。`CustomUI.xml`文件结构及利用该结构创建插件的方法可以参考：
 
 > [Customizing the 2007 Office Fluent Ribbon for Developers](https://docs.microsoft.com/en-us/previous-versions/office/developer/office-2007/aa338202(v%3doffice.12))
-
-> [Microsoft Excel 2010自定义功能区(二)]({{ site.baseurl }}{% post_url 2017-07-24-Microsoft-Excel-2010自定义功能区(二) %})
+>
+> [Microsoft Excel 2010自定义功能区(二)](2017-07-24-Microsoft-Excel-2010自定义功能区(二).md)
 
 ### 2. Python自定义VBA模块
 
@@ -42,13 +46,8 @@ VBA通过命令行执行python脚本处理主要任务，然后获取python返�
 
 ## RunPython()
 
-`RunPython()`是自定义的VBA函数，使用`CreateObject("WScript.Shell").run()`调用指定的python脚本。相比`exec()`的优势是不显示命令行窗口，不足之处是无法直接获取python脚本的执行结果，所以考虑间接地从中间文件读取。其基本代码如下，其中：
+`RunPython()`是自定义的VBA函数，使用`CreateObject("WScript.Shell").run()`调用指定的python脚本。相比`exec()`的优势是不显示命令行窗口，不足之处是无法直接获取python脚本的执行结果，所以考虑间接地从中间文件读取。
 
-- `method_name`指定了需要调用的python脚本，基本规则为`package.module.method`，例如`scripts.test.test_fun`指的是插件主目录下`scripts/test.py`中定义的`test_fun()`方法
-
-- `args`是VBA数组，将其每个元素最为参数传递给被调用的python脚本
-
-- `res`是python脚本的返回信息，如果`RunPython`为True，则为返回值；否则为错误信息
 
 ```vb
 Function RunPython(method_name As String, args, ByRef res As String) As Boolean
@@ -100,6 +99,14 @@ Function RunPython(method_name As String, args, ByRef res As String) As Boolean
     
 End Function
 ```
+
+- `method_name`指定了需要调用的python脚本，基本规则为`package.module.method`，例如`scripts.test.test_fun`指的是插件主目录下`scripts/test.py`中定义的`test_fun()`方法
+
+- `args`是VBA数组，将其每个元素最为参数传递给被调用的python脚本
+
+- `res`是python脚本的返回信息，如果`RunPython`为True，则为返回值；否则为错误信息
+
+
 
 ## main.py
 

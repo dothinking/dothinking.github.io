@@ -72,6 +72,12 @@ div.col-md-9 h2 {
     font-weight: bold;
 }
 
+div.col-md-9 h3 {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
 /* blockquote */
 
 div.col-md-9 blockquote {

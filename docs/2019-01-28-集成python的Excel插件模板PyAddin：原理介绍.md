@@ -6,11 +6,11 @@ keywords: Python, vba
 tags: [VBA, python]
 ---
 
-# 集成python的Excel插件模板PyAddin——原理介绍
+# 集成python的Excel插件模板PyAddin：原理介绍
 
 ---
 
-`PyAddin`是一个Excel插件模板，方便在VBA中调用Python脚本处理主要业务。[前文](2019-01-28-集成python的Excel插件模板PyAddin——使用说明.md)介绍了`PyAddin`的基本用法，本文简要说明设计思路及其实现。
+`PyAddin`是一个Excel插件模板，方便在VBA中调用Python脚本处理主要业务。[前文](2019-01-28-集成python的Excel插件模板PyAddin：使用说明.md)介绍了`PyAddin`的基本用法，本文简要说明设计思路及其实现。
 
 ## 基本原理
 
@@ -20,7 +20,7 @@ Excel2007及更高版本的各类Excel文件，包括插件`*.xlam`实际上都�
 
 > [Customizing the 2007 Office Fluent Ribbon for Developers](https://docs.microsoft.com/en-us/previous-versions/office/developer/office-2007/aa338202(v%3doffice.12))
 >
-> [Microsoft Excel 2010自定义功能区(二)](2017-07-24-Microsoft-Excel-2010自定义功能区(二).md)
+> [Microsoft Excel 2010自定义功能区：修改XML](2017-07-24-Microsoft-Excel-2010自定义功能区：修改XML.md)
 
 ### 2. Python自定义VBA模块
 

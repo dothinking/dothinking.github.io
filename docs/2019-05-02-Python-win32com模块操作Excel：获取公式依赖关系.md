@@ -6,7 +6,7 @@ keywords: python, win32com
 tags: [python, VBA]
 ---
 
-# 获取Excel公式的依赖关系（Python实现）
+# Python-win32com模块操作Excel：获取公式依赖关系
 
 ---
 
@@ -45,9 +45,9 @@ pip install pywin32
 
 关于`win32com`操作Excel的基本代码可以参考
 
-> [Python win32com模块操作Excel的几个应用（一）](2019-04-21-Python-win32com模块操作Excel的几个应用（一）.md)
+> [Python win32com模块操作Excel：基本读写](2019-04-21-Python-win32com模块操作Excel：基本读写.md)
 
-> [Python win32com模块操作Excel的几个应用（二）](2019-09-13-Python-win32com模块操作Excel的几个应用（二）.md)
+> [Python win32com模块操作Excel：VBA模块读写](2019-09-13-Python-win32com模块操作Excel：VBA模块读写.md)
 
 
 ## 当前工作表内的引用

@@ -6,11 +6,11 @@ keywords: ribbon, add-in, Excel, xlam
 tags: [VBA]
 ---
 
-# Microsoft Excel 2010自定义功能区(二)
+# Microsoft Excel 2010自定义功能区：修改XML
 
 ---
 
-[手工创建自定义Excel选项卡](2017-07-23-Microsoft-Excel-2010自定义功能区(一).md)的方法在可移植性方面存在不足，本文将以前文的`hello_world.xlam`为基础，记录将自定义功能区的菜单项集成到插件中去的基本步骤。
+[手工创建自定义Excel选项卡](2017-07-23-Microsoft-Excel-2010自定义功能区：手工创建.md)的方法在可移植性方面存在不足，本文将以前文的`hello_world.xlam`为基础，记录将自定义功能区的菜单项集成到插件中去的基本步骤。
 
 
 

@@ -6,7 +6,7 @@ keywords: gitlab-runner
 tags: [GitLab]
 ---
 
-# GitLab CI/CD之before_script和after_script
+# GitLab CI/CD：before_script和after_script
 
 ---
 

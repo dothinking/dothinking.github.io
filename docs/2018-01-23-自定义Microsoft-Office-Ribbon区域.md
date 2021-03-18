@@ -10,7 +10,7 @@ tags: [VBA]
 
 ---
 
-[前文](2017-07-24-Microsoft-Excel-2010自定义功能区(二).md)以`Microsoft Excel 2010`为例介绍了制作带有自定义Ribbon菜单的Excel插件的基本流程，实际上此方法通用于`MicroSoft Office`的常用组件：Word，Excel，PPT。这是因为这些Office应用程序文档都是基于`Office Open XML`格式：
+[前文](2017-07-24-Microsoft-Excel-2010自定义功能区：修改XML.md)以`Microsoft Excel 2010`为例介绍了制作带有自定义Ribbon菜单的Excel插件的基本流程，实际上此方法通用于`MicroSoft Office`的常用组件：Word，Excel，PPT。这是因为这些Office应用程序文档都是基于`Office Open XML`格式：
 
 > Office Open XML (also informally known as OOXML or Microsoft Open XML (MOX)) is a zipped, XML-based file format developed by Microsoft for representing spreadsheets, charts, presentations and word processing documents.
 >
@@ -19,7 +19,7 @@ tags: [VBA]
 这种开放的XML文件格式改进了文件和数据管理、数据恢复和可交互操作的能力。它实际上是压缩文件，可以使用解压软件查看文件内部的情况；并且任何支持XML的应用程序都能访问和处理Office文件信息，即只要提供了对XML的支持，即便系统没有安装Office软件、非Office应用程序也可以方便地创建和操纵Office文件。
 
 
-正是基于这种开放的XML文件格式，才使得[前文](2017-07-24-Microsoft-Excel-2010自定义功能区(二).md)编辑`XML`文件的方法有迹可寻。
+正是基于这种开放的XML文件格式，才使得[前文](2017-07-24-Microsoft-Excel-2010自定义功能区：修改XML.md)编辑`XML`文件的方法有迹可寻。
 
 ---
 
@@ -78,6 +78,6 @@ PPT模板 | .potx
 
 * 新建Word文档另存为启用宏的模板`.dotm`文件，编写相应VBA代码
 
-* 按照[前文](2017-07-24-Microsoft-Excel-2010自定义功能区(二).md)流程完成自定义Ribbon操作
+* 按照[前文](2017-07-24-Microsoft-Excel-2010自定义功能区：修改XML.md)流程完成自定义Ribbon操作
 
 * 将制作好的`.dotm`模板文件置于`Startup`目录自动加载或者手工按需加载

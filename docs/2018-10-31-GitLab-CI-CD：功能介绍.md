@@ -6,7 +6,7 @@ keywords: GitLab, CI CD
 tags: GitLab
 ---
 
-# GitLab CI/CD功能介绍
+# GitLab CI/CD：功能介绍
 
 ---
 

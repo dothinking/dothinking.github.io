@@ -6,7 +6,7 @@ keywords: python, win32com
 tags: [python, VBA]
 ---
 
-# Python win32com模块操作Excel的几个应用（二）
+# Python win32com模块操作Excel：VBA模块读写
 
 ---
 

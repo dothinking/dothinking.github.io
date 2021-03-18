@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2020-10-15-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E8%8E%B7%E5%8F%96%E5%9B%BE%E7%89%87%E5%8F%8A%E5%85%B6%E4%BD%8D%E7%BD%AE/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>pdf2docx开发概要：获取图片及其位置 - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../categories/2021/" class="nav-link">2021</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2020/" class="nav-link">2020</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2019/" class="nav-link">2019</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2018/" class="nav-link">2018</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2017/" class="nav-link">2017</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/2016/" class="dropdown-item">2016</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2015/" class="dropdown-item">2015</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2014/" class="dropdown-item">2014</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2013/" class="dropdown-item">2013</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2012/" class="dropdown-item">2012</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2020-10-15-pdf2docx开发概要：获取图片及其位置.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#pdf2docx" class="nav-link">pdf2docx开发概要：获取图片及其位置</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#pagegettextrawdict pagegetimagelist" class="nav-link">page.getText('rawdict') 与 page.getImageList()</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#rawdictgetimagelist" class="nav-link">rawdict或getImageList获取图片的背景色错误</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#getimagelist" class="nav-link">getImageList不包含同一图片的不同实例</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#rawdict" class="nav-link">rawdict仅包含完全显示在页面内的图片</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#rawdict_1" class="nav-link">rawdict可能包含“虚假”图片</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">总结</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="pdf2docx">pdf2docx开发概要：获取图片及其位置<a class="headerlink" href="#pdf2docx" title="Permanent link">&para;</a></h1>
+<hr />
+<p>为了在docx中重建图片，我们需要提取图片的内容（二进制流）及其位置（坐标）。<code>PyMuPDF</code>提供了两个获取页面图片的API：<code>page.getText('rawdict')</code>和<code>page.getImageList()</code>，但是截至<code>v1.18.0</code>版本，其中任意单独一个方法都无法完成这个任务，本文记录综合这两个API，提取PDF页面图片及其位置的方法。</p>
+<h2 id="pagegettextrawdict pagegetimagelist"><code>page.getText('rawdict')</code> 与 <code>page.getImageList()</code><a class="headerlink" href="#pagegettextrawdict pagegetimagelist" title="Permanent link">&para;</a></h2>
+<p>以<code>v1.18.0</code>版本为例，这两个API（下文分别以<code>rawdict</code>和<code>getImageList</code>指代）的使用说明参考官方文档：</p>
+<ul>
+<li><a href="https://pymupdf.readthedocs.io/en/latest/page.html#Page.getText">https://pymupdf.readthedocs.io/en/latest/page.html#Page.getText</a></li>
+<li><a href="https://pymupdf.readthedocs.io/en/latest/page.html#Page.getImageList">https://pymupdf.readthedocs.io/en/latest/page.html#Page.getImageList</a></li>
+</ul>
+<p>简要概括一下：</p>
+<ul>
+<li>
+<p><code>rawdict</code>返回当前页面内元素（文本、图片）字典，其中与图片相关的主要键及其意义如下</p>
+<table>
+<thead>
+<tr>
+<th align="left">key</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">bbox</td>
+<td align="left">图片区域：左上角、右下角坐标 (x0, y0, x1, y1)</td>
+</tr>
+<tr>
+<td align="left">width, height</td>
+<td align="left">图片原始宽度和高度</td>
+</tr>
+<tr>
+<td align="left">ext</td>
+<td align="left">图片后缀名</td>
+</tr>
+<tr>
+<td align="left">image</td>
+<td align="left"><code>bytes</code>格式的图片内容</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p><code>getImageList</code>返回当前页面内图片列表，其中每个元素是一个元组</p>
+<pre class="highlight"><code>(xref, smask, width, height, bpc, colorspace, alt. colorspace, name, filter, referencer)</code></pre>
+<table>
+<thead>
+<tr>
+<th align="left">key</th>
+<th align="left">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">xref</td>
+<td align="left">图片内容索引号，<code>fitz.Pixmap(doc, xref)</code>获取到位图内容</td>
+</tr>
+<tr>
+<td align="left">smask</td>
+<td align="left">图片遮罩（Soft Mask）索引号，存储通道数据</td>
+</tr>
+<tr>
+<td align="left">width, height</td>
+<td align="left">图片原始宽度和高度</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<p>初步对比，二者相同点是都能获取到图片内容，不同点在于<code>rawdict</code>可以直接获取到位置信息，而<code>getImageList</code>得到了图片的原始索引<code>xref</code>，可以获取包括图片位置（<code>page.getImageBbox(item)</code>）在内的更多信息。</p>
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<p><code>page.getImageBbox(item)</code>获取的位置信息并非100%可靠 <a href="https://github.com/pymupdf/PyMuPDF/issues/699">Issue-699</a></p>
+</div>
+<p>这样看来，<code>rawdict</code>足以满足获取图片内容和位置的要求。但是，具体实践中却发现了一些特殊情形。</p>
+<h2 id="rawdictgetimagelist"><code>rawdict</code>或<code>getImageList</code>获取图片的背景色错误<a class="headerlink" href="#rawdictgetimagelist" title="Permanent link">&para;</a></h2>
+<p>对于某些图片，无论是<code>rawdict</code>的<code>image</code>，还是<code>getImageList</code>的<code>fitz.Pixmap(doc, xref)</code>得到的图片颜色都不正确。具体又分为以下两种情形：</p>
+<h3 id="a cmykissue-670">(a) <code>CMYK</code>颜色空间或透明图片，参见<a href="https://github.com/pymupdf/PyMuPDF/issues/670">Issue-670</a><a class="headerlink" href="#a cmykissue-670" title="Permanent link">&para;</a></h3>
+<p><code>PyMuPDF</code><a href="https://github.com/pymupdf/PyMuPDF-Utilities/blob/master/examples/extract-imga.py">官方示例</a>借助<code>pillow</code>库进行<code>alpha</code>通道修复，本文采用了<code>PyMuPDF</code>原生方法：</p>
+<ul>
+<li>如果存在则加入<code>alpha</code>通道</li>
+<li>如果不是常规的<code>RGB</code>或<code>gray</code>颜色空间（例如<code>CMYK</code>），则转换到<code>RGB</code>空间</li>
+</ul>
+<p>根据作者的解释，原生方法并非100%稳定；但是于我而言，可以避免仅仅因为较小概率的特殊情况而引入<code>pillow</code>库依赖。</p>
+<pre class="highlight"><code class="language-python">def recover_pixmap(doc:fitz.Document, item:list):
+    '''Restore pixmap with soft mask considered.
+        ---
+        - doc: fitz document
+        - item: an image item got from page.getImageList()
+    '''
+    # data structure of `item`:
+    # (xref, smask, width, height, bpc, colorspace, ...)
+    x = item[0]  # xref of PDF image
+    s = item[1]  # xref of its /SMask
+
+    # base image
+    pix = fitz.Pixmap(doc, x)
+
+    # reconstruct the alpha channel with the smask if exists
+    if s &gt; 0:        
+        # copy of base image, with an alpha channel added
+        pix = fitz.Pixmap(pix, 1)  
+
+        # create pixmap of the /SMask entry
+        ba = bytearray(fitz.Pixmap(doc, s).samples)
+        for i in range(len(ba)):
+            if ba[i] &gt; 0: ba[i] = 255
+        pix.setAlpha(ba)
+
+    # we may need to adjust something for CMYK pixmaps here -&gt; 
+    # recreate pixmap in RGB color space if necessary
+    # NOTE: pix.colorspace may be None for images with alpha channel values only
+    if pix.colorspace and not pix.colorspace.name in (fitz.csGRAY.name, fitz.csRGB.name):
+        pix = fitz.Pixmap(fitz.csRGB, pix)
+
+    return pix</code></pre>
+<h3 id="b alphaissue-677">(b) 只有<code>alpha</code>通道的图片，参见<a href="https://github.com/pymupdf/PyMuPDF/issues/677">Issue-677</a><a class="headerlink" href="#b alphaissue-677" title="Permanent link">&para;</a></h3>
+<p>注意上面代码中，当颜色空间<code>pix.colorspace</code>为空，也就是一副仅有<code>alpha</code>通道的图片，那么上述为基本图片添加<code>alpha</code>通道的方法将失效。</p>
+<blockquote>
+<p>The problem here is that the image at xref 9 consists of alpha values only, i.e. colorspace None as you noted. 
+The turquoise color you see in the PDF is not part of the image, but part of PDF background, established right before that image is invoked for display.</p>
+</blockquote>
+<p>解决这个问题的一个取巧的方法是：获取该图片的区域，然后在该区域内截图。同时处理两个具体问题：</p>
+<ul>
+<li>为避免重叠的文本出现在截图区域，需要在截图前隐藏文本</li>
+<li>调整分辨率以保证截图的质量</li>
+</ul>
+<pre class="highlight"><code class="language-python">def clip_page(page:fitz.Page, bbox:fitz.Rect=None, zoom:float=3.0):
+    '''Clip page pixmap (without text) according to `bbox` (entire page by default).
+    '''
+    # hide text before clip the image only
+    # render Tr: set the text rendering mode
+    # - 3: neither fill nor stroke the text -&gt; invisible
+    # read more:
+    # - https://github.com/pymupdf/PyMuPDF/issues/257
+    # - https://www.adobe.com/content/dam/acom/en/devnet/pdf/pdfs/pdf_reference_archives/PDFReference.pdf
+    doc = page.parent
+    for xref in page._getContents():
+        stream = doc._getXrefStream(xref).replace(b'BT', b'BT 3 Tr') \
+                                            .replace(b'Tm', b'Tm 3 Tr') \
+                                            .replace(b'Td', b'Td 3 Tr')
+        doc._updateStream(xref, stream)
+
+    # improve resolution
+    # - https://pymupdf.readthedocs.io/en/latest/faq.html#how-to-increase-image-resolution
+    # - https://github.com/pymupdf/PyMuPDF/issues/181
+    bbox = page.rect if bbox is None else bbox &amp; page.rect
+    image = page.getPixmap(clip=bbox, matrix=fitz.Matrix(zoom, zoom)) # type: fitz.Pixmap
+    return image</code></pre>
+<p>综上，我们需要一一处理<code>getImageList</code>获取的图片（<code>rawdict</code>无法给出<code>alpha</code>通道的数据）</p>
+<pre class="highlight"><code class="language-python">def extract_images(page:fitz.Page, clip_image_res_ratio:float=3.0):
+    ''' Get images list with contents recovered.'''    
+    doc = page.parent # pdf document
+
+    # check each image item:
+    # (xref, smask, width, height, bpc, colorspace, ...)
+    images = []
+    for item in page.getImageList(full=True):
+        try:
+            item = list(item)
+            item[-1] = 0
+            bbox = page.getImageBbox(item)
+        except ValueError:
+            continue
+
+        # ignore images outside page
+        if not bbox.intersects(page.rect): continue
+
+        # recover cmyk / transparent images
+        pix = recover_pixmap(doc, item)
+
+        # clip page for image with alpha values only
+        if not pix.colorspace:
+            pix = clip_page(page, bbox, zoom=clip_image_res_ratio)
+
+        images.append(pix)
+
+    return images</code></pre>
+<h2 id="getimagelist"><code>getImageList</code>不包含同一图片的不同实例<a class="headerlink" href="#getimagelist" title="Permanent link">&para;</a></h2>
+<p>上面基于<code>getImageList</code>的方法貌似完美了，但实际上，如果同一图片复制多次后粘贴在页面上，<code>getImageList</code>仅仅包含其中一个实例，而<code>rawdict</code>则会计算该图片出现的每个地方。</p>
+<blockquote>
+<p>Image blocks in a textpage are generated for every image location – whether or not there are any duplicates. This is in contrast to Page.getImageList(), which will contain each image only once.</p>
+</blockquote>
+<p>所以还不能放弃<code>rawdict</code>。此时，我们已知：</p>
+<ul>
+<li><code>getImageList</code>得到了图片的正确内容，以及重复图片中的某一个位置</li>
+<li><code>rawdict</code>得到了所有重复图片的正确位置</li>
+</ul>
+<p>结合二者即可得到正确的内容和所有位置：</p>
+<ul>
+<li>(1) 以<code>rawdict</code>的<code>image</code>值为键分组，每一组即为重复图片列表，列表中图片的位置正确，但是内容可能不正确（例如丢失<code>alpha</code>通道）</li>
+<li>(2) 如果<code>getImageList</code>某一图片的位置<code>bbox</code>出现在上述某一分组的<code>bbox</code>列表中，则将改组所有图片的内容修正为<code>getImageList</code>该图片的内容</li>
+</ul>
+<h2 id="rawdict"><code>rawdict</code>仅包含完全显示在页面内的图片<a class="headerlink" href="#rawdict" title="Permanent link">&para;</a></h2>
+<p>上一步的处理以<code>rawdict</code>为基础，以<code>getImageList</code>进行修正。如果一副图片有任何部分出现在页面之外，则并不会被<code>rawdict</code>统计。所以需要在上面处理逻辑中再加一步：</p>
+<ul>
+<li>(3) 如果<code>getImageList</code>某一图片的位置<code>bbox</code>不出现在任何<code>rawdict</code>分组中，则加入该图片</li>
+</ul>
+<h2 id="rawdict_1"><code>rawdict</code>可能包含“虚假”图片<a class="headerlink" href="#rawdict_1" title="Permanent link">&para;</a></h2>
+<p>上一步补救了<code>getImageList</code>含有<code>rawdict</code>中不存在的图片的情形；相反，<code>rawdict</code>也可能含有<code>getImageList</code>中不存在的图片，但实际上，这些是“虚假”图片——因为<code>getImageList</code>统计了所有已显示或者未显示的图片。本文遇到的一个实例，某些复杂的矢量图形被错误地转换为图片而计算到<code>rawdict</code>中去了。</p>
+<p>此时，再追加一步：</p>
+<ul>
+<li>(4) 如果<code>getImageList</code>所有图片的位置<code>bbox</code>都不出现在某一<code>rawdict</code>分组，则删除该分组</li>
+</ul>
+<h2 id="_1">总结<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>getImageList</code>或<code>rawdict</code>得到图片的内容可能不正确，需要进行修复或截图处理</li>
+<li><code>getImageList</code>获取的图片（显示/未显示）才算真正的图片</li>
+<li><code>rawdict</code>获取重复图片的每一个位置</li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

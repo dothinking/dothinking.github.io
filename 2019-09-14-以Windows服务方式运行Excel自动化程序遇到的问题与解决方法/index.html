@@ -8,7 +8,7 @@
         <meta name="author" content="dothinking">
         <link rel="canonical" href="https://dothinking.github.io/2019-09-14-%E4%BB%A5Windows%E6%9C%8D%E5%8A%A1%E6%96%B9%E5%BC%8F%E8%BF%90%E8%A1%8CExcel%E8%87%AA%E5%8A%A8%E5%8C%96%E7%A8%8B%E5%BA%8F%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>2019 09 14 以Windows服务方式运行Excel自动化程序遇到的问题与解决方法 - 格致</title>
+        <title>以Windows服务方式运行Excel自动化程序遇到的问题与解决方法 - 格致</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -103,13 +103,44 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">问题描述</a>
+            <li class="nav-item" data-level="1"><a href="#windowsexcel" class="nav-link">以Windows服务方式运行Excel自动化程序遇到的问题与解决方法</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">概述</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">问题与解决方法</a>
+            <li class="nav-item" data-level="2"><a href="#open method of workbooks class failed" class="nav-link">Open method of Workbooks class failed</a>
               <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#programmatic access to visual basic project is not trusted" class="nav-link">Programmatic access to Visual Basic Project is not trusted</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#vba" class="nav-link">执行VBA代码超时</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#vbac" class="nav-link">无法正确加载VBA中调用的C++动态链接库</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#the configured identity is incorrect" class="nav-link">The configured identity is incorrect</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#module has no attribute clsidtoclassmap" class="nav-link">Module has no attribute 'CLSIDToClassMap'</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#this com object can not automate the makepy process - please run makepy manually for this object" class="nav-link">This COM object can not automate the makepy process - please run makepy manually for this object</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#cannot use object linking and embedding" class="nav-link">Cannot use object linking and embedding</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -117,31 +148,37 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
+<h1 id="windowsexcel">以Windows服务方式运行Excel自动化程序遇到的问题与解决方法<a class="headerlink" href="#windowsexcel" title="Permanent link">&para;</a></h1>
+<hr />
 <p>参考前文关于<code>win32com</code>模块的示例代码可以进行Excel的自动化操作，例如Excel VBA的自动化测试；将其作为Windows服务运行，则可以方便为网络中的其他机器调用。本文正是记录配置Excel自动化服务过程中遇到的问题与相应解决措施。</p>
-<h2 id="_1">问题描述<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h2 id="_1">概述<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>最近有个需求是对启用宏的Excel 2010文件的自动化测试，需要配置在服务器上以供<code>GitLab-Runner</code>调用。于是，按照读入测试数据、执行测试VBA、验证计算结果的逻辑写好Python脚本，调试通过后在本地运行一切正常。然而，通过Commit提交触发CI/CD流程，即<code>GitLab-Runner</code>以Windows服务的方式执行相同的脚本时，却出现了各种各样的问题。</p>
-<p>根本原因显然是**本地账户**和**系统服务**执行Excel自动化操作上的差异，以下逐一记录遇到的问题。除了部分与Python相关的问题外，其余应该具备通用性，可作为Windows服务方式执行Excel、Word、Outlook等自动化程序出现问题时的参考。</p>
-<p><strong>当前登陆账户具备管理员权限</strong>。</p>
-<h2 id="_2">问题与解决方法<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<h3 id="1 open method of workbooks class failed">1. Open method of Workbooks class failed<a class="headerlink" href="#1 open method of workbooks class failed" title="Permanent link">&para;</a></h3>
-<pre class="highlight"><code>(-2147352567, 'Exception occurred.', (0, 'Microsoft Excel', 'Open method of Workbooks class failed', 'xlmain11.chm', 0, -2146827284), None)</code></pre>
-<p>在Stackoverflow搜索到了这个问题的解决方法[<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>]，根据Windows位数在目标目录创建一个<code>Desktop</code>文件夹：</p>
+<p>根本原因显然是 <strong>本地账户</strong> 和 <strong>系统服务</strong> 执行Excel自动化操作上的差异，以下逐一记录遇到的问题。除了部分与Python相关的问题外，其余应该具备通用性，可作为Windows服务方式执行Excel、Word、Outlook等自动化程序出现问题时的参考。</p>
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<p>当前登陆账户应具备管理员权限。</p>
+</div>
+<h2 id="open method of workbooks class failed">Open method of Workbooks class failed<a class="headerlink" href="#open method of workbooks class failed" title="Permanent link">&para;</a></h2>
+<pre class="highlight"><code>(-2147352567, 'Exception occurred.', 
+(0, 'Microsoft Excel', 'Open method of Workbooks class failed', 'xlmain11.chm', 0, -2146827284), None)</code></pre>
+<p>在Stackoverflow搜索到了这个问题的解决方法 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>，根据Windows位数在目标目录创建一个<code>Desktop</code>文件夹：</p>
 <ul>
 <li>64位系统： <code>C:\Windows\SysWOW64\config\systemprofile\</code></li>
 <li>32位系统： <code>C:\Windows\System32\config\systemprofile\</code></li>
 </ul>
-<p>虽然暂时解决了问题，却也不知是何缘由。经历后来遇到的问题4才明白：Excel需要有<code>Interactive User</code>登陆才能正常运行，上面的步骤正是为其提供了用户“桌面”；然而一旦需要更多用户账户相关的设置时，就会有新的问题出现了。</p>
-<h3 id="2 programmatic access to visual basic project is not trusted">2. Programmatic access to Visual Basic Project is not trusted<a class="headerlink" href="#2 programmatic access to visual basic project is not trusted" title="Permanent link">&para;</a></h3>
-<pre class="highlight"><code>(-2147352567, 'Exception occurred.', (0, 'Microsoft Excel', 'Programmatic access to Visual Basic Project is not trusted\n', 'xlmain11.chm', 0, -2146827284), None)</code></pre>
+<p>虽然暂时解决了问题，却也不知是何缘由。经历后续问题才明白：Excel需要有<code>Interactive User</code>登陆才能正常运行，上面的步骤正是为其提供了用户“桌面”；然而一旦需要更多用户账户相关的设置时，就会有新的问题出现了。</p>
+<h2 id="programmatic access to visual basic project is not trusted">Programmatic access to Visual Basic Project is not trusted<a class="headerlink" href="#programmatic access to visual basic project is not trusted" title="Permanent link">&para;</a></h2>
+<pre class="highlight"><code>(-2147352567, 'Exception occurred.', 
+(0, 'Microsoft Excel', 'Programmatic access to Visual Basic Project is not trusted\n', 'xlmain11.chm', 0, -2146827284), None)</code></pre>
 <p>这个问题很明显，一旦代码需要访问VBA工程对象，例如访问<code>module</code>对象、Python动态执行VBA代码，则需要相应的许可（Excel软件信任区设置中有该选项）。</p>
-<p>解决方法可以是利用Python动态修改相应注册表项和值来允许访问VB工程，或者参考[<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>]手工永久设置。</p>
-<h3 id="3 vba">3. 执行VBA代码超时<a class="headerlink" href="#3 vba" title="Permanent link">&para;</a></h3>
+<p>解决方法可以是利用Python动态修改相应注册表项和值来允许访问VB工程，或者参考 <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup> 手工永久设置。</p>
+<h2 id="vba">执行VBA代码超时<a class="headerlink" href="#vba" title="Permanent link">&para;</a></h2>
 <p>这一般是因为VBA代码中存在错误。因为本文的自动化过程是由Python驱动的，一旦VBA代码出错而被挂起，Python就无法得到响应了。</p>
 <p>针对本文应用场景的解决方案是在VBA测试代码的开头加上一句<code>On Error Resume Nest</code>，即忽略VBA代码中的错误，以便Python可以正常执行后续流程。并且无需担心此举造成的错误，VBA代码存在错误必将导致后续验证输出的失败，也就表明了这个测试案例必将失败。</p>
-<h3 id="4 vbac">4. 无法正确加载VBA中调用的C++动态链接库<a class="headerlink" href="#4 vbac" title="Permanent link">&para;</a></h3>
-<p>这个问题是从问题3中排查出来的——正是无法正确加载DLL才导致了VBA测试代码出错。VBA代码中直接通过文件名引用DLL，而DLL所在路径已经添加到了<code>PATH</code>环境变量中。由此看来，以系统服务方式启动的Excel并不能正确获取到环境变量。</p>
+<h2 id="vbac">无法正确加载VBA中调用的C++动态链接库<a class="headerlink" href="#vbac" title="Permanent link">&para;</a></h2>
+<p>VBA代码中直接通过文件名引用DLL，而DLL所在路径已经添加到了<code>PATH</code>环境变量中。由此看来，以系统服务方式启动的Excel并不能正确获取到环境变量。</p>
 <pre class="highlight"><code class="language-vb">Declare Function xxx Lib "sample_dll_name.dll" ( arguments_list_xxx ) As xxx</code></pre>
-<p>解决方法为通过<code>DCOMConfig</code>设置启动Excel的用户[<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>, <sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>]：</p>
+<p>解决方法为通过<code>DCOMConfig</code>设置启动Excel的用户 <sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup> <sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>：</p>
 <ol>
 <li><code>Windows+R</code> -&gt; <code>dcomcnfg</code>，打开<code>Component Service</code></li>
 <li><code>Console Root</code> -&gt; <code>Component Services</code> -&gt; <code>My Computer</code> -&gt; <code>DCOM Config</code></li>
@@ -151,73 +188,83 @@
 </ul>
 </li>
 </ol>
-<p>如果上述<code>DCOM Config</code>列表中并不存在<code>Microsoft Excel Application</code>，则参考下面步骤[<sup id="fnref2:4"><a class="footnote-ref" href="#fn:4">4</a></sup>]：以64位Windows系统上的32位Excel为例，</p>
+<p>如果上述<code>DCOM Config</code>列表中并不存在<code>Microsoft Excel Application</code>，则参考下面步骤 <sup id="fnref2:4"><a class="footnote-ref" href="#fn:4">4</a></sup>。</p>
+<p>以64位Windows系统上的32位Excel为例，</p>
 <ol>
 <li><code>Windows+R</code> -&gt; <code>mmc -32</code>打开<code>Microsoft Managemant Console</code></li>
 <li><code>File</code> -&gt; <code>Add Remove Snap-in</code> -&gt; <code>Component Services</code> -&gt; <code>Add</code> -&gt; <code>OK</code>添加<code>Component Services</code></li>
 <li>按<code>DCOMConfig</code>步骤2，3进行设置</li>
 </ol>
-<h3 id="5 the configured identity is incorrect">5. The configured identity is incorrect<a class="headerlink" href="#5 the configured identity is incorrect" title="Permanent link">&para;</a></h3>
-<pre class="highlight"><code>(-2147467238, 'The server process could not be started because the configured identity is incorrect. Check the username and password.', None, None)</code></pre>
-<p>到目前为止一切正常，可一旦服务器进入待机状态，就出现了上述错误。原因也很明确，因为处理问题4时设置了以当前账户来运行Excel，于是当前用户退出时系统尝试再次登陆，但我们并没有设置任何登陆口令。</p>
-<p>解决方法为<code>DCOMConfig</code>设置<code>Identity</code>为<code>This User</code>，然后输入用户名和密码（注意域内用户需要带上域名称，例如<code>domain\user</code>）[<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup>]。</p>
-<p>后来问题7的出现表明这只是其中一个解决方案。</p>
-<h3 id="6 module has no attribute clsidtoclassmap">6. Module has no attribute 'CLSIDToClassMap'<a class="headerlink" href="#6 module has no attribute clsidtoclassmap" title="Permanent link">&para;</a></h3>
+<h2 id="the configured identity is incorrect">The configured identity is incorrect<a class="headerlink" href="#the configured identity is incorrect" title="Permanent link">&para;</a></h2>
+<pre class="highlight"><code>(-2147467238, 'The server process could not be started because the configured identity is incorrect. 
+Check the username and password.', None, None)</code></pre>
+<p>到目前为止一切正常，可一旦服务器进入待机状态，就出现了上述错误。原因也很明确，因为之前问题时设置了以当前账户来运行Excel，于是当前用户退出时系统尝试再次登陆，但我们并没有设置任何登陆口令。</p>
+<p>解决方法为<code>DCOMConfig</code>设置<code>Identity</code>为<code>The launching user</code>或者<code>This User</code>，然后输入用户名和密码（注意域内用户需要带上域名称，例如<code>domain\user</code>） <sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup>。</p>
+<h2 id="module has no attribute clsidtoclassmap">Module has no attribute 'CLSIDToClassMap'<a class="headerlink" href="#module has no attribute clsidtoclassmap" title="Permanent link">&para;</a></h2>
 <pre class="highlight"><code>module 'win32com.gen_py.00020813-0000-0000-C000-000000000046x0x1x7' has no attribute 'CLSIDToClassMap'</code></pre>
 <p>这是<code>win32com</code>以<code>EnsureDispatch()</code>方式启动Excel会产生临时文件夹，出现此问题后只要删除相应文件夹即可，即本例中的<code>00020813-0000-0000-C000-000000000046x0x1x7</code>。</p>
 <pre class="highlight"><code class="language-python">import win32com.client    
 app = win32com.client.gencache.EnsureDispatch('Excel.Application')</code></pre>
-<p>那么如何找到该目录呢？如下代码将打印目标位置[<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup>]：</p>
+<p>那么如何找到该目录呢？如下代码将打印目标位置 <sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup>：</p>
 <pre class="highlight"><code class="language-python">import win32com
 print(win32com.__gen_path__)</code></pre>
 <ul>
 <li>对于本地账户执行的代码：<code>C:\Users\&lt;my username&gt;\AppData\Local\Temp\gen_py</code></li>
 <li>对于系统服务执行的代码：<code>C:\Windows\Temp\gen_py</code></li>
 </ul>
-<p><em>如果<code>GitLab-runner</code>是系统服务以本地账户形式运行的（如问题8解决方案的情况），则同样对应本地账户目录而非系统目录。</em></p>
-<h3 id="7 this com object can not automate the makepy process - please run makepy manually for this object">7. This COM object can not automate the makepy process - please run makepy manually for this object<a class="headerlink" href="#7 this com object can not automate the makepy process - please run makepy manually for this object" title="Permanent link">&para;</a></h3>
-<p>与问题6删除缓存相反，这个错误表明无法自动产生<code>gen_py</code>文件夹，而这正是<code>win32com</code>以<code>EnsureDispatch()</code>方式启动Excel所必须的。所以按照提示，手动运行<code>makepy.py</code>即可。</p>
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<p>如果<code>GitLab-runner</code>是系统服务以本地账户形式运行的，则同样对应本地账户目录而非系统目录。</p>
+</div>
+<h2 id="this com object can not automate the makepy process - please run makepy manually for this object">This COM object can not automate the makepy process - please run makepy manually for this object<a class="headerlink" href="#this com object can not automate the makepy process - please run makepy manually for this object" title="Permanent link">&para;</a></h2>
+<p>与上一个问题删除缓存的做法相反，这个错误表明无法自动产生<code>gen_py</code>文件夹，而这正是<code>win32com</code>以<code>EnsureDispatch()</code>方式启动Excel所必须的。所以按照提示，手动运行<code>makepy.py</code>即可。</p>
 <ol>
 <li>在<code>Lib\site-packages\win32com\client</code>目录下执行<code>python makepy.py -d</code></li>
 <li>在弹出的<code>select library</code>对话框中选择Excel相关的项目即可，例如<code>Microsoft Excel 16.0 Object Library (1.9)</code></li>
 <li>用户<code>Temp</code>文件夹下即可产生<code>gen_py</code>文件夹</li>
 </ol>
-<h3 id="8 cannot use object linking and embedding">8. Cannot use object linking and embedding<a class="headerlink" href="#8 cannot use object linking and embedding" title="Permanent link">&para;</a></h3>
+<h2 id="cannot use object linking and embedding">Cannot use object linking and embedding<a class="headerlink" href="#cannot use object linking and embedding" title="Permanent link">&para;</a></h2>
 <p>在正常工作了几天后，突然出现了此问题，具体原因尚不明确。实际上，这是本地账户打开Excel时的错误提示，在<code>GitLab-Runner</code>上执行Excel自动化脚本时表现为失去响应直至超时，即卡在打开Excel工作簿上。</p>
-<p>解决方法为通过<code>DCOMConfig</code>设置<code>Identity</code>为<code>The launching user</code>[<sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup>]。</p>
-<p>然而，这就与问题5冲突了！索性问题5还有一个替代方案，<code>GitLab-Runner</code>允许设置登陆账户，我们可以将其从默认的<code>Local System</code>切换到<code>This account</code>，同理设置<code>domain\user</code>及其登陆密码。</p>
+<p>解决方法：</p>
+<ul>
+<li>
+<p>通过<code>DCOMConfig</code>设置系统登陆<code>Identity</code>为<code>The launching user</code> <sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup></p>
+</li>
+<li>
+<p>同时为<code>GitLab-Runner</code>设置登陆账户：将其从默认的<code>Local System</code>切换到<code>This account</code>，然后设置<code>domain\user</code>及其登陆密码。</p>
 <ol>
 <li><code>Windows+R</code> -&gt; <code>services.msc</code> -&gt; <code>gitlab-runner</code> -&gt; <code>properties</code></li>
 <li><code>Log On</code> -&gt; <code>This account</code> -&gt; 填写<code>Password</code>和<code>Confirm Password</code></li>
 </ol>
-<p>另外，MSDN上也有人给出了保持<code>DCOMConfig</code>中<code>This account</code>不变而修改本地Excel文件<code>Security</code>属性的解决方法[<sup id="fnref:8"><a class="footnote-ref" href="#fn:8">8</a></sup>]，本文尚未是测试。</p>
-<hr />
+</li>
+</ul>
+<p>另外，MSDN上也有人给出了保持<code>DCOMConfig</code>中<code>This account</code>不变而修改本地Excel文件<code>Security</code>属性的解决方法 <sup id="fnref:8"><a class="footnote-ref" href="#fn:8">8</a></sup>，本文尚未是测试。</p>
 <div class="footnote">
 <hr />
 <ol>
 <li id="fn:1">
-<p>[1] <a href="https://stackoverflow.com/questions/17177612/excel-access-denied-with-win32-python-pywin32?answertab=votes#tab-top">excel access denied with win32 python pywin32</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<p><a href="https://stackoverflow.com/questions/17177612/excel-access-denied-with-win32-python-pywin32?answertab=votes#tab-top">excel access denied with win32 python pywin32</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 <li id="fn:2">
-<p>[2] <a href="https://blogs.technet.microsoft.com/diana_tudor/2014/12/02/microsoft-project-how-to-control-macro-settings-using-registry-keys/">Microsoft Project – how to control Macro Settings using registry keys</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+<p><a href="https://blogs.technet.microsoft.com/diana_tudor/2014/12/02/microsoft-project-how-to-control-macro-settings-using-registry-keys/">Microsoft Project – how to control Macro Settings using registry keys</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 <li id="fn:3">
-<p>[3] <a href="https://theether.net/download/Microsoft/kb/288368.html">How to configure Office applications for automation from a COM+/MTS package</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+<p><a href="https://theether.net/download/Microsoft/kb/288368.html">How to configure Office applications for automation from a COM+/MTS package</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
 </li>
 <li id="fn:4">
-<p>[4] <a href="https://bharathkumaran.wordpress.com/2011/10/25/running-excel-from-a-windows-service/">Running excel from a windows service</a>&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+<p><a href="https://bharathkumaran.wordpress.com/2011/10/25/running-excel-from-a-windows-service/">Running excel from a windows service</a>&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
 </li>
 <li id="fn:5">
-<p>[5] <a href="https://stackoverflow.com/questions/4234615/excel-com-automation-via-interactive-user-stops-working-when-user-logs-off">Excel COM automation via interactive user stops working when user logs off</a>&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+<p><a href="https://stackoverflow.com/questions/4234615/excel-com-automation-via-interactive-user-stops-working-when-user-logs-off">Excel COM automation via interactive user stops working when user logs off</a>&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
 </li>
 <li id="fn:6">
-<p>[6] <a href="https://stackoverflow.com/questions/52889704/python-win32com-excel-com-model-started-generating-errors">python-win32com excel com model started generating errors</a>&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+<p><a href="https://stackoverflow.com/questions/52889704/python-win32com-excel-com-model-started-generating-errors">python-win32com excel com model started generating errors</a>&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
 </li>
 <li id="fn:7">
-<p>[7] <a href="https://social.msdn.microsoft.com/Forums/en-us/9d38aad5-4a61-4edc-9645-c76610756940/cannot-use-object-linking-and-embedding-excel-2007-dcom?forum=innovateonoffice">Cannot use object linking and embedding - EXCEL 2007 - DCOM</a>&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+<p><a href="https://social.msdn.microsoft.com/Forums/en-us/9d38aad5-4a61-4edc-9645-c76610756940/cannot-use-object-linking-and-embedding-excel-2007-dcom?forum=innovateonoffice">Cannot use object linking and embedding - EXCEL 2007 - DCOM</a>&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
 </li>
 <li id="fn:8">
-<p>[8] <a href="https://social.msdn.microsoft.com/Forums/en-US/251a6e4a-e4ef-45a6-8b73-91dc4620eedf/cannot-use-object-linking-and-embedding-excel-2007?forum=exceldev">Cannot use object linking and embedding Excel 2007</a>&#160;<a class="footnote-backref" href="#fnref:8" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+<p><a href="https://social.msdn.microsoft.com/Forums/en-US/251a6e4a-e4ef-45a6-8b73-91dc4620eedf/cannot-use-object-linking-and-embedding-excel-2007?forum=exceldev">Cannot use object linking and embedding Excel 2007</a>&#160;<a class="footnote-backref" href="#fnref:8" title="Jump back to footnote 8 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div></div>

@@ -8,7 +8,7 @@
         <meta name="author" content="dothinking">
         <link rel="canonical" href="https://dothinking.github.io/2018-04-05-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9AAdvanced-Simulation%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>2018 04 05 NXOpen CAE开发总结系列：Advanced Simulation文件结构 - 格致</title>
+        <title>NXOpen CAE开发总结系列：Advanced Simulation文件结构 - 格致</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -103,23 +103,24 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-level="1"><a href="#nxopen caeadvanced simulation" class="nav-link">NXOpen CAE开发总结系列：Advanced Simulation文件结构</a>
+              <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">文件/部件类型</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">文档结构与装配结构</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">部件切换与装配组件切换</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#_4" class="nav-link">几何对象切换</a>
               <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -127,14 +128,24 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
+<h1 id="nxopen caeadvanced simulation">NXOpen CAE开发总结系列：Advanced Simulation文件结构<a class="headerlink" href="#nxopen caeadvanced simulation" title="Permanent link">&para;</a></h1>
+<hr />
 <p>本文从NX Open二次开发的角度，介绍NX有限元分析涉及的文件结构（Part类型）及不同部件间相关几何对象的引用关系。</p>
 <h2 id="_1">文件/部件类型<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>NX中根据CAD模型创建有限元分析模型过程中将涉及四种类型的文件：CAD主模型(master part)、理想化几何模型(idealized part)、有限元模型(FEM part)及仿真模型(simulation part)。它们相互关联并各司其职：</p>
 <ul>
-<li><strong>CAD主模型</strong> 需要分析的几何对象，并不要求具有可编辑权限</li>
-<li><strong>理想化几何模型</strong> 有限元分析前的几何清理，例如抽中面、分割部件、简化特征等。理想化几何模型关联自主模型，可以响应主模型的更新却不会反向污染主模型。</li>
-<li><strong>有限元模型</strong> 网格划分、单元设置、材料属性</li>
-<li><strong>仿真模型</strong> 边界条件设置、求解参数控制及后处理显示</li>
+<li>
+<p><strong>CAD主模型</strong> 需要分析的几何对象，并不要求具有可编辑权限</p>
+</li>
+<li>
+<p><strong>理想化几何模型</strong> 有限元分析前的几何清理，例如抽中面、分割部件、简化特征等。理想化几何模型关联自主模型，可以响应主模型的更新却不会反向污染主模型。</p>
+</li>
+<li>
+<p><strong>有限元模型</strong> 网格划分、单元设置、材料属性</p>
+</li>
+<li>
+<p><strong>仿真模型</strong> 边界条件设置、求解参数控制及后处理显示</p>
+</li>
 </ul>
 <h2 id="_2">文档结构与装配结构<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>仿真导航器（Simulaton Navigator）和仿真文件视图（SImulation File View）展示了如下的文件结构：</p>
@@ -161,7 +172,11 @@
 |                     |  |   +--+ FEM Part    |
 |                     |  |                    |
 +---------------------+  +--------------------+</code></pre>
-<p><strong>综合起来看，这是两个不同维度的结构，仿真文档视图组织了四类部件，而针对其中任一类部件，都有与之对应的装配树结构。这样一来，我们将同时涉及部件和同名装配组件两个概念。以当前工作部件为SIM Part为例，我们既可以从仿真导航器获取与之关联的FEM Part，又可以从装配导航器获取与之关联的FEM Component。FEM Part和FEM Component包含从NX操作上来看并无区别的几何对象，然而实际上他们在内存中却是不同的对象。</strong></p>
+<div class="admonition note">
+<p class="admonition-title">总结</p>
+<p>综合起来看，这是两个不同维度的结构，仿真文档视图组织了四类部件，而针对其中任一类部件，都有与之对应的装配树结构。这样一来，我们将同时涉及部件和同名装配组件两个概念。     <br />
+   以当前工作部件为SIM Part为例，我们既可以从仿真导航器获取与之关联的FEM Part，又可以从装配导航器获取与之关联的FEM Component。FEM Part和FEM Component包含从NX操作上来看并无区别的几何对象，然而实际上他们在内存中却是不同的对象。</p>
+</div>
 <h2 id="_3">部件切换与装配组件切换<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p>文档结构树所示关联关系用NXOpen API中相关类的成员函数表示为：</p>
 <pre class="highlight"><code>                                 IdealizedPart()
@@ -173,7 +188,10 @@
                                     +----------&gt;+Idealized Part|
                                                 +--------------+
                                  MasterCadPart()</code></pre>
-<p><em>使用成员函数进行以上切换的前提是相关部件都已经加载到Session中。</em></p>
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<p>使用成员函数进行以上切换的前提是相关部件都已经加载到Session中。</p>
+</div>
 <p>切换到相应部件并设为工作部件后，则可根据上述装配结构图获取相应装配体：</p>
 <pre class="highlight"><code>       ComponentAssembly()     RootComponent()       GetChildren()
 +-----------+     +---------------+     +----------------+     +------------+
@@ -183,7 +201,8 @@
 <p>不同部件间的几何对象具有一一对应关系，例如Idealized Part中的某个Edge对应了FEM Part中的Polygon Edge，进而又对应SIM Part中的Polygon Edge。以上对应关系由NX自动维护，我们可以使用<code>Open C</code>函数，根据当前部件中的对象获取处于关系对上的相关对象：</p>
 <pre class="highlight"><code class="language-c">#include &lt;uf_sf.h&gt;
 tag_t UF_SF_map_object_to_current_part(tag_t object_tag /*Tag of a object to be mapped*/);</code></pre>
-<p>我们还可以使用<code>NXOpen C++</code>函数实现部件与装配组件中几何对象的切换。某部件中的几何对象<code>G</code>将以<code>Occurrence</code>的形式<code>G'</code>出现在当前工作部件的装配组件中，而这个<code>G'</code>也正是<code>G</code>对应于当前部件的几何对象。例如，几何对象<code>MeshPoint</code>仅能在FEM Part中创建和删除，即真身（Prototype）存在于FEM Part中，同时它也可以出现在SIM Part中（此时可以被选择却不能被修改）。它在SIM Part中的展现形式正是FEM Part中<code>MeshPoint</code>在FEM装配组件中的<code>Occurrence</code>。下面给出两个具体的例子：</p>
+<p>我们还可以使用<code>NXOpen C++</code>函数实现部件与装配组件中几何对象的切换。某部件中的几何对象<code>G</code>将以<code>Occurrence</code>的形式<code>G'</code>出现在当前工作部件的装配组件中，而这个<code>G'</code>也正是<code>G</code>对应于当前部件的几何对象。例如，几何对象<code>MeshPoint</code>仅能在FEM Part中创建和删除，即真身（Prototype）存在于FEM Part中，同时它也可以出现在SIM Part中（此时可以被选择却不能被修改）。它在SIM Part中的展现形式正是FEM Part中<code>MeshPoint</code>在FEM装配组件中的<code>Occurrence</code>。</p>
+<p>下面给出两个具体的例子：</p>
 <h3 id="meshpointsim partgroup">新建并存储MeshPoint于SIM Part的Group<a class="headerlink" href="#meshpointsim partgroup" title="Permanent link">&para;</a></h3>
 <p>基本思路：首先切换到FEM Part创建<code>MeshPoint</code>对象，然后根据这个Prototype获取相应的Occurrence，最后存入SIM Part的group中。</p>
 <p>得到FEM Part中创建的<code>MeshPoint</code>并切换回SIM Part后，我们可以直接使用上述<code>Open C</code>函数，此处则演示<code>NXOpen C++</code>方法：从装配树获取FEM组件，然后使用其<code>FindOccurrence()</code>成员函数获取在SIM Part中的对象。</p>
@@ -201,7 +220,7 @@ tag_t UF_SF_map_object_to_current_part(tag_t object_tag /*Tag of a object to be 
 </code></pre>
 <h3 id="sim partmeshpointnode">SIM Part中获取MeshPoint的关联Node<a class="headerlink" href="#sim partmeshpointnode" title="Permanent link">&para;</a></h3>
 <p>基本思路：FEM Part的<code>SmartSelectionManager</code>可以根据<code>MeshPoint</code>获取<code>Node</code>，需要注意的是此处的<code>MeshPoint</code>必须是FEM Part中的<code>Prototype</code>。由于Group中存储的<code>Occurrence</code>，直接使用<code>Prototype()</code>获取即可。</p>
-<p><em>创建MeshPoint后应更新FEModel，此后才建立MeshPoint与Node的对应关系，CreateRelatedNodeMethod()方法也才生效。但是，当模型十分复杂时，为避免更新FEModel造成的等待时间，亦可遍历节点坐标来获取重合节点。</em></p></div>
+<p>创建MeshPoint后应更新FEModel，此后才建立MeshPoint与Node的对应关系，CreateRelatedNodeMethod()方法也才生效。但是，当模型十分复杂时，为避免更新FEModel造成的等待时间，亦可遍历节点坐标来获取重合节点。</p></div>
             </div>
         </div>
 

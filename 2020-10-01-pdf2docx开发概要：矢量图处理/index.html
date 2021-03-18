@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2020-10-01-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E7%9F%A2%E9%87%8F%E5%9B%BE%E5%A4%84%E7%90%86/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>pdf2docx开发概要：矢量图处理 - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../categories/2021/" class="nav-link">2021</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2020/" class="nav-link">2020</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2019/" class="nav-link">2019</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2018/" class="nav-link">2018</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2017/" class="nav-link">2017</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/2016/" class="dropdown-item">2016</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2015/" class="dropdown-item">2015</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2014/" class="dropdown-item">2014</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2013/" class="dropdown-item">2013</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2012/" class="dropdown-item">2012</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2020-10-01-pdf2docx开发概要：矢量图处理.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#pdf2docx" class="nav-link">pdf2docx开发概要：矢量图处理</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">矢量图处理方案</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">路径分组</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#- rectangle-intersection-problem" class="nav-link">矩形相交问题 - Rectangle-Intersection-Problem</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_6" class="nav-link">总结</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="pdf2docx">pdf2docx开发概要：矢量图处理<a class="headerlink" href="#pdf2docx" title="Permanent link">&para;</a></h1>
+<hr />
+<p>通常情况下，我们从PDF提取出的路径<code>Path</code>是一些横、纵线及标准矩形填充，用于表格边线、单元格背景、文字高亮等样式的解析。实际上，<strong>矢量图也是由这些路径组成的</strong>。这就引出了两个问题：</p>
+<ul>
+<li>
+<p>对含有矢量图的路径进行表格解析，可能导致错误的、不存在的表格结构</p>
+</li>
+<li>
+<p><code>PyMuPDF</code>提取的<code>pixmap</code>并不包含矢量图，导致重建<code>docx</code>时丢失矢量图</p>
+</li>
+</ul>
+<h2 id="_1">矢量图处理方案<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><strong>基本假设：</strong> 矢量图中包含平行于横、纵坐标轴的直线路径外，还有曲线路径。因为复杂形状的展现离不开曲线。</p>
+<p>PDF中曲线路径即贝塞尔曲线，由<code>c</code>、<code>v</code>、<code>y</code>等算符创建。原始数据给出的是贝塞尔曲线的4个控制点，我们在计算出曲线参数表达式后，采样曲线上的点得到一系列直线段路径来逼近曲线。于是，对于任意一条路径，只要一般直线段（即不正交于坐标轴）的数量超过一定数值，例如贝塞尔曲线的采样分段数，就表明该路经是曲线路径，并且属于某个矢量图区域。</p>
+<p>那么，解决开头两个问题的思路就很明朗了：</p>
+<ul>
+<li><strong>以是否相连为依据分组所有路径</strong>，每一组路径都是潜在的矢量图、表格区域，当然也可能是文本样式例如一条下划线</li>
+<li>检测每一个分组是否存在曲线路径：<ul>
+<li>只要存在曲线路径，该分组即被认为是矢量图，进而用<code>page.getPixmap(clip=bbox)</code>提取相应区域为位图</li>
+<li>否则，仅保留该分组中正交于坐标轴的路径，作为后续表格、文字样式的解析</li>
+</ul>
+</li>
+</ul>
+<h2 id="_2">路径分组<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>以上处理方案的关键点在于 <strong>以是否相连为依据分组所有路径</strong>。</p>
+<p>图<code>Graph</code>是解决这个问题的直接手段：</p>
+<ul>
+<li>每一条路径看作图的<code>顶点</code></li>
+<li>两条路径是否相连构成了<code>边</code>，注意并不是任意两条路径都是相连的</li>
+<li>于是，所有路径及其连接关系构成了一个<code>非连通图</code></li>
+<li>遍历这个非连通图得到每一个<code>连通分量</code>，即为每一个分组</li>
+</ul>
+<p>至此，关键点在于建立这个图，即 <strong>任意两条路径是否相交</strong>。为降低复杂度，引入简化处理：判断路径的包络矩形是否相交。注意本文提及的包络矩形<code>Boundary Box</code>都是平行于坐标轴的（<code>ISO-oriented</code>）。</p>
+<h2 id="- rectangle-intersection-problem">矩形相交问题 - Rectangle-Intersection-Problem<a class="headerlink" href="#- rectangle-intersection-problem" title="Permanent link">&para;</a></h2>
+<p>一开始采用了暴力求解的方式，O(n^2)的时间复杂度在<code>n&lt;2000</code>时尚能接受（~0.6s）；2000条路经也基本涵盖一个页面内普通复杂度的矢量图了。直到遇到包含6万条路经的一张矢量地图，处理时间直接爆炸了。搜索后发现矩形求交是一个研究过的问题，于是参考一篇论文中的算法进行了实现。</p>
+<p>这一节记录暴力求解和优化后的算法。</p>
+<h3 id="_3">判断两个矩形是否相交<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>首先，使用左下角<code>(x0,y0)</code>和右上角<code>(x1,y1)</code>两个点来描述一个标准矩形：</p>
+<pre class="highlight"><code>  ^ y
+  |
+  |        (x1, y1)
+4 |   +-----+          +-------------+
+  |   |A    |          |C            |
+3 |   |     |   +-------------+      |
+  |   |     |   |B     |      |      |
+2 |   +-----+   |      +-------------+
+  |(x0, y0)     |             |
+1 |             +-------------+
+  |                                     x
+  +--------------------------------------&gt;
+  0      1      2      3      4      5</code></pre>
+<p>有多种思路可以判断相交，例如，两个矩形中心距离投影与边长的关系。这里从下图所示四种不相交的情况入手，其反面即为相交：</p>
+<ul>
+<li>B完全在A的上方：<code>B.y0 &gt; A.y1</code></li>
+<li>B完全在A的下方：<code>B.y1 &lt; A.y0</code></li>
+<li>B完全在A的左边：<code>B.x1 &lt; A.x0</code></li>
+<li>B完全在A的右边：<code>B.x0 &gt; A.x1</code></li>
+</ul>
+<pre class="highlight"><code>+----+  +--------------------+
+|    |  |        B           |
+|    |  +--------------------+
+|    |                  +----+
+|    |  +----------+    |    |
+| B  |  |          |    |    |
+|    |  |    A     |    |    |
+|    |  |          |    | B  |
+|    |  |          |    |    |
+|    |  +----------+    |    |
++----+                  |    |
++---------------------+ |    |
+|          B          | |    |
++---------------------+ +----+</code></pre>
+<p>综合以上，得到矩形类及其判断相交的方法如下：</p>
+<pre class="highlight"><code class="language-python">class Rect:
+    def __init__(self, points):
+        assert len(points)==4, 'invalid input'
+        self.x0, self.y0, self.x1, self.y1 = points
+
+    def intersects(self, rect):
+        ''' if intersects with `rect`.'''
+        non_intersection =  rect.x1&lt;self.x0 or \
+                            rect.x0&gt;self.x1 or \
+                            rect.y1&lt;self.y0 or \
+                            rect.y0&gt;self.y1
+        return not non_intersection</code></pre>
+<h3 id="_4">暴力求解<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>既然已经有了判断两个矩形是否相交的方法，自然想到两两判断所有矩形的暴力求解方法。最后用一个列表表示各个矩形的相交矩形，<code>graph = [set() for i in range(num)]</code>，也就是邻接表表示的图结构。</p>
+<pre class="highlight"><code class="language-python">class Rects:
+    '''Collection of Rect instances.'''
+    def __init__(self):
+        self._rects = [] # type: list[Rect]
+
+    def append(self, instance): self._rects.append(instance)    
+
+    def build_graph(self):
+        '''calculate the connectivity between every two rects by brute force method.'''
+        num = len(self._rects)
+        graph = [set() for i in range(num)]
+        for i in range(num):
+            for j in range(i+1, num):
+                if self._rects[i].intersects(self._rects[j]):
+                    graph[i].add(j)
+                    graph[j].add(i)
+        return graph
+
+if __name__ == '__main__':
+
+    inputs = [(0.5,2,1.5,4), (2,1,4,3), (3,2,5,4)]
+
+    # initialize Rects
+    R = Rects()
+    for points in inputs: R.append(Rect(points))
+
+    # solving rectangle intersection
+    graph = R.build_graph()
+    print(graph)
+
+    # output:
+    # [set(), {2}, {1}]</code></pre>
+<p>以上计算示例即为上图中的矩形<code>A</code>、<code>B</code>和<code>C</code>，结果与预期相符：<code>A</code>没有相交矩形，<code>B</code>与<code>C</code>相交，<code>C</code>与<code>B</code>相交。</p>
+<h3 id="_5">优化的求解算法<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>暴力方法简单易行，但随着输入数量增大，性能急剧下降。于是寻求一种优化的算法，基本方向有两个：</p>
+<ul>
+<li>以O(n*logn)代价沿着一个维度对矩形排序，这样可以避免每两个矩形都要进行一次判断</li>
+<li>在一个维度的投影有重叠的情况下，只需按区间判断另一个维度的相交情况</li>
+</ul>
+<p>这里对下面论文提出的算法进行了实现。</p>
+<blockquote>
+<p><a href="https://ieeexplore.ieee.org/document/5578313">A Rectangle-Intersection Algorithm with Limited Resource Requirements</a></p>
+</blockquote>
+<p>算法大意：</p>
+<ul>
+<li>取所有<code>n</code>个矩形的竖直边，并按非降的顺序排序得到共计<code>m=2n</code>条边的集合<code>V</code></li>
+<li>然后重复如下描述的子过程<code>detect(V, m)</code>：<ul>
+<li>如果<code>m &lt; 2</code>则终止递归，否则，</li>
+<li>定义如下集合：<ul>
+<li>令<code>V1</code>为<code>V</code>前一半即<code>⌊m/2⌋</code>个元素的集合，</li>
+<li>令<code>V2</code>为<code>V</code>后一半即剩下元素的集合</li>
+<li>令<code>S11</code>为至少一条竖直边在<code>V1</code>中，且不经过<code>V2</code>区域的矩形的集合</li>
+<li>令<code>S22</code>为至少一条竖直边在<code>V2</code>中，且不经过<code>V1</code>区域的矩形的集合</li>
+<li>令<code>S12</code>为左竖直边在<code>V1</code>中且右竖直边跨过（<code>spanning</code>）<code>V2</code>区域的矩形的集合</li>
+<li>令<code>S21</code>为右竖直边在<code>V2</code>中且左竖直边跨过（<code>spanning</code>）<code>V1</code>区域的矩形的集合</li>
+</ul>
+</li>
+<li>分别对集合(<code>S12</code>, <code>S22</code>)、(<code>S21</code>, <code>S11</code>)、(<code>S12</code>, <code>S21</code>)进行<code>y</code>区间是否重叠的判断<code>stab(S12, S22)</code>、<code>stab(S21, S11)</code>和<code>stab(S12, S21)</code></li>
+<li>重复执行子过程：<code>detect(V1, ⌊m/2⌋)</code>和<code>detect(V2, m−⌊m/2⌋)</code></li>
+</ul>
+</li>
+</ul>
+<p>以第一幅图矩形为例，第一次执行<code>detect</code>时的中间变量，此时无需执行<code>stab</code>操作。注意矩形<code>B</code>，虽然左竖直边在<code>V1</code>中，但右竖直边<code>x=4</code>不满足**跨过**<code>V2</code>，即要求<code>x&gt;5</code>，所以<code>B</code>并不属于<code>S12</code>，同理分析亦不属于<code>S21</code>。</p>
+<pre class="highlight"><code>  ^ y
+  |                 +                    V1  = [0.5, 1.5, 2]
+  |        (x1, y1) |                    V2  = [3, 4, 5]
+4 |   +-----+       |  +-------------+   S11 = [A]
+  |   |A    |       |  |C            |   S22 = [C]
+3 |   |     |   +-------------+      |   S12 = []
+  |   |     |   |B  |  |      |      |   S21 = []
+2 |   +-----+   |   |  +-------------+
+  |(x0, y0)     |   |         |
+1 |             +-------------+
+  |                 |                   x
+  +-----------------+--------------------&gt;
+  0      1      2      3      4      5
+</code></pre>
+<p>分别对上图的<code>V1</code>和<code>V2</code>执行<code>detect</code>操作：</p>
+<pre class="highlight"><code>  ^ y
+  |       +            V1  = [0.5]
+  |       |            V2  = [1.5, 2]
+4 |   +-----+          S11 = []
+  |   |A  | |          S22 = [B]
+3 |   |   | |   +---   S12 = []
+  |   |   | |   |B     S21 = []
+2 |   +-----+   |
+  |       |     |
+1 |       |     +---
+  |       |                             x
+  +-------+------------------------------&gt;
+  0      1      2      3      4      5</code></pre>
+<pre class="highlight"><code>  ^ y
+  |      V1  = [3]         +
+  |      V2  = [4,5]       |
+4 |      S11 = []      +-------------+
+  |      S22 = []      |C  |         |
+3 |      S12 = []    ---------+      |
+  |      S21 = [B]     |   |  |      |
+2 |                    +-------------+
+  |                  B     |  |
+1 |                  ---------+
+  |                        |            x
+  +------------------------+-------------&gt;
+  0      1      2      3      4      5</code></pre>
+<p>上面第二幅子图<code>S21=[B]</code>给出了集合<code>S21</code>的一个例子：右竖直边在<code>V2</code>，且左竖直边<code>x=2</code>跨过了<code>V1</code>即满足<code>x&lt;3</code>。</p>
+<p>注意到以上两图的<code>len(V1)=1</code>满足了<code>detect</code>的终止条件，接下来继续对<code>V2</code>执行<code>detect</code>：</p>
+<pre class="highlight"><code>  ^ y
+  |           +        V1  = [1.5]
+  |           |        V2  = [2]
+4 |        -+ |        S11 = [A]
+  |       A | |        S22 = [B]
+3 |         | | +--+   S12 = []
+  |         | | |B     S21 = []
+2 |        -+ | |
+  |           | |
+1 |           | +--+
+  |           |                         x
+  +-----------+--------------------------&gt;
+  0      1      2      3      4      5</code></pre>
+<pre class="highlight"><code>  ^ y
+  |      V1  = [4]               +
+  |      V2  = [5]               |
+4 |      S11 = [B]          ---------+
+  |      S22 = []                |  C|
+3 |      S12 = []           --+  |   |
+  |      S21 = [C]            |  |   |
+2 |                         ---------+
+  |                         B |  |
+1 |                         --+  |
+  |                              |      x
+  +------------------------------+-------&gt;
+  0      1      2      3      4      5</code></pre>
+<p>终于，上图中可以执行<code>stab(S21,S11)</code>操作即判断<code>B</code>、<code>C</code>在<code>y</code>区间上的相交情况，显然它们是相交的；于是，最终得到一组相交矩形<code>(B, C)</code>。这里略去了<code>stab</code>的算法描述，即一维区间的求交问题。</p>
+<p>综合来看，这个算法将矩形相交的判断分解为两个维度的相交，<code>x</code>方向通过排序和分治提高了效率，剩下的<code>y</code>方向就是一维区间的判断。根据<code>S</code>集合的定义，唯有(<code>S12</code>, <code>S22</code>)、(<code>S21</code>, <code>S11</code>)、(<code>S12</code>, <code>S21</code>)这三种组合在<code>x</code>方向出现重叠，所以算法中仅对它们进行<code>y</code>区间的<code>stab</code>判断。</p>
+<p>于是，以上算法的一个<code>Python</code>实现：</p>
+<pre class="highlight"><code class="language-python">def detect(V:list, num:int, index_groups:list):
+    ''' divide and conquer in x-direction.
+        ---
+        Args:
+        - V: rectangle-related x-edges data, [(index, (x0,y0,x1,y1), x), (...), ...]
+        - num: count of V instances, equal to len(V)
+        - index_groups: target adjacent list for connectivity between rects
+    '''
+    if num==1: return
+
+    # start/end points of left/right intervals
+    center_pos = int(num/2.0)
+    X0, X, X1 = V[0][-1], V[center_pos-1][-1], V[-1][-1] 
+
+    # split into two groups
+    left = V[0:center_pos]
+    right = V[center_pos:]
+
+    # filter rects according to their position to each intervals
+    S11 = list(filter( lambda item: item[1][2]&lt;=X, left ))
+    S12 = list(filter( lambda item: item[1][2]&gt;=X1, left ))
+    S22 = list(filter( lambda item: item[1][0]&gt;X, right ))
+    S21 = list(filter( lambda item: item[1][0]&lt;=X0, right ))
+
+    # intersection in x-direction is fulfilled, so check y-direction further
+    stab(S12, S22, index_groups)
+    stab(S21, S11, index_groups)
+    stab(S12, S21, index_groups)
+
+    # recursive process
+    detect(left,  center_pos,     index_groups)
+    detect(right, num-center_pos, index_groups)
+
+
+def stab(S1:list, S2:list, index_groups:list):
+    '''Check interval intersection in y-direction.'''
+    if not S1 or not S2: return
+
+    # sort
+    S1.sort(key=lambda item: item[1][1])
+    S2.sort(key=lambda item: item[1][1])
+
+    i, j = 0, 0
+    while i&lt;len(S1) and j&lt;len(S2):
+        m, a, _ = S1[i]
+        n, b, _ = S2[j]
+        if a[1] &lt; b[1]:
+            k = j
+            while k&lt;len(S2) and S2[k][1][1] &lt; a[3]:
+                report_pair(int(m/2), int(S2[k][0]/2), index_groups)
+                k += 1
+            i += 1
+        else:
+            k = i
+            while k&lt;len(S1) and S1[k][1][1] &lt; b[3]:
+                report_pair(int(S1[k][0]/2), int(n/2), index_groups)
+                k += 1
+            j += 1
+
+
+def report_pair(i:int, j:int, index_groups:list):
+    '''add pair (i,j) to adjacent list.'''
+    index_groups[i].add(j)
+    index_groups[j].add(i)</code></pre>
+<p>进而，考虑改进算法的<code>Rects</code>类：</p>
+<pre class="highlight"><code class="language-python">class Rects:
+    '''Collection of Rect instances.'''
+    def __init__(self):
+        self._rects = [] # type: list[Rect]
+
+    def append(self, instance): self._rects.append(instance)    
+
+    def build_graph(self):
+        '''calculate rects connectivity by solving rectangle intersection problems.'''
+        num = len(self._rects)
+        graph = [set() for i in range(num)]
+        i_rect_x, i = [], 0
+        for rect in self._rects:
+            points = (rect.x0, rect.y0, rect.x1, rect.y1)
+            i_rect_x.append((i,   points, rect.x0))
+            i_rect_x.append((i+1, points, rect.x1))
+            i += 2
+        i_rect_x.sort(key=lambda item: item[-1])
+        detect(i_rect_x, 2*num, graph) # use the improved algorithm
+        return graph
+
+
+if __name__ == '__main__':
+
+    import random
+    from time import perf_counter
+
+    # initialize random coordinates
+    N = 50000
+    inputs = []
+    for i in range(N):
+        x0, y0 = random.random()*10000, random.random()*10000
+        x1 = x0 + random.random()*5
+        y1 = y0 + random.random()*5
+        inputs.append((x0,y0,x1,y1))
+
+    # initialize Rects
+    R = Rects()
+    for points in inputs: R.append(Rect(points))
+
+    # solving rectangle intersection
+    t0 = perf_counter()
+    graph = R.build_graph()
+    print(f'time: {perf_counter()-t0}')
+
+    # output:
+    # time: 1.2851152</code></pre>
+<p>这样，处理50000个矩形相交问题的时间在2s以内。</p>
+<h2 id="_6">总结<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<p><code>pdf2docx</code>处理矢量图的方案为：</p>
+<ul>
+<li>利用优化后的矩形求交算法建立路径相交关系的图结构</li>
+<li>广度优先遍历图得到各个连通分量即为分组</li>
+<li>检测各个分组是否存在曲线路径，存在则截取该区域为位图，否则提取直线段用于后续的表格、文本样式解析</li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

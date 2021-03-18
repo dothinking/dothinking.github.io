@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2017-07-24-Microsoft-Excel-2010%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8A%9F%E8%83%BD%E5%8C%BA%EF%BC%9A%E4%BF%AE%E6%94%B9XML/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Microsoft Excel 2010自定义功能区：修改XML - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../categories/2021/" class="nav-link">2021</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2020/" class="nav-link">2020</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2019/" class="nav-link">2019</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2018/" class="nav-link">2018</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2017/" class="nav-link">2017</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/2016/" class="dropdown-item">2016</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2015/" class="dropdown-item">2015</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2014/" class="dropdown-item">2014</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2013/" class="dropdown-item">2013</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2012/" class="dropdown-item">2012</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2017-07-24-Microsoft-Excel-2010自定义功能区：修改XML.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#microsoft excel 2010xml" class="nav-link">Microsoft Excel 2010自定义功能区：修改XML</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#xml" class="nav-link">创建自定义功能区的xml文件</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#res" class="nav-link">修改.res文件</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#vba" class="nav-link">编辑VBA代码</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="microsoft excel 2010xml">Microsoft Excel 2010自定义功能区：修改XML<a class="headerlink" href="#microsoft excel 2010xml" title="Permanent link">&para;</a></h1>
+<hr />
+<p><a href="../2017-07-23-Microsoft-Excel-2010%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8A%9F%E8%83%BD%E5%8C%BA%EF%BC%9A%E6%89%8B%E5%B7%A5%E5%88%9B%E5%BB%BA/">手工创建自定义Excel选项卡</a>的方法在可移植性方面存在不足，本文将以前文的<code>hello_world.xlam</code>为基础，记录将自定义功能区的菜单项集成到插件中去的基本步骤。</p>
+<h2 id="xml">创建自定义功能区的<code>xml</code>文件<a class="headerlink" href="#xml" title="Permanent link">&para;</a></h2>
+<p>自定义功能区的选项卡、分组、菜单项可以使用<code>xml</code>格式文件的<code>tab</code>，<code>group</code>，<code>button</code>等标签来组织，其中常用的属性有：</p>
+<ul>
+<li>
+<p><code>label</code>属性为显示的名称</p>
+</li>
+<li>
+<p><code>onAction</code>属性为相应的回调函数，例如<code>btn1</code>对应的函数为<code>user_fun</code></p>
+</li>
+<li>
+<p><code>imageMso</code>属性控制菜单项的显示图标 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
+</li>
+</ul>
+<p>以下是本文简单示例的<code>xml</code>结构：</p>
+<pre class="highlight"><code class="language-xml">&lt;customUI xmlns="http://schemas.microsoft.com/office/2006/01/customui"&gt;
+    &lt;ribbon startFromScratch="false"&gt;
+        &lt;tabs&gt;
+            &lt;tab id="userRibbon" label="自定义Ribbon选项卡"&gt;
+                &lt;group id="g1" label="自定义组一"&gt;
+                    &lt;button id="btn1" 
+                        imageMso="Alerts" 
+                        size="large" 
+                        label="say hello world" 
+                        onAction="user_fun"/&gt;
+                &lt;/group&gt;
+
+                &lt;group id="g2" label="自定义组二"&gt;
+                    &lt;button id="btn2" 
+                        imageMso="Help" 
+                        size="large" 
+                        label="About" 
+                        onAction="about_fun"/&gt;
+                &lt;/group&gt;
+            &lt;/tab&gt;
+        &lt;/tabs&gt;
+    &lt;/ribbon&gt;
+&lt;/customUI&gt;</code></pre>
+<p>关于自定义功能区的<code>xml</code>文件的具体说明，可以参考微软提供的文档 <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup> <sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup> <sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> <sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup>。</p>
+<p>大致了解以上背景知识后，正式开始操作步骤：</p>
+<ul>
+<li>
+<p>新建<code>customUI</code>文件夹，在该文件夹下新建<code>CustomUI.xml</code>文件，文件内容为以上示例<code>xml</code>代码。注意保存以<code>UTF-8</code>编码保存文件。</p>
+</li>
+<li>
+<p>以解压缩软件例如<code>7-zip</code>直接打开<code>hello_world.xlam</code>，然后将整个<code>customUI</code>文件夹拖入到压缩文件中并保存。</p>
+</li>
+</ul>
+<p><img alt="" src="../images/2017-07-24-01.png" /></p>
+<h2 id="res">修改<code>.res</code>文件<a class="headerlink" href="#res" title="Permanent link">&para;</a></h2>
+<p>接下来继续在以压缩包形式打开的<code>hello_world.xlam</code>文件上进行操作：</p>
+<ul>
+<li>
+<p>右键压缩包中<code>_res</code>文件夹下的<code>.res</code>文件，在弹出菜单中选择<code>编辑</code>，以记事本方式打开<code>.res</code>文件。</p>
+</li>
+<li>
+<p>在<code>.rels</code>文件最后一个<code>&lt;/Relationships&gt;</code>标签之前添加如下内容，保存并在提示更新压缩文件时选择确定。</p>
+</li>
+</ul>
+<pre class="highlight"><code class="language-xml">&lt;Relationship Id="customUIRelID" 
+    Type="http://schemas.microsoft.com/office/2006/relationships/ui/extensibility" 
+    Target="customUI/customUI.xml"/&gt;</code></pre>
+<p>完成以上步骤后打开<code>hello_world.xlam</code>得到如下效果：</p>
+<p><img alt="" src="../images/2017-07-24-02.png" /></p>
+<h2 id="vba">编辑<code>VBA</code>代码<a class="headerlink" href="#vba" title="Permanent link">&para;</a></h2>
+<p><code>xml</code>中为<code>say hello world</code>指定的回调函数是<code>user_fun</code>，所以最后完成该子过程即可。新建模块（module）重命名为<code>user_function</code>，在其中写入以下代码：</p>
+<pre class="highlight"><code class="language-vb">Sub user_fun(Control As IRibbonControl)
+    MsgBox "Hello world."
+End Sub</code></pre>
+<p>特别注意，该过程需要带参数<code>control As IRibbon</code>。</p>
+<p>最后，本文示例文件<a href="https://github.com/dothinking/dothinking.github.io/tree/master/samples/excel_ribbon">hello_world_addin.xlam</a>供参考。</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="https://www.microsoft.com/en-us/download/details.aspx?displaylang=en&amp;id=21103">Office 2010 Add-In: Icons Gallery</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://technet.microsoft.com/en-us/library/2009.05.ribbon.aspx#id0980025">A Guide to Customizing the Office 2007 Ribbon</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://msdn.microsoft.com/en-us/library/aa338202.aspx">Customizing the 2007 Office Fluent Ribbon for Developers (Part 1 of 3)</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="https://msdn.microsoft.com/en-us/library/aa338199(v=office.12).aspx">Customizing the 2007 Office Fluent Ribbon for Developers (Part 2 of 3)</a>&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p><a href="https://msdn.microsoft.com/en-us/library/aa722523(v=office.12).aspx">Customizing the 2007 Office Fluent Ribbon for Developers (Part 3 of 3)</a>&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -8,7 +8,7 @@
         <meta name="author" content="dothinking">
         <link rel="canonical" href="https://dothinking.github.io/2018-01-23-%E8%87%AA%E5%AE%9A%E4%B9%89Microsoft-Office-Ribbon%E5%8C%BA%E5%9F%9F/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>2018 01 23 自定义Microsoft Office Ribbon区域 - 格致</title>
+        <title>自定义Microsoft Office Ribbon区域 - 格致</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -103,26 +103,38 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            
-            
-            
-            
+            <li class="nav-item" data-level="1"><a href="#microsoft office ribbon" class="nav-link">自定义Microsoft Office Ribbon区域</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#office open xml" class="nav-link">Office Open XML文档类型</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">主要区别</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">示例</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="{{ site.baseurl }}{% post_url 2017-07-24-Microsoft-Excel-2010自定义功能区(二) %}">前文</a>以<code>Microsoft Excel 2010</code>为例介绍了制作带有自定义Ribbon菜单的Excel插件的基本流程，实际上此方法通用于<code>MicroSoft Office</code>的常用组件：Word，Excel，PPT。这是因为这些Office应用程序文档都是基于<code>Office Open XML</code>格式：</p>
-<blockquote>
-<p>Office Open XML (also informally known as OOXML or Microsoft Open XML (MOX)) is a zipped, XML-based file format developed by Microsoft for representing spreadsheets, charts, presentations and word processing documents.
--- Wikipedia</p>
-</blockquote>
-<p>这种开放的XML文件格式改进了文件和数据管理、数据恢复和可交互操作的能力。它实际上是压缩文件，可以使用解压软件查看文件内部的情况；并且任何支持XML的应用程序都能访问和处理Office文件信息，即只要提供了对XML的支持，即便系统没有安装Office软件、非Office应用程序也可以方便地创建和操纵Office文件。以下是<code>Office Open XML</code>文档容器的基本结构：</p>
-<div align='center'><img src="https://i-technet.sec.s-msft.com/dynimg/IC132707.gif"></div>
-
-<p>正是基于这种开放的XML文件格式，才使得<a href="{{ site.baseurl }}{% post_url 2017-07-24-Microsoft-Excel-2010自定义功能区(二) %}">前文</a>编辑<code>XML</code>文件的方法有迹可寻。</p>
+<h1 id="microsoft office ribbon">自定义Microsoft Office Ribbon区域<a class="headerlink" href="#microsoft office ribbon" title="Permanent link">&para;</a></h1>
 <hr />
-<h3 id="office open xml"><code>Office Open XML</code>格式文档有哪些？<a class="headerlink" href="#office open xml" title="Permanent link">&para;</a></h3>
+<p><a href="../2017-07-24-Microsoft-Excel-2010%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8A%9F%E8%83%BD%E5%8C%BA%EF%BC%9A%E4%BF%AE%E6%94%B9XML/">前文</a>以<code>Microsoft Excel 2010</code>为例介绍了制作带有自定义Ribbon菜单的Excel插件的基本流程，实际上此方法通用于<code>MicroSoft Office</code>的常用组件：Word，Excel，PPT。这是因为这些Office应用程序文档都是基于<code>Office Open XML</code>格式：</p>
+<blockquote>
+<p>Office Open XML (also informally known as OOXML or Microsoft Open XML (MOX)) is a zipped, XML-based file format developed by Microsoft for representing spreadsheets, charts, presentations and word processing documents.</p>
+<p>-- Wikipedia</p>
+</blockquote>
+<p>这种开放的XML文件格式改进了文件和数据管理、数据恢复和可交互操作的能力。它实际上是压缩文件，可以使用解压软件查看文件内部的情况；并且任何支持XML的应用程序都能访问和处理Office文件信息，即只要提供了对XML的支持，即便系统没有安装Office软件、非Office应用程序也可以方便地创建和操纵Office文件。</p>
+<p>正是基于这种开放的XML文件格式，才使得<a href="../2017-07-24-Microsoft-Excel-2010%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8A%9F%E8%83%BD%E5%8C%BA%EF%BC%9A%E4%BF%AE%E6%94%B9XML/">前文</a>编辑<code>XML</code>文件的方法有迹可寻。</p>
+<hr />
+<h2 id="office open xml"><code>Office Open XML</code>文档类型<a class="headerlink" href="#office open xml" title="Permanent link">&para;</a></h2>
 <p>如<a href="https://technet.microsoft.com/zh-cn/library/aa338205.aspx/#Developing Solutions Using the Office XML Formats">Introducing the Office (2007) Open XML File Formats</a>所述，按Word、Excel、PPT分为三大类：</p>
 <table>
 <thead>
@@ -210,26 +222,36 @@
 </tr>
 </tbody>
 </table>
-<h3 id="_1">以上类型可以归纳为普通/启用宏文档、普通/启用宏模板、插件，主要区别何在？<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<h2 id="_1">主要区别<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>以上类型可以归纳为普通/启用宏文档、普通/启用宏模板、插件，主要区别在于：</p>
 <ul>
 <li>是否启用宏决定了能否保存和执行自定义VBA代码，通常以<code>m</code>结尾的文档为启用宏的类型</li>
 <li>对文档（普通/宏）的自定义Ribbon操作仅仅影响当前文档</li>
 <li>对模板或者插件的自定义Ribbon操作将在加载它们后对所有文档生效</li>
 </ul>
 <p>因此，我们通常以模板或者插件的形式制作通用的功能，使其可以被所有需要的文档使用。</p>
-<h3 id="_2"><code>自加载后</code>何解？<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<div class="admonition warning">
+<p class="admonition-title">如何理解“自加载后...”</p>
 <ul>
 <li>插件一旦被启用后，将在每次启动应用程序的时候完成加载</li>
 <li>模板分为全局模板（global template）和普通模板，前者伴随应用程序的启动而加载，后者需要手工加载</li>
 </ul>
-<h3 id="_3">何为<code>全局模板</code>?<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+</div>
+<p>什么是 <strong>全局模板</strong>（global template）?</p>
 <p>以Word为例，位于<code>C:\Users\username\AppData\Roaming\Microsoft\Word\Startup</code>下的模板文件（<code>.dot, .dotx, .dotm</code>）将在Word启动后完成加载，因此称为全局模板。</p>
 <p>可以通过<code>Developer</code>-&gt;<code>Add-Ins</code>查看已加载和启用的模板。当然，通过<code>Add...</code>按钮可以临时添加其他任意位置的模板文件。但是它们在下次启动Word后并不会自动完成加载，还需要手工启用。</p>
-<h3 id="wordribbon">以Word为例演示带有自定义Ribbon菜单的插件的制作？<a class="headerlink" href="#wordribbon" title="Permanent link">&para;</a></h3>
+<h2 id="_2">示例<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>以Word为例演示带有自定义Ribbon菜单的插件的制作：</p>
 <ul>
-<li>新建Word文档另存为启用宏的模板<code>.dotm</code>文件，编写相应VBA代码</li>
-<li>按照<a href="{{ site.baseurl }}{% post_url 2017-07-24-Microsoft-Excel-2010自定义功能区(二) %}">前文</a>流程完成自定义Ribbon操作</li>
-<li>将制作好的<code>.dotm</code>模板文件置于<code>Startup</code>目录自动加载或者手工按需加载</li>
+<li>
+<p>新建Word文档另存为启用宏的模板<code>.dotm</code>文件，编写相应VBA代码</p>
+</li>
+<li>
+<p>按照<a href="../2017-07-24-Microsoft-Excel-2010%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8A%9F%E8%83%BD%E5%8C%BA%EF%BC%9A%E4%BF%AE%E6%94%B9XML/">前文</a>流程完成自定义Ribbon操作</p>
+</li>
+<li>
+<p>将制作好的<code>.dotm</code>模板文件置于<code>Startup</code>目录自动加载或者手工按需加载</p>
+</li>
 </ul></div>
             </div>
         </div>

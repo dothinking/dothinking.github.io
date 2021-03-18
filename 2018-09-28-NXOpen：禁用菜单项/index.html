@@ -8,7 +8,7 @@
         <meta name="author" content="dothinking">
         <link rel="canonical" href="https://dothinking.github.io/2018-09-28-NXOpen%EF%BC%9A%E7%A6%81%E7%94%A8%E8%8F%9C%E5%8D%95%E9%A1%B9/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>2018 09 28 NXOpen：禁用菜单项 - 格致</title>
+        <title>NXOpen：禁用菜单项 - 格致</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -103,13 +103,16 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-level="1"><a href="#nxopen" class="nav-link">NXOpen：禁用菜单项</a>
+              <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">静态设置方法</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">动态设置方法</a>
               <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -117,25 +120,22 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<p><a href="{{ site.baseurl }}{% post_url 2017-09-01-NXOpen：Menu-Script自定义菜单 %}">NXOpen：Menu Script自定义菜单</a>说明了按照模块显示不同菜单栏内容的方法，实际应用中，即便对于同一模块下的菜单项，也会因为不满足某些使用条件而呈现禁用（灰色）状态。本篇即记录禁用/启用菜单项的方法。</p>
-<p>示例效果参考：</p>
-<div align='center'><img src="{{ "/images/2018-09-28-01.png" | prepend: site.baseurl }}"></div>
-
+<h1 id="nxopen">NXOpen：禁用菜单项<a class="headerlink" href="#nxopen" title="Permanent link">&para;</a></h1>
+<hr />
+<p><a href="../2017-09-01-NXOpen%EF%BC%9AMenu-Script%E8%87%AA%E5%AE%9A%E4%B9%89%E8%8F%9C%E5%8D%95/">NXOpen：Menu Script自定义菜单</a>说明了按照模块显示不同菜单栏内容的方法，实际应用中，即便对于同一模块下的菜单项，也会因为不满足某些使用条件而呈现禁用（灰色）状态。本篇即记录禁用/启用菜单项的方法。</p>
+<p><img alt="效果示例" src="../images/2018-09-28-01.png" /></p>
 <h2 id="_1">静态设置方法<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p>在菜单脚本中设置菜单项<code>BUTTON</code>的<code>SENSITIVITY</code>属性为<code>OFF</code>即可将该菜单项初始化为禁用状态。以<a href="{{ site.baseurl }}{% post_url 2017-09-01-NXOpen：Menu-Script自定义菜单 %}">NXOpen：Menu Script自定义菜单</a>中<code>test_modeling.men</code>为例，将其中菜单项定义部分：</p>
-<pre class="highlight"><code>! test_modeling.men
-
-BUTTON TEST_MENU_MODELING_1
+<p>在菜单脚本中设置菜单项<code>BUTTON</code>的<code>SENSITIVITY</code>属性为<code>OFF</code>即可将该菜单项初始化为禁用状态。以<a href="../2017-09-01-NXOpen%EF%BC%9AMenu-Script%E8%87%AA%E5%AE%9A%E4%B9%89%E8%8F%9C%E5%8D%95/">NXOpen：Menu Script自定义菜单</a>中<code>test_modeling.men</code>为例，将其中菜单项定义部分：</p>
+<pre class="codehilite"><code>BUTTON TEST_MENU_MODELING_1
 LABEL Modeling Button 1
 BUTTON TEST_MENU_MODELING_2
 LABEL Modeling Button 2
 BUTTON TEST_MENU_MODELING_3
 LABEL Modeling Button 3
 </code></pre>
-<p>修改为：</p>
-<pre class="highlight"><code>! test_modeling.men
 
-BUTTON TEST_MENU_MODELING_1
+<p>修改为：</p>
+<pre class="codehilite"><code>BUTTON TEST_MENU_MODELING_1
 LABEL Modeling Button 1
 
 BUTTON TEST_MENU_MODELING_2
@@ -144,7 +144,9 @@ SENSITIVITY OFF
 
 BUTTON TEST_MENU_MODELING_3
 LABEL Modeling Button 3
-SENSITIVITY OFF</code></pre>
+SENSITIVITY OFF
+</code></pre>
+
 <p>则<code>Modeling Button 2</code>和<code>Modeling Button 3</code>默认为灰色的禁用状态，如开始的截图所示。</p>
 <h2 id="_2">动态设置方法<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>更迫切的需求可能是，在代码中根据当前条件来判断和设置自定义菜单的禁用/启用状态。其方法为：</p>
@@ -153,12 +155,13 @@ SENSITIVITY OFF</code></pre>
 <li>设置菜单对象的<code>sensitivity</code>属性。</li>
 </ul>
 <p>以NXOpen Python为例：</p>
-<pre class="highlight"><code class="language-python">import NXOpen
+<pre class="codehilite"><code>import NXOpen
 import NXOpen.MenuBar
 
 status = NXOpen.MenuBar.MenuButtonSensitivityStatus.Insensitive # 禁用
 button = NXOpen.UI.GetUI().MenuBarManager.GetButtonFromName('TEST_MENU_MODELING_2')
-button.ButtonSensitivity = status</code></pre></div>
+button.ButtonSensitivity = status
+</code></pre></div>
             </div>
         </div>
 

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2019-12-29-GitLab-CI-CD%EF%BC%9Abefore_script%E5%92%8Cafter_script/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>GitLab CI/CD：before_script和after_script - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../categories/2021/" class="nav-link">2021</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2020/" class="nav-link">2020</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2019/" class="nav-link">2019</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2018/" class="nav-link">2018</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2017/" class="nav-link">2017</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/2016/" class="dropdown-item">2016</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2015/" class="dropdown-item">2015</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2014/" class="dropdown-item">2014</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2013/" class="dropdown-item">2013</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2012/" class="dropdown-item">2012</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2019-12-29-GitLab-CI-CD：before_script和after_script.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#gitlab cicdbefore_scriptafter_script" class="nav-link">GitLab CI/CD：before_script和after_script</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">问题描述</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">解决过程</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">总结</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="gitlab cicdbefore_scriptafter_script">GitLab CI/CD：before_script和after_script<a class="headerlink" href="#gitlab cicdbefore_scriptafter_script" title="Permanent link">&para;</a></h1>
+<hr />
+<p>本文记录使用<code>before_script</code>和<code>after_script</code>解决<code>GitLab CI/CD</code>流程中遇到的一个问题。</p>
+<h2 id="_1">问题描述<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>在某个项目的<code>CI/CD</code>流程中有一个<code>job</code>是利用<code>Python</code>处理<code>Excel</code>和<code>VBA</code>，一旦原始<code>VBA</code>代码出现模态对话框例如<code>MsgBox</code>或者其他用户窗体甚至语法错误，那么整个流程就被堵塞了；接下来要么及时发现后手动取消任务，要么直至任务超时而被自动终止。</p>
+<p>无论哪种方式终止任务，其后果都是该<code>Excel</code>进程没有被终止。于是在下一次提交任务时，由于进程占用而无法清理出现错误的临时文件（例如下面的<code>~$example.xlsm</code>）。</p>
+<pre class="highlight"><code>Checking out 56485a5a as alpha...
+warning: failed to remove dist/example.xlsm: Invalid argument
+warning: failed to remove dist/~$example.xlsm: Invalid argument
+ERROR: Job failed: exit status 1</code></pre>
+<p>此时只能登陆<code>GitLab Runner</code>服务器，手动终止<code>Excel</code>进程。这显然不是一个可以接受的方案，尤其在多人协作的情况下。</p>
+<h2 id="_2">解决过程<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>当然，釜底抽薪的方法是<code>VBA</code>中避免出现阻塞流程的模态对话框，或者<code>Python</code>脚本中检测是否发生阻塞。但前者难以百分百保证（例如<code>VBA</code>语法错误），后者有待进一步研究，所以这里给出一个事后的解决思路：</p>
+<p>在已经发生因阻塞而异常终止pipeline的情况下，尝试去结束<code>Excel</code>进程；并且希望尽量少的改动，例如仅在<code>.gitlab-ci.yml</code>中增删几行。</p>
+<p>既然是事后方案，我们将联想到<code>before_script</code>和<code>after_script</code>：</p>
+<ul>
+<li>本次异常终止后立马使用<code>after_script</code>杀掉进程</li>
+<li>下一次正常提交后使用<code>before_script</code>杀掉进程</li>
+</ul>
+<h3 id="excel">结束<code>Excel</code>进程<a class="headerlink" href="#excel" title="Permanent link">&para;</a></h3>
+<p>无论哪种方式，先把终止<code>Excel</code>进程的脚本写上。参考文章 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>，在主<code>makefile</code>的<code>cclean</code>命令中增加一个<code>kill_excel</code>。</p>
+<pre class="highlight"><code class="language-makefile">.PHONY: cclean
+cclean: kill_excel
+    @ echo "do clean work here ..."
+    ...
+
+.PHONY: kill_excel
+kill_excel:
+    @if [ -n "`TASKLIST | FINDSTR EXCEL.EXE`" ]; then \
+        TASKKILL -F -T -IM EXCEL.EXE ; \
+    fi</code></pre>
+<h3 id="after_script"><code>after_script</code><a class="headerlink" href="#after_script" title="Permanent link">&para;</a></h3>
+<p>首先想到的自然是<code>after_script</code>——在主要脚本执行完毕之后杀掉<code>Excel</code>进程。</p>
+<pre class="highlight"><code class="language-yaml">...
+build:
+  stage: build  
+  script:
+    - make build
+  after_script:
+    - make cclean
+  tags:
+    - xxxx
+...</code></pre>
+<p>虽然正常情况下，即便任务失败也会继续执行<code>after_script</code>。但是，<strong>异常结束（手动取消、超时自动终止）的Pipeline并不会继续执行<code>after_script</code>定义的脚本</strong>！</p>
+<h3 id="before_script"><code>before_script</code><a class="headerlink" href="#before_script" title="Permanent link">&para;</a></h3>
+<p>那就只能考虑<code>before_script</code>——在下次正常提交后、开始执行主脚本前进行杀掉<code>Excel</code>进程。</p>
+<pre class="highlight"><code class="language-yaml">...
+build:
+  stage: build
+  before_script:
+    - make cclean
+  script:
+    - make build
+  tags:
+    - xxxx
+...</code></pre>
+<p>但目测还是解决不了问题，因为本文描述的问题出现在准备阶段，尚未来得及执行<code>script</code>！</p>
+<p>通过输出日志直观了解一下<code>job</code>的执行流程：</p>
+<pre class="highlight"><code>Fetching changes ...
+Checking out ...
+Downloading artifacts ...
+Run before_script ...
+Run script ...
+Run after_script ...</code></pre>
+<h3 id="git strategy"><code>Git strategy</code><a class="headerlink" href="#git strategy" title="Permanent link">&para;</a></h3>
+<p>因此有必要学习和参考一下帮助文档 <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>中关于<code>Runner</code>更新工作目录代码的策略——<code>GIT_STRATEGY</code>变量：</p>
+<ul>
+<li><code>clone</code> 每个<code>job</code>都克隆一遍仓库，确保项目工作空间总是和仓库代码同步的，因此速度也是最慢的</li>
+<li><code>fetch</code> 重用项目工作空间的代码, 因此速度更快；分为两步：<ul>
+<li><code>git fetch</code>重新获取上一个<code>job</code>到当前<code>job</code>之间的所有提交</li>
+<li><code>git clean</code>撤销上一个<code>job</code>的任何操作</li>
+</ul>
+</li>
+<li><code>none</code> 同样重用工作空间，并且跳过所有<code>git</code>操作，因此代码不一定是最新的。它的作用在于操作<code>artifacts</code>，例如部署前置<code>job</code>产生的结果。</li>
+</ul>
+<p>从上面的日志可以看出我的<code>Runner</code>默认的是<code>GIT_STRATEGY="fetch"</code>，并且问题出在<code>git clean</code>这一步。</p>
+<p>所以，解决思路为暂时不要<code>git clean</code>，改为在<code>before_script</code>中执行<code>make cclean</code>来达到撤销此前<code>job</code>操作的目的，同时也顺便杀掉<code>Excel</code>进程。</p>
+<p>索性<code>GitLab</code>果然提供了<code>git clean</code>的开关参数<code>GIT_CLEAN_FLAGS</code> <sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>，将其设置为<code>none</code>即可跳过这一步。于是，最终的<code>.gitlab-ci.yml</code>（局部）为：</p>
+<pre class="highlight"><code class="language-yaml">...
+variables:
+  GIT_CLEAN_FLAGS: none
+...
+build:
+  stage: build
+  before_script:
+    - make cclean
+  script:
+    - make build
+  tags:
+    - xxxx
+...</code></pre>
+<h2 id="_3">总结<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Pipeline异常结束后并不会执行<code>after_script</code></li>
+<li>结合<code>GIT_CLEAN_FLAGS</code>和<code>before_script</code>可以解决本问题</li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="https://stackoverflow.com/questions/162291/how-to-check-if-a-process-is-running-via-a-batch-script">How to check if a process is running via a batch script</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://docs.gitlab.com/ee/ci/yaml/README.html#git-strategy">Git strategy</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://docs.gitlab.com/ee/ci/yaml/README.html#git-clean-flags">Git clean flags</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -8,7 +8,7 @@
         <meta name="author" content="dothinking">
         <link rel="canonical" href="https://dothinking.github.io/2018-02-09-Python3%E4%BB%A3%E7%A0%81%E7%A4%BA%E4%BE%8B%EF%BC%9A%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E6%93%8D%E4%BD%9C/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>2018 02 09 Python3代码示例：文件目录操作 - 格致</title>
+        <title>Python3代码示例：文件目录操作 - 格致</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -103,23 +103,28 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-level="1"><a href="#python3" class="nav-link">Python3代码示例：文件目录操作</a>
+              <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">常用方法</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">工作目录</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">文件/目录列表</a>
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">脚本目录</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#_4" class="nav-link">文件名筛选</a>
+            <li class="nav-item" data-level="2"><a href="#_4" class="nav-link">文件/目录列表</a>
               <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_5" class="nav-link">文件名筛选</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -127,6 +132,8 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
+<h1 id="python3">Python3代码示例：文件目录操作<a class="headerlink" href="#python3" title="Permanent link">&para;</a></h1>
+<hr />
 <p>python的<code>os</code>模块可以处理常见的文件/目录操作，此外还可能用到<code>glob</code>或者<code>fnmatch</code>模块匹配文件名。</p>
 <h2 id="_1">常用方法<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <pre class="highlight"><code class="language-python">os.path.isdir(name) # 判断是不是一个目录
@@ -171,7 +178,11 @@ D:\program\TestSpace
 
 D:\program&gt; python TestSpace\test.py
 D:\program</code></pre>
-<h2 id="_3">文件/目录列表<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h2 id="_3">脚本目录<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p><code>__file__</code>返回当前脚本的路径，考虑到有时返回的是相对路径，故采用如下方式转换一下：</p>
+<pre class="highlight"><code class="language-python">import os
+os.path.dirname(os.path.abspath(__file__))</code></pre>
+<h2 id="_4">文件/目录列表<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p><code>os.listdir(dirname)</code>得到原始的目录文件列表，包括所有的文件、子目录、符号链接等，然后可以结合列表推导式和<code>os.path</code>模块中各函数来完成数据筛选。</p>
 <pre class="highlight"><code class="language-python">import os
 
@@ -183,7 +194,7 @@ filenames = [name for name in os.listdir('somedir') if os.path.isdir(os.path.joi
 
 # 指定类型文件
 pyfiles = [name for name in os.listdir('somedir') if name.endswith('.py')]</code></pre>
-<h2 id="_4">文件名筛选<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h2 id="_5">文件名筛选<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
 <p>简单的文件名匹配可以使用字符串判断方法，也可以使用<code>glob</code>或者<code>fnmatch</code>模块。</p>
 <pre class="highlight"><code class="language-python">import glob
 for name in glob.glob('somedir/*.py'):

@@ -8,7 +8,7 @@
         <meta name="author" content="dothinking">
         <link rel="canonical" href="https://dothinking.github.io/2021-01-02-Python%E5%A4%84%E7%90%86PDF%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E5%AF%B9%E6%AF%94/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>2021 01 02 Python处理PDF的第三方库对比 - 格致</title>
+        <title>Python处理PDF的第三方库对比 - 格致</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -103,13 +103,16 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-level="1"><a href="#pythonpdf" class="nav-link">Python处理PDF的第三方库对比</a>
+              <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">概况</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">点评</a>
               <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -117,12 +120,16 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
+<h1 id="pythonpdf">Python处理PDF的第三方库对比<a class="headerlink" href="#pythonpdf" title="Permanent link">&para;</a></h1>
+<hr />
 <p>PDF（Portable Document Format）是一种便携文档格式，便于跨操作系统传播文档。PDF文档遵循标准格式，因此存在很多可以操作PDF文档的工具，Python自然也不例外。面多众多的Python第三方库，本文从功能、开源协议及社区活跃度三方面加以对比，以便根据具体需求选择合适的库。</p>
 <h2 id="_1">概况<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p>功能对比从大粒度上分成了<code>提取内容</code>、<code>操作页面</code>和<code>创建内容</code>三方面。前两者分别是针对已经存在的PDF文档的读和写操作，最后一项从内容上创建新文档。考虑到时效性，以下对比列出了撰文时相应的最新版本。
-- <code>提取内容</code>如文本、图片、元信息
-- <code>操作页面</code>特指操作已经存在的页面例如分割、合并、裁剪、旋转等
-- <code>创建内容</code>指创建或修改页面内容，例如文本、图片、形状</p>
+<p>功能对比从大粒度上分成了<code>提取内容</code>、<code>操作页面</code>和<code>创建内容</code>三方面。前两者分别是针对已经存在的PDF文档的读和写操作，最后一项从内容上创建新文档。考虑到时效性，以下对比列出了撰文时相应的最新版本。</p>
+<ul>
+<li><code>提取内容</code>如文本、图片、元信息</li>
+<li><code>操作页面</code>特指操作已经存在的页面例如分割、合并、裁剪、旋转等</li>
+<li><code>创建内容</code>指创建或修改页面内容，例如文本、图片、形状</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -225,7 +232,7 @@
 <li><code>PyMuPDF</code>功能全面且速度快，但是<code>GPL v3</code>的开源协议对商用不友好。</li>
 </ul>
 <p>最后，用下图的总结结束全文。</p>
-<div align='center'><img src="{{ "/images/2021-01-02-01.png" | prepend: site.baseurl }}"></div></div>
+<p><img alt="" src="../images/2021-01-02-01.png" /></p></div>
             </div>
         </div>
 

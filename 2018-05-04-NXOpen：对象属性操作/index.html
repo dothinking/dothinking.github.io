@@ -8,7 +8,7 @@
         <meta name="author" content="dothinking">
         <link rel="canonical" href="https://dothinking.github.io/2018-05-04-NXOpen%EF%BC%9A%E5%AF%B9%E8%B1%A1%E5%B1%9E%E6%80%A7%E6%93%8D%E4%BD%9C/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>2018 05 04 NXOpen：对象属性操作 - 格致</title>
+        <title>NXOpen：对象属性操作 - 格致</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -103,23 +103,24 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-level="1"><a href="#nxopen" class="nav-link">NXOpen：对象属性操作</a>
+              <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#nxobjectsetattribute" class="nav-link">NXObject类成员函数SetAttribute</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#nxobjectsetuserattribute" class="nav-link">NXObject类成员函数SetUserAttribute</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">属性管理器</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">总结</a>
               <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -127,14 +128,20 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
+<h1 id="nxopen">NXOpen：对象属性操作<a class="headerlink" href="#nxopen" title="Permanent link">&para;</a></h1>
+<hr />
 <p>在NXOpen开发过程中，有时需要自定义与对象相关的属性并存储起来，以便进行一些初始化和计算工作。本篇记录NXOoen C++属性操作相关函数。</p>
 <h2 id="nxobjectsetattribute">NXObject类成员函数SetAttribute<a class="headerlink" href="#nxobjectsetattribute" title="Permanent link">&para;</a></h2>
 <p>继承自<code>NXObject</code>类的对象可以直接设置自定义属性：</p>
 <pre class="highlight"><code class="language-cpp">SetAttribute(const NXString &amp;title, T value);</code></pre>
 <p>其中，</p>
 <ul>
-<li>属性名称<code>title</code>具有唯一性，不存在时新建属性，否则覆盖已存在的属性即编辑属性</li>
-<li><code>value</code>参数的类型决定了该属性的类型：<code>integer</code>, <code>number</code>, <code>string</code></li>
+<li>
+<p>属性名称<code>title</code>具有唯一性，不存在时新建属性，否则覆盖已存在的属性即编辑属性</p>
+</li>
+<li>
+<p><code>value</code>参数的类型决定了该属性的类型：<code>integer</code>, <code>number</code>, <code>string</code></p>
+</li>
 </ul>
 <p>根据属性的类型可以使用以下函数获取属性值：</p>
 <ul>
@@ -142,7 +149,10 @@
 <li><code>GetRealAttribute(title)</code>获取浮点数类型属性</li>
 <li><code>GetStringAttribute(title)</code>获取字符串类型属性</li>
 </ul>
-<p><strong>SetAttribute()方法自NX8起已不被推荐使用，而是使用SetUserAttribute()替代之</strong></p>
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<p>SetAttribute()方法自NX8起已不被推荐使用，而是使用SetUserAttribute()替代之。</p>
+</div>
 <h2 id="nxobjectsetuserattribute">NXObject类成员函数SetUserAttribute<a class="headerlink" href="#nxobjectsetuserattribute" title="Permanent link">&para;</a></h2>
 <pre class="highlight"><code class="language-cpp">// Creates or modifies an integer attribute with the option to update or not.
 SetUserAttribute (const NXString &amp;title, int index, T value, NXOpen::Update::Option option);
@@ -186,8 +196,12 @@ builder-&gt;IntegerValue ();
 builder-&gt;NumberValue ();
 builder-&gt;StringValue ();</code></pre>
 <ul>
-<li><code>title</code>和<code>index</code>唯一确定属性，不存在时新建，否则覆盖即编辑属性</li>
-<li>获取属性时，<code>SetTitle</code>确定属性，如果是多值属性，还需要<code>SetArrayIndex</code>确定元素位置，最终使用相应函数获取属性值。</li>
+<li>
+<p><code>title</code>和<code>index</code>唯一确定属性，不存在时新建，否则覆盖即编辑属性</p>
+</li>
+<li>
+<p>获取属性时，<code>SetTitle</code>确定属性，如果是多值属性，还需要<code>SetArrayIndex</code>确定元素位置，最终使用相应函数获取属性值。</p>
+</li>
 </ul>
 <h2 id="_2">总结<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>

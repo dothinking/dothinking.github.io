@@ -8,7 +8,7 @@
         <meta name="author" content="dothinking">
         <link rel="canonical" href="https://dothinking.github.io/2018-11-05-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E6%B5%8B%E8%AF%95%E6%A1%88%E4%BE%8B%E4%B9%8B%E5%87%BD%E6%95%B0%E6%9E%81%E5%80%BC/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>2018 11 05 遗传算法：测试案例之函数极值 - 格致</title>
+        <title>遗传算法：测试案例之函数极值 - 格致</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -103,18 +103,20 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">测试函数</a>
+            <li class="nav-item" data-level="1"><a href="#_1" class="nav-link">遗传算法：测试案例之函数极值</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">测试函数</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">测试结果</a>
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">测试结果</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
-            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">调整参数</a>
+            <li class="nav-item" data-level="2"><a href="#_4" class="nav-link">参数调整</a>
               <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -122,8 +124,10 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
+<h1 id="_1">遗传算法：测试案例之函数极值<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<hr />
 <p>本篇将通过求解二元函数最小值，测试此前完成的基本遗传算法及其改进代码。采用基本参数对16个常用测试函数的计算表明，除<code>Rosenbrock</code>、<code>Bukin</code>、<code>Eggholder</code>外，其余结果都表现出了很高的精度。而通过调整参数，也可使以上三个函数达到满意的精度。</p>
-<h2 id="_1">测试函数<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h2 id="_2">测试函数<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>以下链接归纳了测试优化算法的经典函数，涵盖了多局部极值点（MultiModal）、可分/不可分（Separable/Inseparable）、碗状/谷状等物理/几何特征。</p>
 <blockquote>
 <p><a href="https://www.sfu.ca/~ssurjano/optimization.html">Virtual Library of Simulation Experiments: Test Functions and Datasets</a></p>
@@ -171,9 +175,9 @@ if __name__ == '__main__':
         Schaffer,Schaffer_N4,StyblinskiTang]
     for fun in FUNS:
         test(fun)</code></pre>
-<h2 id="_2">测试结果<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h2 id="_3">测试结果<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p>除<code>Rosenbrock</code>、<code>Bukin</code>、<code>Eggholder</code>三个测试函数外，其余都达到了较高的精度。这里仅列出此三个函数的对比结果：</p>
-<pre class="highlight"><code>---TEST FUNCTION: Bukin---
+<pre class="codehilite"><code>---TEST FUNCTION: Bukin---
 Global solution input: [(-10.0, 1.0)]
 Global solution output: 0.0
 GA solution input: [-6.57295214  0.43203714]
@@ -192,9 +196,11 @@ Global solution input: [(1.0, 1.0)]
 Global solution output: 0.0
 GA solution input: [0.98294443 0.96660976]
 GA solution output: 0.00030938355446668127
-spent time: 0.4364597797393799</code></pre>
-<h2 id="_3">调整参数<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<h3 id="1 rosenbrock">1 Rosenbrock<a class="headerlink" href="#1 rosenbrock" title="Permanent link">&para;</a></h3>
+spent time: 0.4364597797393799
+</code></pre>
+
+<h2 id="_4">参数调整<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="rosenbrock">Rosenbrock<a class="headerlink" href="#rosenbrock" title="Permanent link">&para;</a></h3>
 <p><code>Rosenbrock</code>的计算结果已有一定精度，因此考虑从增加进化代数的角度来进一步提高精度。保持原先参数的基础上取<code>gen=500</code>，问题得到解决。</p>
 <pre class="highlight"><code class="language-python">P = Population(I, 50)
 R = RouletteWheelSelection()
@@ -209,8 +215,7 @@ res = g.run(f.objective, 500) # 200-&gt;500
 # GA solution input: [0.99980462 0.99961286]
 # GA solution output: 3.946596566064947e-08
 # spent time: 1.0529274940490723</code></pre>
-<div align='center'><img src="{{ "/images/2018-11-05-01.png" | prepend: site.baseurl }}"></div>
-
+<p><img alt="" src="../images/2018-11-05-01.png" /></p>
 <h3 id="eggholder">Eggholder<a class="headerlink" href="#eggholder" title="Permanent link">&para;</a></h3>
 <p>如上思路却不能很好地提升<code>Eggholder</code>函数的计算精度，观察可知其自变量区间<code>[-512,512]</code>跨度比较大，并且存在非常多的局部极值点。因此考虑：</p>
 <ul>
@@ -231,8 +236,7 @@ res = g.run(f.objective, 400) # 200-&gt;400
 # GA solution output: -959.5996840391349
 # spent time: 1.1881132125854492</code></pre>
 <p>以上调整思路解决了问题。虽然一般建议变异率不超过<code>0.1</code>，但实际上本次采用的遗传算法的变异操作是由变异概率和变异程度共同决定的，而自适应策略设置了变异程度随着进化代数的增加而减小至零。于是实际的变异量并不会很高，也就避免了随机搜索的震荡。</p>
-<div align='center'><img src="{{ "/images/2018-11-05-03.png" | prepend: site.baseurl }}"></div>
-
+<p><img alt="" src="../images/2018-11-05-03.png" /></p>
 <h3 id="bukin">Bukin<a class="headerlink" href="#bukin" title="Permanent link">&para;</a></h3>
 <p><code>Bukin</code>函数具有类似的特点，不过其自变量区间跨度并不大，于是重点调整方向为增大变异概率和遗传代数，最终效果如下：</p>
 <pre class="highlight"><code class="language-python">P = Population(I, 50)
@@ -248,7 +252,7 @@ res = g.run(f.objective, 500) # 200-&gt;500
 # GA solution input: [-10.31586646   1.06417098]
 # GA solution output: 0.019204141350609386
 # spent time: 1.7314023971557617</code></pre>
-<div align='center'><img src="{{ "/images/2018-11-05-02.png" | prepend: site.baseurl }}"></div></div>
+<p><img alt="" src="../images/2018-11-05-02.png" /></p></div>
             </div>
         </div>
 

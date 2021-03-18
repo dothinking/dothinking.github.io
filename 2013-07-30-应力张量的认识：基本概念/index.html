@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2013-07-30-%E5%BA%94%E5%8A%9B%E5%BC%A0%E9%87%8F%E7%9A%84%E8%AE%A4%E8%AF%86%EF%BC%9A%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>应力张量的认识：基本概念 - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../categories/2021/" class="nav-link">2021</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2020/" class="nav-link">2020</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2019/" class="nav-link">2019</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2018/" class="nav-link">2018</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2017/" class="nav-link">2017</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/2016/" class="dropdown-item">2016</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2015/" class="dropdown-item">2015</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2014/" class="dropdown-item">2014</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2013/" class="dropdown-item">2013</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2012/" class="dropdown-item">2012</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2013-07-30-应力张量的认识：基本概念.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#_1" class="nav-link">应力张量的认识：基本概念</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">应力</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">应力状态</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_4" class="nav-link">应力张量</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_9" class="nav-link">应力平衡微分方程</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_10" class="nav-link">总结</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="_1">应力张量的认识：基本概念<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<hr />
+<p>从本科的材料成形原理教材上认识了应力张量后，它便一直出现在我们的视野里。初始，仅是一个基本定义接受了它，进而有过疑惑，随着矩阵论的学习又有了新的认识。曾经就有记录下对其理解的想法，但因思路尚未完善而一再搁置；直到今天重新想起，并完成了方向余弦作为线性空间的证明，才终于开始详细记录。</p>
+<p>根据我对应力张量的阶段性认识，相应分为三部分进行记录。本文介绍第一部分，应力的基本知识和常规认识。</p>
+<h2 id="_2">应力<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>初中物理已指出，因外力作用而在物体内部产生的力称为<code>内力</code>。单位面积上的内力即是<code>应力</code>，表征内力的强度。</p>
+<p>为了研究某一点<span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>处的应力，用任意截面在<span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点处切开物体，如下图所示。根据定义可以得到<span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点的正应力<span><span class="MathJax_Preview">\sigma</span><script type="math/tex">\sigma</script></span>、切应力<span><span class="MathJax_Preview">\tau</span><script type="math/tex">\tau</script></span>，他们的合成即为全应力。</p>
+<p><img alt="应力示意图" src="../images/2013-07-30-01.png" /></p>
+<p>需要注意的是，一个确定的截面对应了一组正应力和切应力。但是过<span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点有无数的截面，那么如何才能真正描述<span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点的应力状态呢？</p>
+<h2 id="_3">应力状态<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p><code>应力状态</code>是受力物体某一点各个截面上应力的变化情况。上面已经意识到过一点有无数的截面，只有任意截面上的应力分量都被确定，才能说应力状态是确定的。</p>
+<p>通常在无数的截面中，任意取三个互相垂直的截面，并以他们的法线方向建立笛卡尔坐标系。也即在<span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点截取一个无限小的平行六面体，称为<code>单元体</code>。</p>
+<p><img alt="单元体" src="../images/2013-07-30-02.png" /></p>
+<p>单元体无限小，因此单元体上相互平行的两个平面视为过该点的同一平面，也即他俩的应力是相同的。这样只用三个互相垂直的截面上的应力即可分析问题。</p>
+<p>由于单元体处于静力平衡状态，由绕各轴合力矩为零可以得到切应力互等定律。</p>
+<div class="admonition warning">
+<p class="admonition-title">既然单元体上相互平行的两个平面视为过该点的同一平面，那为什么上图平行的平面上应力是相反的？</p>
+<p>单元体上相互平行的两个平面视为过该点的同一平面，但是分别是被截开的两部分的平面。截开前他们是重合的，截开后成为了两部分各自的表面，而外表面是有方向的。所以，从各自的方向上来看，应力方向还是相同的。</p>
+</div>
+<h2 id="_4">应力张量<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>根据上面单元体上的应力分量，是否可以求出下图所示任意截面上的应力分量？</p>
+<p><img alt="截面应力分量" src="../images/2013-07-30-03.png" /></p>
+<p>答案是肯定的。根据三个方向的静力平衡就可以计算得到上图法向为<span><span class="MathJax_Preview">\vec{n}=(n_1,n_2,n_3)</span><script type="math/tex">\vec{n}=(n_1,n_2,n_3)</script></span>截面上的应力分量。于是，三个互相垂直的截面上的9个应力分量可以确定任意截面的应力，也就是说这一点的应力状态被完全确定了。并且，从这三个正交截面的选取上来看，他们和坐标系无关。</p>
+<p>于是，我们把单元体上的九个应力分量作为一个整体来描述<span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点的应力状态，称作<code>应力张量</code>，记作</p>
+<p>\[
+\sigma_{ij} = 
+\begin{pmatrix}
+\sigma_x &amp; \tau_{xy} &amp; \tau_{xz} \\\
+\tau_{yx} &amp; \sigma_y &amp; \sigma_{yz} \\\
+\tau_{zx} &amp; \tau_{zy} &amp; \sigma_z
+\end{pmatrix}
+\]</p>
+<h3 id="_5">主应力<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>如果作用在某一截面上的全应力和这一截面垂直，即该截面上只有正应力，则这一截面称为<code>主平面</code>，其法线方向称为应力主方向，该截面的应力称为<code>主应力</code>。如果三个坐标轴方向都是主方向，则称这一坐标系为<code>主轴坐标系</code>。</p>
+<p>确定方法依然是求解静力平衡方程。</p>
+<h3 id="_6">应力张量不变量<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>在求解主应力的过程中会得到以主应力为未知数的三次方程，叫做<code>状态方程</code>。</p>
+<div>
+<div class="MathJax_Preview">\sigma^3-I_1\,\sigma^2+I_2\,\sigma-I_3=0</div>
+<script type="math/tex; mode=display">\sigma^3-I_1\,\sigma^2+I_2\,\sigma-I_3=0</script>
+</div>
+<p>状态方程的三个系数由主应力唯一确定，而一点的主应力是唯一的，这样就得到了不随坐标系变化的三个量，叫作<code>应力张量不变量</code></p>
+<p>\[
+\begin{align*}
+I_1 &amp;= \sigma_1 + \sigma_2 + \sigma_3  \\\
+I_2 &amp;= \sigma_1 \, \sigma_2  + \sigma_2 \, \sigma_3 + \sigma_3 \, \sigma_1  \\\
+I_3 &amp;= \sigma_1 \, \sigma_2 \, \sigma_3
+\end{align*}
+\]</p>
+<p>用一般应力表示为</p>
+<p>\[
+\begin{align*}
+I_1 &amp;= \sigma_x + \sigma_y + \sigma_z  \\\
+I_2 &amp;= \sigma_x \, \sigma_y  + \sigma_y \, \sigma_z + \sigma_z \, \sigma_x - \tau_{xy}^2 - \tau_{yz}^2 - \tau_{zx}^2  \\\
+I_3 &amp;= \sigma_x \, \sigma_y \, \sigma_z + 2\,\tau_{xy}\,\tau_{yz}\,\tau_{zx} - \sigma_x\,\tau_{yz}^2 - \sigma_y\,\tau_{zx}^2 - \sigma_z\,\tau_{xy}^2
+\end{align*}
+\]</p>
+<h3 id="_7">主切应力<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p>切应力有极值的截面叫主切应力平面，截面上的切应力叫作<code>主切应力</code>。六个主切应力中绝对值最大的叫作最大切应力。通过计算可知，主切应力平面与主应力平面成45°夹角。下表是主切应力平面上的正应力、切应力值：</p>
+<table>
+<thead>
+<tr>
+<th>主切应力平面</th>
+<th>切应力</th>
+<th>正应力</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span><span class="MathJax_Preview">\left(0,\,\pm\dfrac{1}{\sqrt{2}},\,\pm\dfrac{1}{\sqrt{2}}\right)</span><script type="math/tex">\left(0,\,\pm\dfrac{1}{\sqrt{2}},\,\pm\dfrac{1}{\sqrt{2}}\right)</script></span></td>
+<td><span><span class="MathJax_Preview">\pm\dfrac{\sigma_2-\sigma_3}{2}</span><script type="math/tex">\pm\dfrac{\sigma_2-\sigma_3}{2}</script></span></td>
+<td><span><span class="MathJax_Preview">\dfrac{\sigma_2+\sigma_3}{2}</span><script type="math/tex">\dfrac{\sigma_2+\sigma_3}{2}</script></span></td>
+</tr>
+<tr>
+<td><span><span class="MathJax_Preview">\left(\pm\dfrac{1}{\sqrt{2}},\,0,\,\pm\dfrac{1}{\sqrt{2}}\right)</span><script type="math/tex">\left(\pm\dfrac{1}{\sqrt{2}},\,0,\,\pm\dfrac{1}{\sqrt{2}}\right)</script></span></td>
+<td><span><span class="MathJax_Preview">\pm\dfrac{\sigma_1-\sigma_3}{2}</span><script type="math/tex">\pm\dfrac{\sigma_1-\sigma_3}{2}</script></span></td>
+<td><span><span class="MathJax_Preview">\dfrac{\sigma_1+\sigma_3}{2}</span><script type="math/tex">\dfrac{\sigma_1+\sigma_3}{2}</script></span></td>
+</tr>
+<tr>
+<td><span><span class="MathJax_Preview">\left(\pm\dfrac{1}{\sqrt{2}},\,\pm\dfrac{1}{\sqrt{2}}\,0,\right)</span><script type="math/tex">\left(\pm\dfrac{1}{\sqrt{2}},\,\pm\dfrac{1}{\sqrt{2}}\,0,\right)</script></span></td>
+<td><span><span class="MathJax_Preview">\pm\dfrac{\sigma_1-\sigma_2}{2}</span><script type="math/tex">\pm\dfrac{\sigma_1-\sigma_2}{2}</script></span></td>
+<td><span><span class="MathJax_Preview">\dfrac{\sigma_1+\sigma_2}{2}</span><script type="math/tex">\dfrac{\sigma_1+\sigma_2}{2}</script></span></td>
+</tr>
+</tbody>
+</table>
+<p>由于塑性变形是由切应力引起的，所以最大切应力可以作为屈服准则。</p>
+<h3 id="_8">应力张量分解<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p>将三个正应力的平均值叫作平均应力或者静水应力，应力张量减去这部分后得到<code>应力偏张量</code>。应力偏张量同样有三个不变量。</p>
+<div>
+<div class="MathJax_Preview">\sigma_m = \dfrac{1}{3}\left(\sigma_x+\sigma_y+\sigma_z\right) = \dfrac{1}{3}\left(\sigma_{11}+\sigma_{22}+\sigma_{33}\right)</div>
+<script type="math/tex; mode=display">\sigma_m = \dfrac{1}{3}\left(\sigma_x+\sigma_y+\sigma_z\right) = \dfrac{1}{3}\left(\sigma_{11}+\sigma_{22}+\sigma_{33}\right)</script>
+</div>
+<p>\[
+\begin{pmatrix}
+\sigma_x &amp; \tau_{xy} &amp; \tau_{xz} \\\
+\tau_{yx} &amp; \sigma_y &amp; \sigma_{yz} \\\
+\tau_{zx} &amp; \tau_{zy} &amp; \sigma_z
+\end{pmatrix} = 
+\begin{pmatrix}
+\sigma_m &amp; 0 &amp; 0 \\\
+0 &amp; \sigma_m &amp; 0 \\\
+0 &amp; 0 &amp; \sigma_m
+\end{pmatrix} + 
+\begin{pmatrix}
+\sigma_x-\sigma_m &amp; \tau_{xy} &amp; \tau_{xz} \\\
+\tau_{yx} &amp; \sigma_y-\sigma_m &amp; \sigma_{yz} \\\
+\tau_{zx} &amp; \tau_{zy} &amp; \sigma_z-\sigma_m
+\end{pmatrix}
+\]</p>
+<p>应力张量分解的物理意义在于：  </p>
+<ul>
+<li>物体在应力张量作用下的变形分为体积变化和形状变化两部分；前者取决于应力球张量，后者取决于应力偏张量。  </li>
+<li>体积变化表征弹性变形，当应力偏张量满足一定条件后，则物体发生塑性变形。</li>
+</ul>
+<h2 id="_9">应力平衡微分方程<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p>以上说明的都是一点的应力状态，而物体内部不同点的应力状态一般是不同的，那么如何描述相邻点间的应力变化关系呢？</p>
+<p>以物体内某一点<span><span class="MathJax_Preview">P(x,y,z)</span><script type="math/tex">P(x,y,z)</script></span>为顶点截取边长分别为dx,dy,dz的直角平行六面体微元，如下图所示，则另一顶点的坐标为<span><span class="MathJax_Preview">(x+dx,y+dy,z+dz)</span><script type="math/tex">(x+dx,y+dy,z+dz)</script></span>。</p>
+<p><img alt="直角平行六面体微元" src="../images/2013-07-30-04.png" /></p>
+<p>根据静力平衡方程，并处理掉高阶小量，得到应力平衡微分方程：</p>
+<p>\[
+\begin{align*}
+\dfrac{\partial\sigma_x}{\partial\,x}+\dfrac{\partial\tau_{yx}}{\partial\,y}+\dfrac{\partial\tau_{zx}}{\partial\,z} &amp;= 0 \\\
+\dfrac{\partial\tau_{xy}}{\partial\,x}+\dfrac{\partial\sigma_y}{\partial\,y}+\dfrac{\partial\tau_{zy}}{\partial\,z} &amp;= 0 \\\
+\dfrac{\partial\tau_{xz}}{\partial\,x}+\dfrac{\partial\tau_{yz}}{\partial\,y}+\dfrac{\partial\sigma_z}{\partial\,z} &amp;= 0
+\end{align*}
+\]</p>
+<div class="admonition warning">
+<p class="admonition-title">这部分微六面体应力状态分析图与之前点的应力状态图即为相似，却有不同，如何理解？</p>
+<p>二者的涵义完全不同。点的应力状态图强调的是同一个点在不同截面下的状态，而微六面体应力状态分析强调的是相邻两个点之间的应力关系。可以说前者是静态的，后者揭示的是相互作用的关系。</p>
+</div>
+<h2 id="_10">总结<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<p>这一部分梳理了我们常规学习的内容，可以概括为两点：</p>
+<ul>
+<li>应力张量——某点的应力状态</li>
+<li>应力平衡方程——相邻点的相互作用</li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

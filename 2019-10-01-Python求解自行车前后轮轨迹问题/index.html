@@ -133,24 +133,22 @@
                     <div class="col-md-9" role="main">
 
 <h1 id="python">Python求解自行车前后轮轨迹问题<a class="headerlink" href="#python" title="Permanent link">&para;</a></h1>
-<p>数月前偶遇一道自行车相关的趣味数学题：根据下图[<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>]所示自行车前、后轮轨迹，判断自行车的前进方向，是从左往右还是从右往左？</p>
-<div align='center'><img src="{{ "/images/2019-10-01-01.png" | prepend: site.baseurl }}"></div>
-
+<hr />
+<p>数月前偶遇一道自行车相关的趣味数学题：根据下图 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> 所示自行车前、后轮轨迹，判断自行车的前进方向，是从左往右还是从右往左？</p>
+<p><img alt="" src="../images/2019-10-01-01.png" /></p>
 <p>不曾想过，平常无奇的自行车的两轮之间还蕴藏着恒定的规律。 在赞叹答案思路清奇之余，也萌生了基于前轮轨迹求解后轮轨迹的想法。本文首先建立自行车轨迹问题的数学模型（常微分方程），然后利用Python的<code>scipy.odeint</code>进行求解，最后对问题的解进行可视化。</p>
 <h2 id="_1">数学模型<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>文章开头的问题最早出自《Which Way did the Bicycle Go? … and Other Intriguing Mathematical Mysteries》一书，封面用的即是这道看似无法求解的问题。福尔摩斯探案集系列中也设计了类似的案件，可惜给出的却不是正确的解释。</p>
-<div align='center'><img src="{{ "/images/2019-10-01-02.jpg" | prepend: site.baseurl }}"></div>
-
+<p><img alt="" src="../images/2019-10-01-02.jpg" /></p>
 <p>这其实是一道精彩的几何问题。考虑一下自行车的结构和运动特点：前轮可以自由控制行进方向，而后轮因为焊死在车架上而只能沿着车身方向行进。因此，后轮轨迹曲线上任一点的切线方向即为车身方向，并且该方向与前轮轨迹曲线的交点即为自行车前后轮轮毂中心的距离，而这保持一个定长（车身长度）。用数学语言描述为：</p>
 <p><strong>作后轮曲线上任一点<code>P</code>的切线，得到与前轮轨迹曲线的交点<code>Q</code>，则线段<code>PQ</code>保持定长</strong>。</p>
 <p>所以解题方法为，分别假设前后轮轨迹，然后按照上述结论进行验证。本题答案为自行车从左向右行驶，具体参考下图：</p>
-<div align='center'><img src="{{ "/images/2019-10-01-03.png" | prepend: site.baseurl }}"></div>
-<div align='center'><img src="{{ "/images/2019-10-01-04.png" | prepend: site.baseurl }}"></div>
-
+<p><img alt="" src="../images/2019-10-01-03.png" />
+<img alt="" src="../images/2019-10-01-04.png" /></p>
 <p>开篇的问题解决了，接下来进入正题：已知任意给定的前轮轨迹，如何求解相应的后轮轨迹？为方便起见，我们用参数方程来描述曲线上任一点的坐标<span><span class="MathJax_Preview">(x,y)</span><script type="math/tex">(x,y)</script></span>，例如已知前轮轨迹<span><span class="MathJax_Preview">x=\alpha(t), y=\beta(t)</span><script type="math/tex">x=\alpha(t), y=\beta(t)</script></span>，求解后轮轨迹<span><span class="MathJax_Preview">x=x(t), y=y(t)</span><script type="math/tex">x=x(t), y=y(t)</script></span>。</p>
 <p>由定长条件<span><span class="MathJax_Preview">\|\overrightarrow{PQ}\|=L</span><script type="math/tex">\|\overrightarrow{PQ}\|=L</script></span>得到：</p>
 <p>\begin{equation*}
-(x-\alpha)<sup>2+(y-\beta)</sup>2=L^2
+(x-\alpha)^2 + (y-\beta)^2 = L^2
 \end{equation*}</p>
 <p>上式对参数<span><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>求导：</p>
 <p>\begin{equation*}
@@ -162,17 +160,16 @@
 \end{equation*}</p>
 <p>联立以上两个式子即可得到：</p>
 <p>\begin{align*}
-x' &amp;= \frac{x-\alpha}{L^2} \left[\alpha'(x-\alpha)+\beta'(y-\beta)\right] \\\
-y' &amp;= \frac{y-\beta}{L^2} \left[\alpha'(x-\alpha)+\beta'(y-\beta)\right] \\\
+x' &amp;= \frac{x-\alpha}{L^2} \left[\alpha'(x-\alpha)+\beta'(y-\beta)\right] \\
+y' &amp;= \frac{y-\beta}{L^2} \left[\alpha'(x-\alpha)+\beta'(y-\beta)\right] \\
 \end{align*}</p>
-<div align='center'><img src="{{ "/images/2019-10-01-05.png" | prepend: site.baseurl }}"></div>
-
+<p><img alt="" src="../images/2019-10-01-05.png" /></p>
 <h2 id="_2">常微分方程数值解<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>上式表明这是一个常微分方程组求解问题。只有当前轮轨迹是某些非常简单的曲线时，后轮轨迹才有可能被解析求解，所以本文采用的是数值求解的方法。</p>
 <p>欧拉在求解形如<span><span class="MathJax_Preview">y'(x)=f(x, y)</span><script type="math/tex">y'(x)=f(x, y)</script></span>的微分方程的数值解问题上给出了一些标准解法。本文待求解的方程组中<span><span class="MathJax_Preview">\alpha, \beta</span><script type="math/tex">\alpha, \beta</script></span>都是参数<span><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>的函数，因此可以归结为：</p>
 <p>\begin{align*}
-x'(t) &amp;= f(t, x, y) \\\
-y'(t) &amp;= g(t, x, y) \\\
+x'(t) &amp;= f(t, x, y) \\
+y'(t) &amp;= g(t, x, y) \\
 \end{align*}</p>
 <p>为了套用<span><span class="MathJax_Preview">y'(x)=f(x, y)</span><script type="math/tex">y'(x)=f(x, y)</script></span>的标准形式，我们将上述方程组改写为向量形式<span><span class="MathJax_Preview">Y'=F(t, Y)</span><script type="math/tex">Y'=F(t, Y)</script></span>。其中，</p>
 <ul>
@@ -180,13 +177,17 @@ y'(t) &amp;= g(t, x, y) \\\
 <li><span><span class="MathJax_Preview">F=(f,g)</span><script type="math/tex">F=(f,g)</script></span>表示待求解微分方程组的各个控制方程。</li>
 </ul>
 <p>作为练习，我们当然可以自己实现欧拉方法及其改进算法（例如<code>Runge-Kutta</code>方法）来求解上述问题，但这不是本文的重点。所以我们直接采用Python科学计算库<code>scipy</code>中的<code>odeint()</code>方法来求解常微分方程。</p>
-<p><code>odeint()</code>函数声明如下（除了最基本的前三个参数外，这里将其余参数统一用<code>**kw</code>表示），具体参考官方文档[<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>]。</p>
-<p><pre class="highlight"><code class="language-python">scipy.integrate.odeint(func, y0, t, **kw)</code></pre>
-- <code>func</code> 表示待求解的函数对象，默认参数列表<code>callable(Y, t, …)</code>，即待求解变量<code>Y</code>出现在自变量<code>t</code>之前。
-    - 如果设置<code>tfirst=True</code>，则改变为<code>callable(t, Y, …)</code>的形式。
-    - 如果求解微分方程组，则函数返回值为各个微分方程返回值组成的向量。
-- <code>y0</code> 表示给定的初始条件，显然求解微分方程组时<code>y0</code>是一个向量。
-- <code>t</code>表示自变量的求解区间或者给定序列，并且**<code>t[0]</code>必须正好对应初始条件<code>y0</code>**。</p>
+<p><code>odeint()</code>函数声明如下（除了最基本的前三个参数外，这里将其余参数统一用<code>**kw</code>表示），具体参考官方文档 <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>。</p>
+<pre class="highlight"><code class="language-python">scipy.integrate.odeint(func, y0, t, **kw)</code></pre>
+<ul>
+<li><code>func</code> 表示待求解的函数对象，默认参数列表<code>callable(Y, t, …)</code>，即待求解变量<code>Y</code>出现在自变量<code>t</code>之前。<ul>
+<li>如果设置<code>tfirst=True</code>，则改变为<code>callable(t, Y, …)</code>的形式。</li>
+<li>如果求解微分方程组，则函数返回值为各个微分方程返回值组成的向量。</li>
+</ul>
+</li>
+<li><code>y0</code> 表示给定的初始条件，显然求解微分方程组时<code>y0</code>是一个向量。</li>
+<li><code>t</code>表示自变量的求解区间或者给定序列，并且 <strong><code>t[0]</code>必须正好对应初始条件<code>y0</code></strong>。</li>
+</ul>
 <p><strong>函数返回值为二维<code>numpy</code>数组，每一行对应给定的自变量序列<code>t</code>的一个值，每一列对应待求解变量<code>y</code>的一个分量</strong>。</p>
 <h2 id="python_1">Python求解方案<a class="headerlink" href="#python_1" title="Permanent link">&para;</a></h2>
 <p>前两节分别建立了数学模型和给出了求解方法，接下来借助Python实现即可解决自行车轨迹问题了。考虑到微分方程的解依赖于初始条件，也就是说即便前轮走同样的轨迹，后轮轨迹也会因为刚启动自行车时车身姿态（后轮位置）的不同而不同。当初想到这个问题，也正是想探究以不同姿态启动自行车时，后轮是如何追随前轮轨迹的。所以，下面以前轮轨迹参数方程为构造函数参数开始自行车轨迹问题的面向对象求解。</p>
@@ -223,14 +224,20 @@ class BicycleTrack:
         self.FX, self.FY = None, None              # front track</code></pre>
 <p>从这个问题的控制方程可知，我们需要求解前轮轨迹的一阶导数，这里借助第三方库<code>autograd</code>来实现[<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>]。例如上述代码中<code>self.dfx = grad(fx)</code>即得到前轮横坐标参数方程<code>fx</code>的一阶导函数<code>dfx</code>。此外，为了避免使用该库过程中出现未知的问题，平时导入<code>numpy</code>库的代码应改为<code>import autograd.numpy as np</code>。</p>
 <p>接下来定义待求解的微分方程组：</p>
-<p><pre class="highlight"><code class="language-python">def governing_equation(self, t, Y):
+<pre class="highlight"><code class="language-python">def governing_equation(self, t, Y):
     ''' ODEs of Bicycle Track Problem '''
     x, y = Y
     k1 = np.array([self.dfx(t), self.dfy(t)])
     k2 = np.array([x-self.front_track_x(t), y-self.front_track_y(t)])        
     return np.sum(k1*k2) * k2 / self.L**2</code></pre>
-- 本文采用了<code>callable(t, Y, …)</code>形式的参数列表（仅仅因为个人习惯），因此后面被<code>odeint</code>调用时需要指明<code>tfirst=True</code>；
-- <code>self.L</code>为自行车车身长度（前后轮毂中心距离），它在给定求解区间和初始条件时被确定。</p>
+<ul>
+<li>
+<p>本文采用了<code>callable(t, Y, …)</code>形式的参数列表（仅仅因为个人习惯），因此后面被<code>odeint</code>调用时需要指明<code>tfirst=True</code>；</p>
+</li>
+<li>
+<p><code>self.L</code>为自行车车身长度（前后轮毂中心距离），它在给定求解区间和初始条件时被确定。</p>
+</li>
+</ul>
 <p>最后，调用<code>odeint</code>求解数值解：</p>
 <pre class="highlight"><code class="language-python">def solve(self, span, P0, num=100):
     ''' 
@@ -259,10 +266,10 @@ class BicycleTrack:
     self.FX, self.FY = self.front_track_x(self.t), self.front_track_y(self.t)</code></pre>
 <p><code>self.FX</code>、<code>self.FY</code>、<code>self.X</code>和<code>self.Y</code>分别保存求解后的前后轮横纵坐标值，可以直接用于后续的可视化。</p>
 <h2 id="_3">验证<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<p>上文提到仅有少数简单的情形才能得到后轮轨迹的解析表达式，我们以特殊情形之一——<code>曳物线</code>[<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>,<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup>]为例进行验证。曳物线可以理解为：自行车初始沿着<code>y</code>轴停放且保持前轮正好在原点，然后前轮沿着<code>x</code>轴正方向行进，此时后轮的轨迹即为曳物线。</p>
+<p>上文提到仅有少数简单的情形才能得到后轮轨迹的解析表达式，我们以特殊情形之一——<code>曳物线</code> <sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> <sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup>为例进行验证。曳物线可以理解为：自行车初始沿着<code>y</code>轴停放且保持前轮正好在原点，然后前轮沿着<code>x</code>轴正方向行进，此时后轮的轨迹即为曳物线。</p>
 <ul>
 <li>前轮轨迹非常简单：<span><span class="MathJax_Preview">x=t, y=0</span><script type="math/tex">x=t, y=0</script></span></li>
-<li>根据曳物线的解析表达式得到后轮轨迹的解析解：<span><span class="MathJax_Preview">x=L\*(t-tanht), y=L\*secht</span><script type="math/tex">x=L\*(t-tanht), y=L\*secht</script></span>（<code>L</code>为车身长度）。</li>
+<li>根据曳物线的解析表达式得到后轮轨迹的解析解：<span><span class="MathJax_Preview">x=L*(t-tanht), y=L*secht</span><script type="math/tex">x=L*(t-tanht), y=L*secht</script></span>（<code>L</code>为车身长度）。</li>
 </ul>
 <pre class="highlight"><code class="language-python">import numpy as np
 import matplotlib.pyplot as plt
@@ -284,8 +291,7 @@ plt.plot(BT.X, BT.Y, 'ro', label='numeric solution')
 plt.plot(x, y, 'deepskyblue', label='analytical solution')
 plt.legend()
 plt.show()</code></pre>
-<div align='center'><img src="{{ "/images/2019-10-01-06.png" | prepend: site.baseurl }}"></div>
-
+<p><img alt="" src="../images/2019-10-01-06.png" /></p>
 <h2 id="_4">结果展示<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p>下面代码画出同一自行车从不同初始状态沿着相同前轮轨迹行进时后轮的轨迹曲线。</p>
 <ul>
@@ -325,35 +331,32 @@ plt.plot(L*np.cos(u), L*np.sin(u), '--', color='silver', label='initial position
 plt.legend()
 plt.axis('equal')
 plt.show()</code></pre>
-<div align='center'><img src="{{ "/images/2019-10-01-07.png" | prepend: site.baseurl }}"></div>
-
+<p><img alt="" src="../images/2019-10-01-07.png" /></p>
 <p>图中三条后轮轨迹曲线验证了我最初的一个想法：无论初始位置如何，最终后轮的轨迹将趋于一致。这也是一个很直观的认识，虽然启动自行车时车身姿态（车身方向与目标方向的夹角）略有不同，后轮轨迹在行进一段距离后将稳定地跟随前轮轨迹。</p>
 <p>此外，图中还反映了一个有意思的现象：<span><span class="MathJax_Preview">\theta=3\pi/2</span><script type="math/tex">\theta=3\pi/2</script></span>时的后轮轨迹并不“光滑”——初始阶段出现了倒车，而后正常前进。但实际上，普通自行车并不能主动倒车！这表明，虽然数学上这是一组解，但实际上并不真实；也就是说，相对真实的物理模型，我们还漏掉了某些条件。</p>
 <p>将自行车瞬时速度分别沿着车身和垂直的车身方向进行分解，普通自行车的结构决定了不能主动倒车，表明沿着车身方向的速度分量必须由后轮指向前轮。这样就决定了车身方向（后轮指向前轮）与行进方向夹角的绝对值<span><span class="MathJax_Preview">\|\delta\|\le\pi/2</span><script type="math/tex">\|\delta\|\le\pi/2</script></span>。</p>
 <p>上图中，自行车启动瞬时前轮沿着<span><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span>轴负方向，<span><span class="MathJax_Preview">\theta=3\pi/2</span><script type="math/tex">\theta=3\pi/2</script></span>的曲线初始位置时车身沿着<span><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span>轴正方向，即车身与行进方向夹角<span><span class="MathJax_Preview">\delta=\pi</span><script type="math/tex">\delta=\pi</script></span>违反了上述限定条件，因此这是一组实际骑行中并不可能的解。</p>
 <p>最后，以<code>matplotlib</code>动画形式（动画过程具体参考文末汇总代码）直观感受一下上述运动过程：</p>
-<div align='center'><img src="{{ "/images/2019-10-01-08.gif" | prepend: site.baseurl }}"></div>
-
+<p><img alt="" src="../images/2019-10-01-08.gif" /></p>
 <p><code>BicycleTrack</code>类及主要测试代码汇总如下：</p>
-<p><a href="https://github.com/dothinking/blog/blob/master/src/bicycle_track/bicycle_track.py">https://github.com/dothinking/blog/blob/master/src/bicycle_track/bicycle_track.py</a></p>
-<hr />
+<p><a href="https://github.com/dothinking/blog/blob/master/samples/bicycle_track/bicycle_track.py">https://github.com/dothinking/blog/blob/master/samples/bicycle_track/bicycle_track.py</a></p>
 <div class="footnote">
 <hr />
 <ol>
 <li id="fn:1">
-<p>[1] <a href="https://gdaymath.com/lessons/gmp/1-9-which-way-did-the-bicycle-go-and-other-bicycle-ponderings/">1.9 Which Way Did the Bicycle Go? – and other bicycle ponderings</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<p><a href="https://gdaymath.com/lessons/gmp/1-9-which-way-did-the-bicycle-go-and-other-bicycle-ponderings/">1.9 Which Way Did the Bicycle Go? – and other bicycle ponderings</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 <li id="fn:2">
-<p>[2] <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.odeint.html">scipy.integrate.odeint</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+<p><a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.odeint.html">scipy.integrate.odeint</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 <li id="fn:3">
-<p>[3] <a href="https://github.com/HIPS/autograd">HIPS/autograd</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+<p><a href="https://github.com/HIPS/autograd">HIPS/autograd</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
 </li>
 <li id="fn:4">
-<p>[4] <a href="https://www.lfhacks.com/t/tractrix">曳物线</a>&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+<p><a href="https://www.lfhacks.com/t/tractrix">曳物线</a>&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
 </li>
 <li id="fn:5">
-<p>[5] <a href="https://www.cnblogs.com/wdfrog/p/5895908.html">曳物线</a>&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+<p><a href="https://www.cnblogs.com/wdfrog/p/5895908.html">曳物线</a>&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div></div>

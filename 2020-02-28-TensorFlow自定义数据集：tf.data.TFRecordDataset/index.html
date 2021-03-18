@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2020-02-28-TensorFlow%E8%87%AA%E5%AE%9A%E4%B9%89%E6%95%B0%E6%8D%AE%E9%9B%86%EF%BC%9Atf.data.TFRecordDataset/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>TensorFlow自定义数据集：tf.data.TFRecordDataset - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../categories/2021/" class="nav-link">2021</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2020/" class="nav-link">2020</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2019/" class="nav-link">2019</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2018/" class="nav-link">2018</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2017/" class="nav-link">2017</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/2016/" class="dropdown-item">2016</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2015/" class="dropdown-item">2015</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2014/" class="dropdown-item">2014</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2013/" class="dropdown-item">2013</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2012/" class="dropdown-item">2012</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2020-02-28-TensorFlow自定义数据集：tf.data.TFRecordDataset.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#tensorflowtfdatatfrecorddataset" class="nav-link">TensorFlow自定义数据集：tf.data.TFRecordDataset</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">基本流程</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">拆分数据集</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#tfrecord" class="nav-link">写入TFRecord 文件</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#tfrecord_1" class="nav-link">读取TFRecord文件</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="tensorflowtfdatatfrecorddataset">TensorFlow自定义数据集：tf.data.TFRecordDataset<a class="headerlink" href="#tensorflowtfdatatfrecorddataset" title="Permanent link">&para;</a></h1>
+<hr />
+<p>前文使用<code>tf.data.Dataset.list_files</code>创建文件路径<code>Dataset</code>并逐步载入图片数据的方式解决无法一次性加载所有图片数据到内存的问题，但依然存在频繁读文件的问题。本文参考TensorFlow官方文档读写图片例子 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>，将原来的图片数据以<code>TFRecord</code>文件形式进行存储，并重新载入<code>Dataset</code>和解析数据。</p>
+<h2 id="_1">基本流程<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><code>TFRecord</code>是一种存储二进制记录序列的简单格式，可以有效地进行 <strong>线性读取</strong> 数据。从创建到使用<code>TFRecord</code>文件的全流程：</p>
+<ul>
+<li>获取源数据</li>
+<li>写入<code>TFRecord</code>文件</li>
+<li>读取和解析<code>TFRecord</code>文件</li>
+</ul>
+<p>本文侧重点在获取源数据和拆分训练/测试数据集，读写<code>TFRecord</code>则直接参考官方示例 <sup id="fnref2:1"><a class="footnote-ref" href="#fn:1">1</a></sup> 的标准流程。</p>
+<h2 id="_2">拆分数据集<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>习惯会按照一定比例，例如9:1拆分为训练和测试集。<code>Dataset</code>的<code>take</code>、<code>skip</code>、<code>shard</code>方法可以用于这个任务，但是或多或少存在一些不足：</p>
+<ul>
+<li><code>take</code>和<code>skip</code>组合最为直接，但是需要知道数据集大小</li>
+<li><code>shard</code>可以按间隔挑出一个子集，但是无法得到剩下的部分</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">提示</p>
+<p><code>take</code>和<code>skip</code>需要在<code>shuffle</code>之前或者设置<code>shuffle</code>的<code>reshuffle_each_iteration=False</code>。否则不同的循环中，原来的<code>Dataset</code>已经改变顺序了，那么由此得到的<code>take</code>和<code>skip</code>会出现重叠元素。</p>
+</div>
+<p>以下参考思路 <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>：</p>
+<ul>
+<li><code>enumerate</code>得到元素的序号组合<code>(index, element)</code></li>
+<li><code>filter</code>筛选序号，利用两个相反的判断拆分为训练/测试两组（此时元素为<code>(index, element)</code>）</li>
+<li><code>map</code>分别从拆分的两组中去掉辅助作用的序号</li>
+</ul>
+<pre class="highlight"><code class="language-python">def _split_train_test(file_pattern, test_rate, buffer_size):
+    # by default, tf.data.Dataset.list_files always shuffles order during iteration
+    # so set it false explicitly
+    dataset = tf.data.Dataset.list_files(file_pattern, shuffle=False)
+
+    # shuffle first and stop shuffling during each iteration
+    # buffer_size is reccommanded to be larger than dataset size
+    dataset = dataset.shuffle(buffer_size, reshuffle_each_iteration=False)
+
+    # split train / test sets
+    if test_rate:
+        # define split interval
+        sep = int(1.0/test_rate)
+        is_test = lambda x, y: x % sep == 0
+        is_train = lambda x, y: not is_test(x, y)
+        recover = lambda x,y: y
+
+        # split train/test set, and reset buffle mode: 
+        # keep shuffle order different during iteration
+        test_dataset = dataset.enumerate(start=1).filter(is_test).map(recover)
+        train_dataset = dataset.enumerate(start=1).filter(is_train).map(recover)
+    else:
+        test_dataset, test_dataset = dataset, None
+
+    return train_dataset, test_dataset</code></pre>
+<h2 id="tfrecord">写入<code>TFRecord</code> 文件<a class="headerlink" href="#tfrecord" title="Permanent link">&para;</a></h2>
+<p>基本套路：</p>
+<ul>
+<li>
+<p>准备<code>tf.train.Example</code>格式数据 <sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>，类似于字典<code>{"string": tf.train.Feature}</code>。</p>
+<p>其中<code>tf.train.Feature</code>存储具体数据，例如本例中的图片二进制字节和验证码字符串，当然也可以是数字格式的图片宽度、图片高度等。</p>
+<pre class="highlight"><code class="language-python">def _image_example(path):
+    """Create a dictionary with features: image raw data, label
+        path: image path, e.g. b'test\\lcrh.jpg
+    '"""
+    # get image raw data and labels
+    image_string = open(path, 'rb').read()
+    image_labels = tf.strings.substr(path, -8, 4)
+
+    # preparation for tf.train.Example
+    feature = {
+    'labels'   : tf.train.Feature(bytes_list=tf.train.BytesList(value=[image_labels.numpy()])),
+    'image_raw': tf.train.Feature(bytes_list=tf.train.BytesList(value=[image_string]))
+    }
+
+    return tf.train.Example(features=tf.train.Features(feature=feature))</code></pre>
+</li>
+<li>
+<p><code>tf.io.TFRecordWriter</code>将<code>tf.train.Example</code>序列化的值写入文件</p>
+<pre class="highlight"><code class="language-python"># --------------------------------------------
+# Write raw image data to `images.tfrecords`
+# --------------------------------------------
+def write_images_to_tfrecord(image_file_pattern, # e.g. 'samples/*.jpg'
+    dir_record, # folder for storing TFRecord files
+    prefix_record='sample',
+    split_test=0.1,  # split train/test rate
+    buffer_size=10000):
+    ''' load images and save to TFRecord file
+            - get image raw data and labels (filename)
+            - split into train / test sets
+            - write to TFRecord file
+    '''
+    # split path dataset
+    train_dataset, test_dataset = _split_train_test(image_file_pattern, split_test, buffer_size)
+
+    # read image in train set and save to TFRecord file
+    train_record = os.path.join(dir_record, f'{prefix_record}_train.tfrecords')
+    with tf.io.TFRecordWriter(train_record) as writer:
+        for path in train_dataset.as_numpy_iterator():
+            tf_example = _image_example(path)
+            writer.write(tf_example.SerializeToString())
+
+    # read image in test set and save to TFRecord file
+    if test_dataset:
+        test_record = os.path.join(dir_record, f'{prefix_record}_test.tfrecords')
+        with tf.io.TFRecordWriter(test_record) as writer:
+            for path in test_dataset.as_numpy_iterator():
+                tf_example = _image_example(path)
+                writer.write(tf_example.SerializeToString())
+    else:
+        test_record = None
+
+    return train_record, test_record</code></pre>
+</li>
+</ul>
+<h2 id="tfrecord_1">读取<code>TFRecord</code>文件<a class="headerlink" href="#tfrecord_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>读入<code>TFRecord</code>文件得到<code>tf.data.TFRecordDataset</code>对象，继承自<code>tf.data.Dataset</code>。</p>
+<p>进而可以进行<code>map</code>、<code>shuffle</code>、<code>batch</code>等链式操作。</p>
+<pre class="highlight"><code class="language-python"># --------------------------------------------
+# create dataset from TFRecord file
+# --------------------------------------------
+def create_dataset_from_tfrecord(record_file, 
+    batch_size=32, 
+    image_size=(60, 120), 
+    label_prefix='labels',
+    buffer_size=10000,
+    grayscale=False): # load image and convert to grayscale
+    '''create image/labels dataset from TFRecord file'''          
+    return tf.data.TFRecordDataset(record_file).map(
+        lambda example_proto: _parse_image_function(example_proto, image_size, label_prefix, grayscale),
+        num_parallel_calls=tf.data.experimental.AUTOTUNE # -1 any available CPUs
+    ).shuffle(buffer_size).batch(batch_size)</code></pre>
+</li>
+<li>
+<p><code>TFRecordDataset</code>中的元素是序列化后的<code>tf.train.Example</code>，配合<code>tf.io.parse_single_example</code>进行解析。</p>
+<p>上面代码块中的<code>_parse_image_function</code>即对其进行解析，得到存储其中的图片二进制文件流及验证码字符串<code>Tensor</code>。</p>
+<pre class="highlight"><code class="language-python">def _parse_image_function(example_proto, image_size, label_prefix, grayscale):
+    '''Parse the input tf.Example protocal using the dictionary describing the features'''
+    image_feature_description = {
+        'labels'   : tf.io.FixedLenFeature([], tf.string),
+        'image_raw': tf.io.FixedLenFeature([], tf.string)
+    }
+    image_features = tf.io.parse_single_example(example_proto, image_feature_description)
+
+    # decode image array and labels
+    image_data = _decode_image(image_features['image_raw'], image_size, grayscale)
+    dict_labels = _decode_labels(image_features['labels'], label_prefix)
+
+    return image_data, dict_labels</code></pre>
+</li>
+<li>
+<p>最后转换图片二进制码为<code>RGB</code>数据、转换验证码各个字符为相应数字编码，作为模型训练的数据。</p>
+<pre class="highlight"><code class="language-python">def _decode_image(image, resize, grayscale):
+    '''preprocess image with given raw data
+        - image: image raw data
+    '''
+    image = tf.image.decode_jpeg(image, channels=3)
+
+    # convert to floats in the [0,1] range.
+    image = tf.image.convert_image_dtype(image, tf.float32)
+    image = tf.image.resize(image, resize)
+
+    # RGB to grayscale -&gt; channels=1
+    if grayscale:
+        image = tf.image.rgb_to_grayscale(image) # shape=(h, w, 1)
+
+    return image # (h, w, c)
+
+
+def _decode_labels(labels, prefix):
+    ''' this function is used within dataset.map(), 
+        where eager execution is disables by default:
+            check tf.executing_eagerly() returns False.
+        So any Tensor.numpy() is not allowed in this function.
+    '''
+    dict_labels = {}
+    for i in range(4):
+        c = tf.strings.substr(labels, i, 1) # labels example: b'abcd'
+        label = tf.strings.unicode_decode(c, input_encoding='utf-8') - ord('a')
+        dict_labels[f'{prefix}{i}'] = label
+
+    return dict_labels</code></pre>
+</li>
+</ul>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="https://tensorflow.google.cn/tutorials/load_data/tfrecord#walkthrough_reading_and_writing_image_data">Walkthrough: Reading and writing image data</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://stackoverflow.com/questions/51125266/how-do-i-split-tensorflow-datasets/51126863#51126863">How do I split Tensorflow datasets?</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://tensorflow.google.cn/tutorials/load_data/tfrecord#tfexample">Data types for tf.Example</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

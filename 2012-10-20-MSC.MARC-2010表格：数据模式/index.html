@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2012-10-20-MSC.MARC-2010%E8%A1%A8%E6%A0%BC%EF%BC%9A%E6%95%B0%E6%8D%AE%E6%A8%A1%E5%BC%8F/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>MSC.MARC 2010表格：数据模式 - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../categories/2021/" class="nav-link">2021</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2020/" class="nav-link">2020</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2019/" class="nav-link">2019</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2018/" class="nav-link">2018</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2017/" class="nav-link">2017</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/2016/" class="dropdown-item">2016</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2015/" class="dropdown-item">2015</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2014/" class="dropdown-item">2014</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2013/" class="dropdown-item">2013</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2012/" class="dropdown-item">2012</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2012-10-20-MSC.MARC-2010表格：数据模式.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#mscmarc 2010" class="nav-link">MSC.MARC 2010表格：数据模式</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">分段线性模式</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">方程模式</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">应用示例</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="mscmarc 2010">MSC.MARC 2010表格：数据模式<a class="headerlink" href="#mscmarc 2010" title="Permanent link">&para;</a></h1>
+<hr />
+<p>根据<a href="../2012-10-18-MSC.MARC-2010%E8%A1%A8%E6%A0%BC%EF%BC%9A%E5%88%9B%E5%BB%BA%E6%96%B9%E5%BC%8F/">第一部分</a>介绍的通过输入公式（FORMULA）创建表格曲线后，即可供Marc程序调用——根据当前时刻的自变量值获取表格函数值。<code>DATA POINTS</code>的输入方式只给出了曲线在有限节点位置的函数值，如何处理自变量位于两节点之间时刻的函数值？一旦当前时刻对应的自变量超出表格范围，又该如何处理？本文即对表格曲线的数据模式进行介绍。</p>
+<p>根据Marc用户手册<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>的描述，表格曲线的函数值具有两种不同的数据模式：</p>
+<p>The function can be input through the TABLE model definition option using either <strong>the piecewise linear mode</strong> or <strong>the equation mode</strong>. </p>
+<ul>
+<li>
+<p>In the piecewise linear mode, the result is interpolated between the given data values.If the independent variable is outside of the range of data entered, the result will be either extrapolated or the last value will be used.  </p>
+</li>
+<li>
+<p>In the second mode, the function may be entered as a mathematical equation.</p>
+</li>
+</ul>
+<h2 id="_1">分段线性模式<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>通过外部数据读入或<code>DATA POINTS</code>选项直接输入散点得到的表格曲线为分段线性模式（the piecewise linear mode）。在输入数据区间内，自变量对应的数值是最近的两个输入数据的线性插值；若超出此范围，则有两种不同处理方式，默认为根据最后两个点线性外推，另外也可以继续使用最后一个点的数值。</p>
+<p><img alt="分段线性模式" src="../images/2012-10-20-01.jpg" /></p>
+<h2 id="_2">方程模式<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>通过<code>FORMULA</code>选项输入函数公式得到曲线为方程模式（the equation mode），任意自变量（即便超出了表格显示上的范围）对应的数值均可直接代入公式计算。</p>
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<p>在显示上，程序都是通过计算有限数目（取决于自变量自定义的分段数）的点的坐标，然后进行描点作图。所以，<strong>有可能曲线上显示的数值与程序真实采用的数值并不一致</strong>。</p>
+</div>
+<p>例如，在<code>[0,8]</code>区间定义关于变量<code>v1</code>曲线<code>f=sin(0.25*pi*v1)</code>，当自变量划分段数分别为4和40时，曲线显示形态分别如下图所示：</p>
+<p><img alt="示例1" src="../images/2012-10-20-03.jpg" />
+<img alt="示例2" src="../images/2012-10-20-04.jpg" /></p>
+<p>虽然二者的显示形态完全不同，但对于Marc来说，输入是同一条曲线。<code>v1=1</code>处的f值，不是线性插值得到的<code>f=0.5</code>，而是直接代入计算得到的<code>f=sin(0.25*pi)=0.707</code>.</p>
+<p>如果将公式输入得到的曲线由<code>FORMULA</code>形式改为<code>DATA POINTS</code>形式，数据模式相应地由方程模式切换到了分段线性模式，此时程序将采用插值的方法计算未知点的坐标。如下图所示，此时对于<code>v1=1</code>，其函数值将由1,2点插值得到<code>f=0.5</code>。</p>
+<p><img alt="示例3" src="../images/2012-10-20-05.jpg" /></p>
+<h2 id="_3">应用示例<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>以上差异是需要注意的地方，但换个角度，也可以作为灵活运用表格的技巧。</p>
+<p>例如，对于下图所示的运动形式，可以先用<code>FORMULA</code>形式输入公式<code>f=sin(0.25*pi*v1)</code>，同时注意设置好自变量步数，以便得到相同的显示形式；然后修改为<code>DATA POINTS</code>模式，使其真正变为图中所示曲线。</p>
+<p><img alt="示例3" src="../images/2012-10-20-06.jpg" /></p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Marc® 2010 Volume A: Theory and User Information&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

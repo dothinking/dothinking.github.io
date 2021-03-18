@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2014-12-24-%E4%B8%8A%E9%99%90%E6%B3%95%E5%A1%91%E6%80%A7%E5%8A%9F%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86%E7%AE%97%E4%BE%8B%EF%BC%9A%E4%B8%89%E9%87%8D%E7%A7%AF%E5%88%86/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>上限法塑性功数值积分算例：三重积分 - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../categories/2021/" class="nav-link">2021</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2020/" class="nav-link">2020</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2019/" class="nav-link">2019</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2018/" class="nav-link">2018</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2017/" class="nav-link">2017</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/2016/" class="dropdown-item">2016</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2015/" class="dropdown-item">2015</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2014/" class="dropdown-item">2014</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2013/" class="dropdown-item">2013</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2012/" class="dropdown-item">2012</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2014-12-24-上限法塑性功数值积分算例：三重积分.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#_1" class="nav-link">上限法塑性功数值积分算例：三重积分</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">计算思路</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">计算实例</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="_1">上限法塑性功数值积分算例：三重积分<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<hr />
+<p>当上限法拓展应用到三维成形问题，三重积分就在所难免了；并且考虑到积分区域无法解析表达，此时数值积分是唯一的选择。之前文章给出了平面问题中上限法塑性功数值积分算例，本文即以具体示例介绍三维上限法计算过程中可能遇到的体积积分问题。</p>
+<p>算例：在半径为1的八分之一球体区域<span><span class="MathJax_Preview">\Omega</span><script type="math/tex">\Omega</script></span>（第一卦限）上计算<span><span class="MathJax_Preview">f(x,y,z)</span><script type="math/tex">f(x,y,z)</script></span>的积分</p>
+<div>
+<div class="MathJax_Preview">\int_{\Omega}{f(x,y,z)\,\mathrm{d}V}</div>
+<script type="math/tex; mode=display">\int_{\Omega}{f(x,y,z)\,\mathrm{d}V}</script>
+</div>
+<p>特别地，当<span><span class="MathJax_Preview">f(x,y,z)=1</span><script type="math/tex">f(x,y,z)=1</script></span>时，其几何意义为八分之一球的体积。</p>
+<h2 id="_2">计算思路<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>思路其实很明晰：</p>
+<ol>
+<li>
+<p>建立球体的几何模型</p>
+</li>
+<li>
+<p>划分网格得到单元及节点坐标数据，编程读入网格数据</p>
+<p>这个可以在网格划分软件中执行，保存的文件格式选取通用的<code>Nastran</code>格式，或者其他的包含单元信息的文件，例如Marc的<code>.dat</code>格式。然后根据保存的文件格式，将数据读入到自己的程序中来。</p>
+</li>
+<li>
+<p>进行数值积分</p>
+<p>将积分区域离散后，以有限积分点的插值数据来替代单元上连续的函数值，得到每个单元的数值积分结果，最后求和。</p>
+<div>
+<div class="MathJax_Preview">\int_{\Omega}{f(x,y,z)\,\mathrm{d}V} = \sum_{i=1}^m{\left[\int_{V_i}f(x_i,y_i,z_i)\,\mathrm{d}V \right]} = \sum_{i=1}^m{f(x_i,y_i,z_i)\,V_i}</div>
+<script type="math/tex; mode=display">\int_{\Omega}{f(x,y,z)\,\mathrm{d}V} = \sum_{i=1}^m{\left[\int_{V_i}f(x_i,y_i,z_i)\,\mathrm{d}V \right]} = \sum_{i=1}^m{f(x_i,y_i,z_i)\,V_i}</script>
+</div>
+</li>
+</ol>
+<h2 id="_3">计算实例<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>本文采用开源的集成有限元前后处理的网格生成程序<code>Gmsh</code>进行几何建模与单元划分，然后借助Python的科学计算库<code>NumPy</code>完成具体计算过程。<code>Gmsh</code>的项目主页参见</p>
+<blockquote>
+<p><a href="http://www.geuz.org/gmsh/">Gmsh: a three-dimensional finite element mesh generator with built-in pre- and post-processing facilities</a></p>
+</blockquote>
+<p>本次计算中采用的是四面体单元，因为四面体具有简易的体积计算公式。积分方案为Hammer积分，根据积分精度可选取线性、二次及三次积分点，参见王勖成《有限单元法》Page 151。本次计算直接采用线性的积分方案，即以四面体单元四个节点上函数值的平均值作为单元的函数值。</p>
+<p><img alt="" src="../images/2014-12-24-01.jpg" /></p>
+<p>计算过程中，选取不同的被积函数<span><span class="MathJax_Preview">f(x,y,z)</span><script type="math/tex">f(x,y,z)</script></span>、同时设置不同的单元数，并与matlab数值积分结果进行对比，如下表所示。</p>
+<table>
+<thead>
+<tr>
+<th align="center">被积函数</th>
+<th align="center">19单元</th>
+<th align="center">370单元</th>
+<th align="center">4560单元</th>
+<th align="center">232705单元</th>
+<th align="center">matlab</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><span><span class="MathJax_Preview">f(x,\,y,\,z)=1</span><script type="math/tex">f(x,\,y,\,z)=1</script></span></td>
+<td align="center">0.402571</td>
+<td align="center">0.515488</td>
+<td align="center">0.522304</td>
+<td align="center">0.523514</td>
+<td align="center">0.523599</td>
+</tr>
+<tr>
+<td align="center"><span><span class="MathJax_Preview">f(x,\,y,\,z)=\sin^2\left(x+y^2+\sqrt{z}\right)</span><script type="math/tex">f(x,\,y,\,z)=\sin^2\left(x+y^2+\sqrt{z}\right)</script></span></td>
+<td align="center">0.300058</td>
+<td align="center">0.405632</td>
+<td align="center">0.410014</td>
+<td align="center">0.410513</td>
+<td align="center">0.410495</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>可以使用<code>triplequad()</code>或者<code>integral3()</code>进行matlab三重数值积分，并且本例积分区域在球坐标系可以转化为常数积分限。</p>
+</blockquote>
+<pre class="codehilite"><code>triplequad(@(x,y,z) x.^2.*sin(y).*sin(x.*sin(y).*cos(z)+(x.*sin(y).*sin(z)).^2+(x.*cos(y)).^0.5).^2,0,1,0,pi/2,0,pi/2)
+</code></pre>
+
+<p>根据上表作图即可得到本算例网格划分数量与解的收敛性的关系，结果表明离散积分得到的结果随着单元数的增多而收敛于真实解；但是，当单元细化到一定级别后，继续通过细化的方式提升计算精度的效率急剧下降。</p>
+<p><img alt="" src="../images/2014-12-24-02.jpg" /></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

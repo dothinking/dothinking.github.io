@@ -8,7 +8,7 @@
         <meta name="author" content="dothinking">
         <link rel="canonical" href="https://dothinking.github.io/2019-04-20-VBA%E8%B0%83%E7%94%A8%E5%A4%96%E9%83%A8%E5%87%BD%E6%95%B0%EF%BC%88%E5%B7%A5%E4%BD%9C%E7%B0%BF-COM%E9%93%BE%E6%8E%A5%E5%BA%93-C%E9%93%BE%E6%8E%A5%E5%BA%93%EF%BC%89%E6%96%B9%E6%B3%95/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>2019 04 20 VBA调用外部函数（工作簿 COM链接库 C链接库）方法 - 格致</title>
+        <title>VBA调用外部函数（工作簿，COM链接库，C链接库）方法 - 格致</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -103,18 +103,20 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-level="1"><a href="#vbacomc" class="nav-link">VBA调用外部函数（工作簿，COM链接库，C链接库）方法</a>
+              <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#excel" class="nav-link">Excel插件/宏文件</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#net" class="nav-link">.NET编译和注册的链接库</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#c" class="nav-link">C风格动态链接库</a>
               <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -122,6 +124,8 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
+<h1 id="vbacomc">VBA调用外部函数（工作簿，COM链接库，C链接库）方法<a class="headerlink" href="#vbacomc" title="Permanent link">&para;</a></h1>
+<hr />
 <p>为便于代码的重复利用和合理组织，VBA支持从当前工作簿调用其他文件中的函数，例如Excel插件<code>*.xlam</code>、宏文件<code>*.xlsm</code>、<code>.NET</code>编译和注册的<code>COM</code>链接库<code>*.dll</code>，以及C语言风格的动态链接库<code>*.dll</code>。本文以计算两个单元格数值和为例，简述跨工作簿函数调用方法。</p>
 <h2 id="excel">Excel插件/宏文件<a class="headerlink" href="#excel" title="Permanent link">&para;</a></h2>
 <p>可以通过**加载引用**或者**直接调用**两种方式使用Excel插件/宏文件中定义的函数。新建<code>add.xlsm</code>，重命名VBA工程名称为<code>Test_add</code>，然后添加一个模块<code>test_add_module</code>，最后创建如下的<code>add()</code>函数：</p>
@@ -131,12 +135,11 @@ Function add(ByVal A As Object, ByVal B As Object)
 End Function</code></pre>
 <h3 id="_1">加载引用<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
 <p><code>Developer</code> -&gt; <code>Visual Basic</code> -&gt; <code>Tools</code> -&gt; <code>References...</code> -&gt; <code>Browse...</code>，选择<code>add.xlsm</code>文件所在位置，即可将其加载到<code>test.xlsm</code>工程中。<code>test.xlsm</code>工程中出现<code>References</code>节点，包含<code>Reference to add.xlsm</code>子节点。如下图所示，可以通过<code>View</code> -&gt; <code>Object Browser</code>查看是否成功加载<code>add()</code>函数。</p>
-<div align='center'><img src="{{ "/images/2019-04-20-01.png" | prepend: site.baseurl }}"></div>
-
+<p><img alt="" src="../images/2019-04-20-01.png" /></p>
 <p>接下来即可在VBA代码或者公式编辑器中使用，并且具备智能提示功能。</p>
 <pre class="highlight"><code class="language-vb">Debug.Print Add(Range("A1"), Range("B1"))</code></pre>
 <h3 id="_2">直接加载<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
-<p><code>Application.Run()</code>可以跨工作簿使用函数[<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>]：</p>
+<p><code>Application.Run()</code>可以跨工作簿使用函数 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>：</p>
 <pre class="highlight"><code class="language-vb">' :param Macro: 被调用函数的绝对地址，格式：workbook.xlsm!module.function
 ' :Arg1,...Arg30: 最多支持30个位置参数的输入
 ' :return: 返回Variant类型，可以转换为目标类型
@@ -150,7 +153,7 @@ End Sub</code></pre>
 <p>也可以直接在公式编辑器中使用：</p>
 <pre class="highlight"><code>=add.xlsm!test_add_module.add(A1,B1)</code></pre>
 <h2 id="net"><code>.NET</code>编译和注册的链接库<a class="headerlink" href="#net" title="Permanent link">&para;</a></h2>
-<p>类似于调用工作簿中的函数，VBA也可以采用**加载引用**和**直接调用**两种方式引用<code>VB.NET</code>创建的动态链接库类型的<code>COM</code>组件。首先，参考<code>VB.NET</code>封装COM组件[<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>]的方法创建、编译和注册如下类：</p>
+<p>类似于调用工作簿中的函数，VBA也可以采用 <strong>加载引用</strong> 和 <strong>直接调用</strong> 两种方式引用<code>VB.NET</code>创建的动态链接库类型的<code>COM</code>组件。首先，参考<code>VB.NET</code>封装COM组件 <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup> 的方法创建、编译和注册如下类：</p>
 <pre class="highlight"><code class="language-vb">' TestDLL.dll -&gt; Test_add
 
 &lt;ComClass(Test_add.ClassId, Test_add.InterfaceId, Test_add.EventsId)&gt; _
@@ -180,7 +183,7 @@ End Class</code></pre>
     Set OBJ = New Test_add
     Debug.Print OBJ.Add([A1], [B1])
 End Sub</code></pre>
-<p>我们也可以通过程序的方式自动加载引用，<code>ThisWorkbook.VBProject.References</code>，具体参考VBA自动添加前期引用的文章[<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>]。</p>
+<p>我们也可以通过程序的方式自动加载引用，<code>ThisWorkbook.VBProject.References</code>，具体参考VBA自动添加前期引用的文章 <sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>。</p>
 <h3 id="_4">直接调用<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
 <p>如果不想前期显式地引用库文件，可以使用<code>CreateObject("COM_DLL_name.class_name")</code>创建已注册的类，然后使用其中的函数。参考代码：</p>
 <pre class="highlight"><code class="language-vb">Sub test()
@@ -194,19 +197,18 @@ End Sub</code></pre>
 Private Declare PtrSafe Function [function_name] Lib ["path_to_dll"] ([parameters_list]) As [type]
 ' 32 bit dll
 Private Declare Function [function_name] Lib ["path_to_dll"] ([parameters_list]) As [type]</code></pre>
-<p>具体细节和注意事项参考此前的文章<a href="{{ site.baseurl }}{% post_url 2017-11-30-VBA调用C++动态链接库 %}">VBA调用c++动态链接库</a>。</p>
-<hr />
+<p>具体细节和注意事项参考此前的文章<a href="../2017-11-30-VBA%E8%B0%83%E7%94%A8C%2B%2B%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93/">VBA调用c++动态链接库</a>。</p>
 <div class="footnote">
 <hr />
 <ol>
 <li id="fn:1">
-<p>[1] <a href="https://docs.microsoft.com/zh-cn/office/vba/api/Excel.Application.Run">Application.Run method (Excel)</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<p><a href="https://docs.microsoft.com/zh-cn/office/vba/api/Excel.Application.Run">Application.Run method (Excel)</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 <li id="fn:2">
-<p>[2] <a href="https://www.cnblogs.com/zyjq/p/6658361.html">用VB.NET(Visual Basic 2010)封装EXCEL VBA为DLL_COM组件(一)</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+<p><a href="https://www.cnblogs.com/zyjq/p/6658361.html">用VB.NET(Visual Basic 2010)封装EXCEL VBA为DLL_COM组件(一)</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
 </li>
 <li id="fn:3">
-<p>[3] <a href="http://www.exceloffice.net/archives/2065">如何用vba自动添加前期引用？</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+<p><a href="http://www.exceloffice.net/archives/2065">如何用vba自动添加前期引用？</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div></div>

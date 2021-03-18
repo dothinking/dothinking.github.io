@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2020-03-01-%E8%AF%BB%E4%B9%A6%E8%AE%A1%E5%88%92%EF%BC%9ATensorFlow%E6%8A%80%E6%9C%AF%E8%A7%A3%E6%9E%90%E4%B8%8E%E5%AE%9E%E6%88%98/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>读书计划：TensorFlow技术解析与实战 - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../categories/2021/" class="nav-link">2021</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2020/" class="nav-link">2020</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2019/" class="nav-link">2019</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2018/" class="nav-link">2018</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2017/" class="nav-link">2017</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/2016/" class="dropdown-item">2016</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2015/" class="dropdown-item">2015</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2014/" class="dropdown-item">2014</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2013/" class="dropdown-item">2013</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2012/" class="dropdown-item">2012</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2020-03-01-读书计划：TensorFlow技术解析与实战.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#tensorflow" class="nav-link">读书计划：TensorFlow技术解析与实战</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">读后感</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">故事梗概</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="tensorflow">读书计划：TensorFlow技术解析与实战<a class="headerlink" href="#tensorflow" title="Permanent link">&para;</a></h1>
+<hr />
+<p>春节假期准备消化一下几年前屯的书，于是随手挑了一本《TensorFlow技术解析与实战》。按照惯例，应该是完不成的；未料冠状病毒疫情意外延长了假期，竟得以囫囵看完了。小小激励之下，默默启动2020年读书计划——完成10本技术书籍的阅读和学习。此为第一篇。</p>
+<p>我并不打算以章节笔记的形式来总结每本书的阅读，一方面懒于摘抄、照搬书上知识点，另一方面更习惯直接将注解、思考记录在书籍相应页面上。所以，这个系列更多的是读后感，包含以下两部分：</p>
+<ul>
+<li><code>读后感</code> 全书宏观评价</li>
+<li><code>故事梗概</code> 合上书后捋一遍以及此过程中印象深刻的点</li>
+</ul>
+<h2 id="_1">读后感<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>一言以蔽之：内容丰富但流于表面，不适合新手入门，不适合老手深入。当时看得一头雾水体验及其不佳，好在内容尚且全面，并辅以其他在线资源的解惑，竟也带我入了门。</p>
+<p>全书分为基础（TF基础，CNN/RNN基础）、实战（人脸识别、自然语言处理、语音识别、对抗网络）、提高（分布式、大数据、移动端）三篇，涉及内容甚广却仅仅300余页。内容丰富但流于表面，由此可见一斑。读完之后印象比较深的几点：</p>
+<ul>
+<li>结构拼凑，没有作者的体悟和解读。很多基础知识点例如交叉熵损失函数、卷积网络需要读者自行查询详细资料。</li>
+<li>代码堆砌，大量代码扩充篇幅却没有相应的解读。</li>
+<li>校订不严谨，存在较多错别字、错误代码、错误图注。</li>
+</ul>
+<p>客观来说，并不推荐此书作为TensorFlow或者深度学习的入门书籍。奈何我已经上了这条船，只能结合它尚算丰富的目录以及自己查阅相关资料后的注解，希望日后有用之处可以随手一翻。</p>
+<h2 id="_2">故事梗概<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>TensorFlow基础</p>
+<ul>
+<li>TensorFlow编程架构 <code>Graph</code>和<code>Session</code></li>
+<li>MNIST数据集实战<ul>
+<li><code>softmax</code>分类</li>
+<li><code>CNN</code></li>
+<li><code>RNN</code></li>
+<li>自编码器</li>
+<li>分布式训练</li>
+</ul>
+</li>
+<li>该书基于TensorFlow 1.x，有此基础可以很快转向TensorFlow 2.x</li>
+</ul>
+</li>
+<li>
+<p>神经网络基础</p>
+<ul>
+<li>激活函数：<code>sigmoid</code>、<code>tanh</code>、<code>relu</code>等</li>
+<li>卷积/池化函数：<code>padding</code>、<code>strikes</code>与卷积/池化后张量大小的计算</li>
+<li>分类相关损失函数：熵（信息量的期望）-&gt;散度熵（两个分布的差异）-&gt;交叉熵<ul>
+<li><code>softmax</code>交叉熵 多分类互斥问题（<code>one-hot</code>编码）</li>
+<li><code>binary</code>交叉熵  二分类互斥，<code>softmax</code>交叉熵的特例</li>
+<li><code>sigmoid</code>交叉熵 多分类不互斥问题，每个特征看作一个<code>sigmoid</code>二分类问题，各个特征不互斥所以最终多分类</li>
+</ul>
+</li>
+<li>优化算法：梯度下降算法<ul>
+<li><code>BGD</code>、<code>SGD</code></li>
+<li><code>Momentum</code></li>
+<li><code>adadelta</code></li>
+<li><code>RMSprop</code></li>
+<li><code>adam</code></li>
+</ul>
+</li>
+<li>批标准化</li>
+<li>L1、L2正则化</li>
+</ul>
+</li>
+<li>
+<p>神经网络模型发展</p>
+<ul>
+<li>卷积神经网络<code>CNN</code><ul>
+<li>LeNet：卷积和池化</li>
+<li>AlexNet：<code>relu</code>引入、数据增强、大数据GPU</li>
+<li>VggNet：标准化/模块化卷积/池化组</li>
+<li>Inception：自行学习选择卷积核，并联3x3，5x5</li>
+<li>ResNet：跨层获取输入以避免梯度消失</li>
+</ul>
+</li>
+<li>循环神经网络<code>RNN</code><ul>
+<li>RNN</li>
+<li>LSTM</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>深度学习应用</p>
+<ul>
+<li>人脸识别</li>
+<li>自然语言处理</li>
+<li>语音识别</li>
+<li>生成对抗网络</li>
+<li>分布式</li>
+<li>大数据</li>
+<li>移动应用</li>
+</ul>
+</li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

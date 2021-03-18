@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2014-11-28-%E4%B8%8A%E9%99%90%E6%B3%95%E5%A1%91%E6%80%A7%E5%8A%9F%E6%95%B0%E5%80%BC%E7%A7%AF%E5%88%86%E7%AE%97%E4%BE%8B%EF%BC%9A%E4%BA%8C%E9%87%8D%E7%A7%AF%E5%88%86/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>上限法塑性功数值积分算例：二重积分 - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../categories/2021/" class="nav-link">2021</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2020/" class="nav-link">2020</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2019/" class="nav-link">2019</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2018/" class="nav-link">2018</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2017/" class="nav-link">2017</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/2016/" class="dropdown-item">2016</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2015/" class="dropdown-item">2015</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2014/" class="dropdown-item">2014</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2013/" class="dropdown-item">2013</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2012/" class="dropdown-item">2012</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2014-11-28-上限法塑性功数值积分算例：二重积分.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#_1" class="nav-link">上限法塑性功数值积分算例：二重积分</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">理论解</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">高斯积分</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_4" class="nav-link">单元离散后积分</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_5" class="nav-link">总结</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="_1">上限法塑性功数值积分算例：二重积分<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<hr />
+<p>上限法是一种解析方法，但有时候模型比较复杂，在塑性功积分环节还得求助于数值积分。根据积分方法的不同，存在以下两种思路：</p>
+<ul>
+<li>
+<p>直接进行高斯积分</p>
+</li>
+<li>
+<p>单元离散后进行低阶数值积分</p>
+</li>
+</ul>
+<p>本文分别使用以上两种方法计算下面二重积分，以直观认识及分析二者的区别：</p>
+<div>
+<div class="MathJax_Preview">
+W = \int\limits_{-1}^1 {\int\limits_{-1}^1 {f(x,\,y)}} \mathrm{d}x\mathrm{d}y 
+= \int\limits_{-1}^1 {\int\limits_{-1}^1 {\cos\dfrac{\pi\,(x + y)}{2}}}\mathrm{d}x\mathrm{d}y
+</div>
+<script type="math/tex; mode=display">
+W = \int\limits_{-1}^1 {\int\limits_{-1}^1 {f(x,\,y)}} \mathrm{d}x\mathrm{d}y 
+= \int\limits_{-1}^1 {\int\limits_{-1}^1 {\cos\dfrac{\pi\,(x + y)}{2}}}\mathrm{d}x\mathrm{d}y
+</script>
+</div>
+<h2 id="_2">理论解<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>\begin{align*}
+W &amp;= -\dfrac{2}{\pi}\,\int\limits_{-1}^1{\left.{\sin\dfrac{\pi\,(x+y)}{2}} \right|_{-1}^1} \,\mathrm{d}y\\
+&amp;= -\dfrac{2}{\pi}\,\int\limits_{-1}^1{\biggl[\sin\dfrac{\pi\,(y+1)}{2}-\sin\dfrac{\pi\,(y-1)}{2}\biggr] }\,\mathrm{d}y \\
+&amp;= -\frac{4}{\pi^2}\left. {\biggl[ {\cos\frac{\pi\,(y+1)}{2} - \cos\frac{\pi\,(y-1)}{2}}\biggr]}\right|_{-1}^1 \\
+&amp;= -\frac{16}{\pi ^2} \approx 1.6211
+\end{align*}</p>
+<h2 id="_3">高斯积分<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>由于目标函数恰好在Gauss-Legendre的标准积分区间<span><span class="MathJax_Preview">[-1,1]</span><script type="math/tex">[-1,1]</script></span>，可以直接取积分点代入二重高斯积分公式。于是<span><span class="MathJax_Preview">W</span><script type="math/tex">W</script></span>的<span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>阶Gauss-Legendre积分近似值就可通过下式求得</p>
+<div>
+<div class="MathJax_Preview">
+{W_n} = \sum\limits_{i=0}^n {\sum\limits_{j=0}^n{A_i\,A_j\,f(x_i,\,y_j)} }
+</div>
+<script type="math/tex; mode=display">
+{W_n} = \sum\limits_{i=0}^n {\sum\limits_{j=0}^n{A_i\,A_j\,f(x_i,\,y_j)} }
+</script>
+</div>
+<p>其中<span><span class="MathJax_Preview">x_i,\,x_j</span><script type="math/tex">x_i,\,x_j</script></span>分别为<span><span class="MathJax_Preview">x,\,y</span><script type="math/tex">x,\,y</script></span>方向的积分点，<span><span class="MathJax_Preview">A_i</span><script type="math/tex">A_i</script></span>为对应的积分系数。</p>
+<p>积分点及求积系数的求解可以参考相关文献。为方便起见，这里直接给出前2阶Gauss-Legendre求积公式的节点及系数：</p>
+<table>
+<thead>
+<tr>
+<th>阶数<span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span></th>
+<th>积分点<span><span class="MathJax_Preview">\mathrm{x}</span><script type="math/tex">\mathrm{x}</script></span></th>
+<th>求积系数<span><span class="MathJax_Preview">\mathrm{A}</span><script type="math/tex">\mathrm{A}</script></span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>2</td>
+</tr>
+<tr>
+<td>1</td>
+<td><span><span class="MathJax_Preview">\biggl[-\dfrac{1}{\sqrt{3}},\,\dfrac{1}{\sqrt{3}}\biggr]</span><script type="math/tex">\biggl[-\dfrac{1}{\sqrt{3}},\,\dfrac{1}{\sqrt{3}}\biggr]</script></span></td>
+<td><span><span class="MathJax_Preview">\biggl[1,\,1\biggr]</span><script type="math/tex">\biggl[1,\,1\biggr]</script></span></td>
+</tr>
+<tr>
+<td>2</td>
+<td><span><span class="MathJax_Preview">\biggl[-\dfrac{\sqrt{15}}{5},\,0,\,\dfrac{\sqrt{15}}{5}\biggr]</span><script type="math/tex">\biggl[-\dfrac{\sqrt{15}}{5},\,0,\,\dfrac{\sqrt{15}}{5}\biggr]</script></span></td>
+<td><span><span class="MathJax_Preview">\biggl[\dfrac{5}{9},\,\dfrac{8}{9},\,\dfrac{5}{9}\biggr]</span><script type="math/tex">\biggl[\dfrac{5}{9},\,\dfrac{8}{9},\,\dfrac{5}{9}\biggr]</script></span></td>
+</tr>
+</tbody>
+</table>
+<p>以上公式很容易编写为Matlab代码，以2阶高斯积分为例</p>
+<pre class="codehilite"><code>function w = fun_gauss(f)
+    x = [-sqrt(15)/5,0,sqrt(15)/5];y = x;
+    [X,Y] = meshgrid(x,y);
+    a = [5/9,8/9,5/9];b = a;
+    [A,B] = meshgrid(a,b);
+    w = sum(sum(A.*B.*f(X,Y)));
+</code></pre>
+
+<p>于是得到</p>
+<div>
+<div class="MathJax_Preview">{W_0} = 4,\,{W_1} = 1.5188,\,{W_2} = 1.6234</div>
+<script type="math/tex; mode=display">{W_0} = 4,\,{W_1} = 1.5188,\,{W_2} = 1.6234</script>
+</div>
+<h2 id="_4">单元离散后积分<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>为简单起见，将积分区域离散为<span><span class="MathJax_Preview">N=n^2</span><script type="math/tex">N=n^2</script></span>个面积相等的小区域，则每个单元的面积<span><span class="MathJax_Preview">\Delta S=\dfrac{4}{N}</span><script type="math/tex">\Delta S=\dfrac{4}{N}</script></span>。当单元<span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>足够小时，可以以单元4个节点对应函数值的平均值来近似该单元区域内被积函数值，于是<span><span class="MathJax_Preview">W</span><script type="math/tex">W</script></span>可以表示为</p>
+<p>\begin{align*}
+{W_n} &amp;= \sum_{m=1}^{N} {\int\limits_{y_{m-1}}^{y_m} {\int\limits_{x_{m-1}}^{x_m}} {f(x,\,y)\,\mathrm{d}x\mathrm{d}y} } \\
+&amp;= \sum_{m=1}^{N} {\left[{\frac{1}{4}\sum_{i=1}^2 {\sum_{j=1}^2 {f(x_i,\,y_j)\,\Delta S}}} \right]} \\
+&amp;= \Delta S\,\sum_{m=1}^{N} {\sum_{i=1}^2 {\sum_{j=1}^2 {\frac{f(x_i,\,y_j)}{4}} } }
+\end{align*}</p>
+<p>其中<span><span class="MathJax_Preview">x_1,\,x_2</span><script type="math/tex">x_1,\,x_2</script></span>为单元<span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>的节点的两个横坐标。 </p>
+<p><img alt="" src="../images/2014-11-28-01.png" /></p>
+<p>上式可以理解为将区域离散后，每个单元的每个节点都为最终的积分值贡献&frac14;的作用。单从节点来看，内层节点贡献为1，边界节点（除4个角节点外）贡献&frac12;，4个角节点贡献&frac14;。这很容易通过Matlab编程实现，代码如下：</p>
+<pre class="codehilite"><code>function w = fun_trapezoid(n,f)
+    [X,Y] = meshgrid(linspace(-1,1,n));
+    a = f(X(2:n-1,2:n-1),Y(2:n-1,2:n-1));
+    b = f(X(1,:),Y(1,:))+f(X(n,:),Y(n,:));
+    c = f(X(:,1),Y(:,1))+f(X(:,n),Y(:,n));
+    d = f(X(1,1),Y(1,1))+f(X(1,n),Y(1,n))+f(X(n,1),Y(n,1))+f(X(n,n),Y(n,n));
+    t = sum(sum(a)) + sum(b)/2 + sum(c)/2 - d/4;
+    w = 4*t/n^2;
+</code></pre>
+
+<p>于是得到</p>
+<div>
+<div class="MathJax_Preview">{W_{10}} = 1.2865,\,{W_{100}} = 1.5886,\,{W_{5000}} = 1.6205</div>
+<script type="math/tex; mode=display">{W_{10}} = 1.2865,\,{W_{100}} = 1.5886,\,{W_{5000}} = 1.6205</script>
+</div>
+<p>这样的积分结果差强人意，单元数达到<code>5000×5000</code>才勉强保证小数点后2位精度。</p>
+<p>为了改善精度，在子域上使用Simpson求积公式，得到</p>
+<p>\begin{align*}
+{W_n} &amp;= \sum_{m=1}^{N} {\int\limits_{y_{m-1}}^{y_m} \int\limits_{x_{m-1}}^{x_m} {f(x,\,y)\,\mathrm{d}x\mathrm{d}y} }  \\
+&amp;= \sum_{m=1}^{N} {\left[{\frac{1}{36} \sum_{i=1}^3 {\sum_{j=1}^3 {A_i\,A_j\,f(x_i,\,y_j)\,\Delta S}}} \right]} \\
+&amp;= \dfrac{\Delta S}{36}\,\sum_{m=1}^{N} {\sum_{i=1}^3 {\sum_{j=1}^3 {A_i\,A_j\,f(x_i,\,y_j)} } }
+\end{align*}</p>
+<p>其中<span><span class="MathJax_Preview">x_1,\,x_2,\,x_3</span><script type="math/tex">x_1,\,x_2,\,x_3</script></span>分别为单元<span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>边界的三个等分点的横坐标。<span><span class="MathJax_Preview">A=[1,4,1]</span><script type="math/tex">A=[1,4,1]</script></span>为积分系数。</p>
+<p><img alt="" src="../images/2014-11-28-02.png" /></p>
+<p>Matlab代码为</p>
+<pre class="codehilite"><code>function w = fun_simpson(n,f)
+    t = 2/n;
+    [A,B] = meshgrid([1,4,1],[1,4,1]);
+    w = 0.0;
+    for i = 0:n^2-1
+        x = mod(i,n);
+        y = floor(i/n);    
+        x = -1 + x*t;
+        y = -1 + y*t;
+        [X,Y] = meshgrid(linspace(x,x+t,3),linspace(y,y+t,3));
+        w = w + sum(sum(A.*B.*f(X,Y)/(3*n)^2));
+    end
+</code></pre>
+
+<p>最终计算结果为</p>
+<div>
+<div class="MathJax_Preview">{W_2} = 1.6285,\,{W_5} = 1.6213,\,{W_{10}} = 1.6211</div>
+<script type="math/tex; mode=display">{W_2} = 1.6285,\,{W_5} = 1.6213,\,{W_{10}} = 1.6211</script>
+</div>
+<h2 id="_5">总结<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>高斯积分以积分点的计算为代价可以在较少积分点的情况下获得一定的精度，而离散积分的方法以离散单元数为代价来提高精度；但是精度会因为子域上选取的积分方式的不同而表现出较大的差异：只有单元节点参与计算时，精度相对较低；当单元边界中点也加入计算，精度得以大幅度提高。</p>
+<p>区域离散后积分的方法本质上是复化求积法。通过划分子区间并在子区间上使用低阶求积公式来提高精度并兼顾计算复杂程度。第一种求积方法是梯形公式，第二种是精度更高的Simpson公式（即2阶Newton-Cotes公式）。这种方法的优势在于当积分区域极不规则时，可以通过离散的方法在子区间上进行积分并最终累加。例如实际三维成形问题，由于积分区域无法直接写成显式的积分上下限形式，因此也无法直接在全域上使用高斯求积公式。</p>
+<p>综合来看，在上限法分析模型中，一般二维即平面应变或轴对称模型的积分区域是规则的，因此高斯积分法相对更有应用优势；而三维问题变形区通常较为复杂，离散求积的方法更具优势，且离散区域上的Simpson公式也可以保证精度。</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

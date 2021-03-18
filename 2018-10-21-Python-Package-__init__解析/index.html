@@ -8,7 +8,7 @@
         <meta name="author" content="dothinking">
         <link rel="canonical" href="https://dothinking.github.io/2018-10-21-Python-Package-__init__%E8%A7%A3%E6%9E%90/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>2018 10 21 Python Package   init  解析 - 格致</title>
+        <title>Python Package __init__解析 - 格致</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -103,33 +103,32 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
+            <li class="nav-item" data-level="1"><a href="#python package __init__" class="nav-link">Python Package __init__解析</a>
+              <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">文件结构</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#from package import module" class="nav-link">from Package import module</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#from package import" class="nav-link">from Package import *</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#import package" class="nav-link">import Package</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">子包中的导入问题</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            
             <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">总结</a>
               <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -137,10 +136,12 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
+<h1 id="python package __init__">Python Package __init__解析<a class="headerlink" href="#python package __init__" title="Permanent link">&para;</a></h1>
+<hr />
 <p>单个Python文件可以作为一个<code>Module</code>被导入重用，多个Module可以组织为<code>Package</code>。Package下一般都有一个<code>__init__.py</code>文件，而且内容可能啥也没有。本篇即解释此<code>__init__.py</code>文件的使用。</p>
 <h2 id="_1">文件结构<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>以下文件结构作为本篇试验测试依据：</p>
-<pre class="highlight"><code>+-----------------------------+ +---------------------------------+
+<pre class="codehilite"><code>+-----------------------------+ +---------------------------------+
 |  + Package                  | |# Package/Sub_Package/module_a.py|
 |  |    |                     | |x = 1                            |
 |  |    + Sub_Package         | +---------------------------------+
@@ -154,7 +155,9 @@
 |  |    + __init__.py         | +---------------------+
 |  + test.py                  | |# Package/module_c.py|
 |                             | |x = 3                |
-+-----------------------------+ +---------------------+</code></pre>
++-----------------------------+ +---------------------+
+</code></pre>
+
 <p>其中，</p>
 <ul>
 <li><code>test.py</code>为测试文件，<code>Package</code>为待测试的包</li>

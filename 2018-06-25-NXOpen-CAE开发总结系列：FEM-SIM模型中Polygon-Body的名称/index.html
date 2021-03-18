@@ -8,7 +8,7 @@
         <meta name="author" content="dothinking">
         <link rel="canonical" href="https://dothinking.github.io/2018-06-25-NXOpen-CAE%E5%BC%80%E5%8F%91%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97%EF%BC%9AFEM-SIM%E6%A8%A1%E5%9E%8B%E4%B8%ADPolygon-Body%E7%9A%84%E5%90%8D%E7%A7%B0/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>2018 06 25 NXOpen CAE开发总结系列：FEM SIM模型中Polygon Body的名称 - 格致</title>
+        <title>NXOpen CAE开发总结系列：FEM SIM模型中Polygon Body的名称 - 格致</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -102,11 +102,18 @@
     
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#nxopen caefem simpolygon body" class="nav-link">NXOpen CAE开发总结系列：FEM SIM模型中Polygon Body的名称</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
+<h1 id="nxopen caefem simpolygon body">NXOpen CAE开发总结系列：FEM SIM模型中Polygon Body的名称<a class="headerlink" href="#nxopen caefem simpolygon body" title="Permanent link">&para;</a></h1>
+<hr />
 <p>我们已经知道<code>Idealized Part</code>、<code>FEM Part</code>、<code>SIM Part</code>中的几何元素具有一定的关联，例如前者的Body对象对应了后两者的Polygon Body，那么它们的名称即Name属性在关联关系上有何注意事项呢？</p>
 <ul>
 <li>
@@ -114,16 +121,29 @@
 </li>
 <li>
 <p>Polygon body的Name属性有两种等效的维护途径：</p>
-</li>
-</ul>
-<p>1 选中Polygon body-&gt;右键-&gt;Attribute。</p>
-<p>2 仿真导航器-&gt;FEM-&gt;Polygon Geometry-&gt;右键-&gt;Rename。 <em>注意操作上的一个细节：假设方法1中<code>Name=TEST</code>，则此处显示的是<code>TEST(id)</code>，其中<code>id</code>为该对象的编号。那么，直接rename时的默认名称是<code>TEST(id)</code>即等效为<code>Name=TEST(id)</code>，这就产生了与预期不相符的结果。</em></p>
-<ul>
+<ol>
 <li>
-<p>重命名<code>FEM Part</code>中的Polygon body后仍然可以改回原来的链接自<code>Idealized Part</code>中Body对象的名称：仿真导航器-&gt;FEM-&gt;Polygon Geometry-&gt;右键-&gt;Synchrorize to CAD name。<strong>注意：此时只是修改了polygon body的显示名称，Attribute中的Name依旧是修改前的值</strong>。为了保证Name属性的统一，应该在Synchrorize to CAD name后马上rename为该默认的名称。</p>
+<p>选中Polygon body-&gt;右键-&gt;Attribute。</p>
 </li>
 <li>
-<p>作为Occurrence，<code>SIM Part</code>中对应的Polygon body默认继承了<code>FEM Part</code>中的原始名称，并且<code>FEM Part</code>中的重命名也就同步更新<code>SIM Part</code>的Polygon body。但是，<strong>一旦为<code>SIM Part</code>的Polygon body显式地设置了名称（并且此名称不同于继承的默认名称），则打破了自动继承关系，其名称不再随着<code>FEM Part</code>中polygon body名称的改变而改变</strong>。</p>
+<p>仿真导航器-&gt;FEM-&gt;Polygon Geometry-&gt;右键-&gt;Rename。 </p>
+<div class="admonition warning">
+<p class="admonition-title">注意操作上的一个细节：</p>
+<p>假设方法1中<code>Name=TEST</code>，则此处显示的是<code>TEST(id)</code>，其中<code>id</code>为该对象的编号。那么，直接rename时的默认名称是<code>TEST(id)</code>即等效为<code>Name=TEST(id)</code>，这就产生了与预期不相符的结果。</p>
+</div>
+</li>
+</ol>
+</li>
+<li>
+<p>重命名<code>FEM Part</code>中的Polygon body后仍然可以改回原来的链接自<code>Idealized Part</code>中Body对象的名称：仿真导航器-&gt;FEM-&gt;Polygon Geometry-&gt;右键-&gt;Synchrorize to CAD name。</p>
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<p>此时只是修改了polygon body的显示名称，Attribute中的Name依旧是修改前的值。为了保证Name属性的统一，应该在Synchrorize to CAD name后马上rename为该默认的名称。</p>
+</div>
+</li>
+<li>
+<p>作为Occurrence，<code>SIM Part</code>中对应的Polygon body默认继承了<code>FEM Part</code>中的原始名称，并且<code>FEM Part</code>中的重命名也就同步更新<code>SIM Part</code>的Polygon body。</p>
+<p>但是，<strong>一旦为<code>SIM Part</code>的Polygon body显式地设置了名称（并且此名称不同于继承的默认名称），则打破了自动继承关系，其名称不再随着<code>FEM Part</code>中polygon body名称的改变而改变</strong>。</p>
 </li>
 </ul></div>
             </div>

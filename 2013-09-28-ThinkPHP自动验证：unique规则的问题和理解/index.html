@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2013-09-28-ThinkPHP%E8%87%AA%E5%8A%A8%E9%AA%8C%E8%AF%81%EF%BC%9Aunique%E8%A7%84%E5%88%99%E7%9A%84%E9%97%AE%E9%A2%98%E5%92%8C%E7%90%86%E8%A7%A3/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>ThinkPHP自动验证：unique规则的问题和理解 - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../categories/2021/" class="nav-link">2021</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2020/" class="nav-link">2020</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2019/" class="nav-link">2019</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2018/" class="nav-link">2018</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../categories/2017/" class="nav-link">2017</a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/2016/" class="dropdown-item">2016</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2015/" class="dropdown-item">2015</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2014/" class="dropdown-item">2014</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2013/" class="dropdown-item">2013</a>
+</li>
+                                    
+<li>
+    <a href="../categories/2012/" class="dropdown-item">2012</a>
+</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2013-09-28-ThinkPHP自动验证：unique规则的问题和理解.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#thinkphpunique" class="nav-link">ThinkPHP自动验证：unique规则的问题和理解</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">自动验证的实施</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#unique" class="nav-link">unique自动验证规则的问题</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#ajax" class="nav-link">验证信息的Ajax返回</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="thinkphpunique">ThinkPHP自动验证：unique规则的问题和理解<a class="headerlink" href="#thinkphpunique" title="Permanent link">&para;</a></h1>
+<hr />
+<p>本文针对ThinkPHP自动验证部分学习过程中遇到的几个问题，经过查阅文档及思考理解，作了以下几个方面的总结记录：</p>
+<ol>
+<li>
+<p>自动验证的实施</p>
+</li>
+<li>
+<p>unique验证规则的问题</p>
+</li>
+<li>
+<p>验证信息的Ajax返回</p>
+</li>
+</ol>
+<h2 id="_1">自动验证的实施<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>自动验证是通过对表单提交的数据（可以是对应数据库表中的某些字段，也可以不是表中字段）设定一些验证规则，在<code>create()</code>操作时会根据此规则进行验证并给出相应信息，当然也可以进行手动验证。它包含两种方式<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>：</p>
+<ul>
+<li>
+<p>静态方式：在模型类里面通过$_validate属性定义验证规则。</p>
+</li>
+<li>
+<p>动态方式：使用模型类的validate方法动态创建自动验证规则。</p>
+</li>
+</ul>
+<p>使用格式：</p>
+<pre class="codehilite"><code>array(
+    array(验证字段1,验证规则,错误提示,[验证条件,附加规则,验证时间]),
+    array(验证字段2,验证规则,错误提示,[验证条件,附加规则,验证时间]),
+....);
+</code></pre>
+
+<h2 id="unique">unique自动验证规则的问题<a class="headerlink" href="#unique" title="Permanent link">&para;</a></h2>
+<p>根据第一部分的学习，已经可以建立如下规则，表示在插入数据时，验证username是否唯一。</p>
+<pre class="codehilite"><code>array('username',' ','用户名已经存在！',0,'unique',1)
+</code></pre>
+
+<p>然而在学习初期可能遇到如下问题。</p>
+<h3 id="_2">修改信息的时候，提示用户名已经存在<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>这显然是验证时机的混淆，我们根据上下文很容易判断需要进行的是编辑更新操作，可是程序如何判断？</p>
+<p>程序是根据 <strong>主键值是否存在</strong> 来判定所要进行的操作的。例如，对于插入操作来说，主键值显然不存在；而编辑操作时，主键已经在之前的插入操作中存在了。所以解决这个问题的关键在于让程序知道目前操作是插入还是编辑。方法有两个：</p>
+<ul>
+<li>
+<p>基本方法：根据以上基本原理，编辑操作时，在表单的隐藏域中给出待编辑的记录的主键值，这样程序通过搜索数据库就可以知道这条记录已经存在，即是编辑操作。</p>
+</li>
+<li>
+<p>直接方法：在调用<code>create()</code>函数时明确指明验证时机：<code>create($data,2)</code>。</p>
+</li>
+</ul>
+<h3 id="username">插入信息时，username明明没有重复而提示用户名已经存在<a class="headerlink" href="#username" title="Permanent link">&para;</a></h3>
+<p>这个问题根源在于此时恰好将username设为主键了。解决方法很简单，重新设计主键即可，例如一个自动增长的id。其实这个在ThinkPHP文档中也有一点说明：</p>
+<blockquote>
+<p>ThinkPHP的默认约定每个数据表的主键名采用统一的id作为标识，并且是自动增长类型的。系统会自动识别当前操作的数据表的字段信息和主键名称，所以即使你的主键不是id，也无需进行额外的设置，系统会自动识别<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>。</p>
+</blockquote>
+<p>事实上，假如设置了一个与数据表内容有直接关系的主键，例如这里的username，那么在对username的插入操作时就会出现问题2——username明明是唯一的却提示重复了。引起这一切的根源在于unique验证规则本身的设计，参照ThinkPHP开发包<code>Core</code>文件夹下<code>Model.class.php</code>文件关于<code>unique</code>的代码：</p>
+<pre class="highlight"><code class="language-php">case 'unique': // 验证某个值是否唯一
+    if(is_string($val[0]) &amp;&amp; strpos($val[0],','))
+        $val[0]  =  explode(',',$val[0]);
+    $map = array();
+    if(is_array($val[0])) {
+        // 支持多个字段验证
+        foreach ($val[0] as $field)
+            $map[$field]   =  $data[$field];
+    }else{
+        $map[$val[0]] = $data[$val[0]];
+    }
+    if(!empty($data[$this-&gt;getPk()])) { // 完善编辑的时候验证唯一
+        $map[$this-&gt;getPk()] = array('neq',$data[$this-&gt;getPk()]);
+    }
+    if($this-&gt;where($map)-&gt;find())   return false;
+    return true;</code></pre>
+<p>从这里可以看出unique的逻辑是，查找数据库中有没有与验证数据重复的记录，查询条件有两个并且是<code>and</code>的关系：</p>
+<ul>
+<li>
+<p>规则给出的字段、表单提交的数据</p>
+<pre class="codehilite"><code>$map[$val[0]] = $data[$val[0]]
+</code></pre>
+
+</li>
+<li>
+<p>主键若存在，则要求表单提交的字段值与主键不相等</p>
+<pre class="codehilite"><code>$map[$this-&gt;getPk()] = array('neq',$data[$this-&gt;getPk()])
+</code></pre>
+
+</li>
+</ul>
+<p>这样就可以理解上面两个问题了：</p>
+<ul>
+<li>
+<p>问题1的第一个解决方法的道理在于，表单隐藏域中给出了主键值，则查询条件2保证了不会有重复记录。</p>
+</li>
+<li>
+<p>对于问题2，若要插入的username恰好是主键，则查询条件2覆盖了条件1，而此时的条件是表单提交的主键值在数据库中不存在，这显然是满足的，所以提示重复了。</p>
+</li>
+</ul>
+<h2 id="ajax">验证信息的Ajax返回<a class="headerlink" href="#ajax" title="Permanent link">&para;</a></h2>
+<p>自动验证结合Ajax返回可以无刷新给出相关信息，ThinkPHP提供了<code>ajaxReturn()</code>函数<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup></p>
+<pre class="highlight"><code class="language-php">$this-&gt;ajaxReturn(返回数据,提示信息,操作状态)</code></pre>
+<p>下面通过<code>create()</code>函数自动验证并将<code>getError()</code>得到错误信息通过<code>ajaxReturn()</code>返回。错误信息为数组形式，键为验证字段，值为相应的验证信息。</p>
+<pre class="highlight"><code class="language-php">if (!$m-&gt;create()){ // 如果创建失败 表示验证没有通过 输出错误提示信息
+    $this-&gt;ajaxReturn('',$m-&gt;getError(),0);
+}</code></pre>
+<p>前端Ajax请求及获取数据的Jquery代码：</p>
+<pre class="highlight"><code class="language-javascript">$(document).ready(function(){
+    $("input[type='button']").click(function(){
+        $.post("adduser",$('form').serialize(),function(data){  // $('form').serialize()提交表单数据
+            var json = eval('('+data+')'); // 得到Json对象
+            // 输入不合法
+            if(json.status == 0){ // to do
+            }
+            // 写入数据库错误
+            else if(json.status == 1){ // to do
+            }
+            // 成功新建
+            else if(json.status == 2){ // to do
+            }
+        });
+    });
+})</code></pre>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="http://doc.thinkphp.cn/manual/auto_validate.html">6.15 自动验证</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="http://www.thinkphp.cn/info/171.html">ThinkPHP3.1快速入门（12）自动验证</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="http://doc.thinkphp.cn/manual/primary_key.html">ThinkPHP完全开发手册-6.4-数据主键</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="http://doc.thinkphp.cn/manual/ajax_return.html">ThinkPHP完全开发手册-5.19-AJAX返回</a>&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

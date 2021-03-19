@@ -1,12 +1,10 @@
 ---
-layout: post
-author: Train
-description: Matplotlib多纵轴散点图
-keywords: Python, Matplotlib, Parasite Axes
+categories: [python/vba/cpp]
 tags: [python]
 ---
 
 # Matplotlib多纵轴（寄生轴）散点图
+
 
 ---
 

@@ -1,4 +1,6 @@
-site/
 __pycache__/
 _mkdocs.yml
 categories/
+years/
+build/
+site/

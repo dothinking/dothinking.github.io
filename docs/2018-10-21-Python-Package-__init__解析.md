@@ -1,12 +1,10 @@
 ---
-layout: post
-author: Train
-description: __init__.py文件解析
-keywords: Python
+categories: [python/vba/cpp]
 tags: [python]
 ---
 
 # Python Package __init__解析
+
 
 ---
 

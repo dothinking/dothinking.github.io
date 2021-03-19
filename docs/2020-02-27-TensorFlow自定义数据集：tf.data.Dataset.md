@@ -1,12 +1,10 @@
 ---
-layout: post
-author: Train
-description: tf.data.Dataset准备数据集
-keywords: TensorFlow tf.data.Dataset
+categories: [machine learning]
 tags: [TensorFlow]
 ---
 
 # TensorFlow自定义数据集：tf.data.Dataset
+
 
 ---
 

@@ -1,12 +1,10 @@
 ---
-layout: post
-author: Train
-description: Python操作Excel VBA
-keywords: python, win32com
+categories: [process automation, python/vba/cpp]
 tags: [python, VBA]
 ---
 
 # Python win32com模块操作Excel：VBA模块读写
+
 
 ---
 

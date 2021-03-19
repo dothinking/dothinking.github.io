@@ -1,12 +1,10 @@
 ---
-layout: post
-author: Train
-description: 自定义Excel选项卡
-keywords: ribbon, add-in, Excel, xlam
+categories: [process automation]
 tags: [VBA]
 ---
 
 # Microsoft Excel 2010自定义功能区：修改XML
+
 
 ---
 

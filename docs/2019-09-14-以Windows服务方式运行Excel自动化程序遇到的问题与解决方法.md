@@ -1,12 +1,10 @@
 ---
-layout: post
-author: Train
-description: Windows Service执行Excel自动化程序
-keywords: python, win32com, gitlab-runner
+categories: [process automation]
 tags: [python, VBA]
 ---
 
 # 以Windows服务方式运行Excel自动化程序遇到的问题与解决方法
+
 
 ---
 

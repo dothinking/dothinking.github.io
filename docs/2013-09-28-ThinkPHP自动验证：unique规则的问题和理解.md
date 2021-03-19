@@ -1,12 +1,10 @@
 ---
-layout: post
-author: Train
-description: ThinkPHP自动验证之unique规则说明
-keywords: ThinkPHP, unique, 自动验证
+categories: [web development]
 tags: [ThinkPHP, web]
 ---
 
 # ThinkPHP自动验证：unique规则的问题和理解
+
 
 ---
 

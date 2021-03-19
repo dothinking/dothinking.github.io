@@ -1,12 +1,10 @@
 ---
-layout: post
-author: Train
-description: 修改MySQLReback类使其适用于SAE的读写环境
-keywords: MySQL, SAE, ThinkPHP, 备份还原
+categories: [web development]
 tags: [ThinkPHP, web]
 ---
 
 # SAE环境下使用MySQLReback备份还原MySQL数据库
+
 
 ---
 

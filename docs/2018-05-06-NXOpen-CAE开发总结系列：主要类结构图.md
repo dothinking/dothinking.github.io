@@ -1,12 +1,10 @@
 ---
-layout: post
-author: Train
-description: NXOpen对象属性编辑操作
-keywords: NX, NXOpen, Attribute
+categories: [CAD/CAE integration]
 tags: [NX, NXOpen]
 ---
 
 # NXOpen CAE开发总结系列：主要类结构图
+
 
 ---
 

@@ -1,8 +1,5 @@
 ---
-layout: post
-author: Train
-description: Windows命令行提交Marc计算任务的指令及可能遇到的问题
-keywords: Marc, 命令行
+categories: [finite element analysis]
 tags: [Marc,CAE]
 ---
 

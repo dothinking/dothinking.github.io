@@ -1,12 +1,10 @@
 ---
-layout: post
-author: Train
-description: 《TensorFlow技术解析与实战》读书笔记
-keywords: TensorFlow
+categories: [machine learning, feeling]
 tags: [TensorFlow, thinking, reading]
 ---
 
 # 读书计划：TensorFlow技术解析与实战
+
 
 ---
 

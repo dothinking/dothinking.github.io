@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: 使用python开发Excel插件
-keywords: Python, vba
+categories: [process automation, python/vba/cpp]
 tags: [VBA, python]
 ---
 
 # 集成python的Excel插件模板PyAddin：原理介绍
+
+
 
 ---
 

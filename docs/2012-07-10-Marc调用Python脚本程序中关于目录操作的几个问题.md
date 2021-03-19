@@ -1,8 +1,5 @@
 ---
-layout: post
-author: Train
-description: Marc程序调用Python脚本过程中获取当前目录方法
-keywords: Marc, Python
+categories: [finite element analysis]
 tags: [Marc, python]
 ---
 

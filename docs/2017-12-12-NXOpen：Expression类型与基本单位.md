@@ -1,12 +1,10 @@
 ---
-layout: post
-author: Train
-description: NX表达式概要及NXOpen函数
-keywords: NX, NXOpen, Expression
+categories: [CAD/CAE integration]
 tags: [NX, NXOpen]
 ---
 
 # NXOpen：Expression类型与基本单位
+
 
 ---
 

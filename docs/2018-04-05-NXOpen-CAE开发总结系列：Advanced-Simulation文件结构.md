@@ -1,12 +1,10 @@
 ---
-layout: post
-author: Train
-description: NX Advanced Simulation 文档结构
-keywords: NX, FEM, Simulation
+categories: [CAD/CAE integration]
 tags: [NX,NXOpen]
 ---
 
 # NXOpen CAE开发总结系列：Advanced Simulation文件结构
+
 
 ---
 

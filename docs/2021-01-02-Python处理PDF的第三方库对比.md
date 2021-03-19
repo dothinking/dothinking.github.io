@@ -1,12 +1,10 @@
 ---
-layout: post
-author: Train
-description: Python处理PDF的第三方库对比
-keywords: pdf pdf-processing
+categories: [process automation]
 tags: [python]
 ---
 
 # Python处理PDF的第三方库对比
+
 
 ---
 

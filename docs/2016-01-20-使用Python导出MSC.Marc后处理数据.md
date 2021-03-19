@@ -1,12 +1,11 @@
 ---
-layout: post
-author: Train
-description: 使用py_post模块读取和处理marc后处理数据
-keywords: Marc, Python, 后处理
+categories: [finite element analysis]
 tags: [python, Marc, CAE]
 ---
 
 # 使用Python导出MSC.Marc后处理数据
+
+
 
 ---
 

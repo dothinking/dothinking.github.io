@@ -1,12 +1,10 @@
 ---
-layout: post
-author: Train
-description: 动态链接库模板
-keywords: C++, 动态链接库
+categories: [python/vba/cpp]
 tags: [C++]
 ---
 
 # 兼容Windows和Linux的C++动态链接库模板
+
 
 ---
 

@@ -1,12 +1,10 @@
 ---
-layout: post
-author: Train
-description: NXOpen按模块显示自定义菜单
-keywords: NX, NXOpen, MenuScript
+categories: [CAD/CAE integration]
 tags: [NX, NXOpen]
 ---
 
 # NXOpen：Menu Script自定义菜单
+
 
 ---
 

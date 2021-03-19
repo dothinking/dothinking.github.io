@@ -1,12 +1,10 @@
 ---
-layout: post
-author: Train
-description: NX Mesh与ANSYS input文件对应关系
-keywords: NX, FEM, Simulation
+categories: [CAD/CAE integration]
 tags: [NX,NXOpen]
 ---
 
 # NXOpen CAE开发总结系列：从ANSYS APDL角度看待Mesh
+
 
 ---
 

@@ -1,12 +1,10 @@
 ---
-layout: post
-author: Train
-description: Selenium Python基本操作
-keywords: selenium, phantomjs, chrome
+categories: [process automation, python/vba/cpp]
 tags: [python, spider]
 ---
 
 # Selenium Python基本操作备忘
+
 
 ---
 

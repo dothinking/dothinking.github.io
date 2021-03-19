@@ -1,12 +1,10 @@
 ---
-layout: post
-author: Train
-description: 使用PyQt QProcess调用子程序并获取输出
-keywords: Python, PyQt, QProcess
+categories: [python/vba/cpp]
 tags: [python,PyQt]
 ---
 
 # PyQt使用QProcess调用子进程并获取输出
+
 
 ---
 

@@ -1,12 +1,10 @@
 ---
-layout: post
-author: Train
-description: 使用subprocess模块调用子程序并获取输出
-keywords: Python, Popen
+categories: [python/vba/cpp]
 tags: [python]
 ---
 
 # 使用subprocess模块调用子进程并获取输出
+
 
 ---
 

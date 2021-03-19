@@ -1,12 +1,10 @@
 ---
-layout: post
-author: Train
-description: 直接在Sublime Text2编辑器中运行Python程序的设置方法
-keywords: Python, sublime text
+categories: [python/vba/cpp]
 tags: [python, sublime text]
 ---
 
 # Sublime Text 2中运行Python程序
+
 
 ---
 

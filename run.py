@@ -188,9 +188,9 @@ class Posts:
             self._to_summary_page(year, page_dir)
 
 
-    def to_index(self, dir_name:str, count:int=5):
+    def to_index(self, dir_name:str, title:str='', count:int=5):
         '''Create home page with latest posts and categories.'''
-        lines = []
+        lines = [title]
 
         # latest posts
         lines.append('## 最近更新\n')
@@ -198,6 +198,7 @@ class Posts:
             lines.append(post.to_hyperlink('.'))
 
         # categories
+        lines.append('\n')
         lines.append('## 更多分类\n')
         for c in sorted(self._categories):
             lines.append(f'- [{c} ({len(self._posts.get(c))})]({dir_name}/{to_dir_name(c)}.md)')
@@ -206,7 +207,7 @@ class Posts:
             f.write('\n'.join(lines))
 
 
-    def to_navigation(self, dir_name:str, count:int=5):
+    def to_navigation(self, dir_name:str, count:int=5) -> str:
         '''Generate grouped navigation.
 
         ::
@@ -278,39 +279,67 @@ class Posts:
 
 
 
-def run(docs_dir:str, 
+class ConfigFile:
+    def __init__(self, file_path) -> None:
+        self.file_path = file_path
+        # read content
+        with open(file_path, 'r', encoding='utf-8') as f:
+            self.content = f.read()
+
+    def get_site_info(self):
+        pattern = re.compile(r'site_name:(?P<site>.*)\n(.*)site_description:(?P<desp>.*)\n')
+        match = pattern.search(self.content)
+        if match:
+            site = match.group('site').strip()
+            description = match.group('desp').strip()
+        else:
+            site = 'My Blog'
+            description = 'Welcome to my blog'
+        return f'# {site}\n\n{description}\n\n---\n\n'
+
+
+    def update(self, more_content):
+        with open(self.file_path, 'w', encoding='utf-8') as f:
+            f.write(self.content + more_content)
+
+
+
+def run(cfg_file_path:str,
         year_path_name:str='years', 
         category_path_name:str='categories', 
         nav_count:int=5,
         latest_count:int=5,
         update_page:bool=False):
+    
+    # collect all posts
+    build_dir = os.path.dirname(cfg_file_path)
+    docs_dir = os.path.join(build_dir, 'docs')
     posts = Posts(docs_dir)
     
     # summary pages by category and year
     posts.summay_categories(category_path_name)
     posts.summay_years(year_path_name)
+
+    # update config file
+    cfg = ConfigFile(cfg_file_path)
+    cfg.update(posts.to_navigation(year_path_name, nav_count))
     
     # create index page only if not exist
     if not os.path.exists(os.path.join(docs_dir, 'index.md')):
-        posts.to_index(category_path_name, latest_count)
+        title = cfg.get_site_info()
+        posts.to_index(category_path_name, title, latest_count)
     
     # include meta-data to page
-    if update_page: posts.to_meta_pages(category_path_name)
+    if update_page: 
+        posts.to_meta_pages(category_path_name)
     
-    # navigation
-    nav_text = posts.to_navigation(year_path_name, nav_count)
-
-    return nav_text
-
+    
 
 
 if __name__=='__main__':
-    import sys    
-    # sys.stdout.reconfigure(encoding='utf-8') # python>=3.7
-    sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf8', buffering=1)
+    import sys
 
-    command, docs_dir, years_name, categories_name, nav_count, latest_count = sys.argv[1:]
+    command, cfg_file, years_name, categories_name, nav_count, latest_count = sys.argv[1:]
     nav_count = int(nav_count)
     latest_count = int(latest_count)
-    nav_text = run(docs_dir, years_name, categories_name, nav_count, latest_count, command=='build')
-    print(nav_text)
+    run(cfg_file, years_name, categories_name, nav_count, latest_count, command=='build')

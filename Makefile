@@ -5,14 +5,21 @@
 TOPDIR		:=$(shell pwd)
 DOCS		:=$(TOPDIR)/docs
 BUILD		:=$(TOPDIR)/build
-BUILDDOCS	:=$(BUILD)/docs
+
+# mkdocs configuration file
 MKDOCSCFG	:=_mkdocs.yml
-CATEGORIES	:=categories
-YEARS		:=years
-NAVCNT		:=5
-INDEXCNT	:=5
 SERVECFG	:=$(TOPDIR)/$(MKDOCSCFG)
 BUILDCFG	:=$(BUILD)/$(MKDOCSCFG)
+
+# sub-dir names for categoried posts
+CATEGORIES	:=categories
+YEARS		:=years
+
+# count of items show in navigation bar
+NAVCNT		:=5
+
+# count of latest posts show in homepage
+INDEXCNT	:=7
 
 
 
@@ -35,16 +42,16 @@ copy: pre_process
 .PHONY: serve
 serve: pre_process
 	@echo Summarizing pages...
-	@cat mkdocs.yml > "$(SERVECFG)"
-	@python run.py serve "$(DOCS)" $(YEARS) $(CATEGORIES) $(NAVCNT) $(INDEXCNT)  >> "$(SERVECFG)"
+	@cp mkdocs.yml "$(SERVECFG)"
+	@python run.py serve "$(SERVECFG)" $(YEARS) $(CATEGORIES) $(NAVCNT) $(INDEXCNT)
 	@mkdocs serve -f "$(SERVECFG)"
 
 
 .PHONY: build
 build: copy
 	@echo Summarizing pages...
-	@cat mkdocs.yml > "$(BUILDCFG)"
-	@python run.py build "$(BUILDDOCS)" $(YEARS) $(CATEGORIES) $(NAVCNT) $(INDEXCNT)  >> "$(BUILDCFG)"
+	@cp mkdocs.yml "$(BUILDCFG)"
+	@python run.py build "$(BUILDCFG)" $(YEARS) $(CATEGORIES) $(NAVCNT) $(INDEXCNT)
 	@mkdocs build -f "$(BUILDCFG)"
 
 

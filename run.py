@@ -11,7 +11,9 @@ def to_dir_name(name:str):
 
 class Post:
     # yyyy-mm-dd-post_title.md
-    NAME_PATTERN = re.compile(r'(?P<YEAR>\d{4})-(?P<MONTH>\d{2})-(?P<DAY>\d{2})-(?P<TITLE>.*).md')    
+    NAME_PATTERN = re.compile(r'(?P<YEAR>\d{4})-(?P<MONTH>\d{2})-(?P<DAY>\d{2})-(?P<TITLE>.*).md')
+    
+    HLINE = '---'
 
     def __init__(self, post_path:str) -> None:
         ''' post structure:        
@@ -47,9 +49,9 @@ class Post:
 
         # meta area
         if self.meta:
-            lines.append('---')
+            lines.append(Post.HLINE)
             lines.extend(self.meta)
-            lines.append('---')
+            lines.append(Post.HLINE)
         
         # title area: always has a title
         lines.append('\n')
@@ -60,6 +62,8 @@ class Post:
             links = [f'[{c}]({dir_name}/{to_dir_name(c)}.md)' for c in self.categories]
             meta += ' | ' + ' , '.join(links)
         lines.append(meta)
+        lines.append('\n')
+        lines.append(Post.HLINE)
 
         # content
         if self.content:
@@ -90,13 +94,13 @@ class Post:
         # potential meta
         self.meta = []
         next_i = 0
-        if lines[0].startswith('---'): 
+        if lines[0].startswith(Post.HLINE): 
             for i, line in enumerate(lines[1:], start=1) :
                 s = line.strip()
                 if s == '': continue
                 if ':' in s: 
                     self.meta.append(s)
-                elif s.startswith('---'): # normal end of meta
+                elif s.startswith(Post.HLINE): # normal end of meta
                     next_i = i+1
                     break
                 else: # not valid meta
@@ -137,7 +141,7 @@ class Post:
             if s == '': 
                 continue
             else:
-                start = i+1 if s.startswith('---') else i
+                start = i+1 if s.startswith(Post.HLINE) else i
                 break
         self.content = lines[start:] if start else None
 

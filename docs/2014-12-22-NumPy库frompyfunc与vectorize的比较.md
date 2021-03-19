@@ -1,5 +1,5 @@
 ---
-categories: [numeric calculation, python/vba/c++]
+categories: [numeric calculation, python/vba/cpp]
 tags: [python, numeric analysis]
 ---
 

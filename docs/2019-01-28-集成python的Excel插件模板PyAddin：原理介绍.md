@@ -1,5 +1,5 @@
 ---
-categories: [process automation, python/vba/c++]
+categories: [process automation, python/vba/cpp]
 tags: [VBA, python]
 ---
 

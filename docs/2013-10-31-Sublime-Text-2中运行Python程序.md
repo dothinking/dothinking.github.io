@@ -1,5 +1,5 @@
 ---
-categories: [python/vba/c++]
+categories: [python/vba/cpp]
 tags: [python, sublime text]
 ---
 

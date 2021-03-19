@@ -8,7 +8,7 @@
         <meta name="author" content="dothinking">
         <link rel="canonical" href="https://dothinking.github.io/2019-04-20-VBA%E8%B0%83%E7%94%A8%E5%A4%96%E9%83%A8%E5%87%BD%E6%95%B0%EF%BC%88%E5%B7%A5%E4%BD%9C%E7%B0%BF-COM%E9%93%BE%E6%8E%A5%E5%BA%93-C%E9%93%BE%E6%8E%A5%E5%BA%93%EF%BC%89%E6%96%B9%E6%B3%95/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>VBA调用外部函数（工作簿，COM链接库，C链接库）方法 - 格致</title>
+        <title>VBA调用外部函数（工作簿 COM链接库 C链接库）方法 - 格致</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -35,44 +35,47 @@
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
                             <li class="navitem">
-                                <a href="../categories/2021/" class="nav-link">2021</a>
+                                <a href="../years/2021/" class="nav-link">2021</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2020/" class="nav-link">2020</a>
+                                <a href="../years/2020/" class="nav-link">2020</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2019/" class="nav-link">2019</a>
+                                <a href="../years/2019/" class="nav-link">2019</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2018/" class="nav-link">2018</a>
+                                <a href="../years/2018/" class="nav-link">2018</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2017/" class="nav-link">2017</a>
+                                <a href="../years/2017/" class="nav-link">2017</a>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="../categories/2016/" class="dropdown-item">2016</a>
+    <a href="../years/2016/" class="dropdown-item">2016</a>
 </li>
                                     
 <li>
-    <a href="../categories/2015/" class="dropdown-item">2015</a>
+    <a href="../years/2015/" class="dropdown-item">2015</a>
 </li>
                                     
 <li>
-    <a href="../categories/2014/" class="dropdown-item">2014</a>
+    <a href="../years/2014/" class="dropdown-item">2014</a>
 </li>
                                     
 <li>
-    <a href="../categories/2013/" class="dropdown-item">2013</a>
+    <a href="../years/2013/" class="dropdown-item">2013</a>
 </li>
                                     
 <li>
-    <a href="../categories/2012/" class="dropdown-item">2012</a>
+    <a href="../years/2012/" class="dropdown-item">2012</a>
 </li>
                                 </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../about/" class="nav-link">关于</a>
                             </li>
                         </ul>
 
@@ -103,7 +106,7 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#vbacomc" class="nav-link">VBA调用外部函数（工作簿，COM链接库，C链接库）方法</a>
+            <li class="nav-item" data-level="1"><a href="#vba com c" class="nav-link">VBA调用外部函数（工作簿 COM链接库 C链接库）方法</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#excel" class="nav-link">Excel插件/宏文件</a>
               <ul class="nav flex-column">
@@ -124,8 +127,8 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="vbacomc">VBA调用外部函数（工作簿，COM链接库，C链接库）方法<a class="headerlink" href="#vbacomc" title="Permanent link">&para;</a></h1>
-<hr />
+<h1 id="vba com c">VBA调用外部函数（工作簿 COM链接库 C链接库）方法<a class="headerlink" href="#vba com c" title="Permanent link">&para;</a></h1>
+<p>2019-04-20 | <a href="../categories/python-vba-cpp/">python/vba/cpp</a></p>
 <p>为便于代码的重复利用和合理组织，VBA支持从当前工作簿调用其他文件中的函数，例如Excel插件<code>*.xlam</code>、宏文件<code>*.xlsm</code>、<code>.NET</code>编译和注册的<code>COM</code>链接库<code>*.dll</code>，以及C语言风格的动态链接库<code>*.dll</code>。本文以计算两个单元格数值和为例，简述跨工作簿函数调用方法。</p>
 <h2 id="excel">Excel插件/宏文件<a class="headerlink" href="#excel" title="Permanent link">&para;</a></h2>
 <p>可以通过**加载引用**或者**直接调用**两种方式使用Excel插件/宏文件中定义的函数。新建<code>add.xlsm</code>，重命名VBA工程名称为<code>Test_add</code>，然后添加一个模块<code>test_add_module</code>，最后创建如下的<code>add()</code>函数：</p>

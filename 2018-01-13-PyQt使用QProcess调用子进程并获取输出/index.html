@@ -35,44 +35,47 @@
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
                             <li class="navitem">
-                                <a href="../categories/2021/" class="nav-link">2021</a>
+                                <a href="../years/2021/" class="nav-link">2021</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2020/" class="nav-link">2020</a>
+                                <a href="../years/2020/" class="nav-link">2020</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2019/" class="nav-link">2019</a>
+                                <a href="../years/2019/" class="nav-link">2019</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2018/" class="nav-link">2018</a>
+                                <a href="../years/2018/" class="nav-link">2018</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2017/" class="nav-link">2017</a>
+                                <a href="../years/2017/" class="nav-link">2017</a>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="../categories/2016/" class="dropdown-item">2016</a>
+    <a href="../years/2016/" class="dropdown-item">2016</a>
 </li>
                                     
 <li>
-    <a href="../categories/2015/" class="dropdown-item">2015</a>
+    <a href="../years/2015/" class="dropdown-item">2015</a>
 </li>
                                     
 <li>
-    <a href="../categories/2014/" class="dropdown-item">2014</a>
+    <a href="../years/2014/" class="dropdown-item">2014</a>
 </li>
                                     
 <li>
-    <a href="../categories/2013/" class="dropdown-item">2013</a>
+    <a href="../years/2013/" class="dropdown-item">2013</a>
 </li>
                                     
 <li>
-    <a href="../categories/2012/" class="dropdown-item">2012</a>
+    <a href="../years/2012/" class="dropdown-item">2012</a>
 </li>
                                 </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../about/" class="nav-link">关于</a>
                             </li>
                         </ul>
 
@@ -125,7 +128,7 @@
                     <div class="col-md-9" role="main">
 
 <h1 id="pyqtqprocess">PyQt使用QProcess调用子进程并获取输出<a class="headerlink" href="#pyqtqprocess" title="Permanent link">&para;</a></h1>
-<hr />
+<p>2018-01-13 | <a href="../categories/python-vba-cpp/">python/vba/cpp</a></p>
 <p><code>QProcess()</code>类可以创建子进程执行外部程序，使用<code>readyReadStandardOutput</code>信号监听子进程中的标准输出事件，使用<code>readAllStandardOutput()</code>读取子进程标准输出；对标准错误的操作同理。本文基于Python3和PyQt5示例以上流程的代码。</p>
 <h2 id="qprocess">创建QProcess并关联监听事件<a class="headerlink" href="#qprocess" title="Permanent link">&para;</a></h2>
 <pre class="highlight"><code class="language-python">self.process = QProcess()

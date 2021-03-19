@@ -35,44 +35,47 @@
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
                             <li class="navitem">
-                                <a href="../categories/2021/" class="nav-link">2021</a>
+                                <a href="../years/2021/" class="nav-link">2021</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2020/" class="nav-link">2020</a>
+                                <a href="../years/2020/" class="nav-link">2020</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2019/" class="nav-link">2019</a>
+                                <a href="../years/2019/" class="nav-link">2019</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2018/" class="nav-link">2018</a>
+                                <a href="../years/2018/" class="nav-link">2018</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2017/" class="nav-link">2017</a>
+                                <a href="../years/2017/" class="nav-link">2017</a>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="../categories/2016/" class="dropdown-item">2016</a>
+    <a href="../years/2016/" class="dropdown-item">2016</a>
 </li>
                                     
 <li>
-    <a href="../categories/2015/" class="dropdown-item">2015</a>
+    <a href="../years/2015/" class="dropdown-item">2015</a>
 </li>
                                     
 <li>
-    <a href="../categories/2014/" class="dropdown-item">2014</a>
+    <a href="../years/2014/" class="dropdown-item">2014</a>
 </li>
                                     
 <li>
-    <a href="../categories/2013/" class="dropdown-item">2013</a>
+    <a href="../years/2013/" class="dropdown-item">2013</a>
 </li>
                                     
 <li>
-    <a href="../categories/2012/" class="dropdown-item">2012</a>
+    <a href="../years/2012/" class="dropdown-item">2012</a>
 </li>
                                 </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../about/" class="nav-link">关于</a>
                             </li>
                         </ul>
 
@@ -129,7 +132,7 @@
                     <div class="col-md-9" role="main">
 
 <h1 id="vba">VBA设置用户环境变量<a class="headerlink" href="#vba" title="Permanent link">&para;</a></h1>
-<hr />
+<p>2017-11-25 | <a href="../categories/python-vba-cpp/">python/vba/cpp</a></p>
 <p>问题来源于一个实际应用场景：VBA调用C++动态链接库，该链接库使用<code>QtNetwork</code>发起Https请求和获取响应数据。</p>
 <h2 id="_1">问题描述<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>假设自定义的动态链接库为<code>test.dll</code>，则<code>test.dll</code>依赖于<code>Qt5Core.dll</code>、<code>Qt5Network.dll</code>等Qt模块链接库，而<code>Qt5Network.dll</code>则需要SSL支持即依赖于<code>libeay32.dll</code>和<code>ssleay32.dll</code>。</p>

@@ -35,44 +35,47 @@
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
                             <li class="navitem">
-                                <a href="../categories/2021/" class="nav-link">2021</a>
+                                <a href="../years/2021/" class="nav-link">2021</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2020/" class="nav-link">2020</a>
+                                <a href="../years/2020/" class="nav-link">2020</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2019/" class="nav-link">2019</a>
+                                <a href="../years/2019/" class="nav-link">2019</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2018/" class="nav-link">2018</a>
+                                <a href="../years/2018/" class="nav-link">2018</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2017/" class="nav-link">2017</a>
+                                <a href="../years/2017/" class="nav-link">2017</a>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="../categories/2016/" class="dropdown-item">2016</a>
+    <a href="../years/2016/" class="dropdown-item">2016</a>
 </li>
                                     
 <li>
-    <a href="../categories/2015/" class="dropdown-item">2015</a>
+    <a href="../years/2015/" class="dropdown-item">2015</a>
 </li>
                                     
 <li>
-    <a href="../categories/2014/" class="dropdown-item">2014</a>
+    <a href="../years/2014/" class="dropdown-item">2014</a>
 </li>
                                     
 <li>
-    <a href="../categories/2013/" class="dropdown-item">2013</a>
+    <a href="../years/2013/" class="dropdown-item">2013</a>
 </li>
                                     
 <li>
-    <a href="../categories/2012/" class="dropdown-item">2012</a>
+    <a href="../years/2012/" class="dropdown-item">2012</a>
 </li>
                                 </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../about/" class="nav-link">关于</a>
                             </li>
                         </ul>
 
@@ -129,7 +132,7 @@
                     <div class="col-md-9" role="main">
 
 <h1 id="nxopen caeadvanced simulation">NXOpen CAE开发总结系列：Advanced Simulation文件结构<a class="headerlink" href="#nxopen caeadvanced simulation" title="Permanent link">&para;</a></h1>
-<hr />
+<p>2018-04-05 | <a href="../categories/CAD-CAE%20integration/">CAD/CAE integration</a></p>
 <p>本文从NX Open二次开发的角度，介绍NX有限元分析涉及的文件结构（Part类型）及不同部件间相关几何对象的引用关系。</p>
 <h2 id="_1">文件/部件类型<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>NX中根据CAD模型创建有限元分析模型过程中将涉及四种类型的文件：CAD主模型(master part)、理想化几何模型(idealized part)、有限元模型(FEM part)及仿真模型(simulation part)。它们相互关联并各司其职：</p>

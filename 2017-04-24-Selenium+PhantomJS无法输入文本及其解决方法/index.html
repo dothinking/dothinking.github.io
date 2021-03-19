@@ -8,7 +8,7 @@
         <meta name="author" content="dothinking">
         <link rel="canonical" href="https://dothinking.github.io/2017-04-24-Selenium%2BPhantomJS%E6%97%A0%E6%B3%95%E8%BE%93%E5%85%A5%E6%96%87%E6%9C%AC%E5%8F%8A%E5%85%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Selenium PhantomJS无法输入文本及其解决方法 - 格致</title>
+        <title>Selenium+PhantomJS无法输入文本及其解决方法 - 格致</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -35,44 +35,47 @@
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
                             <li class="navitem">
-                                <a href="../categories/2021/" class="nav-link">2021</a>
+                                <a href="../years/2021/" class="nav-link">2021</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2020/" class="nav-link">2020</a>
+                                <a href="../years/2020/" class="nav-link">2020</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2019/" class="nav-link">2019</a>
+                                <a href="../years/2019/" class="nav-link">2019</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2018/" class="nav-link">2018</a>
+                                <a href="../years/2018/" class="nav-link">2018</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2017/" class="nav-link">2017</a>
+                                <a href="../years/2017/" class="nav-link">2017</a>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="../categories/2016/" class="dropdown-item">2016</a>
+    <a href="../years/2016/" class="dropdown-item">2016</a>
 </li>
                                     
 <li>
-    <a href="../categories/2015/" class="dropdown-item">2015</a>
+    <a href="../years/2015/" class="dropdown-item">2015</a>
 </li>
                                     
 <li>
-    <a href="../categories/2014/" class="dropdown-item">2014</a>
+    <a href="../years/2014/" class="dropdown-item">2014</a>
 </li>
                                     
 <li>
-    <a href="../categories/2013/" class="dropdown-item">2013</a>
+    <a href="../years/2013/" class="dropdown-item">2013</a>
 </li>
                                     
 <li>
-    <a href="../categories/2012/" class="dropdown-item">2012</a>
+    <a href="../years/2012/" class="dropdown-item">2012</a>
 </li>
                                 </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../about/" class="nav-link">关于</a>
                             </li>
                         </ul>
 
@@ -103,7 +106,7 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#selenium phantomjs" class="nav-link">Selenium PhantomJS无法输入文本及其解决方法</a>
+            <li class="nav-item" data-level="1"><a href="#seleniumphantomjs" class="nav-link">Selenium+PhantomJS无法输入文本及其解决方法</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">问题描述</a>
               <ul class="nav flex-column">
@@ -124,8 +127,8 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="selenium phantomjs">Selenium PhantomJS无法输入文本及其解决方法<a class="headerlink" href="#selenium phantomjs" title="Permanent link">&para;</a></h1>
-<hr />
+<h1 id="seleniumphantomjs">Selenium+PhantomJS无法输入文本及其解决方法<a class="headerlink" href="#seleniumphantomjs" title="Permanent link">&para;</a></h1>
+<p>2017-04-24 | <a href="../categories/process%20automation/">process automation</a> , <a href="../categories/python-vba-cpp/">python/vba/cpp</a></p>
 <p><code>Selenium</code>是一个Web应用程序自动化测试工具，可以结合不同的webDriver（如Chrome、Firefox、Opera、PhantomJs）进行程序功能、兼容性方面的测试，也可进行爬虫相关的页面获取和分析。</p>
 <p>本文记录使用Selenium Python的<code>send_keys</code>方法进行文本输入时遇到的问题及其解决方法。</p>
 <h2 id="_1">问题描述<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>

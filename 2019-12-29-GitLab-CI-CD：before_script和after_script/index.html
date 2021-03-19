@@ -8,7 +8,7 @@
         <meta name="author" content="dothinking">
         <link rel="canonical" href="https://dothinking.github.io/2019-12-29-GitLab-CI-CD%EF%BC%9Abefore_script%E5%92%8Cafter_script/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>GitLab CI/CD：before_script和after_script - 格致</title>
+        <title>GitLab CI CD：before_script和after_script - 格致</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -35,44 +35,47 @@
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
                             <li class="navitem">
-                                <a href="../categories/2021/" class="nav-link">2021</a>
+                                <a href="../years/2021/" class="nav-link">2021</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2020/" class="nav-link">2020</a>
+                                <a href="../years/2020/" class="nav-link">2020</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2019/" class="nav-link">2019</a>
+                                <a href="../years/2019/" class="nav-link">2019</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2018/" class="nav-link">2018</a>
+                                <a href="../years/2018/" class="nav-link">2018</a>
                             </li>
                             <li class="navitem">
-                                <a href="../categories/2017/" class="nav-link">2017</a>
+                                <a href="../years/2017/" class="nav-link">2017</a>
                             </li>
                             <li class="dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="../categories/2016/" class="dropdown-item">2016</a>
+    <a href="../years/2016/" class="dropdown-item">2016</a>
 </li>
                                     
 <li>
-    <a href="../categories/2015/" class="dropdown-item">2015</a>
+    <a href="../years/2015/" class="dropdown-item">2015</a>
 </li>
                                     
 <li>
-    <a href="../categories/2014/" class="dropdown-item">2014</a>
+    <a href="../years/2014/" class="dropdown-item">2014</a>
 </li>
                                     
 <li>
-    <a href="../categories/2013/" class="dropdown-item">2013</a>
+    <a href="../years/2013/" class="dropdown-item">2013</a>
 </li>
                                     
 <li>
-    <a href="../categories/2012/" class="dropdown-item">2012</a>
+    <a href="../years/2012/" class="dropdown-item">2012</a>
 </li>
                                 </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../about/" class="nav-link">关于</a>
                             </li>
                         </ul>
 
@@ -103,7 +106,7 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#gitlab cicdbefore_scriptafter_script" class="nav-link">GitLab CI/CD：before_script和after_script</a>
+            <li class="nav-item" data-level="1"><a href="#gitlab ci cdbefore_scriptafter_script" class="nav-link">GitLab CI CD：before_script和after_script</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">问题描述</a>
               <ul class="nav flex-column">
@@ -124,8 +127,8 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="gitlab cicdbefore_scriptafter_script">GitLab CI/CD：before_script和after_script<a class="headerlink" href="#gitlab cicdbefore_scriptafter_script" title="Permanent link">&para;</a></h1>
-<hr />
+<h1 id="gitlab ci cdbefore_scriptafter_script">GitLab CI CD：before_script和after_script<a class="headerlink" href="#gitlab ci cdbefore_scriptafter_script" title="Permanent link">&para;</a></h1>
+<p>2019-12-29 | <a href="../categories/process%20automation/">process automation</a></p>
 <p>本文记录使用<code>before_script</code>和<code>after_script</code>解决<code>GitLab CI/CD</code>流程中遇到的一个问题。</p>
 <h2 id="_1">问题描述<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>在某个项目的<code>CI/CD</code>流程中有一个<code>job</code>是利用<code>Python</code>处理<code>Excel</code>和<code>VBA</code>，一旦原始<code>VBA</code>代码出现模态对话框例如<code>MsgBox</code>或者其他用户窗体甚至语法错误，那么整个流程就被堵塞了；接下来要么及时发现后手动取消任务，要么直至任务超时而被自动终止。</p>

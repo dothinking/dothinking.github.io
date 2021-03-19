@@ -37,7 +37,7 @@
             ...
 
 - 提交更新到远程`master`分支，触发`Github Action`自动构建和部署
-    - 创建主页（如果[docs](./docs)下不存在`index.html`）
+    - 创建主页（如果[docs](./docs)下不存在`index.md`）
     - 根据[docs](./docs)下文件名生成按年份归档页面
     - 根据文章元信息`categories`生成分类页面
     - 构建博客内容并上传到远程`gh-pages`分支

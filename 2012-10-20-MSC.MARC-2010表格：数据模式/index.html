@@ -129,6 +129,7 @@
 
 <h1 id="mscmarc 2010">MSC.MARC 2010表格：数据模式<a class="headerlink" href="#mscmarc 2010" title="Permanent link">&para;</a></h1>
 <p>2012-10-20 | <a href="../categories/finite%20element%20analysis/">finite element analysis</a></p>
+<hr />
 <p>根据<a href="../2012-10-18-MSC.MARC-2010%E8%A1%A8%E6%A0%BC%EF%BC%9A%E5%88%9B%E5%BB%BA%E6%96%B9%E5%BC%8F/">第一部分</a>介绍的通过输入公式（FORMULA）创建表格曲线后，即可供Marc程序调用——根据当前时刻的自变量值获取表格函数值。<code>DATA POINTS</code>的输入方式只给出了曲线在有限节点位置的函数值，如何处理自变量位于两节点之间时刻的函数值？一旦当前时刻对应的自变量超出表格范围，又该如何处理？本文即对表格曲线的数据模式进行介绍。</p>
 <p>根据Marc用户手册<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>的描述，表格曲线的函数值具有两种不同的数据模式：</p>
 <p>The function can be input through the TABLE model definition option using either <strong>the piecewise linear mode</strong> or <strong>the equation mode</strong>. </p>

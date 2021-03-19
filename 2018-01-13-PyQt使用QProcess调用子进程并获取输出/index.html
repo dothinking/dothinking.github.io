@@ -129,6 +129,7 @@
 
 <h1 id="pyqtqprocess">PyQt使用QProcess调用子进程并获取输出<a class="headerlink" href="#pyqtqprocess" title="Permanent link">&para;</a></h1>
 <p>2018-01-13 | <a href="../categories/python-vba-cpp/">python/vba/cpp</a></p>
+<hr />
 <p><code>QProcess()</code>类可以创建子进程执行外部程序，使用<code>readyReadStandardOutput</code>信号监听子进程中的标准输出事件，使用<code>readAllStandardOutput()</code>读取子进程标准输出；对标准错误的操作同理。本文基于Python3和PyQt5示例以上流程的代码。</p>
 <h2 id="qprocess">创建QProcess并关联监听事件<a class="headerlink" href="#qprocess" title="Permanent link">&para;</a></h2>
 <pre class="highlight"><code class="language-python">self.process = QProcess()

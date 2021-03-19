@@ -133,6 +133,7 @@
 
 <h1 id="pythonmlabmatlab">python中使用mlab库实现与MATLAB交互<a class="headerlink" href="#pythonmlabmatlab" title="Permanent link">&para;</a></h1>
 <p>2015-11-15 | <a href="../categories/numeric%20calculation/">numeric calculation</a></p>
+<hr />
 <p><code>numpy</code>、<code>scipy</code>、<code>sympy</code>等扩展库增加了Python在科学计算上的优势，但是，某些函数的执行效率依旧比不上商业化的Matlab。例如，针对本人的一个约束极值问题，matlab优化工具箱的<code>fmincon()</code>函数相比scipy.optimize的<code>minimize()</code>函数表现出更高的计算效率。因此，在某些场合下，需要在python代码中执行matlab命令。</p>
 <p>庆幸的是，已经有开源项目实现了这个需求。其中值得推荐的是：Alexander Schmolck 和 Vivek Rathod 负责的<code>mlabwrap</code>。此项目作者的本意是在Linux下写的，对于windows用户需要C++编译器才能成功安装。Yauhen Yakimovich在mlabwrap的基础上开发了并不依赖于C++编译器的<code>mlab</code>，本文即对其安装和使用作简要说明。</p>
 <h2 id="mlab">mlab简介<a class="headerlink" href="#mlab" title="Permanent link">&para;</a></h2>

@@ -133,6 +133,7 @@
 
 <h1 id="vba">VBA设置用户环境变量<a class="headerlink" href="#vba" title="Permanent link">&para;</a></h1>
 <p>2017-11-25 | <a href="../categories/python-vba-cpp/">python/vba/cpp</a></p>
+<hr />
 <p>问题来源于一个实际应用场景：VBA调用C++动态链接库，该链接库使用<code>QtNetwork</code>发起Https请求和获取响应数据。</p>
 <h2 id="_1">问题描述<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>假设自定义的动态链接库为<code>test.dll</code>，则<code>test.dll</code>依赖于<code>Qt5Core.dll</code>、<code>Qt5Network.dll</code>等Qt模块链接库，而<code>Qt5Network.dll</code>则需要SSL支持即依赖于<code>libeay32.dll</code>和<code>ssleay32.dll</code>。</p>

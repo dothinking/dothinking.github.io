@@ -129,6 +129,7 @@
 
 <h1 id="pythonexcelpyaddin">集成python的Excel插件模板PyAddin：使用说明<a class="headerlink" href="#pythonexcelpyaddin" title="Permanent link">&para;</a></h1>
 <p>2019-01-28 | <a href="../categories/process%20automation/">process automation</a> , <a href="../categories/python-vba-cpp/">python/vba/cpp</a></p>
+<hr />
 <p>虽然VBA是Excel的官配二次开发语言，但鉴于python的简洁易用高可维护性，相信不少人更倾向于使用python来处理Excel相关的二次开发工作。目前已有一些优秀的python第三方库，例如<code>xlrd</code>，<code>xlwt</code>和<code>xlutils</code>，可以分别实现Excel文件的读、写和读写转换工作；尤其推荐<code>xlwings</code>，可以如同VBA一样操作Excel工作簿、工作表、单元格区域等。这些库的一个共同特征是完全不依赖于Excel本身，仅仅将其作为一个对象进行处理。但有时候，我们还是限定在Excel环境下，只是希望借助python而不是VBA来处理数据。</p>
 <p>本文介绍一个作者从实际需求中总结设计的Excel插件模板设计工具<code>pyAddin</code>，实现VBA控制显示、python驱动计算的效果。</p>
 <blockquote>

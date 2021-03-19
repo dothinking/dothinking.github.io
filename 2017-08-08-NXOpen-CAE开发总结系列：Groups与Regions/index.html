@@ -141,6 +141,7 @@
 
 <h1 id="nxopen caegroupsregions">NXOpen CAE开发总结系列：Groups与Regions<a class="headerlink" href="#nxopen caegroupsregions" title="Permanent link">&para;</a></h1>
 <p>2017-08-08 | <a href="../categories/CAD-CAE%20integration/">CAD/CAE integration</a></p>
+<hr />
 <p>NX FEM与Simulation部分经常会遇到两个概念<code>Groups</code>与<code>Regions</code>，它们都可以用来存储一些可重用的对象，便于统一管理。那么，二者有何区别？本文以NX帮助文档为基础，介绍Groups与Regions的概念及其差异，以作学习记录和备忘。</p>
 <h2 id="_1">定义<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p><code>Groups</code>是几何（点/线/面等）或有限元对象（网格/节点/单元等）的集合。人为选取某些对象并将其定义为一个Group，以便于通过这个Group来统一操作所有被包含的对象，例如导出、施加边界条件、控制显示/隐藏。这类似于MSC.Marc中的<code>Set</code>，Hypermesh中的<code>Component</code>的概念。</p>

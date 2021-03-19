@@ -125,6 +125,7 @@
 
 <h1 id="matplotlib">Matplotlib多纵轴（寄生轴）散点图<a class="headerlink" href="#matplotlib" title="Permanent link">&para;</a></h1>
 <p>2019-05-22 | <a href="../categories/python-vba-cpp/">python/vba/cpp</a></p>
+<hr />
 <p>我们知道<code>Matplotlib</code>散点图的一个纵轴上可以画多条曲线，当纵轴数据属于不同类型（例如温度和压力）或者不同尺度，那就需要更多的纵轴来分别容纳。这类似于Excel图表中的次坐标轴，只不过<code>Matplotlib</code>可以呈现更多的纵轴。本文基于<code>Matplotlib</code>官网给出的实例封装了一个实现寄生轴散点图的函数。</p>
 <h2 id="_1">概述<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>这些纵轴<code>y axes</code>共享同一横轴<code>x axes</code>数据，因此有两种思路可以实现：</p>

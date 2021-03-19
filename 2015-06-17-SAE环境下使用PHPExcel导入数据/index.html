@@ -129,6 +129,7 @@
 
 <h1 id="saephpexcel">SAE环境下使用PHPExcel导入数据<a class="headerlink" href="#saephpexcel" title="Permanent link">&para;</a></h1>
 <p>2015-06-17 | <a href="../categories/web%20development/">web development</a></p>
+<hr />
 <p>当我们将一些涉及文件读写的项目移到云计算平台上，可能发现某些在本地运行得好好的功能会突然失效。例如，之前处理的是MySQL数据库备份还原功能在新浪云上的修改。本文将以ThinkPHP框架为例，处理SAE环境下使用PHPExcel插件导入数据的问题。</p>
 <p>本地使用PHPExcel导入数据的流程为：先上传文件到服务器，然后将文件路径提供给PHPExcel以便读取文件，最后操作Excel文件的内容。关键代码如下：</p>
 <pre class="highlight"><code class="language-php">Vendor('Classes.PHPExcel');    //将phpExcel插件放在vender文件夹下

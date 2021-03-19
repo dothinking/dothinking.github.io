@@ -137,6 +137,7 @@
 
 <h1 id="saemysqlrebackmysql">SAE环境下使用MySQLReback备份还原MySQL数据库<a class="headerlink" href="#saemysqlrebackmysql" title="Permanent link">&para;</a></h1>
 <p>2015-06-16 | <a href="../categories/web%20development/">web development</a></p>
+<hr />
 <p><a href="../2013-10-19-ThinkPHP%E6%A1%86%E6%9E%B6%E4%B8%8BMySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD%E8%BF%98%E5%8E%9F%E7%B1%BB/">之前一篇文章</a>介绍了ThinkPHP框架下的MySQL数据库备份还原类的使用，后来将项目迁移到了新浪云计算平台上，由于无法像本地一样读写文件，备份、还原功能也就失效了。本文即针对此问题，对原来的<code>MySQLReback.class.php</code>文件作相应修改，以适应SAE环境。</p>
 <h2 id="_1">思路<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>SAE不支持本地文件的读写，但是为我们提供了<code>Storage</code>用于数据的存储：</p>

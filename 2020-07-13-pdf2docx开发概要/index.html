@@ -141,6 +141,7 @@
 
 <h1 id="pdf2docx">pdf2docx开发概要<a class="headerlink" href="#pdf2docx" title="Permanent link">&para;</a></h1>
 <p>2020-07-13 | <a href="../categories/process%20automation/">process automation</a></p>
+<hr />
 <p><strong>PDF转Word</strong> 是一个古老的话题，其难点在于建立PDF基于元素位置的格式与Word基于内容的格式之间的映射关系。<a href="https://solidframework.net/"><code>Solid Documents</code></a>是这方面的佼佼者，其技术的应用案例：在线PDF转换网站<a href="https://smallpdf.com/pdf-to-word">Smallpdf</a>。</p>
 <p>在某个项目的调研过程中，作者尝试了这个话题，编写了一个用于转换PDF到Word的Python库<code>pdf2docx</code>——依赖<code>PyMuPDF</code>解析PDF文件，并用<code>python-docx</code>创建Word文件。本文记录相关开发思路（一些特性仅针对如下列出版本而言）。</p>
 <ul>

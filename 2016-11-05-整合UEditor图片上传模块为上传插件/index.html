@@ -129,6 +129,7 @@
 
 <h1 id="ueditor">整合UEditor图片上传模块为上传插件<a class="headerlink" href="#ueditor" title="Permanent link">&para;</a></h1>
 <p>2016-11-05 | <a href="../categories/web%20development/">web development</a></p>
+<hr />
 <p>UEditor是百度web前端研发团队fex-team开发的所见即所得富文本编辑器，具有轻量，可定制的特点。本文结合<a href="http://www.dookay.com/n/10929">稻壳互联发布的博文</a>提供的思路，将UEditor的文件/图片上传功能整合为上传插件，并对其使用方法做简要说明。</p>
 <h2 id="_1">插件代码<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>思路：初始化一个隐藏自身、仅带有文件/图片上传按钮的UEditor，并监听其文件/图片上传组件的插入动作；然后在目标对象的单击事件中打开文件/图片上传对话框。</p>

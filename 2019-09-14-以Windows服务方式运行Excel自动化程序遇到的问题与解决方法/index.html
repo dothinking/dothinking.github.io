@@ -153,6 +153,7 @@
 
 <h1 id="windowsexcel">以Windows服务方式运行Excel自动化程序遇到的问题与解决方法<a class="headerlink" href="#windowsexcel" title="Permanent link">&para;</a></h1>
 <p>2019-09-14 | <a href="../categories/process%20automation/">process automation</a></p>
+<hr />
 <p>参考前文关于<code>win32com</code>模块的示例代码可以进行Excel的自动化操作，例如Excel VBA的自动化测试；将其作为Windows服务运行，则可以方便为网络中的其他机器调用。本文正是记录配置Excel自动化服务过程中遇到的问题与相应解决措施。</p>
 <h2 id="_1">概述<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>最近有个需求是对启用宏的Excel 2010文件的自动化测试，需要配置在服务器上以供<code>GitLab-Runner</code>调用。于是，按照读入测试数据、执行测试VBA、验证计算结果的逻辑写好Python脚本，调试通过后在本地运行一切正常。然而，通过Commit提交触发CI/CD流程，即<code>GitLab-Runner</code>以Windows服务的方式执行相同的脚本时，却出现了各种各样的问题。</p>

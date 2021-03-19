@@ -133,6 +133,7 @@
 
 <h1 id="tensorflowtfdatatfrecorddataset">TensorFlow自定义数据集：tf.data.TFRecordDataset<a class="headerlink" href="#tensorflowtfdatatfrecorddataset" title="Permanent link">&para;</a></h1>
 <p>2020-02-28 | <a href="../categories/machine%20learning/">machine learning</a></p>
+<hr />
 <p>前文使用<code>tf.data.Dataset.list_files</code>创建文件路径<code>Dataset</code>并逐步载入图片数据的方式解决无法一次性加载所有图片数据到内存的问题，但依然存在频繁读文件的问题。本文参考TensorFlow官方文档读写图片例子 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>，将原来的图片数据以<code>TFRecord</code>文件形式进行存储，并重新载入<code>Dataset</code>和解析数据。</p>
 <h2 id="_1">基本流程<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p><code>TFRecord</code>是一种存储二进制记录序列的简单格式，可以有效地进行 <strong>线性读取</strong> 数据。从创建到使用<code>TFRecord</code>文件的全流程：</p>

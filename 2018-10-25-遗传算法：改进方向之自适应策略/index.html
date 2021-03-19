@@ -129,6 +129,7 @@
 
 <h1 id="_1">遗传算法：改进方向之自适应策略<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <p>2018-10-25 | <a href="../categories/numeric%20calculation/">numeric calculation</a></p>
+<hr />
 <p><a href="../2018-10-21-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%E5%8F%8APython%E5%AE%9E%E7%8E%B0/">前文</a>基于经典遗传算法的基本原理，使用Python的<code>Numpy</code>模块实现了求解单目标无约束优化问题的程序。但是，针对二元函数最小值的求解结果表明其精度有待提高，本文将根据自适应遗传算法（Adaptive Genetic Algorithm，AGA）的原理改进之前的代码。</p>
 <p>自适应遗传算法的改进点在于 <strong>自适应调整遗传参数</strong>，使得保持群体多样性的同时，保证了算法的收敛性。例如对于基本遗传算法，交叉、变异的概率是固定的，自适应策略则要求在进化过程中进行自适应调整：开始阶段选取较大交叉、变异概率，这样的粗略搜索过程有利于保持种群多样性，后期则调整为较小值以进行细致搜索，防止破化最优解，加快收敛速度。</p>
 <h2 id="_2">自适应交叉概率<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>

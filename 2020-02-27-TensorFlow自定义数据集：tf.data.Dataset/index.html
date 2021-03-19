@@ -133,6 +133,7 @@
 
 <h1 id="tensorflowtfdatadataset">TensorFlow自定义数据集：tf.data.Dataset<a class="headerlink" href="#tensorflowtfdatadataset" title="Permanent link">&para;</a></h1>
 <p>2020-02-27 | <a href="../categories/machine%20learning/">machine learning</a></p>
+<hr />
 <p>当样本数据大到不能一次性载入内存时，TensorFlow推荐使用<code>tf.data.Dataset</code>创建样本的输入数据流，进而投喂给模型进行训练<code>model.fit(dataset)</code>。本文以带标签（即文件名）的验证码图片数据集为例，记录基本流程及一些备忘点。</p>
 <h2 id="_1">基本流程<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p><code>tf.data.Dataset</code>的使用遵循基本的流程 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>：</p>

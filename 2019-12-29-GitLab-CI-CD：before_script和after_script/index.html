@@ -129,6 +129,7 @@
 
 <h1 id="gitlab ci cdbefore_scriptafter_script">GitLab CI CD：before_script和after_script<a class="headerlink" href="#gitlab ci cdbefore_scriptafter_script" title="Permanent link">&para;</a></h1>
 <p>2019-12-29 | <a href="../categories/process%20automation/">process automation</a></p>
+<hr />
 <p>本文记录使用<code>before_script</code>和<code>after_script</code>解决<code>GitLab CI/CD</code>流程中遇到的一个问题。</p>
 <h2 id="_1">问题描述<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>在某个项目的<code>CI/CD</code>流程中有一个<code>job</code>是利用<code>Python</code>处理<code>Excel</code>和<code>VBA</code>，一旦原始<code>VBA</code>代码出现模态对话框例如<code>MsgBox</code>或者其他用户窗体甚至语法错误，那么整个流程就被堵塞了；接下来要么及时发现后手动取消任务，要么直至任务超时而被自动终止。</p>

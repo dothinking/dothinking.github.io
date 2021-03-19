@@ -137,6 +137,7 @@
 
 <h1 id="python">Python求解自行车前后轮轨迹问题<a class="headerlink" href="#python" title="Permanent link">&para;</a></h1>
 <p>2019-10-01 | <a href="../categories/numeric%20calculation/">numeric calculation</a></p>
+<hr />
 <p>数月前偶遇一道自行车相关的趣味数学题：根据下图 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> 所示自行车前、后轮轨迹，判断自行车的前进方向，是从左往右还是从右往左？</p>
 <p><img alt="" src="../images/2019-10-01-01.png" /></p>
 <p>不曾想过，平常无奇的自行车的两轮之间还蕴藏着恒定的规律。 在赞叹答案思路清奇之余，也萌生了基于前轮轨迹求解后轮轨迹的想法。本文首先建立自行车轨迹问题的数学模型（常微分方程），然后利用Python的<code>scipy.odeint</code>进行求解，最后对问题的解进行可视化。</p>

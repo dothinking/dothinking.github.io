@@ -141,6 +141,7 @@
 
 <h1 id="pdf2docx">pdf2docx开发概要：获取图片及其位置<a class="headerlink" href="#pdf2docx" title="Permanent link">&para;</a></h1>
 <p>2020-10-15 | <a href="../categories/process%20automation/">process automation</a></p>
+<hr />
 <p>为了在docx中重建图片，我们需要提取图片的内容（二进制流）及其位置（坐标）。<code>PyMuPDF</code>提供了两个获取页面图片的API：<code>page.getText('rawdict')</code>和<code>page.getImageList()</code>，但是截至<code>v1.18.0</code>版本，其中任意单独一个方法都无法完成这个任务，本文记录综合这两个API，提取PDF页面图片及其位置的方法。</p>
 <h2 id="pagegettextrawdict pagegetimagelist"><code>page.getText('rawdict')</code> 与 <code>page.getImageList()</code><a class="headerlink" href="#pagegettextrawdict pagegetimagelist" title="Permanent link">&para;</a></h2>
 <p>以<code>v1.18.0</code>版本为例，这两个API（下文分别以<code>rawdict</code>和<code>getImageList</code>指代）的使用说明参考官方文档：</p>

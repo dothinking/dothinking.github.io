@@ -133,6 +133,7 @@
 
 <h1 id="python win32comexcel">Python win32com模块操作Excel：获取公式依赖关系<a class="headerlink" href="#python win32comexcel" title="Permanent link">&para;</a></h1>
 <p>2019-05-02 | <a href="../categories/process%20automation/">process automation</a> , <a href="../categories/python-vba-cpp/">python/vba/cpp</a></p>
+<hr />
 <p>Excel中某个单元格的计算结果可以作为其他单元格计算公式的一部分，即二者存在依赖/引用的关系。尤其是对于复杂的表格，这种依赖关系可以方便我们追踪数据的相互作用。Excel已经在<code>Formula</code>-&gt;<code>Formula Auditing</code>组提供了可视化公式引用关系的功能：<code>Trace Precedents</code>和<code>Trace Dependents</code>，同时也可以通过相应的API来编程获取引用关系。本文即记录使用Python的<code>win32com</code>模块来实现之。</p>
 <h2 id="_1">问题描述<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>假设几个单元格的公式如下：</p>

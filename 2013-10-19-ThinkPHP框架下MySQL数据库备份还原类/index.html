@@ -129,6 +129,7 @@
 
 <h1 id="thinkphpmysql">ThinkPHP框架下MySQL数据库备份还原类<a class="headerlink" href="#thinkphpmysql" title="Permanent link">&para;</a></h1>
 <p>2013-10-19 | <a href="../categories/web%20development/">web development</a></p>
+<hr />
 <p>最近在用ThinkPHP框架写一个实验预约网站，到了数据库备份与还原一步，在网上找了一个现成的<code>MySQLReback</code>类，以.sql文件方式备份和还原数据库。本文记录使用过程以作备忘。</p>
 <p>备份还原页面总体思路为：</p>
 <p>该模块的<code>bacover()</code>方法读取备份目录中的文件列表显示在静态页面，备份/还原/删除文件等操作则异步提交给同模块的<code>dobacover()</code>方法，该方法使用<code>MySQLReback</code>类的方法完成数据库的相应操作。</p>

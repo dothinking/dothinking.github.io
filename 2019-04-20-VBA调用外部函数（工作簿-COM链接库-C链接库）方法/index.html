@@ -129,6 +129,7 @@
 
 <h1 id="vba com c">VBA调用外部函数（工作簿 COM链接库 C链接库）方法<a class="headerlink" href="#vba com c" title="Permanent link">&para;</a></h1>
 <p>2019-04-20 | <a href="../categories/python-vba-cpp/">python/vba/cpp</a></p>
+<hr />
 <p>为便于代码的重复利用和合理组织，VBA支持从当前工作簿调用其他文件中的函数，例如Excel插件<code>*.xlam</code>、宏文件<code>*.xlsm</code>、<code>.NET</code>编译和注册的<code>COM</code>链接库<code>*.dll</code>，以及C语言风格的动态链接库<code>*.dll</code>。本文以计算两个单元格数值和为例，简述跨工作簿函数调用方法。</p>
 <h2 id="excel">Excel插件/宏文件<a class="headerlink" href="#excel" title="Permanent link">&para;</a></h2>
 <p>可以通过**加载引用**或者**直接调用**两种方式使用Excel插件/宏文件中定义的函数。新建<code>add.xlsm</code>，重命名VBA工程名称为<code>Test_add</code>，然后添加一个模块<code>test_add_module</code>，最后创建如下的<code>add()</code>函数：</p>

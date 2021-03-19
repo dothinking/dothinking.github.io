@@ -137,6 +137,7 @@
 
 <h1 id="pdf2docx">pdf2docx开发概要：创建浮动图片<a class="headerlink" href="#pdf2docx" title="Permanent link">&para;</a></h1>
 <p>2020-10-25 | <a href="../categories/process%20automation/">process automation</a></p>
+<hr />
 <p><code>python-docx</code>库支持以内联形状（Inline Shape）的形式插入图片，即图片和文本之间没有重叠，遵循所谓的流动版式（flow layout）。截至最新的<code>0.8.10</code>版本，<code>python-docx</code>尚不支持插入浮动图片（floating picture）。这显然不能满足丰富多彩的文档样式的需要，因此本文探究基于<code>python-docx</code>插入浮动图片的方法。</p>
 <ul>
 <li>

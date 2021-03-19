@@ -129,6 +129,7 @@
 
 <h1 id="microsoft excel 2010enable">Microsoft Excel 2010自定义功能区：菜单项Enable状态<a class="headerlink" href="#microsoft excel 2010enable" title="Permanent link">&para;</a></h1>
 <p>2017-07-31 | <a href="../categories/process%20automation/">process automation</a></p>
+<hr />
 <p><a href="../2017-07-24-Microsoft-Excel-2010%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8A%9F%E8%83%BD%E5%8C%BA%EF%BC%9A%E4%BF%AE%E6%94%B9XML/">之前的文章</a>演示了在Excel插件中自定义菜单的基本步骤，本文将以前文的<code>hello_world_addin.xlam</code>为基础，记录进一步控制单个菜单项可用/禁用状态的方法。</p>
 <p><img alt="" src="../images/2017-07-24-02.png" /></p>
 <p>假设目标需求是：只有当前WorkSheet的名字是<code>hello</code>时，才允许点击<code>say hello world</code>。换言之，自定义菜单项<code>say hello world</code>一直处于禁用状态，除非当前工作表名称为<code>hello</code>。</p>

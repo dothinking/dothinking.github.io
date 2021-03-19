@@ -133,6 +133,7 @@
 
 <h1 id="python win32comexcelvba">Python win32com模块操作Excel：VBA模块读写<a class="headerlink" href="#python win32comexcelvba" title="Permanent link">&para;</a></h1>
 <p>2019-09-13 | <a href="../categories/process%20automation/">process automation</a> , <a href="../categories/python-vba-cpp/">python/vba/cpp</a></p>
+<hr />
 <p>Python有很多强大的第三方库可以读写Excel，例如<code>xlrd</code>、<code>xlwt</code>、<code>xlutils</code>、<code>openpyxl</code>、<code>xlwings</code>等，它们主要在读写方面具备优势，但论起对Excel操作的全面性和基础性，则首推<code>win32com</code>，它是<code>pywin32</code>库 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> 的一部分。本文以代码片段方式记录使用<code>win32com</code>读写、运行VBA宏代码。</p>
 <p>正如直接在Excel VBA工程中操作一样，<code>win32com</code>可以导出或者导入工作簿中的VBA模块，也可以运行其中的宏。同理，这些操作也受到Excel宏安全性设置的影响，因此这一部分从导入/导出宏和运行宏两部分介绍基本代码及相应的宏设置。</p>
 <h2 id="_1">导入/导出模块<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>

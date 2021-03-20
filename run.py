@@ -44,7 +44,7 @@ class Post:
         self.categories = self._process_categories() if self.meta else None
     
 
-    def to_meta_page(self, dir_name:str):
+    def to_meta_page(self, category_dir_name:str):
         lines = []
 
         # meta area
@@ -57,10 +57,10 @@ class Post:
         lines.append('\n')
         lines.append(f'# {self.title}')
         lines.append('\n')
-        meta = f'{self.year}-{self.month}-{self.day}'
+        meta = f'发布于：{self.year}-{self.month}-{self.day}'
         if self.categories:
-            links = [f'[{c}]({dir_name}/{to_dir_name(c)}.md)' for c in self.categories]
-            meta += ' | ' + ' , '.join(links)
+            links = [f'[{c}]({category_dir_name}/{to_dir_name(c)}.md)' for c in self.categories]
+            meta += ' | 分类：' + ' , '.join(links)
         lines.append(meta)
         lines.append('\n')
         lines.append(Post.HLINE)
@@ -149,10 +149,17 @@ class Post:
 
 class Posts:
 
-    def __init__(self, docs_dir:str) -> None: 
+    INDEX_FILENAME   = 'index.md'
+    ARCHIVE_FILENAME = 'archive.md'
+    ABOUT_FILENAME   = 'about.md'
+
+    def __init__(self, docs_dir:str, category_dir_name:str='categories', archive_dir_name:str='archives') -> None: 
         self.docs_dir = docs_dir
+        self.category_dir_name = category_dir_name
+        self.archive_dir_name = archive_dir_name
+
         self._posts = defaultdict(list) # summarized by year/category
-        self._years = set()
+        self._archives = set()
         self._categories = set()
         
         for filename in sorted(os.listdir(docs_dir), reverse=True):            
@@ -166,7 +173,7 @@ class Posts:
         if not isinstance(post, Post) or post.year is None: return
         # by year
         self._posts[post.year].append(post)
-        self._years.add(post.year)
+        self._archives.add(post.year)
 
         # by category
         for c in (post.categories or ['未分类']):
@@ -174,21 +181,30 @@ class Posts:
             self._categories.add(c)
 
 
-    def summay_categories(self, dir_name:str):
+    def to_category_pages(self):
         '''Create summary pages grouped by category.'''
-        page_dir = os.path.join(self.docs_dir, dir_name)
+        page_dir = os.path.join(self.docs_dir, self.category_dir_name)
         for c in self._categories:
             self._to_summary_page(c, page_dir)
  
 
-    def summay_years(self, dir_name:str):
+    def to_archive_pages(self):
         '''Create summary pages grouped by year.'''
-        page_dir = os.path.join(self.docs_dir, dir_name)
-        for year in self._years:
+        lines = ['## Archives\n']
+        page_dir = os.path.join(self.docs_dir, self.archive_dir_name)
+        for year in sorted(self._archives, reverse=True):
+            len_posts = len(self._posts.get(year))
+            lines.append(f'- [{year} ({len_posts})]({self.archive_dir_name}/{year}.md)')
+
+            # pages in each year
             self._to_summary_page(year, page_dir)
+        
+        # top page
+        with open(os.path.join(self.docs_dir, Posts.ARCHIVE_FILENAME), 'w', encoding='utf-8') as f:
+            f.write('\n'.join(lines))            
 
 
-    def to_index(self, dir_name:str, title:str='', count:int=5):
+    def to_home_page(self, title:str='', count:int=5):
         '''Create home page with latest posts and categories.'''
         lines = [title]
 
@@ -201,61 +217,50 @@ class Posts:
         lines.append('\n')
         lines.append('## 更多分类\n')
         for c in sorted(self._categories):
-            lines.append(f'- [{c} ({len(self._posts.get(c))})]({dir_name}/{to_dir_name(c)}.md)')
+            len_posts = len(self._posts.get(c))
+            lines.append(f'- [{c} ({len_posts})]({self.category_dir_name}/{to_dir_name(c)}.md)')
 
-        with open(os.path.join(self.docs_dir, 'index.md'), 'w', encoding='utf-8') as f:
+        with open(os.path.join(self.docs_dir, Posts.INDEX_FILENAME), 'w', encoding='utf-8') as f:
             f.write('\n'.join(lines))
 
 
-    def to_navigation(self, dir_name:str, count:int=5) -> str:
+    def to_navigation(self) -> str:
         '''Generate grouped navigation.
 
         ::
-            nav:
-                - '2021': dir_name/2021.md
-                - '2020': dir_name/2020.md
+            nav:                
+                - '分类':
+                    - 'foo': categories/foo.md
+                    - 'bar': categories/bar.md
+                - '归档': archives.md
+                - '关于': about.md
                 ...
-                - 'More':
-                    - '2015': dir_name/2015.md
-                    - '2014': dir_name/2014.md
-
-        Args:
-            dir_name (str): Dir name storing annual posts.
-            count (int, optional): The count of year shown in navigation. Defaults to 5.
         '''
-        group_posts = {}
-        group_posts['More'] = defaultdict(dict)
-
-        top = ['\n', 'nav:']
-        more = ['\n', "  - 'More':"]
-        i = 0
-
-        for year in sorted(self._years, reverse=True):            
-            i += 1
-            # navigation
-            item = f'- {year}: {dir_name}/{year}.md'
-            if i <= count:
-                top.append(f'  {item}')
-            else:
-                more.append(f'    {item}')
+        nav = ['nav:']
+        nav.append("  - '分类':")
+        for c in sorted(self._categories):
+            nav.append(f'    - {c}: {self.category_dir_name}/{to_dir_name(c)}.md')
         
-        # about
-        about = '\n  - 关于: about.md'
+        # archive, about
+        nav.extend([
+            f'  - 归档: {Posts.ARCHIVE_FILENAME}',
+            f'  - 关于: {Posts.ABOUT_FILENAME}'
+        ])
         
-        return '\n'.join(top) + '\n'.join(more) + about
+        return '\n'.join(nav)
 
  
-    def to_meta_pages(self, dir_name:str):
+    def to_meta_pages(self):
         '''Update page content with meta-date included.'''
-        for year in self._years:
+        for year in self._archives:
             for post in self._posts.get(year, []):
-                post.to_meta_page(dir_name)
+                post.to_meta_page(self.category_dir_name)
 
 
     def _get_latest(self, count:int):
         posts = []
         need = count
-        for year in sorted(self._years, reverse=True):
+        for year in sorted(self._archives, reverse=True):
             year_posts = self._posts.get(year)
             year_cnt = len(year_posts)
             if year_cnt>=need:
@@ -300,38 +305,37 @@ class ConfigFile:
 
     def update(self, more_content):
         with open(self.file_path, 'w', encoding='utf-8') as f:
-            f.write(self.content + more_content)
+            f.write(self.content + '\n' + more_content)
 
 
 
 def run(cfg_file_path:str,
-        year_path_name:str='years', 
+        archive_path_name:str='archives', 
         category_path_name:str='categories', 
-        nav_count:int=5,
-        latest_count:int=5,
+        latest_posts_count:int=5,
         update_page:bool=False):
     
     # collect all posts
     build_dir = os.path.dirname(cfg_file_path)
     docs_dir = os.path.join(build_dir, 'docs')
-    posts = Posts(docs_dir)
+    posts = Posts(docs_dir, category_path_name, archive_path_name)
     
     # summary pages by category and year
-    posts.summay_categories(category_path_name)
-    posts.summay_years(year_path_name)
+    posts.to_category_pages()
+    posts.to_archive_pages()
 
     # update config file
     cfg = ConfigFile(cfg_file_path)
-    cfg.update(posts.to_navigation(year_path_name, nav_count))
+    cfg.update(posts.to_navigation())
     
     # create index page only if not exist
-    if not os.path.exists(os.path.join(docs_dir, 'index.md')):
+    if not os.path.exists(os.path.join(docs_dir, Posts.INDEX_FILENAME)):
         title = cfg.get_site_info()
-        posts.to_index(category_path_name, title, latest_count)
+        posts.to_home_page(title, latest_posts_count)
     
     # include meta-data to page
     if update_page: 
-        posts.to_meta_pages(category_path_name)
+        posts.to_meta_pages()
     
     
 
@@ -339,7 +343,6 @@ def run(cfg_file_path:str,
 if __name__=='__main__':
     import sys
 
-    command, cfg_file, years_name, categories_name, nav_count, latest_count = sys.argv[1:]
-    nav_count = int(nav_count)
+    command, cfg_file, archive_name, categories_name, latest_count = sys.argv[1:]
     latest_count = int(latest_count)
-    run(cfg_file, years_name, categories_name, nav_count, latest_count, command=='build')
+    run(cfg_file, archive_name, categories_name, latest_count, command=='build')

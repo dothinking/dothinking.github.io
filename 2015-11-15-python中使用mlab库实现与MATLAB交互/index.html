@@ -34,45 +34,53 @@
                 <div id="navbar-collapse" class="navbar-collapse collapse">
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
-                            <li class="navitem">
-                                <a href="../years/2021/" class="nav-link">2021</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../years/2020/" class="nav-link">2020</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../years/2019/" class="nav-link">2019</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../years/2018/" class="nav-link">2018</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../years/2017/" class="nav-link">2017</a>
-                            </li>
                             <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">分类 <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     
 <li>
-    <a href="../years/2016/" class="dropdown-item">2016</a>
+    <a href="../categories/CAD-CAE%20integration/" class="dropdown-item">CAD/CAE integration</a>
 </li>
                                     
 <li>
-    <a href="../years/2015/" class="dropdown-item">2015</a>
+    <a href="../categories/feeling/" class="dropdown-item">feeling</a>
 </li>
                                     
 <li>
-    <a href="../years/2014/" class="dropdown-item">2014</a>
+    <a href="../categories/finite%20element%20analysis/" class="dropdown-item">finite element analysis</a>
 </li>
                                     
 <li>
-    <a href="../years/2013/" class="dropdown-item">2013</a>
+    <a href="../categories/machine%20learning/" class="dropdown-item">machine learning</a>
 </li>
                                     
 <li>
-    <a href="../years/2012/" class="dropdown-item">2012</a>
+    <a href="../categories/mathematics/" class="dropdown-item">mathematics</a>
+</li>
+                                    
+<li>
+    <a href="../categories/numeric%20calculation/" class="dropdown-item">numeric calculation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/plasticity%20theory/" class="dropdown-item">plasticity theory</a>
+</li>
+                                    
+<li>
+    <a href="../categories/process%20automation/" class="dropdown-item">process automation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/python-vba-cpp/" class="dropdown-item">python/vba/cpp</a>
+</li>
+                                    
+<li>
+    <a href="../categories/web%20development/" class="dropdown-item">web development</a>
 </li>
                                 </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../archive/" class="nav-link">归档</a>
                             </li>
                             <li class="navitem">
                                 <a href="../about/" class="nav-link">关于</a>
@@ -132,7 +140,7 @@
                     <div class="col-md-9" role="main">
 
 <h1 id="pythonmlabmatlab">python中使用mlab库实现与MATLAB交互<a class="headerlink" href="#pythonmlabmatlab" title="Permanent link">&para;</a></h1>
-<p>2015-11-15 | <a href="../categories/numeric%20calculation/">numeric calculation</a></p>
+<p>发布于：2015-11-15 | 分类：<a href="../categories/numeric%20calculation/">numeric calculation</a></p>
 <hr />
 <p><code>numpy</code>、<code>scipy</code>、<code>sympy</code>等扩展库增加了Python在科学计算上的优势，但是，某些函数的执行效率依旧比不上商业化的Matlab。例如，针对本人的一个约束极值问题，matlab优化工具箱的<code>fmincon()</code>函数相比scipy.optimize的<code>minimize()</code>函数表现出更高的计算效率。因此，在某些场合下，需要在python代码中执行matlab命令。</p>
 <p>庆幸的是，已经有开源项目实现了这个需求。其中值得推荐的是：Alexander Schmolck 和 Vivek Rathod 负责的<code>mlabwrap</code>。此项目作者的本意是在Linux下写的，对于windows用户需要C++编译器才能成功安装。Yauhen Yakimovich在mlabwrap的基础上开发了并不依赖于C++编译器的<code>mlab</code>，本文即对其安装和使用作简要说明。</p>

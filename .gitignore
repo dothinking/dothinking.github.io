@@ -1,6 +1,7 @@
 __pycache__/
 _mkdocs.yml
 categories/
-years/
+archives/
 build/
 site/
+archive.md

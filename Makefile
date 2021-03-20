@@ -13,13 +13,10 @@ BUILDCFG	:=$(BUILD)/$(MKDOCSCFG)
 
 # sub-dir names for categoried posts
 CATEGORIES	:=categories
-YEARS		:=years
-
-# count of items show in navigation bar
-NAVCNT		:=5
+ARCHIVES	:=archives
 
 # count of latest posts show in homepage
-INDEXCNT	:=7
+INDEXCNT	:=10
 
 
 
@@ -27,9 +24,9 @@ INDEXCNT	:=7
 pre_process: 
 	@echo Checking and creating sub-directories...
 	@if [ -d "$(DOCS)/$(CATEGORIES)" ];  then rm -rf "$(DOCS)/$(CATEGORIES)" ; fi
-	@if [ -d "$(DOCS)/$(YEARS)" ];  then rm -rf "$(DOCS)/$(YEARS)" ; fi
+	@if [ -d "$(DOCS)/$(ARCHIVES)" ];  then rm -rf "$(DOCS)/$(ARCHIVES)" ; fi
 	@mkdir "$(DOCS)/$(CATEGORIES)"
-	@mkdir "$(DOCS)/$(YEARS)"	
+	@mkdir "$(DOCS)/$(ARCHIVES)"	
 
 
 .PHONY: copy
@@ -43,7 +40,7 @@ copy: pre_process
 serve: pre_process
 	@echo Summarizing pages...
 	@cp mkdocs.yml "$(SERVECFG)"
-	@python run.py serve "$(SERVECFG)" $(YEARS) $(CATEGORIES) $(NAVCNT) $(INDEXCNT)
+	@python run.py serve "$(SERVECFG)" $(ARCHIVES) $(CATEGORIES) $(INDEXCNT)
 	@mkdocs serve -f "$(SERVECFG)"
 
 
@@ -51,7 +48,7 @@ serve: pre_process
 build: copy
 	@echo Summarizing pages...
 	@cp mkdocs.yml "$(BUILDCFG)"
-	@python run.py build "$(BUILDCFG)" $(YEARS) $(CATEGORIES) $(NAVCNT) $(INDEXCNT)
+	@python run.py build "$(BUILDCFG)" $(ARCHIVES) $(CATEGORIES) $(INDEXCNT)
 	@mkdocs build -f "$(BUILDCFG)"
 
 
@@ -59,5 +56,5 @@ build: copy
 clean:
 	@if [ -d "$(BUILD)" ];  then rm -rf "$(BUILD)" ; fi
 	@if [ -d "$(DOCS)/$(CATEGORIES)" ];  then rm -rf "$(DOCS)/$(CATEGORIES)" ; fi
-	@if [ -d "$(DOCS)/$(YEARS)" ];  then rm -rf "$(DOCS)/$(YEARS)" ; fi
+	@if [ -d "$(DOCS)/$(ARCHIVES)" ];  then rm -rf "$(DOCS)/$(ARCHIVES)" ; fi
 	@if [ -e "$(SERVECFG)" ];  then rm -rf "$(SERVECFG)" ; fi

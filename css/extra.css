@@ -115,6 +115,10 @@ div.col-md-9 p a {
     color: #0366d6;
 }
 
+div.col-md-9 p+ul a {
+    color: #0366d6;
+}
+
 a.footnote-ref {
     color: #0366d6;
     font-weight: bold;

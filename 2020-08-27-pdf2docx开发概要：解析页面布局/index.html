@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="dothinking">
-        <link rel="canonical" href="https://dothinking.github.io/archive/">
+        <link rel="canonical" href="https://dothinking.github.io/2020-08-27-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E8%A7%A3%E6%9E%90%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>归档 - 格致</title>
+        <title>pdf2docx开发概要：解析页面布局 - 格致</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -79,8 +79,8 @@
 </li>
                                 </ul>
                             </li>
-                            <li class="navitem active">
-                                <a href="./" class="nav-link">归档</a>
+                            <li class="navitem">
+                                <a href="../archive/" class="nav-link">归档</a>
                             </li>
                             <li class="navitem">
                                 <a href="../about/" class="nav-link">关于</a>
@@ -94,17 +94,7 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" href="../categories/web%20development/" class="nav-link">
-                                    <i class="fa fa-arrow-left"></i> Previous
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a rel="next" href="../about/" class="nav-link">
-                                    Next <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/archive.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2020-08-27-pdf2docx开发概要：解析页面布局.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -124,8 +114,24 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="2"><a href="#archives" class="nav-link">Archives</a>
+            <li class="nav-item" data-level="1"><a href="#pdf2docx" class="nav-link">pdf2docx开发概要：解析页面布局</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">页面大小与页边距</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">竖直方向定位</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">水平方向定位</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_4" class="nav-link">数据结构</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -133,19 +139,77 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h2 id="archives">Archives<a class="headerlink" href="#archives" title="Permanent link">&para;</a></h2>
+<h1 id="pdf2docx">pdf2docx开发概要：解析页面布局<a class="headerlink" href="#pdf2docx" title="Permanent link">&para;</a></h1>
+<p>发布于：2020-08-27 | 分类：<a href="../categories/process%20automation/">process automation</a></p>
+<hr />
+<p>经过<a href="../2020-08-15-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E8%A7%A3%E6%9E%90%E8%A1%A8%E6%A0%BC/">表格解析</a>、<a href="../2020-07-20-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E8%A7%A3%E6%9E%90%E6%96%87%E6%9C%AC%E6%A0%B7%E5%BC%8F/">文本样式识别</a>后，我们得到了整合后的文本/图片/表格块。其中文本/图片块将被重建为段落，表格块将被重建为表格，单元格内文本/图片块按照相同的逻辑处理。在此基础上，计算相邻元素之间的间距，例如竖直方向的前后段间距、水平方向的段落缩进。</p>
+<h2 id="_1">页面大小与页边距<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><code>PyMuPDF</code>解析结果直接包括了页面宽度和高度，同时根据所有块级元素占据区域的极限值得到页边距，例如最小左上角点确定了左边距和上边距。</p>
+<p><code>python-docx</code>中页面<code>section</code>对象恰好提供了这六个属性，例如<code>page_width</code>、<code>left_margin</code>。于是页面基本形式得以确定。</p>
+<h2 id="_2">竖直方向定位<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>块级元素之间通过段前/段后间距确定相对位置关系，同时保证自身的高度，例如段落行高对于文本块，表格行高对于表格块。由于Word中段落具有段前/段后间距属性，文本块将被作为定位的参考元素。竖直间距确定原则：</p>
 <ul>
-<li><a href="../archives/2021/">2021 (1)</a></li>
-<li><a href="../archives/2020/">2020 (12)</a></li>
-<li><a href="../archives/2019/">2019 (13)</a></li>
-<li><a href="../archives/2018/">2018 (18)</a></li>
-<li><a href="../archives/2017/">2017 (15)</a></li>
-<li><a href="../archives/2016/">2016 (2)</a></li>
-<li><a href="../archives/2015/">2015 (4)</a></li>
-<li><a href="../archives/2014/">2014 (5)</a></li>
-<li><a href="../archives/2013/">2013 (9)</a></li>
-<li><a href="../archives/2012/">2012 (8)</a></li>
-</ul></div>
+<li>
+<p>考察竖直方向上相邻的两个块级元素，前一个是参考块，后一个是当前块。对于第一个块级元素，参考块是上边距，当前块即为自身。</p>
+</li>
+<li>
+<p>如果当前是文本块或者图片块（不论参考块是文本、图片还是表格），则设置当前块的段前间距<code>before_space</code>为二者之间垂直距离。同时，</p>
+<ul>
+<li>如果当前是文本块，则设置行高<code>line_space</code>为平均磅数：文本块高度除以物理行数</li>
+<li>如果当前是图片块，则无需显式设置行高，docx创建时直接设置1.05倍行距即可。</li>
+</ul>
+</li>
+<li>
+<p>如果当前块是表格块，则考察参考块：</p>
+<ul>
+<li>如果参考块是文本块或者图片块（此时当前块为表格），则设置参考块的段后距离<code>after_space</code></li>
+<li>如果参考块还是表格块，则设置当前块的段前间距<code>before_space</code></li>
+</ul>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<ul>
+<li><code>docx</code>中无法直接设置两个表格的间距，创建表格时采用变通方式：在间距中插入空文本块，然后设置该文本块的段前间距。</li>
+<li>如果表格在末尾，<code>MS Word</code>会自动加一个标准间距的空段落，这样可能导致非预期的换页。因此，此种情况注意人为添加一个空段落并设置其为最小的间距值，例如前后零间距，行高1磅。</li>
+</ul>
+</div>
+<h2 id="_3">水平方向定位<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>水平方向根据块内元素的对齐关系以及在页面中的位置确定对齐方式：左/居中/右/分散对齐。其中左对齐为默认方式，因为结合段落左缩进和制表符，总能正确定位任何块间元素。</p>
+<ul>
+<li>如果块内有不连续的行（相邻<code>line</code>存在明显的间距），则设为左对齐，以便结合制表符定位</li>
+<li>如果只有一行，则考察与页面的关系：<ul>
+<li>这一行足够长 -&gt; 左对齐</li>
+<li>行中心与页面中心差值很小 -&gt; 居中对齐</li>
+<li>依次判断左、右边距差值，哪个差值小即为相应对齐方式</li>
+</ul>
+</li>
+<li>如果存在多行，则考察这些行之间的对齐关系：<ul>
+<li>中心对齐其左右都不对齐 -&gt; 中心对齐</li>
+</ul>
+</li>
+</ul>
+<p>最后，创建<code>docx</code>时通过设置段落的左/右缩进和对齐方式来实现。并且，左对齐方式还要通过 <strong>制表位</strong> 来保证段落内不同行的水平位置。</p>
+<h2 id="_4">数据结构<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>综上，文本/表格块在标准数据结构的基础上，加入了如下定位相关属性：</p>
+<pre class="highlight"><code class="language-python"># text/table block
+{
+    "type": 0,
+    "bbox": [float, float, float, float],
+
+    ..., # text/table properties
+
+    # ----- vertical spacing -----
+    "before_space": float,
+    "line_space": float,
+    "after_space": float
+
+    # ----- horizontal spacing -----
+    "alignment": int,
+    "left_space": float,
+    "right_space": float,
+    "tab_stops": [float, float, ...]
+}</code></pre></div>
             </div>
         </div>
 

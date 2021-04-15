@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2020-08-15-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E8%A7%A3%E6%9E%90%E8%A1%A8%E6%A0%BC/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>pdf2docx开发概要：解析表格 - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">分类 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/CAD-CAE%20integration/" class="dropdown-item">CAD/CAE integration</a>
+</li>
+                                    
+<li>
+    <a href="../categories/feeling/" class="dropdown-item">feeling</a>
+</li>
+                                    
+<li>
+    <a href="../categories/finite%20element%20analysis/" class="dropdown-item">finite element analysis</a>
+</li>
+                                    
+<li>
+    <a href="../categories/machine%20learning/" class="dropdown-item">machine learning</a>
+</li>
+                                    
+<li>
+    <a href="../categories/mathematics/" class="dropdown-item">mathematics</a>
+</li>
+                                    
+<li>
+    <a href="../categories/numeric%20calculation/" class="dropdown-item">numeric calculation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/plasticity%20theory/" class="dropdown-item">plasticity theory</a>
+</li>
+                                    
+<li>
+    <a href="../categories/process%20automation/" class="dropdown-item">process automation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/python-vba-cpp/" class="dropdown-item">python/vba/cpp</a>
+</li>
+                                    
+<li>
+    <a href="../categories/web%20development/" class="dropdown-item">web development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../archive/" class="nav-link">归档</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../about/" class="nav-link">关于</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2020-08-15-pdf2docx开发概要：解析表格.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#pdf2docx" class="nav-link">pdf2docx开发概要：解析表格</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">解析显式表格</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">解析隐式表格</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">数据结构</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="pdf2docx">pdf2docx开发概要：解析表格<a class="headerlink" href="#pdf2docx" title="Permanent link">&para;</a></h1>
+<p>发布于：2020-08-15 | 分类：<a href="../categories/process%20automation/">process automation</a></p>
+<hr />
+<p>PDF中没有语义上的表格的概念，所以需要根据外观上的表格，即边框线（<code>Stroke</code>类型的形状）围成的区域，来识别语义上的表格。另一方面，不借助文本框的话<code>Word</code>不支持浮动布局，表现为一段文字默认占据一整行，所以需要表格来进行辅助布局，例如多列文本。于是，<code>pdf2docx</code>考虑两类表格：</p>
+<ul>
+<li>显式表格（<code>Lattice Table</code>）：有边线，组织结构化的内容</li>
+<li>隐式表格（<code>Stream Table</code>）：无边线，既可能用于组织结构化的内容（隐藏边框的表格），也可能是为了页面布局的需要</li>
+</ul>
+<h2 id="_1">解析显式表格<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><strong>从边线出发，确定表格结构-&gt;单元格属性-&gt;单元格内容</strong>：</p>
+<ul>
+<li>
+<p>以是否相交为依据分组<code>Stroke</code>元素，每一组即为潜在的表格区域内的边框线（table border），根据潜在表格区域获取<code>Fill</code>单元格背景（cell shading）。</p>
+</li>
+<li>
+<p>基于边框线确定表格结构</p>
+<ul>
+<li>
+<p>判断是否存在外边框线，没有则加上假想的外边框线（白色、宽度0）。</p>
+</li>
+<li>
+<p>将边框线按横、纵分组得到行间隔线和列间隔线，横纵间隔线的交点组成了初始的未考虑合并单元格的表格结构。</p>
+</li>
+<li>
+<p>对于每一行，检测一条假想水平线与列边线的交点：不存在交点的位置即发生了行方向的合并单元格；同理检测列方向的合并单元格。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>基于表格结构确定单元格属性</p>
+<ul>
+<li>
+<p>以左上角单元格表示合并单元格区域，被合并的单元格初始化为空<code>Cell()</code>。</p>
+</li>
+<li>
+<p>根据每一个单元格的区域（合并单元格则考虑所有合并区域）确定边框的四个矩形：从而直接得到各个边框的宽度和颜色；并根据单元格区域检测<code>Fill</code>类型的矩形，存在则得到单元格背景色。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>基于表格结构确定单元格包含的文本</p>
+<ul>
+<li>
+<p>将包含于单元格区域的文本/图片加入到相应单元格。有时文本块的划分与单元格区域并不严格匹配，需要深入到<code>block</code>&gt;<code>line</code>&gt;<code>span</code>&gt;<code>char</code>级别拆分原始文本块。</p>
+</li>
+<li>
+<p>如果两个文本块物理上处于同一行，则合并为一个大文本块。目的是创建Word文档时保证正确的位置关系，因为每一个文本块将被作为独立的段落。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>得到表格的位置及属性后，需要考虑能否在<code>python-docx</code>中重建。好在或者直接使用API或者借助<code>openxml</code>，以下操作都被<code>python-docx</code>支持：</p>
+<ul>
+<li>表格缩进 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></li>
+<li>合并单元格 <code>cell.merge(other_cell)</code> <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></li>
+<li>行高<code>row.height</code>及单元格宽度<code>cell.width</code> <sup id="fnref2:2"><a class="footnote-ref" href="#fn:2">2</a></sup></li>
+<li>单元格内边距 <sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup></li>
+<li>单元格边框颜色和宽度 <sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup></li>
+<li>单元格背景色 <sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup></li>
+</ul>
+<h2 id="_2">解析隐式表格<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>实际上很难完美重建语义上的无边线表格，<code>pdf2docx</code>退而求其次，只是为了保证位置关系，从“看起来一样”的角度解析隐式表格。基本思路：</p>
+<p><strong>从文本块出发，确定分隔线即边线，接下来与显式表格的处理步骤一致</strong>。</p>
+<ul>
+<li>
+<p>基于文本块位置关系检测潜在的隐式表格区域</p>
+<ul>
+<li>
+<p>如果同一文本块内<code>line</code>级别元素竖直方向有重叠但物理上不是严格处于同一行，它将被视为表格的行。因为docx重建时，普通段落无法保证这样的位置关系，所以必须加入潜在表格区域，后续进一步划分为不同列。</p>
+</li>
+<li>
+<p>如果同一文本块内<code>line</code>级别元素出现多次且相邻之间间隔一定距离，各个<code>line</code>将被视为潜在的单元格，因此整个文本块被加入潜在表格区域。</p>
+</li>
+<li>
+<p>同理，如果相邻两个文本块物理上处于同一行（竖直方向有重叠），它们也将被视为表格区域。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>基于以上文本块的<code>line</code>级别的元素递归检测边界线</p>
+<ul>
+<li>
+<p>按列分组，相邻两组的中间线即为列边界。因为列的角度有利于docx重建，行方向会因为不同文本块另起一段而破坏位置关系。</p>
+</li>
+<li>
+<p>每一组内按行分组，相邻两组的中间线即为行边界。</p>
+</li>
+<li>
+<p>重复以上步骤，直到每组只有单一文本块。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>如上得到隐式表格区域的假想边框线，接下来按照显式表格流程处理即可。</p>
+<p>以上将相邻两组的中间线作为列边界的处理方式简单快捷，但不足之处是不同行中的各列边界参差不齐，使表格结构复杂化。另外，还有一类半显式半隐式表格，即在隐式表格的基础上，又显式给出了部分表格线，例如常见的三线表。这些都需要在上述隐式表格解析的基础上进行表格线的优化，具体参考下文：</p>
+<blockquote>
+<p><a href="../2020-09-27-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E5%AF%B9%E9%BD%90%E9%9A%90%E5%BC%8F%E8%A1%A8%E6%A0%BC%E7%BA%BF/">pdf2docx开发概要：对齐隐式表格线</a></p>
+</blockquote>
+<h2 id="_3">数据结构<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>参考文本和图片，定义表格类型的数据结构：</p>
+<pre class="highlight"><code class="language-python">{
+    'type': int, # 3-explicit table; 4-implicit table
+    'bbox': (float, float, float, float),
+    ..., # some spacing properties    
+    "rows": [
+        {
+            'bbox': (float, float, float, float),
+            'height': float,
+            'cells': [
+                {
+                    'bbox': (float, float, float, float),
+                    'bg-color':  int,
+                    'border-color': (int, int, int, int), # top, right, bootom, left
+                    'border-width': (float, float, float, float),
+                    'merged-cells': (int, int),
+                    'blocks': [
+                        {
+                            # text/image blocks contained in current cell
+                        }
+                    ]
+                },
+                ... # more cells
+            ]
+
+        },
+        ... # more rows
+    ]
+
+}</code></pre>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="https://stackoverflow.com/questions/50556604/using-pythons-docx-library-how-can-a-table-be-indented">Using Python's docx library, how can a table be indented?</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://python-docx.readthedocs.io/en/latest/api/table.html#cell-objects">Table objects</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://stackoverflow.com/questions/51060431/how-to-set-cell-margins-of-tables-in-ms-word-using-python-docx">How to set cell margins of tables in ms word using python docx</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="https://stackoverflow.com/questions/33069697/how-to-setup-cell-borders-with-python-docx">How to setup cell borders with python-docx</a>&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p><a href="https://stackoverflow.com/questions/26752856/python-docx-set-table-cell-background-and-text-color">python docx set table cell background and text color</a>&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

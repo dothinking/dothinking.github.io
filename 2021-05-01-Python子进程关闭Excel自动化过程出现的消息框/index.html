@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2021-05-01-Python%E5%AD%90%E8%BF%9B%E7%A8%8B%E5%85%B3%E9%97%ADExcel%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%87%E7%A8%8B%E5%87%BA%E7%8E%B0%E7%9A%84%E6%B6%88%E6%81%AF%E6%A1%86/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Python子进程关闭Excel自动化过程出现的消息框 - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">分类 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/CAD-CAE%20integration/" class="dropdown-item">CAD/CAE integration</a>
+</li>
+                                    
+<li>
+    <a href="../categories/feeling/" class="dropdown-item">feeling</a>
+</li>
+                                    
+<li>
+    <a href="../categories/finite%20element%20analysis/" class="dropdown-item">finite element analysis</a>
+</li>
+                                    
+<li>
+    <a href="../categories/machine%20learning/" class="dropdown-item">machine learning</a>
+</li>
+                                    
+<li>
+    <a href="../categories/mathematics/" class="dropdown-item">mathematics</a>
+</li>
+                                    
+<li>
+    <a href="../categories/numeric%20calculation/" class="dropdown-item">numeric calculation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/plasticity%20theory/" class="dropdown-item">plasticity theory</a>
+</li>
+                                    
+<li>
+    <a href="../categories/process%20automation/" class="dropdown-item">process automation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/python-vba-cpp/" class="dropdown-item">python/vba/cpp</a>
+</li>
+                                    
+<li>
+    <a href="../categories/web%20development/" class="dropdown-item">web development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../archive/" class="nav-link">归档</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../about/" class="nav-link">关于</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2021-05-01-Python子进程关闭Excel自动化过程出现的消息框.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#pythonexcel" class="nav-link">Python子进程关闭Excel自动化过程出现的消息框</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">假想场景</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">基本思路</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#pywinauto" class="nav-link">pywinauto方案</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#win32gui" class="nav-link">win32gui方案</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="pythonexcel">Python子进程关闭Excel自动化过程出现的消息框<a class="headerlink" href="#pythonexcel" title="Permanent link">&para;</a></h1>
+<p>发布于：2021-05-01 | 分类：<a href="../categories/process%20automation/">process automation</a></p>
+<hr />
+<p>利用Python实现Excel自动化，尤其是涉及VBA时，有可能好心出现消息框 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>，例如动作完成后的一个VBA弹窗（MsgBox）。此时需要人为响应，否则代码卡死直至超时。当然，根本的方法是VBA代码中不要出现类似弹窗；但有时我们无权修改被操作的Excel文件，例如这是我们进行自动化测试的对象。所以本文记录从代码角度解决此类问题的方法。</p>
+<h2 id="_1">假想场景<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>使用<code>xlwings</code>（或者其他自动化库）打开Excel文件<code>test.xlsm</code>，读取<code>Sheet1!A1</code>单元格内容。很简单的一个操作：</p>
+<pre class="codehilite"><code>import xlwings as xw
+
+wb = xw.Book('test.xlsm')
+msg = wb.sheets('Sheet1').range('A1').value
+print(msg)
+wb.close()
+</code></pre>
+
+<p>然而不幸的是，这个文件在打开工作簿时进行了热情的欢迎仪式：</p>
+<pre class="codehilite"><code>Private Sub Workbook_Open()
+    MsgBox &quot;Welcome&quot;
+    MsgBox &quot;to open&quot;
+    MsgBox &quot;this file.&quot;
+End Sub
+</code></pre>
+
+<p>第一个弹窗<code>Welcome</code>就卡住了Excel，Python代码相应被卡死在第一行。</p>
+<h2 id="_2">基本思路<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>主程序中不可能直接处理或者绕过此类问题，也不能奢望有人随时蹲守解决此类问题——那就新开一个线程来坚守吧。因此，解决方案是利用子线程监听并随时关闭弹窗，直到主程序圆满结束。</p>
+<p>Excel弹窗默认的标题是<code>Microsoft Excel</code>，接下来以此为例捕捉窗口并点击按钮。</p>
+<h2 id="pywinauto">pywinauto方案<a class="headerlink" href="#pywinauto" title="Permanent link">&para;</a></h2>
+<p><code>pywinauto</code>顾名思义是Windows界面自动化库，模拟鼠标和键盘操作窗体和控件 <sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>。不同于先获取句柄再获取属性的传统方式，<code>pywinauto</code>的API更加友好和pythonic。例如，两行代码就可以实现窗口捕捉和点击：</p>
+<pre class="codehilite"><code>win = Application(backend=&quot;win32&quot;).connect(title='Microsoft Excel')
+win.Dialog.Button.click()
+</code></pre>
+
+<p>自定义一个线程类执行以上操作：</p>
+<pre class="codehilite"><code># listener_pywinauto.py
+import time
+from threading import Thread, Event
+from pywinauto.application import Application
+
+
+class MsgBoxListener(Thread):
+
+    def __init__(self, title:str, interval:int):
+        Thread.__init__(self)
+        self._title = title 
+        self._interval = interval 
+        self._stop_event = Event()
+
+    def stop(self): self._stop_event.set()
+
+    @property
+    def is_running(self): return not self._stop_event.is_set()
+
+    def run(self):
+        while self.is_running:
+            try:
+                time.sleep(self._interval)
+                self._close_msgbox()
+            except Exception as e:
+                print(e, flush=True)
+
+
+    def _close_msgbox(self):
+        '''Close the default Excel MsgBox with title &quot;Microsoft Excel&quot;.'''        
+        win = Application(backend=&quot;win32&quot;).connect(title=self._title)
+        win.Dialog.Button.click()
+
+
+if __name__=='__main__':
+    t = MsgBoxListener('Microsoft Excel', 1)
+    t.start()
+    time.sleep(10)
+    t.stop()
+</code></pre>
+
+<p>最终，在开始主要操作前启动子线程，并在结束后关闭：</p>
+<pre class="codehilite"><code>import xlwings as xw
+from listener_pywinauto import MsgBoxListener
+
+# start listen thread
+listener = MsgBoxListener('Microsoft Excel', 3)
+listener.start()
+
+# main process
+wb = xw.Book('test.xlsm')
+msg = wb.sheets('Sheet1').range('A1').value
+print(msg)
+wb.close()
+
+# stop listener thread
+listener.stop()
+</code></pre>
+
+<p>到此问题基本解决，本地运行效果完全达到预期。但我的真实需求是以系统服务方式在服务器上进行Excel文件自动化测试，后续发现，当以系统服务方式运行时，<code>pywinauto</code>竟然捕捉不到弹窗！这或许是<code>pywinauto</code>一个潜在的问题 <sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>。</p>
+<h2 id="win32gui">win32gui方案<a class="headerlink" href="#win32gui" title="Permanent link">&para;</a></h2>
+<p>那就只好转向相对底层的<code>win32gui</code>（实际是<code>pywin32</code>库的一部分），所幸解决了上述问题。</p>
+<pre class="codehilite"><code># pip install pywin32
+import win32gui
+import win32con
+</code></pre>
+
+<p>以下仅列出<code>MsgBoxListener</code>类中关键操作，其余代码完全一致：</p>
+<pre class="codehilite"><code>def _close_msgbox(self):
+    # find the top window by title
+    hwnd = win32gui.FindWindow(None, self._title)
+    if not hwnd: return
+
+    # find child button
+    h_btn = win32gui.FindWindowEx(hwnd, None,'Button', None)
+    if not h_btn: return
+
+    # show text
+    text = win32gui.GetWindowText(h_btn)
+    print(text)
+
+    # click button        
+    win32gui.PostMessage(h_btn, win32con.WM_LBUTTONDOWN, None, None)
+    time.sleep(0.2)
+    win32gui.PostMessage(h_btn, win32con.WM_LBUTTONUP, None, None)
+    time.sleep(0.2)
+</code></pre>
+
+<p>再进一步，原VBA代码可能不是采用默认的弹窗标题，因此我们不能仅根据标题进行捕捉。那就扩大化范围，尝试点击任何包含确定性按钮（例如OK，Yes，Confirm）的窗口。</p>
+<pre class="codehilite"><code>def _close_msgbox(self):
+    '''Click button to close message box if has text &quot;OK&quot;, &quot;Yes&quot; or &quot;Confirm&quot;.'''
+    # Get handles of all top wondows
+    h_windows = []
+    win32gui.EnumWindows(lambda hWnd, param: param.append(hWnd), h_windows)
+
+    for h_window in h_windows:            
+        # Get child button with text OK, Yes or Confirm of given window.
+        h_btn = win32gui.FindWindowEx(h_window, None,'Button', None)
+        if not h_btn: continue
+
+        # check button text
+        text = win32gui.GetWindowText(h_btn)
+        if not text.lower() in ('ok', 'yes', 'confirm'): continue
+
+        # click button
+        win32gui.PostMessage(h_btn, win32con.WM_LBUTTONDOWN, None, None)
+        time.sleep(0.2)
+        win32gui.PostMessage(h_btn, win32con.WM_LBUTTONUP, None, None)
+        time.sleep(0.2)
+</code></pre>
+
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="https://stackoverflow.com/questions/51817465/handling-vba-popup-message-boxes-in-microsoft-excel">Handling VBA popup message boxes in Microsoft Excel</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://stackoverflow.com/questions/56530310/trying-to-catch-msgbox-text-and-press-button-in-xlwings">Trying to catch MsgBox text and press button in xlwings</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://pywinauto.readthedocs.io/en/latest/">What is pywinauto</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="https://pywinauto.readthedocs.io/en/latest/remote_execution.html">Remote Execution Guide</a>&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -116,19 +116,31 @@
             
             <li class="nav-item" data-level="1"><a href="#python win32comexcelvba" class="nav-link">Python win32com模块操作Excel：VBA模块读写</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">导入/导出模块</a>
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">导出模块</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">读取/更新模块</a>
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">导入模块</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">运行宏</a>
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">创建模块</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#_4" class="nav-link">注意事项</a>
+            <li class="nav-item" data-level="2"><a href="#_4" class="nav-link">读取模块代码</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_5" class="nav-link">更新模块代码</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_6" class="nav-link">运行宏</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_7" class="nav-link">注意事项</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -143,29 +155,32 @@
 <p>发布于：2019-09-13 | 分类：<a href="../categories/process%20automation/">process automation</a> , <a href="../categories/python-vba-cpp/">python/vba/cpp</a></p>
 <hr />
 <p>Python有很多强大的第三方库可以读写Excel，例如<code>xlrd</code>、<code>xlwt</code>、<code>xlutils</code>、<code>openpyxl</code>、<code>xlwings</code>等，它们主要在读写方面具备优势，但论起对Excel操作的全面性和基础性，则首推<code>win32com</code>，它是<code>pywin32</code>库 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> 的一部分。本文以代码片段方式记录使用<code>win32com</code>读写、运行VBA宏代码。</p>
-<p>正如直接在Excel VBA工程中操作一样，<code>win32com</code>可以导出或者导入工作簿中的VBA模块，也可以运行其中的宏。同理，这些操作也受到Excel宏安全性设置的影响，因此这一部分从导入/导出宏和运行宏两部分介绍基本代码及相应的宏设置。</p>
-<h2 id="_1">导入/导出模块<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>正如直接在Excel VBA工程中操作一样，<code>win32com</code>可以创建、导入、或者导出工作簿中的VBA模块，也可以运行其中的宏。同理，这些操作也受到Excel宏安全性设置的影响，需要考虑相应的宏设置。</p>
+<h2 id="_1">导出模块<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p><code>workbook.VBProject.VBComponents</code>获取所有VBA模块，因此可以进行导出/读取内容操作：</p>
-<pre class="highlight"><code class="language-python">def export_module(wb, module_name, saved_file):
+<pre class="codehilite"><code>def export_module(wb, module_name, saved_file):
     '''export vba module to file'''
     for comp in wb.VBProject.VBComponents:
         if comp.Name == module_name:
             comp.Export(saved_file)
             return True
     else:
-        return False</code></pre>
+        return False
+</code></pre>
+
+<h2 id="_2">导入模块<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>上面<code>Export()</code>方法导出的宏文件是以<code>Attribute VB_Name = "xxxx"</code>开头的，然后才是代码正文。相应地，我们可以先判断第一行得到宏的名称，然后用<code>Import()</code>方法进行导入，并且注意不可重复导入已存在的模块，可以根据需要选择保留或者替换原模块。</p>
-<pre class="highlight"><code class="language-python">def import_module(wb, module_file):
+<pre class="codehilite"><code>def import_module(wb, module_file):
     '''
         import vba module from *.bas.
         module name is declared in the first line of module_file:
-        Attribute VB_Name = "xxxx"
+        Attribute VB_Name = &quot;xxxx&quot;
     '''
     # check module name
     with open(module_file, 'r') as f:
         for line in f:
             if line.startswith('Attribute VB_Name'):
-                module_name = line.split('"')[-2]
+                module_name = line.split('&quot;')[-2]
                 break
         else:
             raise Exception('Error: Invalid module file.')
@@ -178,10 +193,19 @@
     # import 
     wb.VBProject.VBComponents.Import(module_file)
 
-    return module_name</code></pre>
-<h2 id="_2">读取/更新模块<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>上面是以文件的形式导入/导出模块代码，当然还可以以文本形式读取/更新模块代码。</p>
-<pre class="highlight"><code class="language-python">def get_module(wb, name):
+    return module_name
+</code></pre>
+
+<h2 id="_3">创建模块<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>上面是以文件的形式导入/导出模块代码，当然还可以以文本形式创建、更新模块代码。</p>
+<pre class="codehilite"><code>def create_module(wb, name):
+    '''Add normal module.'''
+    module = wb.VBProject.VBComponents.Add(1)
+    module.Name = name
+</code></pre>
+
+<h2 id="_4">读取模块代码<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code>def get_module(wb, name):
     ''' Get the module content from the workbook. '''
     cm = wb.VBProject.VBComponents(name).CodeModule
     num = cm.CountOfLines
@@ -192,9 +216,10 @@ def get_modules(wb):
     ''' Get all modules contents from the workbook and return a dictionary. '''
     for module in wb.VBProject.VBComponents:
         yield module.Name, module.Type, get_module(module.Name)
+</code></pre>
 
-
-def set_module(wb, name, code):
+<h2 id="_5">更新模块代码<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<pre class="codehilite"><code>def set_module(wb, name, code):
     ''' update code of specified module '''
     comp = wb.VBProject.VBComponents(name)
     assert comp, f'Module {name} does not exist in the workbook.'
@@ -207,17 +232,19 @@ def set_module(wb, name, code):
     cm.AddFromString(code)
 
     # save
-    wb.Save()</code></pre>
-<h2 id="_3">运行宏<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+    wb.Save()
+</code></pre>
+
+<h2 id="_6">运行宏<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
 <p>VBA中<code>Application.Run()</code>可以运行宏，我们同样可以在<code>win32com</code>模块使用相应的函数。</p>
-<pre class="highlight"><code class="language-python">def run_macro(wb, macro_name):
+<pre class="codehilite"><code>def run_macro(wb, macro_name):
     '''run macro embedded in current toll
-       :param macro_name: macro name, e.g. workbook_name!mudule_name.sub_name
+    :param macro_name: macro name, e.g. workbook_name!mudule_name.sub_name
 
-       if errors exist in the macro, this function will be blocked. so ensure the macro works
-       well and insert the following macro at the beginning for safe:
+    if errors exist in the macro, this function will be blocked. so ensure the macro works
+    well and insert the following macro at the beginning for safe:
 
-       On Error Resume Next
+    On Error Resume Next
 
     '''
     try:
@@ -226,18 +253,22 @@ def set_module(wb, name, code):
         print(e, flush=True)
         return False
     else:
-        return True</code></pre>
-<h2 id="_4">注意事项<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+        return True
+</code></pre>
+
+<h2 id="_7">注意事项<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
 <h3 id="excel">操作宏的Excel设置<a class="headerlink" href="#excel" title="Permanent link">&para;</a></h3>
 <p>成功使用<code>win32com</code>操作宏的前提是 <strong>允许访问VBA工程对象模型</strong>：<code>File</code> -&gt; <code>Option</code> -&gt; <code>Trust Center Setting...</code> -&gt; <code>Macro Settings</code>。否则，提示无权获取VBA工程的模块。</p>
-<pre class="highlight"><code>Programmatic access to Visual Basic Project is not trusted.</code></pre>
+<pre class="codehilite"><code>Programmatic access to Visual Basic Project is not trusted.
+</code></pre>
+
 <p>除了手动设置上述选项外，还可以程序的方式动态修改：这个选项的开关是注册表项目下<code>AccessVBOM</code>字段控制的，0表示禁用，1表示启用。因此安全的做法是在访问VBA模块前修改该设置，这可以通过Python操作注册表来实现。以Excel 2010为例：</p>
-<pre class="highlight"><code class="language-python">import win32api
+<pre class="codehilite"><code>import win32api
 import win32con
 
 def access_VBA_object_model(value):
     '''programmatically enable access to the VBA object module
-       :param value: 0-&gt;disabled, 1-&gt;enabled
+    :param value: 0-&gt;disabled, 1-&gt;enabled
     '''
     # open registry on Excel2010
     key = win32api.RegOpenKeyEx(win32con.HKEY_CURRENT_USER,
@@ -246,18 +277,20 @@ def access_VBA_object_model(value):
     val, _ = win32api.RegQueryValueEx(key,'AccessVBOM') # (value, type)
 
     # set value:
-    # the property name "AccessVBOM" could be check from Registry
-    win32api.RegSetValueEx(key, "AccessVBOM", 0, win32con.REG_DWORD, value)
+    # the property name &quot;AccessVBOM&quot; could be check from Registry
+    win32api.RegSetValueEx(key, &quot;AccessVBOM&quot;, 0, win32con.REG_DWORD, value)
 
     # close
     win32api.RegCloseKey(key)
 
-    return val</code></pre>
+    return val
+</code></pre>
+
 <p>上述代码记录了修改前的值，以便处理完后恢复原来的设置。</p>
 <h3 id="excel_1">运行宏的Excel设置<a class="headerlink" href="#excel_1" title="Permanent link">&para;</a></h3>
 <p>运行宏同样存在安全策略的设置问题。根据系统设置策略，不在信任区域的宏代码可能是默认被禁用的，那么执行上述代码将提示不存在该宏。Excel软件中对应这个设置的操作是：<code>File</code> -&gt; <code>Option</code> -&gt; <code>Trust Center Setting...</code> -&gt; <code>ActiveX Settings</code>，其中有不同的选项例如默认禁用、默认禁用但打开工作簿时给予提醒、全部启用等。</p>
 <p>程序中则由<code>Application</code>的<code>AutomationSecurity</code>属性控制：2表示禁用所有宏, 1表示启用所有宏。如果来源确实可靠的话，我们可以在执行宏前启用所有宏，最后修改回之前的设置即可。</p>
-<pre class="highlight"><code class="language-python">app = win32com.client.Dispatch("Excel.Application")
+<pre class="codehilite"><code>app = win32com.client.Dispatch(&quot;Excel.Application&quot;)
 # save original value
 origin_val = app.Application.AutomationSecurity
 # enable all
@@ -265,15 +298,19 @@ app.Application.AutomationSecurity = 1
 # run macro here
 # ...
 # reset
-app.Application.AutomationSecurity = origin_val</code></pre>
-<h3 id="_5">更新宏的问题<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+app.Application.AutomationSecurity = origin_val
+</code></pre>
+
+<h3 id="_8">更新宏的问题<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
 <p>上面更新模块代码的函数<code>set_module(wb, name, code)</code>，有时会出现莫名其妙的问题：在<code>name</code>模块的末尾多出了一对括号<code>()</code>。也就是说准备设置<code>code</code>，结果却是<code>code</code>+<code>()</code>。</p>
 <p>根据<code>stackoverflow</code>上的一个提问 <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>，原因在于：<strong><code>win32com</code>处理VBA时无法完全正确地识别VBA的续行符<code>_</code></strong>。</p>
 <p>例如，当<code>code</code>中包含下面片段时：</p>
-<pre class="highlight"><code class="language-vb">Private Declare PtrSafe Function foo Lib "bar.dll" _
-    Alias "foo_bar" ( _
+<pre class="codehilite"><code>Private Declare PtrSafe Function foo Lib &quot;bar.dll&quot; _
+    Alias &quot;foo_bar&quot; ( _
     ByVal x As Long, _
-    ByVal y As Long) As Long</code></pre>
+    ByVal y As Long) As Long
+</code></pre>
+
 <p>括号中的两个续行符<code>_</code>可以被正确识别，但第一行孤立的<code>_</code>则出现了问题，于是VBA的自动完成机制导致了最后的一对<code>()</code>。</p>
 <p>所以尽量避免出现上述写法，或者强制将末尾的<code>_</code>删除并合并相应的两行。</p>
 <div class="footnote">

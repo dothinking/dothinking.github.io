@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2021-05-09-Jenkins%E5%85%A5%E9%97%A8%EF%BC%9A%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%E5%92%8C%E5%8F%82%E6%95%B0%E5%8C%96%E6%9E%84%E5%BB%BA/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Jenkins入门：创建项目 - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">分类 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/CAD-CAE%20integration/" class="dropdown-item">CAD/CAE integration</a>
+</li>
+                                    
+<li>
+    <a href="../categories/devops/" class="dropdown-item">devops</a>
+</li>
+                                    
+<li>
+    <a href="../categories/feeling/" class="dropdown-item">feeling</a>
+</li>
+                                    
+<li>
+    <a href="../categories/finite%20element%20analysis/" class="dropdown-item">finite element analysis</a>
+</li>
+                                    
+<li>
+    <a href="../categories/machine%20learning/" class="dropdown-item">machine learning</a>
+</li>
+                                    
+<li>
+    <a href="../categories/mathematics/" class="dropdown-item">mathematics</a>
+</li>
+                                    
+<li>
+    <a href="../categories/numeric%20calculation/" class="dropdown-item">numeric calculation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/plasticity%20theory/" class="dropdown-item">plasticity theory</a>
+</li>
+                                    
+<li>
+    <a href="../categories/process%20automation/" class="dropdown-item">process automation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/python-vba-cpp/" class="dropdown-item">python/vba/cpp</a>
+</li>
+                                    
+<li>
+    <a href="../categories/web%20development/" class="dropdown-item">web development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../archive/" class="nav-link">归档</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../about/" class="nav-link">关于</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2021-05-09-Jenkins入门：创建项目和参数化构建.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#jenkins" class="nav-link">Jenkins入门：创建项目</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">参数化构建</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#freestyle" class="nav-link">Freestyle项目</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#pipeline" class="nav-link">Pipeline项目</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#pipeline_1" class="nav-link">多分支Pipeline项目</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="jenkins">Jenkins入门：创建项目<a class="headerlink" href="#jenkins" title="Permanent link">&para;</a></h1>
+<p>发布于：2021-05-09 | 分类：<a href="../categories/devops/">devops</a></p>
+<hr />
+<p>Jenkins是CI/CD链条中连接上游版本管理和下游构建、测试、部署的重要一环。即便版本管理与CI/CD日趋融合的今天，例如GitLab CI、GitHub Action的兴起，Jenkins以其先发优势和强大扩展性仍旧聚集了大量用户。本文在参数化构建的前提下，循序渐进地介绍使用Jenkins创建<code>Freestyle</code>、<code>Pipeline</code>及<code>Multibranch Pipeline</code>项目的要点。</p>
+<p><img alt="overview" src="../images/2021-05-09-01.png" /></p>
+<h2 id="_1">参数化构建<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>作为入门，我们选择在Jenkins页面上手动执行/构建/build项目；一个仓库通常包含多个分支，那么能否在同一个项目中根据需要选择性构建某个分支呢？这就是参数化构建，在开始构建之前指定某个参数。设置方式：</p>
+<blockquote>
+<p>General -&gt; This project is parameterized</p>
+</blockquote>
+<p>这里我们关心的参数是分支名称。数据来源形式有很多，例如手动指定默认的选项（master, alpha, beta等），但更好的方式是直接从仓库中读取。这就需要Git Parameter插件的支持。安装插件后，在项目配置页开启参数化构建，选择Git Parameter，并配置如下具体内容（仅列出关键项）：</p>
+<ul>
+<li>
+<p><code>Name</code> 参数名称，本文以<code>BRANCH_TAG</code>为例，则后续其他地方可以引用<code>${BRANCH_TAG}</code></p>
+</li>
+<li>
+<p><code>Parameter Type</code>选择<code>Branch or Tag</code>表示同时关心分支名和标签</p>
+</li>
+<li>
+<p><code>Default Value</code>默认分支名，例如<code>master</code></p>
+</li>
+<li>
+<p><code>Branch Filter</code>填写<code>origin/(.*)</code>，完整的分支名通常是<code>origin/xxx</code>，因此需要提取出名字本身<code>xxx</code></p>
+</li>
+</ul>
+<p>这一步设置的效果是Jenkins UI上的构建按钮从<code>Build Now</code>变成了<code>Build with Parameters</code>，即需要指定参数后才能继续；并且自动列出了仓库中的所有分支和标签。</p>
+<p><img alt="parametric-build" src="../images/2021-05-09-02.png" /></p>
+<h2 id="freestyle">Freestyle项目<a class="headerlink" href="#freestyle" title="Permanent link">&para;</a></h2>
+<p>最基础、灵活的配置方式，可以配置以下六个方面：</p>
+<ul>
+<li>
+<p><code>General</code> 基本设置，如是否参数化构建、是否指定节点执行此项目。</p>
+<p><em>如上一节描述进行参数化构建设置，参数名<code>BRANCH_TAG</code></em></p>
+</li>
+<li>
+<p><code>Source Code Management</code>指定源码</p>
+<ul>
+<li>git仓库地址、登陆凭证、分支名称，其中分支名称使用<code>${BRANCH_TAG}</code>，以便进行参数化构建</li>
+<li>当然也可以为空，即不针对源码的构建</li>
+</ul>
+</li>
+<li>
+<p><code>Build Triggers</code> 触发自动构建的方式例如轮询仓库、仓库的Push操作等。本文手动触发，故略过。</p>
+</li>
+<li>
+<p><code>Build Environment</code> 略过</p>
+</li>
+<li>
+<p><code>Build</code> 构建方式例如执行shell或者batch脚本。</p>
+</li>
+<li>
+<p><code>Post-build Actions</code> 构建完成后的操作例如生成报告、发送邮件等。</p>
+</li>
+</ul>
+<p>Freestyle项目思路清晰简单，但涉及整个构建周期的方方面面；以最大灵活度手动配置上下游，而核心构建过程由脚本完成。考虑到实际应用中Build部分涉及多个阶段，例如构建、测试、发布等，一整段脚本的方式可能不够明晰和灵活，这就引出了下面的<code>Pipeline</code>项目。</p>
+<h2 id="pipeline">Pipeline项目<a class="headerlink" href="#pipeline" title="Permanent link">&para;</a></h2>
+<p>Pipeline项目将Freestyle项目中的许多手动设置方式改为配置文件<code>Jenkinsfile</code>，并且最大的亮点在于以分阶段的方式管理整个构建流程，故而称为<code>Pipeline</code>项目。需要配置的方面也从6个减为3个：</p>
+<ul>
+<li>
+<p><code>General</code> 同上，开启Git Parameter参数化构建。</p>
+</li>
+<li>
+<p><code>Build Triggers</code> 同上，略过。</p>
+</li>
+<li>
+<p><code>Advanced Project Options</code>指定构建过程的项目显示名称，默认即为项目名。仅为显示效果，故没算做一个配置方面。</p>
+</li>
+<li>
+<p><code>Pipeline</code>指定<code>Jenkinsfile</code>——遵守Jenkins Pipeline语法规则的脚本。</p>
+</li>
+</ul>
+<p>一个明显的问题，如何指定源码仓库？如上所述，由手动指定改为由Pipeline指定。两种方式指定Pipeline：</p>
+<ul>
+<li>
+<p><code>Pipeline script</code>：直接在Jenkins页面上输入Pipeline脚本，本文称作UI托管的Jenkinsfile</p>
+</li>
+<li>
+<p><code>Pipeline script from SCM</code>：Pipeline脚本随源码一同管理，本文称作源码托管的Jenkinsfile</p>
+</li>
+</ul>
+<h3 id="1 uijenkinsfile">1. UI托管的Jenkinsfile<a class="headerlink" href="#1 uijenkinsfile" title="Permanent link">&para;</a></h3>
+<p>下面给出一个示例，基本语法参考官网文档。</p>
+<ul>
+<li>
+<p>第一步得指定源码仓库，于是有了<code>stage('Checkout')</code>这个阶段。</p>
+<p>这部分脚本可借助Snippet Generator自动生成（模板：checkout: Checkout from version control）。</p>
+</li>
+<li>
+<p><code>Checkout</code>中分支名称<code>branches</code>必须跟随参数变化，因此需要<code>parameters</code>部分定义参数<code>BRANCH_TAG</code>。</p>
+<p>这部分脚本可借助Snippet Generator自动生成（模板：properties: Set job properties）。</p>
+</li>
+<li>
+<p><code>stage('Init')</code>部分是一个应用示例，根据<code>BRANCH_TAG</code>参数定义两个环境变量<code>BRANCH</code>和<code>TAG</code>，分别代表当前构建的是分支还是标签，以便后续有针对性的操作。</p>
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<p><code>BRANCH_NAME</code>虽然是Jenkins内置的表示分支名称的环境变量，但是仅在多分支的<code>Pipeline</code>项目有效。</p>
+</div>
+</li>
+<li>
+<p><code>stage('Build')</code>是另一个示例，示意Windows上通过默认的cmd和git batch执行shell命令的方式</p>
+<ul>
+<li>执行节点<code>win_agent</code>是Windows机器，所以用<code>bat</code>执行cmd命令</li>
+<li>实际需要执行shell命令，所以需要<code>sh</code>（Git_Home\bin\sh.exe）执行，并用<code>-c</code>指定执行命令的文本</li>
+</ul>
+</li>
+</ul>
+<pre class="highlight"><code class="language-Jenkinsfile">pipeline {
+
+    agent {label 'win_agent'}
+
+    parameters {
+        gitParameter name: 'BRANCH_TAG',
+            type: 'PT_BRANCH_TAG',
+            branchFilter: 'origin/(.*)', 
+            tagFilter: '*',
+            defaultValue: 'master', 
+            selectedValue: 'DEFAULT',
+            sortMode: 'DESCENDING_SMART',
+            description: 'Select branch/tag to build...'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Checkout git repo..'
+                checkout([$class: 'GitSCM', 
+                          branches: [[name: "${params.BRANCH_TAG}"]], 
+                          doGenerateSubmoduleConfigurations: false, 
+                          extensions: [], 
+                          submoduleCfg: [], 
+                          userRemoteConfigs: [[
+                              credentialsId: 'bd3cxxxxxxx',
+                              url: 'git@gitlab-url/group/name.git']]
+                        ])
+            }
+        }
+        stage('Init') { 
+            steps { 
+              script {
+                if (params.BRANCH_TAG =~ /^([0-9]+)\.([0-9]+)\.([0-9]+).*/) {
+                    env.BRANCH = params.BRANCH_TAG
+                    env.TAG = params.BRANCH_TAG
+                } else {
+                    env.BRANCH = params.BRANCH_TAG
+                    env.TAG = ""
+                }
+              }
+            }
+        }
+        stage('Build') {
+            steps {
+                bat "sh -c 'make build'"
+            }
+        }
+        stage('Test') {
+            steps {
+                bat "sh -c 'make test'"
+            }
+        }
+        stage('Deploy') {
+            steps {
+                bat "sh -c 'make deploy'"
+            }
+        }
+    }
+}</code></pre>
+<h3 id="2 jenkinsfile">2. 源码托管的Jenkinsfile<a class="headerlink" href="#2 jenkinsfile" title="Permanent link">&para;</a></h3>
+<p>为便于维护，通常将以上Pipeline脚本和源码放一起管理，这就对应定义Pipeline的第二种方式：从下拉框选择<code>Pipeline script from SCM</code>，然后指定源仓库的信息，类似于Freestyle项目指定仓库的方式：</p>
+<ul>
+<li>
+<p>仓库地址和登陆凭证</p>
+</li>
+<li>
+<p>分支名称，配合参数化构建，输入<code>${BRANCH_TAG}</code></p>
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<p>实际上这种传入参数的方式仅适用于Freestyle项目，所以此处<code>${BRANCH_TAG}</code>并不会被解析为具体名称，而是原封不动作为git分支名称，导致Checkout仓库失败。一个解决方式是取消勾选最后的<code>Lightweight checkout</code>。</p>
+</div>
+</li>
+<li>
+<p>Pipeline脚本相对仓库根目录的路径，这是新增的部分</p>
+</li>
+</ul>
+<p>最终，删除上一段Jenkinsfile中<code>stage('Checkout')</code>部分即可直接存入仓库使用。</p>
+<h2 id="pipeline_1">多分支Pipeline项目<a class="headerlink" href="#pipeline_1" title="Permanent link">&para;</a></h2>
+<p>借助Git Parameter的参数化构建方式还是有些繁琐，所以Jenkins直接内置了多分支<code>Pipeline</code>项目，配置源码仓库后，Jenkins自动为每一个带有Jenkinsfile的分支/标签创建子项目，最终形成<code>project_name/branch_name</code>两级项目的结构。</p>
+<p>多分支Pipeline项目配置选项略多，作为入门配置只需考虑以下两方面：</p>
+<ul>
+<li>
+<p><code>Branch Sources</code>指定分支来源</p>
+<ul>
+<li>
+<p>源码仓库和登陆凭证</p>
+</li>
+<li>
+<p><code>Behavious</code>选择<code>Discover branches</code>和<code>Discover tags</code>，表示同时考虑分支和标签</p>
+</li>
+</ul>
+</li>
+<li>
+<p><code>Build Configuration</code>指定Jenkinsfile在仓库中的路径</p>
+</li>
+</ul>
+<p>注意，我们不再使用前面的参数化构建，且<code>BRANCH_NAME</code>对多分支Pipeline项目生效了，故Pipeline脚本做相应的简化：</p>
+<ul>
+<li>
+<p>无需<code>parameters</code></p>
+</li>
+<li>
+<p>无需<code>stage('Checkout')</code></p>
+</li>
+<li>
+<p>直接使用<code>BRANCH_NAME</code>和<code>TAG_NAME</code></p>
+</li>
+</ul>
+<pre class="highlight"><code class="language-Jenkinsfile">pipeline {
+
+    agent {label 'win_agent'}
+
+    stages {
+        stage('Init') { 
+            steps { 
+              script {
+                if (env.TAG_NAME == null) {
+                    env.BRANCH = env.BRANCH_NAME
+                    env.TAG = ""
+                } else {
+                    env.BRANCH = env.TAG_NAME
+                    env.TAG = env.TAG_NAME
+                }
+              }
+            }
+        }
+        stage('Build') {
+            steps {
+                bat "sh -c 'make build'"
+            }
+        }
+        stage('Test') {
+            steps {
+                bat "sh -c 'make test'"
+            }
+        }
+        stage('Deploy') {
+            steps {
+                bat "sh -c 'make deploy'"
+            }
+        }
+    }
+}</code></pre>
+<p>最终结果</p>
+<p><img alt="multi-branch-pipeline" src="../images/2021-05-09-03.png" /></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

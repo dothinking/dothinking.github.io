@@ -1,5 +1,5 @@
 ---
-categories: [process automation]
+categories: [devops]
 tags: [GitLab]
 ---
 

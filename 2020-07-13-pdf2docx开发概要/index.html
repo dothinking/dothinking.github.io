@@ -139,12 +139,12 @@
 <p>发布于：2020-07-13 | 分类：<a href="../categories/process%20automation/">process automation</a></p>
 <hr />
 <p><strong>PDF转Word</strong> 是一个古老的话题，其难点在于建立PDF基于元素位置的格式与Word基于内容的格式之间的映射关系。<a href="https://solidframework.net/"><code>Solid Documents</code></a>是这方面的佼佼者，其技术的应用案例：在线PDF转换网站<a href="https://smallpdf.com/pdf-to-word">Smallpdf</a>。</p>
-<p>在某个项目的调研过程中，作者尝试了这个话题，编写了一个用于转换PDF到Word的Python库<code>pdf2docx</code>——依赖<code>PyMuPDF</code>解析PDF文件，并用<code>python-docx</code>创建Word文件。本文记录相关开发思路（一些特性仅针对如下列出版本而言）。</p>
-<ul>
-<li>项目地址：<a href="https://github.com/dothinking/pdf2docx">https://github.com/dothinking/pdf2docx</a></li>
-<li>当前版本：v0.4.3</li>
-<li>依赖库版本：<code>PyMuPDF v1.17.3</code>、<code>python-docx v0.8.10</code></li>
-</ul>
+<p>在某个项目的调研过程中，作者尝试了这个话题，编写了一个用于转换PDF到Word的Python库<code>pdf2docx</code>——借助<code>PyMuPDF</code>从PDF文件提取内容，基于位置规则解析内容，最后用<code>python-docx</code>创建Word文件。</p>
+<blockquote>
+<p><a href="https://github.com/dothinking/pdf2docx">https://github.com/dothinking/pdf2docx</a></p>
+</blockquote>
+<p>本文记录主要开发思路，具体细节随着版本升级可能略有差异。</p>
+<p><img alt="sample" src="https://camo.githubusercontent.com/a581ee7caccdcf093648d54445fcc689a32ef205a81594c94b2e410cbde07757/68747470733a2f2f73312e617831782e636f6d2f323032302f30382f30342f6144727978312e706e67" /></p>
 <h2 id="_1">思路<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
@@ -160,19 +160,41 @@
 <p>以上技术路线也决定了<code>pdf2docx</code>的局限：</p>
 <ul>
 <li>
-<p>根据有限的、确定的规则建立PDF导出元素位置与docx要求的内容之间的映射并非完全可靠，也就是说仅能处理常见的规范的格式，而非百分百还原。</p>
+<p>只能处理标准格式的PDF，不支持扫描版、图片格式PDF。</p>
 </li>
 <li>
-<p>Word格式还受到<code>python-docx</code>处理能力的限制，例如截至版本<code>0.8.10</code>，<code>python-docx</code>尚不支持浮动图片。</p>
+<p>只能处理水平、竖直方向文本，忽略旋转角度的文本。</p>
+</li>
+<li>
+<p>根据有限的、确定的规则建立PDF导出元素位置与docx要求的内容之间的映射并非完全可靠，也就是说仅能处理常见的规范的格式，而非百分百还原。</p>
 </li>
 </ul>
 <h2 id="_2">目录<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>以下分篇介绍提取PDF页面数据、解析和重建docx过程中的具体细节：</p>
 <ul>
-<li><a href="../2020-07-14-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E6%8F%90%E5%8F%96%E6%96%87%E6%9C%AC%E3%80%81%E5%9B%BE%E7%89%87%E5%92%8C%E5%BD%A2%E7%8A%B6/">提取文本、图片和形状</a></li>
+<li>
+<p><a href="../2020-07-14-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E6%8F%90%E5%8F%96%E6%96%87%E6%9C%AC%E3%80%81%E5%9B%BE%E7%89%87%E5%92%8C%E5%BD%A2%E7%8A%B6/">提取文本、图片和形状</a></p>
+<ul>
+<li><a href="../2020-10-15-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E8%8E%B7%E5%8F%96%E5%9B%BE%E7%89%87%E5%8F%8A%E5%85%B6%E4%BD%8D%E7%BD%AE/">获取图片及其位置</a></li>
+<li><a href="../2020-10-25-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E5%88%9B%E5%BB%BA%E6%B5%AE%E5%8A%A8%E5%9B%BE%E7%89%87/">创建浮动图片</a></li>
+<li><a href="../2020-10-01-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E7%9F%A2%E9%87%8F%E5%9B%BE%E5%A4%84%E7%90%86/">矢量图处理</a></li>
+</ul>
+</li>
+<li>
+<p><a href="../2021-05-30-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E8%A7%A3%E6%9E%90%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80/">解析页面布局</a></p>
+</li>
+<li>
+<p><a href="../2020-08-15-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E8%A7%A3%E6%9E%90%E8%A1%A8%E6%A0%BC/">解析表格</a></p>
+<ul>
+<li><a href="../2020-09-27-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E5%AF%B9%E9%BD%90%E9%9A%90%E5%BC%8F%E8%A1%A8%E6%A0%BC%E7%BA%BF/">对齐隐式表格线</a></li>
+</ul>
+</li>
+<li>
+<p><a href="../2020-08-27-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E8%A7%A3%E6%9E%90%E6%AE%B5%E8%90%BD/">解析段落</a></p>
+<ul>
 <li><a href="../2020-07-20-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E8%A7%A3%E6%9E%90%E6%96%87%E6%9C%AC%E6%A0%B7%E5%BC%8F/">解析文本样式</a></li>
-<li><a href="../2020-08-15-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E8%A7%A3%E6%9E%90%E8%A1%A8%E6%A0%BC/">解析表格</a></li>
-<li><a href="../2020-08-27-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E8%A7%A3%E6%9E%90%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80/">解析页面布局</a></li>
+</ul>
+</li>
 </ul>
 <div class="footnote">
 <hr />

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2021-05-30-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E8%A7%A3%E6%9E%90%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>pdf2docx开发概要：解析页面布局 - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">分类 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/CAD-CAE%20integration/" class="dropdown-item">CAD/CAE integration</a>
+</li>
+                                    
+<li>
+    <a href="../categories/devops/" class="dropdown-item">devops</a>
+</li>
+                                    
+<li>
+    <a href="../categories/feeling/" class="dropdown-item">feeling</a>
+</li>
+                                    
+<li>
+    <a href="../categories/finite%20element%20analysis/" class="dropdown-item">finite element analysis</a>
+</li>
+                                    
+<li>
+    <a href="../categories/machine%20learning/" class="dropdown-item">machine learning</a>
+</li>
+                                    
+<li>
+    <a href="../categories/mathematics/" class="dropdown-item">mathematics</a>
+</li>
+                                    
+<li>
+    <a href="../categories/numeric%20calculation/" class="dropdown-item">numeric calculation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/plasticity%20theory/" class="dropdown-item">plasticity theory</a>
+</li>
+                                    
+<li>
+    <a href="../categories/process%20automation/" class="dropdown-item">process automation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/python-vba-cpp/" class="dropdown-item">python/vba/cpp</a>
+</li>
+                                    
+<li>
+    <a href="../categories/web%20development/" class="dropdown-item">web development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../archive/" class="nav-link">归档</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../about/" class="nav-link">关于</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2021-05-30-pdf2docx开发概要：解析页面布局.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#pdf2docx" class="nav-link">pdf2docx开发概要：解析页面布局</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">数据结构</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">页眉页脚</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">页面大小与页边距</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_4" class="nav-link">分栏</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_7" class="nav-link">表格和段落解析</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="pdf2docx">pdf2docx开发概要：解析页面布局<a class="headerlink" href="#pdf2docx" title="Permanent link">&para;</a></h1>
+<p>发布于：2021-05-30 | 分类：<a href="../categories/process%20automation/">process automation</a></p>
+<hr />
+<p><a href="../2020-07-14-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E6%8F%90%E5%8F%96%E6%96%87%E6%9C%AC%E3%80%81%E5%9B%BE%E7%89%87%E5%92%8C%E5%BD%A2%E7%8A%B6/">前文</a>介绍了从PDF直接提取出的基本数据：块元素<code>Block</code>和形状<code>Shape</code>，但是它们目前还只有位置数据，接下来要做的是解析语义数据，例如从块元素解析出表格和普通段落，从形状元素解析出文本样式例如下划线、高亮及其作用的文本、解析表格样式如边框颜色、背景色及其包含的段落。我们先从页面布局开始。</p>
+<h2 id="_1">数据结构<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>为了更好地管理和解析<code>Block</code>和<code>Shape</code>，并且考虑最后在Word中的重建，设计<code>pdf2docx</code>转换类的基本结构如下。其中：</p>
+<ul>
+<li>
+<p><code>Page</code>类对应物理上的一个页面，具有尺寸、边距、页眉页脚等属性，主要内容按照流式布局顺序被分为一个或者多个<code>Section</code></p>
+</li>
+<li>
+<p><code>Section</code>对应Word的节（Section），表示具有类似结构的布局，例如一个或者多个分栏<code>Column</code></p>
+</li>
+<li>
+<p><code>Column</code>对应Word的分栏（Column），表示分栏中的一列。对于普通的排版，块元素和形状元素都在一个<code>Section</code>的一个<code>Column</code>下</p>
+</li>
+</ul>
+<pre class="highlight"><code>┌───────────────────────────────────┐
+│pdf2docx Converter                 │
+│ ┌───────────────────────────────┐ │
+│ │Page-1                         │ │
+│ │ ┌───────────────────────────┐ │ │
+│ │ │Section-1                  │ │ │
+│ │ │ ┌──────────┐ ┌──────────┐ │ │ │
+│ │ │ │ Column-1 │ │ Column-2 │ │ │ │
+│ │ │ └──────────┘ └──────────┘ │ │ │
+│ │ └───────────────────────────┘ │ │
+│ │  Section-2                    │ │
+│ └───────────────────────────────┘ │
+│  Page-2                           │
+└───────────────────────────────────┘</code></pre>
+<h2 id="_2">页眉页脚<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>理论上，无法从单个页面识别出页眉和页脚，所以需要从文档级别即多个Pages一起对比结构相似性，从而从页面开始部分分离出页眉、从页面结束部分分离出页脚。同时，需要处理一些不确定因素，例如页码、奇偶页不同的页眉页脚。</p>
+<p>截至<code>v0.5.2</code>，这部分依然占坑待处理中。</p>
+<h2 id="_3">页面大小与页边距<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p><code>PyMuPDF</code>提取的数据直接包括了页面宽度和高度，然后根据 <strong>除去页眉页脚后</strong> 的所有块级、形状元素所占据的区域计算页边距，例如最小左上角点确定了左边距和上边距。</p>
+<p><code>python-docx</code>中页面<code>section</code>对象恰好提供了这六个属性，例如<code>page_width</code>、<code>left_margin</code>。于是页面基本形式得以确定。</p>
+<h2 id="_4">分栏<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>早期版本通过表格来实现分栏布局，从0.5.2版开始引入<code>Section</code>和<code>Column</code>，以保证页面逻辑的合理性，同时减少嵌套表格的泛滥。</p>
+<div class="admonition note">
+<p class="admonition-title">注意</p>
+<p>为兼顾通用性和降低复杂度，目前仅支持单栏或者两栏的布局，更多的分栏将被解析为表格。</p>
+</div>
+<h3 id="_5">分栏逻辑<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>自上而下检测每一行，将连续的单列或者双列归为同一个<code>Section</code>，其中每一列即为一个<code>Column</code>。同时，注意以下细节：</p>
+<ul>
+<li>
+<p>目前最多考虑两栏，故列数大于2的行视为单栏</p>
+</li>
+<li>
+<p>当前行可以分为两列时，</p>
+<ul>
+<li>当其中一列宽度很小例如小于5Pt，则视为单栏；</li>
+<li>前一个<code>Section</code>也是两栏，但是各自的栏分隔线不重合，则当前行视为单栏</li>
+</ul>
+</li>
+<li>
+<p>当前行仅为一列，且前一个<code>Section</code>为两栏时，</p>
+<ul>
+<li>当前行完全处于前一个<code>Section</code>的左栏，则当前行视为两栏（右栏为空）；</li>
+<li>前一个<code>Section</code>高度较小例如小于20Pt，则前一个<code>Section</code>退化为一栏</li>
+</ul>
+</li>
+</ul>
+<h3 id="_6">竖直定位<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>每一个<code>Section</code>在页面竖直方向的位置 <strong>由前一个段落的段后间距</strong> 确定，因此在确定好<code>Section</code>后，计算当前<code>Section</code>开始位置<code>y0</code>与前一个<code>Section</code>结束位置<code>y1</code>的差值，作为<code>Section</code>的一个属性<code>before_space</code>。</p>
+<p>使用<code>python-docx</code>重建<code>Section</code>时，设置前一个<code>Section</code>最后一个段落的段后距离等于当前<code>Section</code>的<code>before_space</code>即可。两个<code>Column</code>之间设置列分隔符<code>WD_SECTION.NEW_COLUMN</code>。</p>
+<div class="admonition warning">
+<p class="admonition-title">每一页第一个<code>Section</code>的处理</p>
+<ul>
+<li>计算<code>before_space</code>时，前一个参考位置为页面上边距。</li>
+<li>重建<code>Section</code>时，新建一个空段落作为设置段后间距的参考。</li>
+</ul>
+</div>
+<h2 id="_7">表格和段落解析<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p>创建<code>Section</code>后，将原始的<code>Block</code>和<code>Shape</code>按照位置关系分配到相应的<code>Column</code>中去，以便进一步解析表格和段落。<code>Column</code>是一个布局对象，直接容纳<code>Block</code>和<code>Shape</code>，所以<code>pdf2docx</code>为其抽象出一个<code>Layout</code>类，便于管理和操作。</p>
+<pre class="highlight"><code>┌────────────────────────────────┐
+│Layout                          │
+│ ┌────────────┐   ┌───────────┐ │
+│ │Blocks      │   │Shapes     │ │
+│ │  TextBlock │   │  Stroke   │ │
+│ │  TableBlock│   │  Fill     │ │
+│ │  ...       │   │  ...      │ │
+│ └────────────┘   └───────────┘ │
+└────────────────────────────────┘</code></pre>
+<p>PDF直接提取出的块元素只有<code>TextBlock</code>，结合形状元素（潜在的表格边框、单元格背景色）解析出<code>TableBlock</code>后，继续根据位置关系将表格范围内的<code>Block</code>和<code>Shape</code>分配到相应的单元格中去。由此可知，容纳<code>Block</code>和<code>Shape</code>的单元格也是一个<code>Layout</code>对象，可以继续进行单元格内的嵌套表格和段落解析。这样的设计确保可以递归解析出无限嵌套的表格，同时也有助于将PDF的浮动布局转化为流动布局，便于在Word中重建。</p>
+<p>至于表格的具体解析方法，单开一篇进行具体介绍：</p>
+<blockquote>
+<p><a href="../2020-08-15-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E8%A7%A3%E6%9E%90%E8%A1%A8%E6%A0%BC/">pdf2docx开发概要：解析表格</a></p>
+</blockquote>
+<p>最后，总结页面布局级别的数据结构及基本属性如下：</p>
+<pre class="highlight"><code class="language-python"># page -&gt; section -&gt; column
+{
+    "filename": "demo.pdf",
+    "page_cnt": 2,
+    "pages": [
+        {
+            "id": 0,
+            "width": float,
+            "height": float,
+            "margin": [float, float, float, float],
+            "sections": [
+                {
+                    "bbox": [float, float, float, float],
+                    "cols": int,
+                    "space": float,
+                    "before_space": float,
+                    "columns": [
+                        {
+                            "bbox": [float, float, float, float],
+                            "blocks": [],
+                            "shapes": []
+                        },
+                        {
+                            # column 2
+                        }
+                    ]
+                },
+                {
+                    # section 2
+                }
+            ],
+            "header": str,
+            "footer": str,
+            "floats": []
+        },
+        {
+            # page 2
+        }
+    ]
+}</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

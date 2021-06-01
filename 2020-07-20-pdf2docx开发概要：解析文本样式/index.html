@@ -189,9 +189,9 @@
 </div>
 <h2 id="_2">数据结构<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>在原始文本块数据结构的基础上，为<code>span</code>块新增表征解析结果的<code>style</code>属性：</p>
-<pre class="highlight"><code class="language-python"># dict of span
+<pre class="highlight"><code class="language-python"># span
 {
-    "bbox": (float, float, float, float)
+    "bbox": [float, float, float, float],
     "size": float,
     "flags": int,
     "font": str,

@@ -238,11 +238,11 @@
 <p><a href="../2020-09-27-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E5%AF%B9%E9%BD%90%E9%9A%90%E5%BC%8F%E8%A1%A8%E6%A0%BC%E7%BA%BF/">pdf2docx开发概要：对齐隐式表格线</a></p>
 </blockquote>
 <h2 id="_3">数据结构<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<p>参考文本和图片，定义表格类型的数据结构：</p>
+<p>表格块<code>TableBlock</code>继承了块元素<code>Block</code>的结构（详见<a href="../2020-07-14-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E6%8F%90%E5%8F%96%E6%96%87%E6%9C%AC%E3%80%81%E5%9B%BE%E7%89%87%E5%92%8C%E5%BD%A2%E7%8A%B6/">PDF提取</a>），同时新增了表征表格结构的<code>Row</code>和<code>Cell</code>。其中<code>Cell</code>是布局级别的对象（<code>Layout</code>），嵌套了下一级的块元素和形状元素，如此递归，直到块元素中不再包含表格，即只有表征文本和图片的<code>TextBlock</code>。</p>
 <pre class="highlight"><code class="language-python">{
     'type': int, # 3-explicit table; 4-implicit table
     'bbox': (float, float, float, float),
-    ..., # some spacing properties    
+    ..., # some spacing properties same with Block
     "rows": [
         {
             'bbox': (float, float, float, float),
@@ -255,9 +255,12 @@
                     'border-width': (float, float, float, float),
                     'merged-cells': (int, int),
                     'blocks': [
-                        {
-                            # text/image blocks contained in current cell
-                        }
+                        { # text/image blocks contained in current cell },
+                        { ... }
+                    ]，
+                    'shapes': [
+                        { # shapes contained in current cell }
+                        { ... }
                     ]
                 },
                 ... # more cells

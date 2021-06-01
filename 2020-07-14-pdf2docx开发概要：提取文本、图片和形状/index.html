@@ -132,6 +132,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#_4" class="nav-link">总结</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -146,16 +150,13 @@
 <h2 id="_1">文本与图片<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p><code>PyMuPDF</code>的<code>Textpage</code>对象提供的<code>extractDICT()</code>和<code>extractRAWDICT()</code>用以获取页面中的所有文本和图片（内容、位置、属性），基本数据结构如下 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>：</p>
 <p><img alt="文本与图片块结构" src="https://pymupdf.readthedocs.io/en/latest/_images/img-textpage.png" /></p>
-<p><code>pdf2docx</code>继续沿用以上数据结构，并稍作改动：</p>
+<p><code>pdf2docx</code>继续沿用以上数据结构，并稍作改动，作为第一类基本数据<code>Block</code>：</p>
 <ul>
 <li>
-<p>将图片块整合到文本块中，作为<code>line</code>&gt;<code>span</code>级别的元素</p>
+<p>将图片块整合到文本块<code>TextBlock</code>中，作为<code>line</code>&gt;<code>span</code>级别的元素</p>
 </li>
 <li>
-<p><code>block</code>元素字典增加了页面布局参数，例如<code>alignment</code>，<code>left_space</code>，<code>before_space</code>，用以保存后续页面布局解析结果</p>
-</li>
-<li>
-<p>新增了表格块，用以保存表格解析结果</p>
+<p>增加布局参数，例如<code>alignment</code>，<code>left_space</code>，<code>before_space</code>，用以保存后续段落布局解析结果</p>
 </li>
 </ul>
 <div class="admonition warning">
@@ -167,7 +168,8 @@
 </blockquote>
 </div>
 <h2 id="_2">形状<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>文本与图片构成了主体内容，它们的样式则由 <strong>形状</strong> 来描述，例如代表文本高亮的矩形块，表明表格边线的直线（很细的矩形）。这里的所谓的形状具体指两类来源：</p>
+<p>文本与图片构成了主体内容，它们的样式则由 <strong>形状</strong> 来描述，例如代表文本高亮的矩形块，表明表格边线的直线（很细的矩形）。形状构成了<code>pdf2docx</code>的第二类基本数据<code>Shape</code>。</p>
+<p>这里的所谓的形状具体指两类来源：</p>
 <ul>
 <li>
 <p>PDF原始文件中的路径<code>Path</code></p>
@@ -270,6 +272,16 @@ PDF_ANNOT_STRIKEOUT 11
 <p class="admonition-title">注意</p>
 <p><code>Hyperlink</code>类似于<code>Stroke</code>，本质区别在于<code>Hyperlink</code>的语义类型是已知的。更一般地理解，<code>Stroke</code>是一种几何类型，事先并不知道它的语义类型（边框、删除线还是下划线？）；而<code>Hyperlink</code>是一种确定了语义类型的<code>Stroke</code>。</p>
 </div>
+<h2 id="_4">总结<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>借助<code>PyMuPDF</code>从PDF提取文本、图片和形状数据，它们构成了<code>pdf2docx</code>的两类基础数据：</p>
+<ul>
+<li>
+<p>块元素<code>Block</code>，代表主体内容，例如直接提取出的文本/图片组成的<code>TextBlock</code>，以及后续解析得到的表格结构<code>TableBlock</code>。</p>
+</li>
+<li>
+<p>形状元素<code>Shape</code>，代表格式内容，例如描边<code>Stroke</code>将对应下划线、表格边框等，填充<code>Fill</code>将对应文本高亮、单元格背景色等。</p>
+</li>
+</ul>
 <div class="footnote">
 <hr />
 <ol>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2021-06-06-pytest%E5%8F%82%E6%95%B0%E5%8C%96%E6%B5%8B%E8%AF%95/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>pytest参数化测试 - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">分类 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/CAD-CAE%20integration/" class="dropdown-item">CAD/CAE integration</a>
+</li>
+                                    
+<li>
+    <a href="../categories/devops/" class="dropdown-item">devops</a>
+</li>
+                                    
+<li>
+    <a href="../categories/feeling/" class="dropdown-item">feeling</a>
+</li>
+                                    
+<li>
+    <a href="../categories/finite%20element%20analysis/" class="dropdown-item">finite element analysis</a>
+</li>
+                                    
+<li>
+    <a href="../categories/machine%20learning/" class="dropdown-item">machine learning</a>
+</li>
+                                    
+<li>
+    <a href="../categories/mathematics/" class="dropdown-item">mathematics</a>
+</li>
+                                    
+<li>
+    <a href="../categories/numeric%20calculation/" class="dropdown-item">numeric calculation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/plasticity%20theory/" class="dropdown-item">plasticity theory</a>
+</li>
+                                    
+<li>
+    <a href="../categories/process%20automation/" class="dropdown-item">process automation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/python-vba-cpp/" class="dropdown-item">python/vba/cpp</a>
+</li>
+                                    
+<li>
+    <a href="../categories/web%20development/" class="dropdown-item">web development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../archive/" class="nav-link">归档</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../about/" class="nav-link">关于</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2021-06-06-pytest参数化测试.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#pytest" class="nav-link">pytest参数化测试</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">目标场景</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#pytestfixture 1" class="nav-link">从pytest.fixture()开始 1</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#pytestmarkparametrize 2" class="nav-link">再到@pytest.mark.parametrize 2</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#3" class="nav-link">动态生成参数化测试案例 3</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#4 5" class="nav-link">注册命令行参数 4 5</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#pythonpytest" class="nav-link">从Python代码启动pytest测试</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="pytest">pytest参数化测试<a class="headerlink" href="#pytest" title="Permanent link">&para;</a></h1>
+<p>发布于：2021-06-06 | 分类：<a href="../categories/devops/">devops</a> , <a href="../categories/python-vba-cpp/">python/vba/cpp</a></p>
+<hr />
+<p><code>pytest</code>是一个流行的Python单元测试框架，自身功能强大，且可以集成各种插件例如代码覆盖率、测试报告。我们可能遇到的这样的应用场景，同一功能需要在大量数据集上进行测试，并且每一个测试样本对应一个测试案例。显然，每个测试案例仅是输入不同，为每一个测试样本写一个测试函数不太现实。本文介绍的pytest参数化测试即是针对这类问题的解决方案。</p>
+<h2 id="_1">目标场景<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>N个测试样本分别放在如下文件夹<code>test-001</code>，<code>test-002</code>，...，要求：</p>
+<ul>
+<li>为每一个测试样本生成一个测试案例</li>
+<li>默认测试所有案例</li>
+<li>如果输入参数<code>n</code>，则只测试前<code>n</code>个案例</li>
+</ul>
+<h2 id="pytestfixture 1">从pytest.fixture()开始 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup><a class="headerlink" href="#pytestfixture 1" title="Permanent link">&para;</a></h2>
+<p>顾名思义，<code>fixture</code>是辅助测试函数的工装夹具，其中<code>params</code>参数提供了参数化输入的功能，每一个参数都会被创建为一个独立的测试案例。一个简单的例子：</p>
+<pre class="highlight"><code class="language-python"># test.py
+import pytest
+
+inputs = ['test-001', 'test-002', 'test-003']
+
+@pytest.fixture(scope="module", params=inputs)
+def get_input(request):
+    return request.param
+
+# 测试函数
+def test(get_input):
+    print(f'Testing {get_input}')</code></pre>
+<p>这样，使用一个测试函数即可完成三个类似案例的测试。</p>
+<pre class="highlight"><code>$ pytest -sv test.py
+
+test.py::test[test-001] Testing test-001
+PASSED
+test.py::test[test-002] Testing test-002
+PASSED
+test.py::test[test-003] Testing test-003
+PASSED</code></pre>
+<h2 id="pytestmarkparametrize 2">再到@pytest.mark.parametrize <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup><a class="headerlink" href="#pytestmarkparametrize 2" title="Permanent link">&para;</a></h2>
+<p>与<code>fixture</code>类似，<code>pytest.mark.parametrize</code>装饰器也提供了参数化输入的功能。<code>fixture</code>例子中，测试函数的参数<code>get_input</code>是一个<code>fixture</code>，本例中<code>get_input</code>是一个自定义的参数名称。</p>
+<pre class="highlight"><code class="language-python">import pytest
+
+inputs = ['test-001', 'test-002', 'test-003']
+
+# 测试函数
+@pytest.mark.parametrize("get_input", inputs)
+def test(get_input):
+    print(f'Testing {get_input}')</code></pre>
+<p>以上两种方式都满足了 <strong>为每一个样本创建独立测试案例</strong> 的需求，然而问题是输入参数是以硬编码的方式写死的，可扩展性很差。于是，引出了下面的参数化测试方法。</p>
+<h2 id="3">动态生成参数化测试案例 <sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup><a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p><code>pytest_generate_tests(metafunc)</code>是pytest自带的在收集测试函数时调用的钩子函数，以便按照自定义方式、动态地生成参数化方案。其中，<code>metafunc</code>参数可以检查请求的测试上下文，</p>
+<ul>
+<li>
+<p><code>metafunc.fixturenames</code>获取所有<code>fixture</code></p>
+</li>
+<li>
+<p><code>metafunc.parametrize(name, params)</code>生成自定义测试方案</p>
+</li>
+</ul>
+<pre class="highlight"><code class="language-python">prefix = 'test-00'
+
+def pytest_generate_tests(metafunc):
+    if not "get_input" in metafunc.fixturenames: return
+
+    params = [f'{prefix}{i+1}' for i in range(3)]
+    metafunc.parametrize("get_input", params)
+
+
+# 测试函数
+def test(get_input):
+    print(f'Testing {get_input}')</code></pre>
+<p>这个例子不再直接给出硬编码的<code>test-001</code>~<code>test-003</code>，而是根据需要动态生成的，这为实际应用带来无限可能。但是，其中测试案例个数<code>3</code>还是硬编码方式写入的！为了实现终极目标，我们必须引入命令行参数。</p>
+<h2 id="4 5">注册命令行参数 <sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> <sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup><a class="headerlink" href="#4 5" title="Permanent link">&para;</a></h2>
+<p><code>pytest_addoption(parser)</code>是另一个pytest钩子函数，可以让用户注册一个自定义的命令行参数，然后通过<code>fixture</code>或其他钩子获取用户输入。</p>
+<ul>
+<li><code>parser.addoption</code>注册命令行参数</li>
+<li>
+<p><code>fixture</code>的<code>pytestconfig</code>参数获取参数：
+    <pre class="highlight"><code class="language-python">@pytest.fixture(scope='session')
+def user_param(pytestconfig):
+    return pytestconfig.getoption('--param_name')</code></pre></p>
+</li>
+<li>
+<p>或者<code>pytest_generate_tests</code>的<code>metafunc</code>获取参数：
+    <pre class="highlight"><code class="language-python">metafunc.config.getoption('param_name')</code></pre></p>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<p><code>pytest_addoption</code>必须写在默认的配置文件中：conftest.py。</p>
+</div>
+<p>回到本问题，创建配置文件<code>conftext.py</code>，注册用户输入参数<code>n</code>。</p>
+<pre class="highlight"><code class="language-python"># conftest.py
+def pytest_addoption(parser):
+    parser.addoption(
+        "--n", 
+        action="store", 
+        default=None, 
+        help="Specify the count of test cases.")</code></pre>
+<p>此时，在<code>conftext.py</code>所在目录下查看<code>pytest</code>帮助。可以发现，<code>pytest</code>成功读取了配置文件并注册了用户输入参数<code>--n</code>。</p>
+<pre class="highlight"><code>$ pytest -h
+...
+custom options:
+  --n=N                 Specify the count of test cases.
+...</code></pre>
+<p>接下来，与之前动态生成测试方案的例子结合：</p>
+<pre class="highlight"><code class="language-python">prefix = 'test-00'
+
+def pytest_generate_tests(metafunc):
+    if not "get_input" in metafunc.fixturenames: return
+
+    n = metafunc.config.getoption("n") # 获取输入参数值
+    n = int(n) if n is not None else 3
+    params = [f'{prefix}{i+1}' for i in range(n)]
+    metafunc.parametrize("get_input", params)
+
+
+# 测试函数
+def test(get_input):
+    print(f'Testing {get_input}')</code></pre>
+<p>试验一下可知满足既定需求：</p>
+<ul>
+<li>
+<p>不指定<code>n</code>时，默认运行3个测试案例；
+    <pre class="highlight"><code>$ pytest -sv test.py
+
+test.py::test[test-001] Testing test-001
+PASSED
+test.py::test[test-002] Testing test-002
+PASSED
+test.py::test[test-003] Testing test-003
+PASSED</code></pre></p>
+</li>
+<li>
+<p>如果指定<code>n</code>，则运行<code>n</code>个测试案例。
+    <pre class="highlight"><code>$ pytest -sv test.py --n=2
+
+test.py::test[test-001] Testing test-001
+PASSED
+test.py::test[test-002] Testing test-002
+PASSED</code></pre></p>
+</li>
+</ul>
+<h2 id="pythonpytest">从Python代码启动pytest测试<a class="headerlink" href="#pythonpytest" title="Permanent link">&para;</a></h2>
+<p>以上内容基于从命令行启动测试的前提，已经可以满足本文开头目标场景的需要。不过，还可以进一步，直接从代码启动测试。有什么作用呢？锦上添花，可以进一步封装成一个针对本文场景的专用测试工具。</p>
+<p>pytest提供了从代码执行测试的函数<code>pytest.main()</code>，它接受两个参数：</p>
+<ul>
+<li><code>args</code> 参数列表，等同于命令行模式输入的各种参数</li>
+<li><code>plugins</code> 插件列表。</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">什么是pytest插件？</p>
+<p>pytest插件是通过钩子函数实现的一些功能，例如前面提到的<code>conftest.py</code>即为插件类型的一种：<strong>本地插件</strong>。</p>
+</div>
+<p>我们正好将<code>conftest.py</code>的代码整合到一起，得到完整版：</p>
+<pre class="highlight"><code class="language-python"># test.py
+# 测试函数
+def test(get_input):
+    print(f'Testing {get_input}')</code></pre>
+<pre class="highlight"><code class="language-python"># main.py
+import pytest
+
+prefix = 'test-00'
+
+class MyPlugin:
+    def pytest_addoption(self, parser):
+        parser.addoption(
+            "--n", 
+            action="store", 
+            default=None, 
+            help="Specify the count of test cases.")
+
+    def pytest_generate_tests(self, metafunc):
+        if not "get_input" in metafunc.fixturenames: return    
+        n = metafunc.config.getoption("n") # 获取输入参数值
+        n = int(n) if n is not None else 3
+        params = [f'{prefix}{i+1}' for i in range(n)]
+        metafunc.parametrize("get_input", params)
+
+if __name__=='__main__':
+    pytest.main(
+        args=['-sv', '--n=2', 'test.py'], 
+        plugins=[MyPlugin()])</code></pre>
+<p>最后，<code>python main.py</code>启动测试即可。</p>
+<p>注意，虽然最后例子中直接写入<code>--n=2</code>，实际上<code>main.py</code>可以借助<code>fire</code>等第三方库转为命令行工具，从而接受用户输入。本文略过。</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p><a href="https://docs.pytest.org/en/6.2.x/fixture.html#fixture-parametrize">Parametrizing fixtures</a>&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p><a href="https://docs.pytest.org/en/6.2.x/parametrize.html#pytest-mark-parametrize">pytest.mark.parametrize: parametrizing test functions</a>&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p><a href="https://docs.pytest.org/en/6.2.x/parametrize.html#basic-pytest-generate-tests-example">Basic pytest_generate_tests example</a>&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p><a href="https://docs.pytest.org/en/6.2.x/example/markers.html?custom-marker-and-command-line-option-to-control-test-runs#custom-marker-and-command-line-option-to-control-test-runs">Custom marker and command line option to control test runs</a>&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p><a href="https://blog.csdn.net/waitan2018/article/details/104320927">Hook 方法之 pytest_addoption ：注册命令行参数</a>&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p><a href="https://docs.pytest.org/en/6.2.x/usage.html#calling-pytest-from-python-code">Calling pytest from Python code</a>&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

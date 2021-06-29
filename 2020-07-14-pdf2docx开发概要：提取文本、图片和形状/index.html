@@ -12,12 +12,12 @@
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
         <link href="../css/extra.css" rel="stylesheet">
 
         <script src="../js/jquery-1.10.2.min.js" defer></script>
         <script src="../js/bootstrap.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
     </head>
 
@@ -220,7 +220,7 @@ EMC</code></pre>
 <p>上述的PDF路径解析是一个复杂的工程，<code>pdf2docx</code>提供了简化版的解析函数，可以提取出常规的路径坐标、颜色、描边/填充状态。其中，我们只关注水平或者竖直的路径，因为只有它们对接下来的表格、文本样式解析有意义。</p>
 <p>至于其他的曲线路径，实际上组成了矢量图形，<code>pdf2docx</code>将其转化为位图，便于插入到<code>docx</code>文档中，具体参考下文：</p>
 <blockquote>
-<p><a href="../2020-10-01-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E7%9F%A2%E9%87%8F%E5%9B%BE%E5%A4%84%E7%90%86/">pdf2docx开发概要：矢量图处理</a></p>
+<p><a href="../2021-06-26-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E7%9F%A2%E9%87%8F%E5%9B%BE%E5%A4%84%E7%90%86/">pdf2docx开发概要：矢量图处理</a></p>
 </blockquote>
 <h3 id="b">(b) 形状注释<a class="headerlink" href="#b" title="Permanent link">&para;</a></h3>
 <p>在PDF文件基础上进行的批注操作例如高亮、下划线，可以直接使用<code>Page</code>对象的<code>annots()</code>方法获取，其中的<code>type</code>属性表明了该批注的类型 <sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>。例如，<code>pdf2docx</code>关心的有：</p>
@@ -320,16 +320,13 @@ PDF_ANNOT_STRIKEOUT 11
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>

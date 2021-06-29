@@ -6,18 +6,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="dothinking">
-        <link rel="canonical" href="https://dothinking.github.io/2020-10-01-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E7%9F%A2%E9%87%8F%E5%9B%BE%E5%A4%84%E7%90%86/">
+        <link rel="canonical" href="https://dothinking.github.io/2020-09-01-%E6%B1%82%E8%A7%A3%E7%9F%A9%E5%BD%A2%E7%9B%B8%E4%BA%A4%E9%97%AE%E9%A2%98/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>pdf2docx开发概要：矢量图处理 - 格致</title>
+        <title>求解矩形相交问题 - 格致</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
         <link href="../css/extra.css" rel="stylesheet">
 
         <script src="../js/jquery-1.10.2.min.js" defer></script>
         <script src="../js/bootstrap.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script> 
     </head>
 
@@ -98,7 +98,7 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2020-10-01-pdf2docx开发概要：矢量图处理.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2020-09-01-求解矩形相交问题.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -118,21 +118,17 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#pdf2docx" class="nav-link">pdf2docx开发概要：矢量图处理</a>
+            <li class="nav-item" data-level="1"><a href="#_1" class="nav-link">求解矩形相交问题</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">矢量图处理方案</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">路径分组</a>
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">从判断两个矩形是否相交开始</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#- rectangle-intersection-problem" class="nav-link">矩形相交问题 - Rectangle-Intersection-Problem</a>
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">暴力求解</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#_6" class="nav-link">总结</a>
+            <li class="nav-item" data-level="2"><a href="#_4" class="nav-link">优化的求解算法</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -143,44 +139,11 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="pdf2docx">pdf2docx开发概要：矢量图处理<a class="headerlink" href="#pdf2docx" title="Permanent link">&para;</a></h1>
-<p>发布于：2020-10-01 | 分类：<a href="../categories/process%20automation/">process automation</a></p>
+<h1 id="_1">求解矩形相交问题<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>发布于：2020-09-01 | 分类：<a href="../categories/mathematics/">mathematics</a></p>
 <hr />
-<p>通常情况下，我们从PDF提取出的路径<code>Path</code>是一些横、纵线及标准矩形填充，用于表格边线、单元格背景、文字高亮等样式的解析。实际上，<strong>矢量图也是由这些路径组成的</strong>。这就引出了两个问题：</p>
-<ul>
-<li>
-<p>对含有矢量图的路径进行表格解析，可能导致错误的、不存在的表格结构</p>
-</li>
-<li>
-<p><code>PyMuPDF</code>提取的<code>pixmap</code>并不包含矢量图，导致重建<code>docx</code>时丢失矢量图</p>
-</li>
-</ul>
-<h2 id="_1">矢量图处理方案<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p><strong>基本假设：</strong> 矢量图中包含平行于横、纵坐标轴的直线路径外，还有曲线路径。因为复杂形状的展现离不开曲线。</p>
-<p>PDF中曲线路径即贝塞尔曲线，由<code>c</code>、<code>v</code>、<code>y</code>等算符创建。原始数据给出的是贝塞尔曲线的4个控制点，我们在计算出曲线参数表达式后，采样曲线上的点得到一系列直线段路径来逼近曲线。于是，对于任意一条路径，只要一般直线段（即不正交于坐标轴）的数量超过一定数值，例如贝塞尔曲线的采样分段数，就表明该路经是曲线路径，并且属于某个矢量图区域。</p>
-<p>那么，解决开头两个问题的思路就很明朗了：</p>
-<ul>
-<li><strong>以是否相连为依据分组所有路径</strong>，每一组路径都是潜在的矢量图、表格区域，当然也可能是文本样式例如一条下划线</li>
-<li>检测每一个分组是否存在曲线路径：<ul>
-<li>只要存在曲线路径，该分组即被认为是矢量图，进而用<code>page.getPixmap(clip=bbox)</code>提取相应区域为位图</li>
-<li>否则，仅保留该分组中正交于坐标轴的路径，作为后续表格、文字样式的解析</li>
-</ul>
-</li>
-</ul>
-<h2 id="_2">路径分组<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>以上处理方案的关键点在于 <strong>以是否相连为依据分组所有路径</strong>。</p>
-<p>图<code>Graph</code>是解决这个问题的直接手段：</p>
-<ul>
-<li>每一条路径看作图的<code>顶点</code></li>
-<li>两条路径是否相连构成了<code>边</code>，注意并不是任意两条路径都是相连的</li>
-<li>于是，所有路径及其连接关系构成了一个<code>非连通图</code></li>
-<li>遍历这个非连通图得到每一个<code>连通分量</code>，即为每一个分组</li>
-</ul>
-<p>至此，关键点在于建立这个图，即 <strong>任意两条路径是否相交</strong>。为降低复杂度，引入简化处理：判断路径的包络矩形是否相交。注意本文提及的包络矩形<code>Boundary Box</code>都是平行于坐标轴的（<code>ISO-oriented</code>）。</p>
-<h2 id="- rectangle-intersection-problem">矩形相交问题 - Rectangle-Intersection-Problem<a class="headerlink" href="#- rectangle-intersection-problem" title="Permanent link">&para;</a></h2>
-<p>一开始采用了暴力求解的方式，O(n^2)的时间复杂度在<code>n&lt;2000</code>时尚能接受（~0.6s）；2000条路经也基本涵盖一个页面内普通复杂度的矢量图了。直到遇到包含6万条路经的一张矢量地图，处理时间直接爆炸了。搜索后发现矩形求交是一个研究过的问题，于是参考一篇论文中的算法进行了实现。</p>
-<p>这一节记录暴力求解和优化后的算法。</p>
-<h3 id="_3">判断两个矩形是否相交<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>本文求解矩形相交问题（Rectangle Intersection Problem）：已知<code>n</code>个水平或者竖直放置的矩形，对于每个矩形，求所有与之相交的矩形。一开始采用了暴力求解的方式，O(n^2)的时间复杂度在<code>n&lt;2000</code>时尚能接受（~0.6s），继续增大<code>n</code>则导致计算时间爆炸了。实际上，矩形求交是一个研究过的问题，本文参考一篇论文中的算法进行了实现。</p>
+<h2 id="_2">从判断两个矩形是否相交开始<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>首先，使用左下角<code>(x0,y0)</code>和右上角<code>(x1,y1)</code>两个点来描述一个标准矩形：</p>
 <pre class="highlight"><code>  ^ y
   |
@@ -229,7 +192,7 @@
                             rect.y1&lt;self.y0 or \
                             rect.y0&gt;self.y1
         return not non_intersection</code></pre>
-<h3 id="_4">暴力求解<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<h2 id="_3">暴力求解<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p>既然已经有了判断两个矩形是否相交的方法，自然想到两两判断所有矩形的暴力求解方法。最后用一个列表表示各个矩形的相交矩形，<code>graph = [set() for i in range(num)]</code>，也就是邻接表表示的图结构。</p>
 <pre class="highlight"><code class="language-python">class Rects:
     '''Collection of Rect instances.'''
@@ -264,13 +227,13 @@ if __name__ == '__main__':
     # output:
     # [set(), {2}, {1}]</code></pre>
 <p>以上计算示例即为上图中的矩形<code>A</code>、<code>B</code>和<code>C</code>，结果与预期相符：<code>A</code>没有相交矩形，<code>B</code>与<code>C</code>相交，<code>C</code>与<code>B</code>相交。</p>
-<h3 id="_5">优化的求解算法<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<h2 id="_4">优化的求解算法<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p>暴力方法简单易行，但随着输入数量增大，性能急剧下降。于是寻求一种优化的算法，基本方向有两个：</p>
 <ul>
 <li>以O(n*logn)代价沿着一个维度对矩形排序，这样可以避免每两个矩形都要进行一次判断</li>
 <li>在一个维度的投影有重叠的情况下，只需按区间判断另一个维度的相交情况</li>
 </ul>
-<p>这里对下面论文提出的算法进行了实现。</p>
+<p>本文对如下论文提出的算法进行了实现：</p>
 <blockquote>
 <p><a href="https://ieeexplore.ieee.org/document/5578313">A Rectangle-Intersection Algorithm with Limited Resource Requirements</a></p>
 </blockquote>
@@ -478,14 +441,7 @@ if __name__ == '__main__':
 
     # output:
     # time: 1.2851152</code></pre>
-<p>这样，处理50000个矩形相交问题的时间在2s以内。</p>
-<h2 id="_6">总结<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
-<p><code>pdf2docx</code>处理矢量图的方案为：</p>
-<ul>
-<li>利用优化后的矩形求交算法建立路径相交关系的图结构</li>
-<li>广度优先遍历图得到各个连通分量即为分组</li>
-<li>检测各个分组是否存在曲线路径，存在则截取该区域为位图，否则提取直线段用于后续的表格、文本样式解析</li>
-</ul></div>
+<p>这样，处理50000个矩形相交问题的时间在2s以内。</p></div>
             </div>
         </div>
 
@@ -510,16 +466,13 @@ if __name__ == '__main__':
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
-                <p>
-                    From here you can search these documents. Enter
-                    your search terms below.
-                </p>
+                <p>From here you can search these documents. Enter your search terms below.</p>
                 <form>
                     <div class="form-group">
                         <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
-                <div id="mkdocs-search-results"></div>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
             </div>
             <div class="modal-footer">
             </div>

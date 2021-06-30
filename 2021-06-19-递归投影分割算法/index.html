@@ -120,6 +120,22 @@
             
             <li class="nav-item" data-level="1"><a href="#_1" class="nav-link">递归投影分割算法</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">基本步骤</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">水平投影和垂直投影</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_4" class="nav-link">分割投影轮廓</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#python" class="nav-link">Python实现</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -130,7 +146,230 @@
 <h1 id="_1">递归投影分割算法<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <p>发布于：2021-06-19 | 分类：<a href="../categories/mathematics/">mathematics</a></p>
 <hr />
-<p>递归投影分割算法 Recursive XY Cut</p></div>
+<p>递归投影分割（Recursive XY Cut）是一种自顶向下的版面分割方法，将页面分割成一系列相对独立的矩形区域。例如，根据竖直方向间隙的不同，可以划分段落、行。本文记录该算法的思路和实现。</p>
+<h2 id="_2">基本步骤<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>此算法的输入是一张二值化的图片，每一个像素的值为0或者255。并且，本文约定 <strong>255表示有效区域，0表示页面空白</strong>。</p>
+<ul>
+<li>
+<p>对二值图作水平投影，根据间隙分割子图，确定子图区域的上下边界</p>
+</li>
+<li>
+<p>对每一个子图作垂直投影，根据间隙进一步分割子图，确定子图的左右边界</p>
+</li>
+<li>
+<p>根据前两步得到一次分割后的矩形框</p>
+</li>
+<li>
+<p>对该矩形框内的子图，重复如上过程；直到水平投影分割没有得到新的子图，或者垂直投影分割得到子图数&lt;=2</p>
+</li>
+</ul>
+<pre class="highlight"><code>┌────────────────┐                                ┌───────────────┐
+│       1        │        root                    │               │
+└────────────────┘          │                     │               │
+┌─────┐                  1──┴───2-5               │     ┌─────────┘
+│     │ ┌────────┐               │                │     │
+│ 2   │ │  3     │          2────┴──3-5           │     │  ┌──────┐
+│     │ └────────┘                   │            │     │  │      │
+│     │ ┌──┐ ┌──┐           4-5 ─────┴───3        │     │  │      │
+│     │ │  │ │  │            │                    │     │  │      │
+│     │ │4 │ │ 5│        4───┴───5                │     │  │      │
+└─────┘ └──┘ └──┘                                 └─────┘  └──────┘
+(a) normal layout        (b) hierarchy         (c) unavailable layout</code></pre>
+<p>以上图（a）所示版面为例，最终得到各个区域及其层级关系树如图（b）所示。</p>
+<ul>
+<li>
+<p>第一次递归：水平投影分离出子图区域1和子图区域2-5，然后分别对这两个子图进行垂直投影：</p>
+<ul>
+<li>子图区域1：得到唯一子图1，因此完全确定区域1的矩形框，且不必进入下一次递归</li>
+<li>子图区域2-5：分离出区域2和子图区域3-5；因为得到两个区域，还需进入下一次递归</li>
+</ul>
+</li>
+<li>
+<p>第二次递归：</p>
+<ul>
+<li>区域2：水平和垂直投影都得到唯一子图2，停止</li>
+<li>区域3-5：水平投影分割出3和4-5，3的垂直投影完全确定3，停止；4-5的垂直投影分割出4和5，继续进入下一轮</li>
+</ul>
+</li>
+<li>
+<p>第三次递归：水平、垂直分割分别确定区域4和5</p>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">局限</p>
+</div>
+<p>递归投影分割法仅对按矩形分块的版面有效，无法处理相互嵌入的矩形，例如图（c）。</p>
+<h2 id="_3">水平投影和垂直投影<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>在了解基本原理后，我们逐渐进入细节和代码实现层面。</p>
+<ul>
+<li>水平投影：二维图像（二值图）在y轴上的投影，也就是每一行中等于255的像素的个数</li>
+<li>垂直投影：二维图像（二值图）在x轴上的投影，也就是每一列中等于255的像素的个数</li>
+</ul>
+<p>借助<code>opencv</code>，图像数据已经是<code>numpy.ndarray</code>类型了，所以无需循环统计，而是采用更为高效的numpy函数：</p>
+<pre class="highlight"><code class="language-python">x_projection = np.count_nonzero(img==255, axis=1)
+y_projection = np.count_nonzero(img==255, axis=0)</code></pre>
+<p>投影结果本质上是一维数组，以数值大小为高度绘制在坐标轴上得到投影轮廓。其中，大于阈值（例如0）的位置表现为山峰，表征有效像素区域；小于阈值的位置为山谷，表现为空白（忽略）区域。山谷分割了山峰区域，每一座山即为一个独立的区域。</p>
+<pre class="highlight"><code>                                          x
+      x       x             xx           xx           x
+      x x x   x            xxx           xxx          x
+      xxxxx  xxx          xxxx          xxxx         xx
+     xxxxxx xxxxx        xxxxx          xxxx         xx
+     xxxxxxxxxxxxx       xxxxxxxx xxx   xxxxx        xxx
+   xxxxxxxxxxxxxxxxx    xxxxxxxxxxxxxxxxxxxxxx      xxxxx
+xxxxxxxxxxxxxxxxxxxx   xxxxxxxxxxxxxxxxxxxxxxxxx   xxxxxxxxxx</code></pre>
+<h2 id="_4">分割投影轮廓<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>根据投影轮廓，我们可以分割出独立区域。分割结果依赖于两类阈值：</p>
+<ul>
+<li>
+<p>最小投影值<code>min_value</code>，表示沿着投影方向上的有效像素数。对于水平投影来说，即为需要关注的矩形的最小宽度。</p>
+</li>
+<li>
+<p>投影间隙<code>min_gap</code>，表示两个区域在垂直投影方向上的最小距离。对于水平投影来说，例如段间距、行间距等参数。</p>
+</li>
+</ul>
+<pre class="highlight"><code>                     ┌──┐
+projection           │  │       ┌─┐───
+    ┌──┐             │  │       │ │ |
+    │  │             │  │ ┌───┐ │ │min_value
+    │  │&lt;- min_gap -&gt;│  │ │   │ │ │ |
+────┴──┴─────────────┴──┴─┴───┴─┴─┴─┴───
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16</code></pre>
+<p>下面给一个实例演示，假设投影数组：</p>
+<pre class="highlight"><code class="language-python">&gt;&gt;&gt; P = np.array([1, 2, 3, 0, 0, 1, 2, 3, 4, 0, 0, 0, 1, 2, 3, 0])</code></pre>
+<p>为简化问题，假定两类阈值都等于0。那么，通过遍历投影数组，数一数连续的非零元素，即可得到3个子区域，其位置索引范围分别是：[0,2]，[5,8]和[12,14]。</p>
+<p>但既然已经用上numpy了，那就换上numpy数组运算的思维：</p>
+<ul>
+<li>
+<p>计算投影数组非零元素的索引位置数组<code>I</code>
+    <pre class="highlight"><code class="language-python">&gt;&gt;&gt; I = np.where(P&gt;0)[0]
+array([ 0,  1,  2,  5,  6,  7,  8, 12, 13, 14], dtype=int64)</code></pre></p>
+<p><code>np.where</code>返回值与原数组维度一致，即一维的元组，所以取其第一个元素。</p>
+</li>
+<li>
+<p>索引数组<code>I</code>错位求差得到差值数组<code>D</code>
+    <pre class="highlight"><code class="language-python">&gt;&gt;&gt; D=I[1:]-I[0:-1]
+array([1, 1, 3, 1, 1, 1, 4, 1, 1], dtype=int64)</code></pre></p>
+</li>
+<li>
+<p>差值数组<code>D</code>大于1（即至少间隔1像素）的元素的索引位置<code>pos</code>对应<code>I</code>中元素的值<code>I[pos]</code>，即为空白区间的开始位置，对应有效分割区域的结束索引<code>E</code>。注意，此时并未考虑最后一个区域，需要额外补到最后。
+    <pre class="highlight"><code class="language-python">&gt;&gt;&gt; pos = np.where(D&gt;1)[0]
+array([2, 6], dtype=int64)
+&gt;&gt;&gt; E = I[pos]
+array([2, 8], dtype=int64)
+&gt;&gt;&gt; E = np.append(E, I[-1])
+array([ 2, 8, 14], dtype=int64)</code></pre></p>
+</li>
+<li>
+<p>相应地，<code>pos</code>的下一个位置<code>I[pos+1]</code>对应空白区间的结束位置，也就是有效分割区域的开始索引<code>S</code>。注意，此时并未考虑第一个区域，需要额外插入到最前面。
+    <pre class="highlight"><code class="language-python">&gt;&gt;&gt; S = I[pos+1]
+array([ 5, 12], dtype=int64)
+&gt;&gt;&gt; S = np.insert(S, 0, I[0])
+array([ 0, 5, 12], dtype=int64)</code></pre></p>
+</li>
+</ul>
+<p>综合起始索引<code>[ 0, 5, 12]</code>和结束索引<code>[ 2, 8, 14]</code>，也得到了同样正确的三个区间。</p>
+<h2 id="python">Python实现<a class="headerlink" href="#python" title="Permanent link">&para;</a></h2>
+<p>最后，汇总代码如下。注意：分割后的区域理论上是分层级的，不过以下实现中将所有区域放在一个同级列表中。</p>
+<pre class="highlight"><code class="language-python"># -------------------------------------------------------------------------------------------
+# Implementation of recursive X-Y cut algorithm, which is:
+# a top-down page segmentation technique that decomposes a document image recursively into a 
+# set of rectangular blocks.
+# 
+# - https://en.wikipedia.org/wiki/Recursive_X-Y_cut
+# - Recursive X-Y Cut using Bounding Boxes of Connected Components by Jaekyu Ha, 
+#   Robert M.Haralick and Ihsin T. Phillips
+# -------------------------------------------------------------------------------------------
+def recursive_xy_cut(img_binary:np.array, 
+                    min_w:float=0.0, min_h:float=0.0, 
+                    min_dx:float=15.0, min_dy:float=15.0): 
+    '''Split image with recursive xy-cut algorithm.
+
+    Args:
+        img_binary (np.array): Binarized image with interesting region (255) and empty region (0).
+        min_w (float): Ignore bbox if the width is less than this value.
+        min_h (float): Ignore bbox if the height is less than this value.
+        min_dx (float): Merge two bbox-es if the x-gap is less than this value.
+        min_dy (float): Merge two bbox-es if the y-gap is less than this value.
+
+    Returns:
+        list: bbox (x0, y0, x1, y1) of split blocks.
+    '''
+    def xy_cut(arr:np.array, top_left:tuple, res:list, 
+                    min_w:float, min_h:float, min_dx:float, min_dy:float):
+        x0, y0 = top_left
+        h, w = arr.shape
+        # cut along x-direction
+        projection = np.count_nonzero(arr==255, axis=1)
+        pos_y = _split_projection_profile(projection, min_w, min_dy)
+        if not pos_y: return        
+
+        # cut along y-direction for each part
+        arr_y0, arr_y1 = pos_y
+        for r0, r1 in zip(arr_y0, arr_y1):
+            x_arr = arr[r0:r1, 0:w]
+            projection = np.count_nonzero(x_arr==255, axis=0)
+            pos_x = _split_projection_profile(projection, min_h, min_dx)
+            if not pos_x: continue
+
+            # determined the block bbox
+            arr_x0, arr_x1 = pos_x
+            if len(arr_x0)==1:
+                res.append((x0+arr_x0[0], y0+r0, x0+arr_x1[0], y0+r1))
+                continue
+
+            # xy-cut recursively if the count of blocks &gt; 1
+            for c0, c1 in zip(arr_x0, arr_x1):
+                y_arr = arr[r0:r1, c0:c1]
+                top_left = (x0+c0, y0+r0)
+                xy_cut(y_arr, top_left, res, min_w, min_h, min_dx, min_dy)
+
+    # do xy-cut recursively
+    res = []
+    xy_cut(arr=img_binary, top_left=(0, 0), res=res, 
+            min_w=min_w, min_h=min_h, min_dx=min_dx, min_dy=min_dy)
+    return res
+
+
+def _split_projection_profile(arr_values:np.array, min_value:float, min_gap:float):
+    '''Split projection profile:
+
+    ```
+                              ┌──┐
+         arr_values           │  │       ┌─┐───
+             ┌──┐             │  │       │ │ |
+             │  │             │  │ ┌───┐ │ │min_value
+             │  │&lt;- min_gap -&gt;│  │ │   │ │ │ |
+         ────┴──┴─────────────┴──┴─┴───┴─┴─┴─┴───
+         0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+    ```
+
+    Args:
+        arr_values (np.array): 1-d array representing the projection profile.
+        min_value (float): Ignore the profile if `arr_value` is less than `min_value`.
+        min_gap (float): Ignore the gap if less than this value.
+
+    Returns:
+        tuple: Start indexes and end indexes of split groups.
+    '''
+    # all indexes with projection height exceeding the threshold
+    arr_index = np.where(arr_values&gt;min_value)[0]
+    if not len(arr_index): return
+
+    # find zero intervals between adjacent projections
+    # |  |                    ||
+    # ||||&lt;- zero-interval -&gt; |||||
+    arr_diff = arr_index[1:] - arr_index[0:-1]
+    arr_diff_index = np.where(arr_diff&gt;min_gap)[0]
+    arr_zero_intvl_start = arr_index[arr_diff_index]
+    arr_zero_intvl_end = arr_index[arr_diff_index+1]
+
+    # convert to index of projection range:
+    # the start index of zero interval is the end index of projection
+    arr_start = np.insert(arr_zero_intvl_end, 0, arr_index[0])
+    arr_end = np.append(arr_zero_intvl_start, arr_index[-1])
+    arr_end += 1 # end index will be excluded as index slice
+
+    return arr_start, arr_end</code></pre></div>
             </div>
         </div>
 

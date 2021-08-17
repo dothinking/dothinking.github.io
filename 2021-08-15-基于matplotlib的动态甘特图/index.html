@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2021-08-15-%E5%9F%BA%E4%BA%8Ematplotlib%E7%9A%84%E5%8A%A8%E6%80%81%E7%94%98%E7%89%B9%E5%9B%BE/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>基于matplotlib的动态甘特图 - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">分类 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/CAD-CAE%20integration/" class="dropdown-item">CAD/CAE integration</a>
+</li>
+                                    
+<li>
+    <a href="../categories/devops/" class="dropdown-item">devops</a>
+</li>
+                                    
+<li>
+    <a href="../categories/feeling/" class="dropdown-item">feeling</a>
+</li>
+                                    
+<li>
+    <a href="../categories/finite%20element%20analysis/" class="dropdown-item">finite element analysis</a>
+</li>
+                                    
+<li>
+    <a href="../categories/machine%20learning/" class="dropdown-item">machine learning</a>
+</li>
+                                    
+<li>
+    <a href="../categories/mathematics/" class="dropdown-item">mathematics</a>
+</li>
+                                    
+<li>
+    <a href="../categories/numeric%20calculation/" class="dropdown-item">numeric calculation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/optimization/" class="dropdown-item">optimization</a>
+</li>
+                                    
+<li>
+    <a href="../categories/plasticity%20theory/" class="dropdown-item">plasticity theory</a>
+</li>
+                                    
+<li>
+    <a href="../categories/process%20automation/" class="dropdown-item">process automation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/python-vba-cpp/" class="dropdown-item">python/vba/cpp</a>
+</li>
+                                    
+<li>
+    <a href="../categories/web%20development/" class="dropdown-item">web development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../archive/" class="nav-link">归档</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../about/" class="nav-link">关于</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2021-08-15-基于matplotlib的动态甘特图.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#matplotlib" class="nav-link">基于matplotlib的动态甘特图</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">从静态甘特图开始</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">动态更新思路</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">回到作业车间调度背景</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="matplotlib">基于matplotlib的动态甘特图<a class="headerlink" href="#matplotlib" title="Permanent link">&para;</a></h1>
+<p>发布于：2021-08-15 | 分类：<a href="../categories/python-vba-cpp/">python/vba/cpp</a></p>
+<hr />
+<p>本文在作业车间调度问题背景下，基于<code>matplotlib</code>库实现甘特图并监听数据进行动态更新。文中描述的基本流程也适用于其他类型图表的动态更新。最终效果如下。</p>
+<p><img alt="dynamic-gantt-chart" src="../images/2021-08-15-02.gif" /></p>
+<h2 id="_1">从静态甘特图开始<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>甘特图可以用<code>matplotlib</code>的条形图（水平柱状图）来模拟，横轴为时间，纵轴为工序/任务类型；每一个横条(bar)对应一个工序/任务。</p>
+<pre class="highlight"><code class="language-python">matplotlib.pyplot.barh(y, width, height=0.8, left=None, *, align='center', **kwargs)</code></pre>
+<p>其中，</p>
+<ul>
+<li>
+<p><code>y</code>即为y轴坐标，对应 <strong>工序类别</strong>，例如从作业的视角即为作业ID，从机器的视角即为机器ID</p>
+</li>
+<li>
+<p><code>width</code>为横条宽度，对应 <strong>工序加工时间</strong></p>
+</li>
+<li>
+<p><code>height</code>为横条高度，没有直接意义</p>
+</li>
+<li>
+<p><code>left</code>为横条左边界的x坐标，对应 <strong>工序开始时间</strong></p>
+</li>
+</ul>
+<p>通常，我们可以画出两类甘特图:</p>
+<ul>
+<li>
+<p>项目/作业视角，项目任务或者作业工序的时间安排</p>
+</li>
+<li>
+<p>资源/设备视角，分配到同类资源/设备上的任务/工序的时间安排</p>
+</li>
+</ul>
+<p>本文将其绘制为同一幅图的两张子图，效果及代码如下。其中，工序属性用一个四元组表示：<code>（作业号，机器号，开始时间，加工时长）</code>。</p>
+<p><img alt="static_gantt_chart" src="../images/2021-08-15-01.png" /></p>
+<pre class="highlight"><code class="language-python">import matplotlib.pyplot as plt
+
+# dummy data:
+# - job number
+# - machine number
+# - task properties: (job id, machine id, start time, duration)
+num_job, num_machine = 2, 3
+tasks = [(0,2,0,10), (0,1,10,5), (0,0,35,20), (1,0,15,15),(1,1,40,15), (1,2,50,10)]
+
+# create two subplots: job view and machine view
+fig, (gnt_job, gnt_machine) = plt.subplots(2,1, sharex=True)
+
+# title
+fig.suptitle('Gantt Chart', fontweight='bold')
+
+# axis style for job subplot
+job_ids = range(num_job)
+gnt_job.set(ylabel='Job', \
+    yticks=job_ids, \
+    yticklabels=[f'Job-{i}' for i in job_ids])
+gnt_job.grid(which='major', axis='x', linestyle='--')
+
+# axis style for machine subplot
+machine_ids = range(num_machine)
+gnt_machine.set(xlabel='Time', ylabel='Machine',\
+    yticks=machine_ids, \
+    yticklabels=[f'M-{i}' for i in machine_ids])
+gnt_machine.grid(which='major', axis='x', linestyle='--')
+
+# plot each task
+for (jid,mid,start,duration) in tasks:
+    gnt_job.barh(jid, duration, left=start, height=0.5)
+    gnt_machine.barh(mid, duration, left=start, height=0.5)
+
+plt.show()</code></pre>
+<h2 id="_2">动态更新思路<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>动态更新即修改绘图对象/数据，通常有以下两种做法：</p>
+<ul>
+<li>
+<p>交互绘图模式：<code>plt.ion</code>和<code>plt.ioff</code></p>
+</li>
+<li>
+<p>动画模式：按照一定的频率执行自定义的方法来更新数据，每一次更新数据对应 <strong>一帧</strong> 的结果</p>
+</li>
+</ul>
+<p>本文采用动画模式：</p>
+<pre class="highlight"><code class="language-python">matplotlib.animation.FuncAnimation(fig, func, frames=None, \
+    init_func=None, fargs=None, save_count=None, *, cache_frame_data=True, **kwargs)</code></pre>
+<p>其中几个关键参数：</p>
+<ul>
+<li>
+<p><code>fig</code>为当前画布</p>
+</li>
+<li>
+<p><code>func</code>为更新图形数据的自定义函数，参数构成如下：</p>
+<pre class="highlight"><code class="language-python">def func(frame, *fargs) -&gt; iterable_of_artists</code></pre>
+<p>其中，</p>
+<ul>
+<li><code>frame</code>为每一帧的参数，由下面的<code>frames</code>参数传入</li>
+<li><code>fargs</code>为额外的参数，由下面的<code>fargs</code>传入</li>
+</ul>
+</li>
+<li>
+<p><code>frames</code> 一般为可迭代对象，控制整个动画过程，每一帧传一个元素给<code>func</code></p>
+<ul>
+<li>如果是可迭代对象：每一帧传一个元素</li>
+<li>如果是<code>int</code>，等效为 <code>range(frames)</code></li>
+<li>如果是生成器，每一帧传一个生成的对象</li>
+<li>如果是<code>None</code>，每一帧传入当前运行次数</li>
+</ul>
+</li>
+<li>
+<p><code>init_func</code>是图形初始化函数，在绘制第一帧前调用</p>
+<pre class="highlight"><code class="language-python">def init_func() -&gt; iterable_of_artists</code></pre>
+</li>
+<li>
+<p><code>fargs</code> 为每一帧调用时传给<code>func</code>的额外的参数</p>
+</li>
+<li>
+<p><code>interval</code>为频率参数，表示两帧之间的间隔，默认 <code>200ms</code></p>
+</li>
+<li>
+<p><code>repeat</code>表示<code>frames</code>定义的帧数结束后是否重复，默认 <code>False</code></p>
+</li>
+<li>
+<p><code>blit</code>表示是否启用<code>blitting</code>技术优化绘图，默认 <code>False</code></p>
+</li>
+</ul>
+<p>更详细介绍参考：</p>
+<blockquote>
+<p><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.animation.FuncAnimation.html">https://matplotlib.org/stable/api/_as_gen/matplotlib.animation.FuncAnimation.html</a></p>
+</blockquote>
+<div class="admonition warning">
+<p class="admonition-title">关于<code>func</code>的进一步理解</p>
+<ul>
+<li>
+<p>一般在<code>func</code>中更新已经创建好的对象的数据，例如<code>plt.plot()</code>返回的曲线；也可以清除之前的所有对象，再用新的数据重新绘图，特别是对不适用直接更新数据的场合，例如本文涉及的条形图。</p>
+</li>
+<li>
+<p><code>func</code>的返回值（该帧所有绘图对象组成的可迭代对象）主要用于<code>blit=True</code>时优化绘图显示，所以如果设置<code>blit=False</code>，完全可以不用返回值。</p>
+</li>
+</ul>
+</div>
+<h2 id="_3">回到作业车间调度背景<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>matplotlib的animation以固定的频率刷新数据，然而，回到作业车间调度问题背景下，我们无法预知在哪一刻会产生一个新解。为了避免无意义的刷新，可以设置一个开关变量，一旦得到了新解则刷新甘特图，否则啥也不做。</p>
+<p>针对作业车间调度问题，我们抽象出两个主要的类：</p>
+<ul>
+<li>
+<p><code>Problem</code>：指定问题的规模，然后求解<code>solve()</code>，生成并动态更新甘特图<code>__dynamic_gantt()</code></p>
+<pre class="highlight"><code class="language-python">class Problem:
+    def __init__(self, num_job:int, num_machine:int, solution) -&gt; None:
+        '''Initialize problem with the count of job and machine.'''
+        self.num_job = num_job
+        self.num_machine = num_machine
+
+        # a solution is a collection of tasks with determined start time
+        self.__solution = solution # type: Solution
+
+        # implement dynamic gantt chart by animation
+        self.__animation = None
+
+
+    def solve(self):
+        '''Solve problem and update Gantt chart dynamically.'''
+        pass
+
+
+    def __dynamic_gantt(self, interval:int=1000):
+        '''Create plot and define animation to update data dynamically.'''
+        pass</code></pre>
+</li>
+<li>
+<p><code>Solution</code>：问题的解即一系列属性已知（主要是<code>开始时间</code>）的工序，主要负责更新解<code>update()</code>和绘制甘特图的图形区域<code>plot()</code>。</p>
+<pre class="highlight"><code class="language-python">class Solution:
+
+    Task = namedtuple('Task',['jid','mid', 'start', 'duration'])
+
+    def __init__(self) -&gt; None:
+        self.__tasks = [] # list[Task]
+        self.__update_plot = False
+
+    def update(self, num_job:int, num_machine:int):
+        '''Simulate a real solving process to update solution iteratively.'''
+        pass
+
+
+    def plot(self, axes:tuple):
+        '''Plot Gantt chart data area.'''
+        pass</code></pre>
+</li>
+</ul>
+<h3 id="_4">求解框架<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p><code>problem.solve()</code>方法模拟求解过程，主线程的甘特图持续监听新解：在获得新解之前，绘图状态为关，保持不动；一旦子线程的求解获得了更好的解，绘图选项被打开，从而更新甘特图。基本框架和相应代码如下：</p>
+<ul>
+<li>
+<p>在子线程中求解，即调用<code>Solution</code>的<code>update()</code>方法</p>
+</li>
+<li>
+<p>在主线程中展示和更新甘特图<code>problem.__dynamic_gantt()</code>，即通过上一节介绍的<code>animation.FuncAnimation</code>对象以一定的频率执行<code>Solution</code>的<code>plot()</code>方法</p>
+</li>
+</ul>
+<pre class="highlight"><code class="language-python">class Problem:
+
+    def solve(self):
+        '''Solve problem and update Gantt chart dynamically.'''
+        # solve problem in child thread
+        thread = Thread(target=self.__solution.update, \
+                        args=(self.num_job, self.num_machine))
+        thread.start()
+
+        # show gantt chart and listen to the solution update in main thread
+        self.__dynamic_gantt(interval=1000)
+        plt.show()</code></pre>
+<h3 id="_5">定义甘特图动画<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>绘制甘特图的代码和第一节的静态甘特图类似，这里仅给出定义动画的部分：</p>
+<ul>
+<li>
+<p>因为无法预知动画的周期，所以<code>frames</code>参数为空，即传入调用次数<code>i</code></p>
+</li>
+<li>
+<p>虽然以固定频率刷新动画（调用<code>solution.plot()</code>），但实际图形在获得新解之前并不会被无意义地重复绘制（具体参考前面的介绍和下面的实现）</p>
+</li>
+</ul>
+<pre class="highlight"><code class="language-python">class Problem:
+
+    def __dynamic_gantt(self, interval:int=1000):
+        '''Create plot and define animation to update data dynamically.'''
+        ...
+
+        # animation
+        self.__animation = FuncAnimation(fig, \
+            func=lambda i: self.__solution.plot(axes=(gnt_job, gnt_machine)), \
+            interval=interval, \
+            repeat=False)</code></pre>
+<h3 id="_6">更新甘特图<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>更新甘特图的代码如下：</p>
+<ul>
+<li>
+<p><code>self.__update_plot</code>控制了是否真正重绘</p>
+</li>
+<li>
+<p>对于甘特图中的每一个横条，这里采用了先清除再重绘的方式</p>
+</li>
+</ul>
+<pre class="highlight"><code class="language-python">class Solution:            
+
+    def plot(self, axes:tuple):
+        '''Plot Gantt chart data area.'''
+        # update plot only if the solution is updated
+        if not self.__update_plot:
+            return
+        else:
+            self.__update_plot = False
+
+        # clear plotted bars
+        for axis in axes:
+            bars = [bar for bar in axis.containers if isinstance(bar, BarContainer)]
+            for bar in bars: bar.remove()
+
+        # plot new bars
+        gnt_job, gnt_machine = axes
+        for task in self.__tasks:
+            gnt_job.barh(task.jid, task.duration, left=task.start, height=0.5)
+            gnt_machine.barh(task.mid, task.duration, left=task.start, height=0.5)
+
+        # reset x-limit
+        for axis in axes:
+            axis.relim()
+            axis.autoscale()</code></pre>
+<p>最后，完整代码参考：</p>
+<blockquote>
+<p><a href="https://github.com/dothinking/dothinking.github.io/tree/master/samples/gantt">https://github.com/dothinking/dothinking.github.io/tree/master/samples/gantt</a></p>
+</blockquote></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

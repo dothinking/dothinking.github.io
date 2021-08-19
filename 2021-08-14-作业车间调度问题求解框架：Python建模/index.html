@@ -148,7 +148,7 @@
 <hr />
 <p>基于前文对作业车间调度问题的定义和描述，本文进行Python建模，开发了一个通用的作业车间调度问题求解框架，把问题分解、抽象为可重用的部分，从而专注求解算法的开发、实施和验证。</p>
 <blockquote>
-<p><a href="https://github.com/dothinking/job_shop_schedule">dothinking/job_shop_schedule</a></p>
+<p><a href="https://github.com/dothinking/jsp_framework">dothinking/jsp_framework</a></p>
 </blockquote>
 <h2 id="_1">框架结构<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>整个求解框架基于Python面向对象编程实现，主要结构参考下图。</p>
@@ -214,9 +214,8 @@
 </li>
 </ul>
 <p>关键代码参考：</p>
-<pre class="highlight"><code class="language-python">from model.solver import JSSolver
-from model.problem import JSProblem
-from model.solution import JSSolution
+<pre class="highlight"><code class="language-python"># user defined path, e.g. path/to/UserSolver.py
+from jsp_fwk import (JSProblem, JSSolution, JSSolver)
 
 class UserSolver(JSSolver):
 
@@ -235,7 +234,7 @@ class UserSolver(JSSolver):
         # (3) Update the solution for problem iteratively        
         problem.update_solution(solution)</code></pre>
 <h2 id="_3">测试算法<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<p>框架已经内置了作业车间调度问题的标准考题数据，便于根据名称直接初始化问题。以下示例调用自定义求解器 <code>SampleSolver</code> 求解 <code>ft10</code> 问题。</p>
+<p>框架已经内置了作业车间调度问题的标准考题数据，便于根据名称直接初始化问题。以下示例调用上一节自定义的求解器 <code>UserSolver</code> 求解 <code>ft10</code> 问题。</p>
 <ul>
 <li>
 <p>更多基本问题数据 <a href="https://github.com/dothinking/job_shop_schedule/blob/master/benchmark/instances.json">参考</a></p>
@@ -244,14 +243,15 @@ class UserSolver(JSSolver):
 <p>求解过程以甘特图形式动态展示解的变化</p>
 </li>
 </ul>
-<pre class="highlight"><code class="language-python">from model.problem import JSProblem
-from solver.SampleSolver import SampleSolver
+<pre class="highlight"><code class="language-python"># test.py
+from jsp_fwk import JSProblem
+from path/to/UserSolver import UserSolver
 
 # load benchmark problem
 problem = JSProblem(benchmark='ft10')
 
 # solve problem with user defined solver
-s = SampleSolver(name='sample')
+s = UserSolver()
 s.solve(problem=problem)</code></pre>
 <p>基本介绍到此结束，接下来将陆续实施一些求解算法。</p></div>
             </div>

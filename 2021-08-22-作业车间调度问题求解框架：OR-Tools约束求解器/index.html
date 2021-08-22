@@ -253,37 +253,62 @@ status = solver.SolveWithSolutionCallback(model, solution_printer)</code></pre>
 </ul>
 <h2 id="_2">计算实例<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>最后，求解几个标准问题。求解时间上限设定为300秒。</p>
-<pre class="highlight"><code class="language-python">from jsp_fwk import (JSProblem, JSSolution)
+<pre class="highlight"><code class="language-python"># benchmark.py
+import threading
+from queue import Queue
+from jsp_fwk import (JSProblem, JSSolution)
 from jsp_fwk.solver import GoogleORCPSolver
 
-# benchmarks
-names = ['ft06', 'la01', 'ft10', 'swv01', 'la38', \
-        'ta31', 'swv12', 'ta42', 'ta54', 'ta70']
+# solving process in a child thread
+def solve(names_queue:Queue, res:list, thread_name:str):
+    while True:
+        name = names_queue.get()
+        p = JSProblem(benchmark=name)
+        s = GoogleORCPSolver(max_time=300) # set upper limit of solving time
+        s.solve(problem=p, interval=None)
+        s.wait() # wait for termination
 
-res = []
-res.append('name,num_job,num_machine,optimum,solution,time')
-for name in names:
-    p = JSProblem(benchmark=name)
-    s = GoogleORCPSolver(max_time=300) # set upper limit of solving time
-    s.solve(problem=p, interval=None)
+        # collect results
+        items = [name, len(p.jobs), len(p.machines), p.optimum, \
+                    p.solution.makespan, s.user_time]
+        res.append(','.join(map(str, items)))
+
+        names_queue.task_done()
+        print(f'{thread_name} processed {name}.')
+
+
+if __name__=='__main__':
+
+    # benchmarks
+    names = ['ft06', 'la01', 'ft10', 'swv01', 'la38', \
+            'ta31', 'swv12', 'ta42', 'ta54', 'ta70']
+    names_queue = Queue(maxsize=20)
+    for name in names: names_queue.put(name)
+
+    # result
+    res = []
+    res.append('name,num_job,num_machine,optimum,solution,time')
+
+    # start child threads
+    for i in range(4):
+        thread = threading.Thread(target=solve, \
+                            args=(names_queue, res, f'Child-{i}'))
+        thread.setDaemon(True) # terminate when main thread terminated
+        thread.start()
 
     # wait for termination
-    while True:
-        if not s.is_running: break
+    names_queue.join()
 
-    # collect results
-    items = [name, len(p.jobs), len(p.machines), p.optimum, \
-                p.solution.makespan, s.user_time]
-    res.append(','.join(map(str, items)))
-
-print(res)</code></pre>
+    # final results
+    print()
+    for line in res: print(line)</code></pre>
 <p>结果如下表所示：</p>
 <ul>
 <li>
 <p>前5行变量总数300以内，<code>OR-Tools</code> 基本得到了最优解。例4虽然没能在规定时间内求得最优解，但是相对误差0.5%已经很小。</p>
 </li>
 <li>
-<p>后5行变量总数在<span><span class="MathJax_Preview">[450, 1000]</span><script type="math/tex">[450, 1000]</script></span>量级，都没能在300秒内求得最优解，并且精度随着问题复杂度（例如变量总数、工序数等）增加而急剧降低。</p>
+<p>后5行变量总数在<span><span class="MathJax_Preview">[450, 1000]</span><script type="math/tex">[450, 1000]</script></span>量级，除了例9有些反常外，其余都没能在300秒内求得最优解，并且精度随着问题复杂度（例如变量总数、工序数等）增加而降低。</p>
 </li>
 </ul>
 <table>
@@ -308,7 +333,7 @@ print(res)</code></pre>
 <td>55</td>
 <td>55</td>
 <td>0.0</td>
-<td>0.8</td>
+<td>0.0</td>
 </tr>
 <tr>
 <td>2</td>
@@ -318,7 +343,7 @@ print(res)</code></pre>
 <td>666</td>
 <td>666</td>
 <td>0.0</td>
-<td>6.8</td>
+<td>0.2</td>
 </tr>
 <tr>
 <td>3</td>
@@ -328,7 +353,7 @@ print(res)</code></pre>
 <td>930</td>
 <td>930</td>
 <td>0.0</td>
-<td>20.6</td>
+<td>3.8</td>
 </tr>
 <tr>
 <td>4</td>
@@ -338,7 +363,7 @@ print(res)</code></pre>
 <td>1407</td>
 <td>1414</td>
 <td>0.5</td>
-<td>300.1</td>
+<td>300.0</td>
 </tr>
 <tr>
 <td>5</td>
@@ -348,7 +373,7 @@ print(res)</code></pre>
 <td>1196</td>
 <td>1196</td>
 <td>0</td>
-<td>193.5</td>
+<td>147.7</td>
 </tr>
 <tr>
 <td>6</td>
@@ -356,9 +381,9 @@ print(res)</code></pre>
 <td>30</td>
 <td>15</td>
 <td>1764</td>
-<td>1891</td>
-<td>7.2</td>
-<td>300.1</td>
+<td>1814</td>
+<td>2.8</td>
+<td>300.0</td>
 </tr>
 <tr>
 <td>7</td>
@@ -376,8 +401,8 @@ print(res)</code></pre>
 <td>30</td>
 <td>20</td>
 <td>(1867, 1956)</td>
-<td>2546</td>
-<td>33.2</td>
+<td>2096</td>
+<td>9.6</td>
 <td>300.1</td>
 </tr>
 <tr>
@@ -386,9 +411,9 @@ print(res)</code></pre>
 <td>50</td>
 <td>15</td>
 <td>2839</td>
-<td>3192</td>
-<td>12.4</td>
-<td>299.7</td>
+<td>2863</td>
+<td>0.8</td>
+<td>300.1</td>
 </tr>
 <tr>
 <td>10</td>
@@ -396,13 +421,13 @@ print(res)</code></pre>
 <td>50</td>
 <td>20</td>
 <td>2995</td>
-<td>3948</td>
-<td>31.8</td>
-<td>299.0</td>
+<td>3307</td>
+<td>10.4</td>
+<td>300.1</td>
 </tr>
 </tbody>
 </table>
-<p>问题规模较小时，高效求出最优解；但随着问题规模的增大，求解效率急剧下降。这是整数规划等精确求解方法应用于实际大规模调度问题的限制所在。</p></div>
+<p>问题规模较小时，能高效求出最优解；但随着问题规模的增大，求解效率急剧下降。例如，上例中即便将计算时间上限增加到600秒，后5个例子的结果也没有显著改善。这是整数规划等精确求解方法应用于实际大规模调度问题的限制所在。</p></div>
             </div>
         </div>
 

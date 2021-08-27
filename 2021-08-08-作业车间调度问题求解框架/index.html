@@ -136,6 +136,10 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            <li class="nav-item" data-level="2"><a href="#_5" class="nav-link">参考文献</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -158,6 +162,16 @@
 <h2 id="_2">项目仓库<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p><a href="https://github.com/dothinking/jsp_framework">https://github.com/dothinking/jsp_framework</a></p>
 <h2 id="_3">建模<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>作业车间调度问题通常有两类描述方式：</p>
+<ul>
+<li>
+<p>以工序开始时间为规划变量的线性规划数学模型</p>
+</li>
+<li>
+<p>以工序顺序（作业工序顺序和机器工序顺序）为基础的析取图描述</p>
+</li>
+</ul>
+<p>本节从这两种描述入手认识作业车间调度问题，并基于此设计了整个求解框架，把问题分解、抽象为可重用的部分，从而专注求解算法的开发、实施和验证。</p>
 <ul>
 <li>
 <p><a href="../2021-08-08-%E4%BD%9C%E4%B8%9A%E8%BD%A6%E9%97%B4%E8%B0%83%E5%BA%A6%E9%97%AE%E9%A2%98%E6%B1%82%E8%A7%A3%E6%A1%86%E6%9E%B6%EF%BC%9A%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0/">问题描述</a></p>
@@ -170,12 +184,31 @@
 </li>
 </ul>
 <h2 id="_4">求解<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>作业车间调度问题通常有两类解法：</p>
+<ul>
+<li>
+<p>精确解法例如线性规划、动态规划、分枝定界等</p>
+</li>
+<li>
+<p>近似解法例如局部搜索（禁忌搜索、模拟退火等）、群体算法（遗传算法、蚁群、粒子群等）、基于规则算法等</p>
+</li>
+</ul>
+<p>精确解法理论上总能获得全局最优解，但是求解效率随着问题规模的增大而急剧下降，例如一个 <code>85 job x 8 machines</code> 问题的搜索空间达到了 <span><span class="MathJax_Preview">10^{880}</span><script type="math/tex">10^{880}</script></span>。<strong>近似解法则追求以合理的计算时间获取较好质量的解，但不保证是全局最优解</strong>。</p>
 <ul>
 <li>
 <p><a href="../2021-08-22-%E4%BD%9C%E4%B8%9A%E8%BD%A6%E9%97%B4%E8%B0%83%E5%BA%A6%E9%97%AE%E9%A2%98%E6%B1%82%E8%A7%A3%E6%A1%86%E6%9E%B6%EF%BC%9AOR-Tools%E7%BA%A6%E6%9D%9F%E6%B1%82%E8%A7%A3%E5%99%A8/">OR-Tools 约束求解器</a></p>
 </li>
 <li>
-<p><a href="2021-08-22-作业车间调度问题求解框架：基于规则指派求解器.md">基于规则指派</a></p>
+<p><a href="2021-08-28-作业车间调度问题求解框架：基于规则指派求解器.md">基于规则指派</a></p>
+</li>
+</ul>
+<h2 id="_5">参考文献<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>Zahmani, M. H. et al. <a href="https://ieeexplore.ieee.org/document/7232991/">"Multiple priority dispatching rules for the job shop scheduling problem."</a> 2015 3<sup>rd</sup> International Conference on Control, Engineering &amp; Information Technology (CEIT) (2015): 1-6.</p>
+</li>
+<li>
+<p>黄志, and 黄文奇. "作业车间调度问题的一种启发式算法." 计算机工程与应用 26(2004):25-27.</p>
 </li>
 </ul></div>
             </div>

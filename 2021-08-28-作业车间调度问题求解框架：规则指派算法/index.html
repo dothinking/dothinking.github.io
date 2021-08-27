@@ -225,7 +225,8 @@
 </li>
 </ul>
 <h2 id="_3">典型规则<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<p>接下来问题的关键在于设计什么样的规则来定义工序的优先级。实际问题中，基于不同的目标（交货周期、延误率、在制品数等），可能有各式各样的规则，但本质上都依赖于作业工序的相关属性。根据文献 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>，通常关注如下3个静态属性和3个动态属性。</p>
+<p>接下来问题的关键在于设计什么样的规则来定义工序的优先级。实际问题中，基于不同的目标例如加工周期（flow-time）、延误时间（lateness / tardiness）、在制品数等，可能有各式各样的规则，但本质上都依赖于作业工序的相关属性。</p>
+<p>文献 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> 总结了 34 个典型规则，并根据依赖属性的不同分为 4 类。本文参考文献 <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup> 的简化版本，介绍基于如下3个静态属性和3个动态属性得到的14个基本规则。</p>
 <ul>
 <li>
 <p>静态属性：工序/作业的固有属性，不随加工进度改变</p>
@@ -261,7 +262,7 @@
 12  LWT     Longest Waiting Time            Dynamic 
 13  LTWR    Least Total Work Remaining      Dynamic 
 14  MTWR    Most Total Work Remaining       Dynamic </code></pre>
-<p>进而，组合其中的多个规则可以得到更多组合式规则。本文特别列出文献 <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup> 提出的一个组合式规则，姑且以作者姓氏命名为 <code>HH</code>。</p>
+<p>进而，组合其中的多个规则可以得到更多组合式规则。本文特别列出文献 <sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup> 提出的一个组合式规则，姑且以作者姓氏命名为 <code>HH</code>。</p>
 <div>
 <div class="MathJax_Preview">z_{i,j} = \left (t_{i,j}+w_{i,j} \uparrow, \,\, r_{i,j}-1.5\,p_{i,j} \downarrow \right )</div>
 <script type="math/tex; mode=display">z_{i,j} = \left (t_{i,j}+w_{i,j} \uparrow, \,\, r_{i,j}-1.5\,p_{i,j} \downarrow \right )</script>
@@ -276,7 +277,7 @@
 </li>
 </ul>
 <h2 id="_4">计算实例<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
-<p>上一节基本规则中，<code>SPT</code> 和 <code>MTWR</code>得到较多文献的关注；本节带上 <code>HH</code> 规则，在最小化加工周期的目标下，对比计算效率。</p>
+<p>几乎所有的文献都有一个共识：没有哪一种单一规则可以全方位优于其他规则，但折衷来看还是存在具有相对优势的某些规则。例如，上一节基本规则中的 <code>SPT</code> 和 <code>MTWR</code>得到较多文献的关注：文献 <sup id="fnref2:1"><a class="footnote-ref" href="#fn:1">1</a></sup> 认为 <code>SPT</code> 综合表现最好，文献 <sup id="fnref2:2"><a class="footnote-ref" href="#fn:2">2</a></sup> 则认为 <code>MTWR</code> 表现更好。本节带上 <code>HH</code> 规则，在最小化加工周期的目标下，看看效果究竟如何。</p>
 <ul>
 <li>
 <p><code>SPT</code> 优先加工耗时短的工序，即简单的事情先做</p>
@@ -314,7 +315,6 @@ benchmark.run(show_info=True)</code></pre>
 <p><code>HH</code>以极高的计算效率（精度和时间的平衡）展现了其实用性</p>
 </li>
 </ul>
-<p>计算结果还是很符合我们日常行为处事的哲学的，优先做已经具备条件的事情（不浪费资源），在此基础上选择复杂度高的事情（抓主要矛盾）。</p>
 <pre class="highlight"><code>+----+---------+--------+---------------+--------------+----------+---------+------+
 | ID | Problem | Solver | job x machine |   Optimum    | Solution | Error % | Time |
 +----+---------+--------+---------------+--------------+----------+---------+------+
@@ -361,15 +361,20 @@ benchmark.run(show_info=True)</code></pre>
 | 41 |   ta70  |  MTWR  |    50 x 20    |     2995     |  4879.0  |   62.9  | 40.8 |
 | 42 |   ta70  |   HH   |    50 x 20    |     2995     |  3438.0  |   14.8  | 41.2 |
 +----+---------+--------+---------------+--------------+----------+---------+------+</code></pre>
+<p>计算结果还是很符合我们日常做事哲学的：</p>
+<p><strong>优先做已经具备条件的事情（不浪费资源），在此基础上选择复杂度高的事情（抓主要矛盾）</strong>。</p>
 <div class="footnote">
 <hr />
 <ol>
 <li id="fn:1">
-<p>Kaban, A. et al. "Comparison of dispatching rules in job-shop scheduling problem using simulation: 
-a case study." International Journal of Simulation Modelling 11 (2012): 129-140.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+<p>Blackstone, John H., Don T. Phillips, and Gary L. Hogg. "A state-of-the-art survey of dispatching rules for manufacturing job shop operations." The International Journal of Production Research 20.1 (1982): 27-45.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
 </li>
 <li id="fn:2">
-<p>黄志, and 黄文奇. "作业车间调度问题的一种启发式算法." 计算机工程与应用 26(2004):25-27.&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+<p>Kaban, A. et al. "Comparison of dispatching rules in job-shop scheduling problem using simulation: 
+a case study." International Journal of Simulation Modelling 11 (2012): 129-140.&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>黄志, and 黄文奇. "作业车间调度问题的一种启发式算法." 计算机工程与应用 26(2004):25-27.&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
 </li>
 </ol>
 </div></div>

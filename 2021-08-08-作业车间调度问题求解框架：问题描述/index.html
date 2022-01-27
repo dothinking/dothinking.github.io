@@ -159,32 +159,32 @@
 <p>在车间<code>m</code>台机器（machine）上调度<code>n</code>个作业（job），其中每个作业包含一定数量的步骤/工序（operation）且每个工序需要在给定的某一台机器上来完成。定义：</p>
 <ul>
 <li>
-<p>机器集合 <span><span class="MathJax_Preview">\mathbb{M} = \left \{ 1, 2, \cdots, m \right \}</span><script type="math/tex">\mathbb{M} = \left \{ 1, 2, \cdots, m \right \}</script></span></p>
+<p>机器集合 <span class="arithmatex"><span class="MathJax_Preview">\mathbb{M} = \left \{ 1, 2, \cdots, m \right \}</span><script type="math/tex">\mathbb{M} = \left \{ 1, 2, \cdots, m \right \}</script></span></p>
 </li>
 <li>
-<p>作业集合 <span><span class="MathJax_Preview">\mathbb{J} = \left \{ 1, 2, \cdots, n \right \}</span><script type="math/tex">\mathbb{J} = \left \{ 1, 2, \cdots, n \right \}</script></span></p>
+<p>作业集合 <span class="arithmatex"><span class="MathJax_Preview">\mathbb{J} = \left \{ 1, 2, \cdots, n \right \}</span><script type="math/tex">\mathbb{J} = \left \{ 1, 2, \cdots, n \right \}</script></span></p>
 </li>
 <li>
-<p>工序集合 <span><span class="MathJax_Preview">\mathbb{O} = \left \{ (i, j) \; | \; i \in \mathbb{M}^j \subset \mathbb{M}, j \in \mathbb{J} \right \}</span><script type="math/tex">\mathbb{O} = \left \{ (i, j) \; | \; i \in \mathbb{M}^j \subset \mathbb{M}, j \in \mathbb{J} \right \}</script></span>表示作业<span><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>的某个将在机器<span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>上加工的工序，记录其所需时间为<span><span class="MathJax_Preview">p_{ij}</span><script type="math/tex">p_{ij}</script></span>。其中<span><span class="MathJax_Preview">\mathbb{M}^j</span><script type="math/tex">\mathbb{M}^j</script></span>是完成作业<span><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>所有工序所需的机器集合。</p>
+<p>工序集合 <span class="arithmatex"><span class="MathJax_Preview">\mathbb{O} = \left \{ (i, j) \; | \; i \in \mathbb{M}^j \subset \mathbb{M}, j \in \mathbb{J} \right \}</span><script type="math/tex">\mathbb{O} = \left \{ (i, j) \; | \; i \in \mathbb{M}^j \subset \mathbb{M}, j \in \mathbb{J} \right \}</script></span>表示作业<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>的某个将在机器<span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span>上加工的工序，记录其所需时间为<span class="arithmatex"><span class="MathJax_Preview">p_{ij}</span><script type="math/tex">p_{ij}</script></span>。其中<span class="arithmatex"><span class="MathJax_Preview">\mathbb{M}^j</span><script type="math/tex">\mathbb{M}^j</script></span>是完成作业<span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span>所有工序所需的机器集合。</p>
 </li>
 </ul>
 <p>接下来根据作业中工序数量和顺序的不同，将车间调度问题分为以下三类：</p>
 <ul>
 <li>
-<p>流水车间（Flow shop）：<span><span class="MathJax_Preview">\mathbb{M}^j=\mathbb{M}</span><script type="math/tex">\mathbb{M}^j=\mathbb{M}</script></span>，且<span><span class="MathJax_Preview">\mathbb{C}_{pre}=\left\{(i, j) \rightarrow (i+1, j)\;|\; i=1,2,\cdots,m−1; j=1,2,\cdots,n \right\}</span><script type="math/tex">\mathbb{C}_{pre}=\left\{(i, j) \rightarrow (i+1, j)\;|\; i=1,2,\cdots,m−1; j=1,2,\cdots,n \right\}</script></span></p>
+<p>流水车间（Flow shop）：<span class="arithmatex"><span class="MathJax_Preview">\mathbb{M}^j=\mathbb{M}</span><script type="math/tex">\mathbb{M}^j=\mathbb{M}</script></span>，且<span class="arithmatex"><span class="MathJax_Preview">\mathbb{C}_{pre}=\left\{(i, j) \rightarrow (i+1, j)\;|\; i=1,2,\cdots,m−1; j=1,2,\cdots,n \right\}</span><script type="math/tex">\mathbb{C}_{pre}=\left\{(i, j) \rightarrow (i+1, j)\;|\; i=1,2,\cdots,m−1; j=1,2,\cdots,n \right\}</script></span></p>
 </li>
 <li>
-<p>开放车间（Open shop）：<span><span class="MathJax_Preview">\mathbb{M}^j=\mathbb{M}</span><script type="math/tex">\mathbb{M}^j=\mathbb{M}</script></span>，且<span><span class="MathJax_Preview">\mathbb{C}_{pre}=\emptyset</span><script type="math/tex">\mathbb{C}_{pre}=\emptyset</script></span></p>
+<p>开放车间（Open shop）：<span class="arithmatex"><span class="MathJax_Preview">\mathbb{M}^j=\mathbb{M}</span><script type="math/tex">\mathbb{M}^j=\mathbb{M}</script></span>，且<span class="arithmatex"><span class="MathJax_Preview">\mathbb{C}_{pre}=\emptyset</span><script type="math/tex">\mathbb{C}_{pre}=\emptyset</script></span></p>
 </li>
 <li>
-<p>作业车间（Job shop）：<span><span class="MathJax_Preview">\mathbb{C}_{pre}=\left\{ (i_1,j) \rightarrow (i_2,j), \cdots, \rightarrow (i_{|\mathbb{M}^j|}, j) \;|\; j=1,2,\cdots,n \right\}</span><script type="math/tex">\mathbb{C}_{pre}=\left\{ (i_1,j) \rightarrow (i_2,j), \cdots, \rightarrow (i_{|\mathbb{M}^j|}, j) \;|\; j=1,2,\cdots,n \right\}</script></span></p>
+<p>作业车间（Job shop）：<span class="arithmatex"><span class="MathJax_Preview">\mathbb{C}_{pre}=\left\{ (i_1,j) \rightarrow (i_2,j), \cdots, \rightarrow (i_{|\mathbb{M}^j|}, j) \;|\; j=1,2,\cdots,n \right\}</span><script type="math/tex">\mathbb{C}_{pre}=\left\{ (i_1,j) \rightarrow (i_2,j), \cdots, \rightarrow (i_{|\mathbb{M}^j|}, j) \;|\; j=1,2,\cdots,n \right\}</script></span></p>
 </li>
 </ul>
-<p>其中，<span><span class="MathJax_Preview">\mathbb{C}_{pre}</span><script type="math/tex">\mathbb{C}_{pre}</script></span>表示工序前后顺序的关系。</p>
+<p>其中，<span class="arithmatex"><span class="MathJax_Preview">\mathbb{C}_{pre}</span><script type="math/tex">\mathbb{C}_{pre}</script></span>表示工序前后顺序的关系。</p>
 <p>综合起来，白话就是：</p>
 <ul>
-<li>流水车间：任意两个作业的工序数相同（<span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>），且工序遵循的先后顺序相同，即流水作业</li>
-<li>开放车间：任意两个作业的工序数相同（<span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>），但工序没有前后顺序之分，即无序作业</li>
+<li>流水车间：任意两个作业的工序数相同（<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>），且工序遵循的先后顺序相同，即流水作业</li>
+<li>开放车间：任意两个作业的工序数相同（<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>），但工序没有前后顺序之分，即无序作业</li>
 <li>作业车间：任意两个作业的工序数无关，但各自遵循一定的先后顺序，即异序作业</li>
 </ul>
 <div class="admonition warning">
@@ -193,7 +193,7 @@
 </div>
 <h2 id="_2">白话描述<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>综上，作业车间调度问题可以定义为：</p>
-<p>给定<span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>个作业，每个作业的加工过程分为若干道工序，每道工序满足（1）序列约束即必须在该作业的前续工序完成后才能开始，（2）资源约束即必须在给定的<span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>台机器中确定的 <strong>一台</strong> 上加工且独占该时间段，即每一台机器在某个时刻只能加工一道工序。</p>
+<p>给定<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>个作业，每个作业的加工过程分为若干道工序，每道工序满足（1）序列约束即必须在该作业的前续工序完成后才能开始，（2）资源约束即必须在给定的<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>台机器中确定的 <strong>一台</strong> 上加工且独占该时间段，即每一台机器在某个时刻只能加工一道工序。</p>
 <p>在这些约束条件下，规划每道工序的开始加工时刻，使得从第一个开始加工工序的开始时刻到最后一个完成加工工序的完成时刻的时间跨度（makespan）尽可能的短。</p>
 <p>举一个3机器3作业的例子：</p>
 <ul>
@@ -212,7 +212,7 @@
   3       M2, 2    M1, 4    M3, 1
 ---------------------------------------</code></pre>
 <h2 id="_3">数学描述<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<p>定义工序<span><span class="MathJax_Preview">(i,j)</span><script type="math/tex">(i,j)</script></span>的完工时间为<span><span class="MathJax_Preview">c_{ij}</span><script type="math/tex">c_{ij}</script></span>，则作业车间调度问题等效为如下优化问题：</p>
+<p>定义工序<span class="arithmatex"><span class="MathJax_Preview">(i,j)</span><script type="math/tex">(i,j)</script></span>的完工时间为<span class="arithmatex"><span class="MathJax_Preview">c_{ij}</span><script type="math/tex">c_{ij}</script></span>，则作业车间调度问题等效为如下优化问题：</p>
 <p>\begin{align*}
 &amp;\min\,\, c_{m} = \max \left \{ c_{ij} \, | \, (i,j) \in \mathbb{O} \right \} \\
 \\
@@ -239,44 +239,44 @@ c_{ij} - c_{ik} \geq p_{ij} \,\, or \,\, c_{ik}-c_{ij}  \geq p_{ik} &amp; (i,j),
 <li>机器工序链即分配到相应机器上的所有工序的序列，每个机器的每一种排列方式即对应一种调度方式</li>
 </ul>
 <p>于是，产生了用析取图（Disjunctive Graph）来描述作业车间调度问题的方式。</p>
-<p>定义图结构<span><span class="MathJax_Preview">G = (V, C, D)</span><script type="math/tex">G = (V, C, D)</script></span>，其中：</p>
+<p>定义图结构<span class="arithmatex"><span class="MathJax_Preview">G = (V, C, D)</span><script type="math/tex">G = (V, C, D)</script></span>，其中：</p>
 <ul>
 <li>
-<p><span><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>是节点集合，对应工序集<span><span class="MathJax_Preview">\mathbb{O}</span><script type="math/tex">\mathbb{O}</script></span>，以及额外加入的两个等效加工时间都为0的虚拟节点：</p>
+<p><span class="arithmatex"><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>是节点集合，对应工序集<span class="arithmatex"><span class="MathJax_Preview">\mathbb{O}</span><script type="math/tex">\mathbb{O}</script></span>，以及额外加入的两个等效加工时间都为0的虚拟节点：</p>
 <ul>
-<li>源节点（source）<span><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span>：源节点指向所有作业的第一个工序</li>
-<li>汇节点（sink）<span><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span>：所有作业的最后一个工序指向汇节点</li>
+<li>源节点（source）<span class="arithmatex"><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span>：源节点指向所有作业的第一个工序</li>
+<li>汇节点（sink）<span class="arithmatex"><span class="MathJax_Preview">e</span><script type="math/tex">e</script></span>：所有作业的最后一个工序指向汇节点</li>
 </ul>
 </li>
 <li>
-<p><span><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span>是连接边集合（conjunctive arcs），对应作业工序链的顺序关系，由上一工序指向下一工序；同时包括由虚拟节点引入的<span><span class="MathJax_Preview">2n</span><script type="math/tex">2n</script></span>条有向边：</p>
+<p><span class="arithmatex"><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span>是连接边集合（conjunctive arcs），对应作业工序链的顺序关系，由上一工序指向下一工序；同时包括由虚拟节点引入的<span class="arithmatex"><span class="MathJax_Preview">2n</span><script type="math/tex">2n</script></span>条有向边：</p>
 <ul>
-<li>源节点指向所有作业的第一个工序的<span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>条有向边</li>
-<li>所有作业的最后一个工序指向汇节点的<span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>条有向边</li>
+<li>源节点指向所有作业的第一个工序的<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>条有向边</li>
+<li>所有作业的最后一个工序指向汇节点的<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>条有向边</li>
 </ul>
 </li>
 <li>
-<p><span><span class="MathJax_Preview">D</span><script type="math/tex">D</script></span>是析取边集合（disjunctive arcs），对应潜在的机器工序链连接关系，每一条析取边连接同一机器上加工的两个工序。</p>
+<p><span class="arithmatex"><span class="MathJax_Preview">D</span><script type="math/tex">D</script></span>是析取边集合（disjunctive arcs），对应潜在的机器工序链连接关系，每一条析取边连接同一机器上加工的两个工序。</p>
 </li>
 </ul>
 <p>还是以前面3机器3作业为例，析取图如下。其中，</p>
 <ul>
-<li>彩色箭头表示的有向边为连接边集合 <span><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span>，箭头从上一道工序指向下一道工序，定义边的权值为出发节点即上一道工序的加工时间。</li>
-<li>黑色实线表示的无向边为析取边集合 <span><span class="MathJax_Preview">D</span><script type="math/tex">D</script></span>，相同机器上的工序之间都有一条析取边，例如1号机器上的<code>(1,1)</code>、<code>(1,2)</code>和<code>(1,3)</code>。此时尚未确定边的方向，故权值暂时为空。</li>
+<li>彩色箭头表示的有向边为连接边集合 <span class="arithmatex"><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span>，箭头从上一道工序指向下一道工序，定义边的权值为出发节点即上一道工序的加工时间。</li>
+<li>黑色实线表示的无向边为析取边集合 <span class="arithmatex"><span class="MathJax_Preview">D</span><script type="math/tex">D</script></span>，相同机器上的工序之间都有一条析取边，例如1号机器上的<code>(1,1)</code>、<code>(1,2)</code>和<code>(1,3)</code>。此时尚未确定边的方向，故权值暂时为空。</li>
 </ul>
 <p><img alt="析取图" src="../images/2021-08-08-01.png" /></p>
 <h3 id="_5">搜索空间<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
 <p>为所有析取边选择一个方向即确定机器上工序的先后顺序后，析取图退化为有向图，也即对应一种调度方案。根据乘法原理，可能的方案即解的搜索空间大小为：</p>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">N = \prod_{i=0}^m |\mathbb{J}^i|! </div>
 <script type="math/tex; mode=display">N = \prod_{i=0}^m |\mathbb{J}^i|! </script>
 </div>
-<p>其中，<span><span class="MathJax_Preview">|\mathbb{J}^i|</span><script type="math/tex">|\mathbb{J}^i|</script></span> 表示机器 <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> 上加工的工序数量。</p>
+<p>其中，<span class="arithmatex"><span class="MathJax_Preview">|\mathbb{J}^i|</span><script type="math/tex">|\mathbb{J}^i|</script></span> 表示机器 <span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> 上加工的工序数量。</p>
 <p>显然，问题规模随着机器数和作业数的增加而急剧增大。</p>
 <h3 id="_6">有向图与路径长度<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
 <p>假设所有机器上的工序都按作业号从小到大排序，例如3号机器上<code>(3,1)</code>-&gt;<code>(3,2)</code>-&gt;<code>(3,3)</code>，则得到如下一个有向图结构。</p>
 <p><img alt="有向图" src="../images/2021-08-08-02.png" /></p>
-<p>有向图反映了作业工序链和机器工序链上工序的顺序关系，并且 <strong>源节点到某节点的最长路径长度即为该工序的开始时间</strong>。于是，源节点到汇结点的最长路径（图中黄色线）即为目标函数（加工周期） <span><span class="MathJax_Preview">c_m</span><script type="math/tex">c_m</script></span>。</p>
+<p>有向图反映了作业工序链和机器工序链上工序的顺序关系，并且 <strong>源节点到某节点的最长路径长度即为该工序的开始时间</strong>。于是，源节点到汇结点的最长路径（图中黄色线）即为目标函数（加工周期） <span class="arithmatex"><span class="MathJax_Preview">c_m</span><script type="math/tex">c_m</script></span>。</p>
 <p>有向图的最长路径算法（例如拓扑排序）有助于我们计算和评估目标函数值。</p>
 <h3 id="_7">有向无环图<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
 <p>有向图的边很好地表示了工序的先后顺序，但是如果存在 <strong>环</strong>，则会产生矛盾。例如，下面的有向图结构中，黄色线路径构成了一个环路：</p>

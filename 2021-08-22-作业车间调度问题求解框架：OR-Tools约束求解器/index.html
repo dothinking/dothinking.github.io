@@ -178,8 +178,8 @@ c_{ij} - c_{ik} \geq p_{ij} \,\, or \,\, c_{ik}-c_{ij}  \geq p_{ik} &amp; (i,j),
 \end{align*}</p>
 <p>具体变量说明参考原文，其中两个基本变量：</p>
 <ul>
-<li><span><span class="MathJax_Preview">c_{ij}</span><script type="math/tex">c_{ij}</script></span> 表示工序 <span><span class="MathJax_Preview">(i,j)</span><script type="math/tex">(i,j)</script></span> 即作业 <span><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span> 的某个在机器 <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> 上进行的工序的完成时间</li>
-<li><span><span class="MathJax_Preview">p_{ij}</span><script type="math/tex">p_{ij}</script></span> 表示作业 <span><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span> 的某个在机器 <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> 上进行的工序所需的加工时间</li>
+<li><span class="arithmatex"><span class="MathJax_Preview">c_{ij}</span><script type="math/tex">c_{ij}</script></span> 表示工序 <span class="arithmatex"><span class="MathJax_Preview">(i,j)</span><script type="math/tex">(i,j)</script></span> 即作业 <span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span> 的某个在机器 <span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> 上进行的工序的完成时间</li>
+<li><span class="arithmatex"><span class="MathJax_Preview">p_{ij}</span><script type="math/tex">p_{ij}</script></span> 表示作业 <span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span> 的某个在机器 <span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> 上进行的工序所需的加工时间</li>
 </ul>
 <p>三个约束中：</p>
 <ul>
@@ -193,17 +193,17 @@ c_{ij} - c_{ik} \geq p_{ij} \,\, or \,\, c_{ik}-c_{ij}  \geq p_{ik} &amp; (i,j),
 <p class="admonition-title">注意</p>
 <p><code>OR-Tools</code> 使用 <code>CP-SAT</code> 约束求解器求解作业车间调度问题。<code>CP-SAT</code> 求解器仅支持整数变量。</p>
 </div>
-<p>上一节数学模型中将工序完工时刻作为求解变量，为了建模方便，这里为每个工序创建两个变量 <span><span class="MathJax_Preview">s_{ij}</span><script type="math/tex">s_{ij}</script></span> 和 <span><span class="MathJax_Preview">c_{ij}</span><script type="math/tex">c_{ij}</script></span>，分别表示开始时刻和结束时刻。<code>OR-Tools</code> 内置了 <code>NewIntVar</code> 整数变量，根据函数签名可知，我们需要指定变量名及变量范围 <span><span class="MathJax_Preview">[lb, ub]</span><script type="math/tex">[lb, ub]</script></span>。</p>
+<p>上一节数学模型中将工序完工时刻作为求解变量，为了建模方便，这里为每个工序创建两个变量 <span class="arithmatex"><span class="MathJax_Preview">s_{ij}</span><script type="math/tex">s_{ij}</script></span> 和 <span class="arithmatex"><span class="MathJax_Preview">c_{ij}</span><script type="math/tex">c_{ij}</script></span>，分别表示开始时刻和结束时刻。<code>OR-Tools</code> 内置了 <code>NewIntVar</code> 整数变量，根据函数签名可知，我们需要指定变量名及变量范围 <span class="arithmatex"><span class="MathJax_Preview">[lb, ub]</span><script type="math/tex">[lb, ub]</script></span>。</p>
 <pre class="highlight"><code class="language-python">def NewIntVar(self, lb, ub, name): pass</code></pre>
 <p>基于这些变量，</p>
 <ul>
-<li>用<code>AddMaxEquality</code>取 <span><span class="MathJax_Preview">c_{ij}</span><script type="math/tex">c_{ij}</script></span> 的最大值然后最小化得到目标函数</li>
-<li>定义变量下限 <span><span class="MathJax_Preview">lb \geq 0</span><script type="math/tex">lb \geq 0</script></span> 即可满足第一个非负的约束条件</li>
-<li>第二个约束条件基于前后工序的 <span><span class="MathJax_Preview">s_{ij}</span><script type="math/tex">s_{ij}</script></span> 和 <span><span class="MathJax_Preview">c_{ij}</span><script type="math/tex">c_{ij}</script></span> 实现</li>
+<li>用<code>AddMaxEquality</code>取 <span class="arithmatex"><span class="MathJax_Preview">c_{ij}</span><script type="math/tex">c_{ij}</script></span> 的最大值然后最小化得到目标函数</li>
+<li>定义变量下限 <span class="arithmatex"><span class="MathJax_Preview">lb \geq 0</span><script type="math/tex">lb \geq 0</script></span> 即可满足第一个非负的约束条件</li>
+<li>第二个约束条件基于前后工序的 <span class="arithmatex"><span class="MathJax_Preview">s_{ij}</span><script type="math/tex">s_{ij}</script></span> 和 <span class="arithmatex"><span class="MathJax_Preview">c_{ij}</span><script type="math/tex">c_{ij}</script></span> 实现</li>
 </ul>
 <p>为了实施第三个约束条件，即同一机器上的任意两个工序不重叠，需要用到 <code>OR-Tools</code> 的 <strong>区间变量</strong> <code>NewIntervalVar</code>。针对不可重叠的所有工序/区间，直接施加内置的 <code>NoOverlap</code> 约束。</p>
 <pre class="highlight"><code class="language-python">def NewIntervalVar(self, start, size, end, name): pass</code></pre>
-<p>其中，<code>start</code>、<code>end</code> 及 <code>size</code> 分别表示区间的开始、结束位置及区间的大小，并且始终满足 <span><span class="MathJax_Preview">start + size = end</span><script type="math/tex">start + size = end</script></span>。对于本问题，<code>start</code>、<code>end</code> 为上一步的 <span><span class="MathJax_Preview">s_{ij}</span><script type="math/tex">s_{ij}</script></span> 和 <span><span class="MathJax_Preview">c_{ij}</span><script type="math/tex">c_{ij}</script></span>，<code>size</code> 为工序加工时间常量。</p>
+<p>其中，<code>start</code>、<code>end</code> 及 <code>size</code> 分别表示区间的开始、结束位置及区间的大小，并且始终满足 <span class="arithmatex"><span class="MathJax_Preview">start + size = end</span><script type="math/tex">start + size = end</script></span>。对于本问题，<code>start</code>、<code>end</code> 为上一步的 <span class="arithmatex"><span class="MathJax_Preview">s_{ij}</span><script type="math/tex">s_{ij}</script></span> 和 <span class="arithmatex"><span class="MathJax_Preview">c_{ij}</span><script type="math/tex">c_{ij}</script></span>，<code>size</code> 为工序加工时间常量。</p>
 <h2 id="jsp_framework">基于 <code>jsp_framework</code> 实现<a class="headerlink" href="#jsp_framework" title="Permanent link">&para;</a></h2>
 <p><code>OR-Tools</code> 的官方文档提供了一个求解作业车间调度问题的 <a href="https://developers.google.cn/optimization/scheduling/job_shop">完整案例</a>，本文将基于本系列的 <code>jsp_framework</code> 实现。</p>
 <ul>
@@ -274,7 +274,7 @@ benchmark.run(show_info=True)</code></pre>
 <p>前5行变量总数300以内，<code>OR-Tools</code> 基本得到了最优解。例4虽然没能在规定时间内求得最优解，但是相对误差0.5%已经很小。</p>
 </li>
 <li>
-<p>后5行变量总数在<span><span class="MathJax_Preview">[450, 1000]</span><script type="math/tex">[450, 1000]</script></span>量级，除了例9有些反常外，其余都没能在300秒内求得最优解，并且精度随着问题复杂度（例如变量总数、工序数等）增加而降低。</p>
+<p>后5行变量总数在<span class="arithmatex"><span class="MathJax_Preview">[450, 1000]</span><script type="math/tex">[450, 1000]</script></span>量级，除了例9有些反常外，其余都没能在300秒内求得最优解，并且精度随着问题复杂度（例如变量总数、工序数等）增加而降低。</p>
 </li>
 </ul>
 <pre class="highlight"><code>+----+---------+------------------+-------+--------------+----------+---------+-------+

@@ -165,16 +165,16 @@
 <p>所以解题方法为，分别假设前后轮轨迹，然后按照上述结论进行验证。本题答案为自行车从左向右行驶，具体参考下图：</p>
 <p><img alt="" src="../images/2019-10-01-03.png" />
 <img alt="" src="../images/2019-10-01-04.png" /></p>
-<p>开篇的问题解决了，接下来进入正题：已知任意给定的前轮轨迹，如何求解相应的后轮轨迹？为方便起见，我们用参数方程来描述曲线上任一点的坐标<span><span class="MathJax_Preview">(x,y)</span><script type="math/tex">(x,y)</script></span>，例如已知前轮轨迹<span><span class="MathJax_Preview">x=\alpha(t), y=\beta(t)</span><script type="math/tex">x=\alpha(t), y=\beta(t)</script></span>，求解后轮轨迹<span><span class="MathJax_Preview">x=x(t), y=y(t)</span><script type="math/tex">x=x(t), y=y(t)</script></span>。</p>
-<p>由定长条件<span><span class="MathJax_Preview">\|\overrightarrow{PQ}\|=L</span><script type="math/tex">\|\overrightarrow{PQ}\|=L</script></span>得到：</p>
+<p>开篇的问题解决了，接下来进入正题：已知任意给定的前轮轨迹，如何求解相应的后轮轨迹？为方便起见，我们用参数方程来描述曲线上任一点的坐标<span class="arithmatex"><span class="MathJax_Preview">(x,y)</span><script type="math/tex">(x,y)</script></span>，例如已知前轮轨迹<span class="arithmatex"><span class="MathJax_Preview">x=\alpha(t), y=\beta(t)</span><script type="math/tex">x=\alpha(t), y=\beta(t)</script></span>，求解后轮轨迹<span class="arithmatex"><span class="MathJax_Preview">x=x(t), y=y(t)</span><script type="math/tex">x=x(t), y=y(t)</script></span>。</p>
+<p>由定长条件<span class="arithmatex"><span class="MathJax_Preview">\|\overrightarrow{PQ}\|=L</span><script type="math/tex">\|\overrightarrow{PQ}\|=L</script></span>得到：</p>
 <p>\begin{equation*}
 (x-\alpha)^2 + (y-\beta)^2 = L^2
 \end{equation*}</p>
-<p>上式对参数<span><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>求导：</p>
+<p>上式对参数<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>求导：</p>
 <p>\begin{equation*}
 (x-\alpha)*(x'-\alpha')+(y-\beta)(y'-\beta')=0
 \end{equation*}</p>
-<p>另一方面，由<span><span class="MathJax_Preview">\overrightarrow{PQ}//\overrightarrow{\tau}</span><script type="math/tex">\overrightarrow{PQ}//\overrightarrow{\tau}</script></span>得到：</p>
+<p>另一方面，由<span class="arithmatex"><span class="MathJax_Preview">\overrightarrow{PQ}//\overrightarrow{\tau}</span><script type="math/tex">\overrightarrow{PQ}//\overrightarrow{\tau}</script></span>得到：</p>
 <p>\begin{equation*}
 \frac{y'}{x'}=\frac{y-\beta}{x-\alpha}
 \end{equation*}</p>
@@ -186,15 +186,15 @@ y' &amp;= \frac{y-\beta}{L^2} \left[\alpha'(x-\alpha)+\beta'(y-\beta)\right] \\
 <p><img alt="" src="../images/2019-10-01-05.png" /></p>
 <h2 id="_2">常微分方程数值解<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>上式表明这是一个常微分方程组求解问题。只有当前轮轨迹是某些非常简单的曲线时，后轮轨迹才有可能被解析求解，所以本文采用的是数值求解的方法。</p>
-<p>欧拉在求解形如<span><span class="MathJax_Preview">y'(x)=f(x, y)</span><script type="math/tex">y'(x)=f(x, y)</script></span>的微分方程的数值解问题上给出了一些标准解法。本文待求解的方程组中<span><span class="MathJax_Preview">\alpha, \beta</span><script type="math/tex">\alpha, \beta</script></span>都是参数<span><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>的函数，因此可以归结为：</p>
+<p>欧拉在求解形如<span class="arithmatex"><span class="MathJax_Preview">y'(x)=f(x, y)</span><script type="math/tex">y'(x)=f(x, y)</script></span>的微分方程的数值解问题上给出了一些标准解法。本文待求解的方程组中<span class="arithmatex"><span class="MathJax_Preview">\alpha, \beta</span><script type="math/tex">\alpha, \beta</script></span>都是参数<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>的函数，因此可以归结为：</p>
 <p>\begin{align*}
 x'(t) &amp;= f(t, x, y) \\
 y'(t) &amp;= g(t, x, y) \\
 \end{align*}</p>
-<p>为了套用<span><span class="MathJax_Preview">y'(x)=f(x, y)</span><script type="math/tex">y'(x)=f(x, y)</script></span>的标准形式，我们将上述方程组改写为向量形式<span><span class="MathJax_Preview">Y'=F(t, Y)</span><script type="math/tex">Y'=F(t, Y)</script></span>。其中，</p>
+<p>为了套用<span class="arithmatex"><span class="MathJax_Preview">y'(x)=f(x, y)</span><script type="math/tex">y'(x)=f(x, y)</script></span>的标准形式，我们将上述方程组改写为向量形式<span class="arithmatex"><span class="MathJax_Preview">Y'=F(t, Y)</span><script type="math/tex">Y'=F(t, Y)</script></span>。其中，</p>
 <ul>
-<li><span><span class="MathJax_Preview">Y=(x,y)</span><script type="math/tex">Y=(x,y)</script></span>表示待求解微分方程组的各个分量组成的向量，也就是后轮曲线上的<span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>和<span><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span>坐标；</li>
-<li><span><span class="MathJax_Preview">F=(f,g)</span><script type="math/tex">F=(f,g)</script></span>表示待求解微分方程组的各个控制方程。</li>
+<li><span class="arithmatex"><span class="MathJax_Preview">Y=(x,y)</span><script type="math/tex">Y=(x,y)</script></span>表示待求解微分方程组的各个分量组成的向量，也就是后轮曲线上的<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>和<span class="arithmatex"><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span>坐标；</li>
+<li><span class="arithmatex"><span class="MathJax_Preview">F=(f,g)</span><script type="math/tex">F=(f,g)</script></span>表示待求解微分方程组的各个控制方程。</li>
 </ul>
 <p>作为练习，我们当然可以自己实现欧拉方法及其改进算法（例如<code>Runge-Kutta</code>方法）来求解上述问题，但这不是本文的重点。所以我们直接采用Python科学计算库<code>scipy</code>中的<code>odeint()</code>方法来求解常微分方程。</p>
 <p><code>odeint()</code>函数声明如下（除了最基本的前三个参数外，这里将其余参数统一用<code>**kw</code>表示），具体参考官方文档 <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>。</p>
@@ -288,8 +288,8 @@ class BicycleTrack:
 <h2 id="_3">验证<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p>上文提到仅有少数简单的情形才能得到后轮轨迹的解析表达式，我们以特殊情形之一——<code>曳物线</code> <sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> <sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup>为例进行验证。曳物线可以理解为：自行车初始沿着<code>y</code>轴停放且保持前轮正好在原点，然后前轮沿着<code>x</code>轴正方向行进，此时后轮的轨迹即为曳物线。</p>
 <ul>
-<li>前轮轨迹非常简单：<span><span class="MathJax_Preview">x=t, y=0</span><script type="math/tex">x=t, y=0</script></span></li>
-<li>根据曳物线的解析表达式得到后轮轨迹的解析解：<span><span class="MathJax_Preview">x=L*(t-tanht), y=L*secht</span><script type="math/tex">x=L*(t-tanht), y=L*secht</script></span>（<code>L</code>为车身长度）。</li>
+<li>前轮轨迹非常简单：<span class="arithmatex"><span class="MathJax_Preview">x=t, y=0</span><script type="math/tex">x=t, y=0</script></span></li>
+<li>根据曳物线的解析表达式得到后轮轨迹的解析解：<span class="arithmatex"><span class="MathJax_Preview">x=L*(t-tanht), y=L*secht</span><script type="math/tex">x=L*(t-tanht), y=L*secht</script></span>（<code>L</code>为车身长度）。</li>
 </ul>
 <pre class="highlight"><code class="language-python">import numpy as np
 import matplotlib.pyplot as plt
@@ -315,8 +315,8 @@ plt.show()</code></pre>
 <h2 id="_4">结果展示<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p>下面代码画出同一自行车从不同初始状态沿着相同前轮轨迹行进时后轮的轨迹曲线。</p>
 <ul>
-<li>前轮从原点出发沿着曲线<span><span class="MathJax_Preview">(x-5)^2+y^2=25</span><script type="math/tex">(x-5)^2+y^2=25</script></span>逆时针运动</li>
-<li>车身长度<span><span class="MathJax_Preview">L=3</span><script type="math/tex">L=3</script></span>，后轮的初始位置必定在圆<span><span class="MathJax_Preview">x^2+y^2=9</span><script type="math/tex">x^2+y^2=9</script></span>上。这里选取与<span><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>轴正向夹角<span><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>分别为<span><span class="MathJax_Preview">\pi/2, \pi, 3\pi/2</span><script type="math/tex">\pi/2, \pi, 3\pi/2</script></span>的三个初始位置。</li>
+<li>前轮从原点出发沿着曲线<span class="arithmatex"><span class="MathJax_Preview">(x-5)^2+y^2=25</span><script type="math/tex">(x-5)^2+y^2=25</script></span>逆时针运动</li>
+<li>车身长度<span class="arithmatex"><span class="MathJax_Preview">L=3</span><script type="math/tex">L=3</script></span>，后轮的初始位置必定在圆<span class="arithmatex"><span class="MathJax_Preview">x^2+y^2=9</span><script type="math/tex">x^2+y^2=9</script></span>上。这里选取与<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>轴正向夹角<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>分别为<span class="arithmatex"><span class="MathJax_Preview">\pi/2, \pi, 3\pi/2</span><script type="math/tex">\pi/2, \pi, 3\pi/2</script></span>的三个初始位置。</li>
 </ul>
 <pre class="highlight"><code class="language-python">import autograd.numpy as np
 from bicycle_track import BicycleTrack
@@ -353,9 +353,9 @@ plt.axis('equal')
 plt.show()</code></pre>
 <p><img alt="" src="../images/2019-10-01-07.png" /></p>
 <p>图中三条后轮轨迹曲线验证了我最初的一个想法：无论初始位置如何，最终后轮的轨迹将趋于一致。这也是一个很直观的认识，虽然启动自行车时车身姿态（车身方向与目标方向的夹角）略有不同，后轮轨迹在行进一段距离后将稳定地跟随前轮轨迹。</p>
-<p>此外，图中还反映了一个有意思的现象：<span><span class="MathJax_Preview">\theta=3\pi/2</span><script type="math/tex">\theta=3\pi/2</script></span>时的后轮轨迹并不“光滑”——初始阶段出现了倒车，而后正常前进。但实际上，普通自行车并不能主动倒车！这表明，虽然数学上这是一组解，但实际上并不真实；也就是说，相对真实的物理模型，我们还漏掉了某些条件。</p>
-<p>将自行车瞬时速度分别沿着车身和垂直的车身方向进行分解，普通自行车的结构决定了不能主动倒车，表明沿着车身方向的速度分量必须由后轮指向前轮。这样就决定了车身方向（后轮指向前轮）与行进方向夹角的绝对值<span><span class="MathJax_Preview">\|\delta\|\le\pi/2</span><script type="math/tex">\|\delta\|\le\pi/2</script></span>。</p>
-<p>上图中，自行车启动瞬时前轮沿着<span><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span>轴负方向，<span><span class="MathJax_Preview">\theta=3\pi/2</span><script type="math/tex">\theta=3\pi/2</script></span>的曲线初始位置时车身沿着<span><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span>轴正方向，即车身与行进方向夹角<span><span class="MathJax_Preview">\delta=\pi</span><script type="math/tex">\delta=\pi</script></span>违反了上述限定条件，因此这是一组实际骑行中并不可能的解。</p>
+<p>此外，图中还反映了一个有意思的现象：<span class="arithmatex"><span class="MathJax_Preview">\theta=3\pi/2</span><script type="math/tex">\theta=3\pi/2</script></span>时的后轮轨迹并不“光滑”——初始阶段出现了倒车，而后正常前进。但实际上，普通自行车并不能主动倒车！这表明，虽然数学上这是一组解，但实际上并不真实；也就是说，相对真实的物理模型，我们还漏掉了某些条件。</p>
+<p>将自行车瞬时速度分别沿着车身和垂直的车身方向进行分解，普通自行车的结构决定了不能主动倒车，表明沿着车身方向的速度分量必须由后轮指向前轮。这样就决定了车身方向（后轮指向前轮）与行进方向夹角的绝对值<span class="arithmatex"><span class="MathJax_Preview">\|\delta\|\le\pi/2</span><script type="math/tex">\|\delta\|\le\pi/2</script></span>。</p>
+<p>上图中，自行车启动瞬时前轮沿着<span class="arithmatex"><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span>轴负方向，<span class="arithmatex"><span class="MathJax_Preview">\theta=3\pi/2</span><script type="math/tex">\theta=3\pi/2</script></span>的曲线初始位置时车身沿着<span class="arithmatex"><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span>轴正方向，即车身与行进方向夹角<span class="arithmatex"><span class="MathJax_Preview">\delta=\pi</span><script type="math/tex">\delta=\pi</script></span>违反了上述限定条件，因此这是一组实际骑行中并不可能的解。</p>
 <p>最后，以<code>matplotlib</code>动画形式（动画过程具体参考文末汇总代码）直观感受一下上述运动过程：</p>
 <p><img alt="" src="../images/2019-10-01-08.gif" /></p>
 <p><code>BicycleTrack</code>类及主要测试代码汇总如下：</p>

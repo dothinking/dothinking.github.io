@@ -160,13 +160,13 @@
 <p>于是，基于规则指派（Priority Dispatching based on Rule）算法：</p>
 <ol>
 <li>
-<p>计算前沿工序集 <span><span class="MathJax_Preview">\mathbb{Q}</span><script type="math/tex">\mathbb{Q}</script></span></p>
+<p>计算前沿工序集 <span class="arithmatex"><span class="MathJax_Preview">\mathbb{Q}</span><script type="math/tex">\mathbb{Q}</script></span></p>
 </li>
 <li>
-<p>按照一定规则从 <span><span class="MathJax_Preview">\mathbb{Q}</span><script type="math/tex">\mathbb{Q}</script></span> 中选择一个工序 <span><span class="MathJax_Preview">o_{i,j}</span><script type="math/tex">o_{i,j}</script></span>，分配到相应机器 <span><span class="MathJax_Preview">m_i</span><script type="math/tex">m_i</script></span> 上</p>
+<p>按照一定规则从 <span class="arithmatex"><span class="MathJax_Preview">\mathbb{Q}</span><script type="math/tex">\mathbb{Q}</script></span> 中选择一个工序 <span class="arithmatex"><span class="MathJax_Preview">o_{i,j}</span><script type="math/tex">o_{i,j}</script></span>，分配到相应机器 <span class="arithmatex"><span class="MathJax_Preview">m_i</span><script type="math/tex">m_i</script></span> 上</p>
 </li>
 <li>
-<p>重复前两步直到 <span><span class="MathJax_Preview">\mathbb{Q} = \emptyset</span><script type="math/tex">\mathbb{Q} = \emptyset</script></span></p>
+<p>重复前两步直到 <span class="arithmatex"><span class="MathJax_Preview">\mathbb{Q} = \emptyset</span><script type="math/tex">\mathbb{Q} = \emptyset</script></span></p>
 </li>
 </ol>
 <p>流程非常简单，基于 <code>jsp_framework</code> 框架实现：</p>
@@ -231,17 +231,17 @@
 <li>
 <p>静态属性：工序/作业的固有属性，不随加工进度改变</p>
 <ul>
-<li>工序加工时间 <span><span class="MathJax_Preview">p_{i,j}</span><script type="math/tex">p_{i,j}</script></span></li>
-<li>作业工序数量 <span><span class="MathJax_Preview">|M_j|</span><script type="math/tex">|M_j|</script></span></li>
-<li>作业加工时间 <span><span class="MathJax_Preview">\,\Sigma_{i=1}^{m} p_{i,j}</span><script type="math/tex">\,\Sigma_{i=1}^{m} p_{i,j}</script></span>：作业包含的所有工序的加工时间总和</li>
+<li>工序加工时间 <span class="arithmatex"><span class="MathJax_Preview">p_{i,j}</span><script type="math/tex">p_{i,j}</script></span></li>
+<li>作业工序数量 <span class="arithmatex"><span class="MathJax_Preview">|M_j|</span><script type="math/tex">|M_j|</script></span></li>
+<li>作业加工时间 <span class="arithmatex"><span class="MathJax_Preview">\,\Sigma_{i=1}^{m} p_{i,j}</span><script type="math/tex">\,\Sigma_{i=1}^{m} p_{i,j}</script></span>：作业包含的所有工序的加工时间总和</li>
 </ul>
 </li>
 <li>
 <p>动态属性：与加工进程相关的属性</p>
 <ul>
-<li>工序生成时刻 <span><span class="MathJax_Preview">t_{i,j}</span><script type="math/tex">t_{i,j}</script></span>：工序 <span><span class="MathJax_Preview">O_{i,j}</span><script type="math/tex">O_{i,j}</script></span> 达到机器 <span><span class="MathJax_Preview">m_i</span><script type="math/tex">m_i</script></span> 的时刻，即上一道工序结束的时间</li>
-<li>工序等待时间 <span><span class="MathJax_Preview">w_{i,j}</span><script type="math/tex">w_{i,j}</script></span>：从工序到达机器开始到可以进行加工的时间间隔，如果马上可以加工则等待为时间等于0</li>
-<li>作业剩余工作时间 <span><span class="MathJax_Preview">r_{i,j}</span><script type="math/tex">r_{i,j}</script></span>：工序所在作业尚未进行的工序（包含当前工序）的加工时间之和</li>
+<li>工序生成时刻 <span class="arithmatex"><span class="MathJax_Preview">t_{i,j}</span><script type="math/tex">t_{i,j}</script></span>：工序 <span class="arithmatex"><span class="MathJax_Preview">O_{i,j}</span><script type="math/tex">O_{i,j}</script></span> 达到机器 <span class="arithmatex"><span class="MathJax_Preview">m_i</span><script type="math/tex">m_i</script></span> 的时刻，即上一道工序结束的时间</li>
+<li>工序等待时间 <span class="arithmatex"><span class="MathJax_Preview">w_{i,j}</span><script type="math/tex">w_{i,j}</script></span>：从工序到达机器开始到可以进行加工的时间间隔，如果马上可以加工则等待为时间等于0</li>
+<li>作业剩余工作时间 <span class="arithmatex"><span class="MathJax_Preview">r_{i,j}</span><script type="math/tex">r_{i,j}</script></span>：工序所在作业尚未进行的工序（包含当前工序）的加工时间之和</li>
 </ul>
 </li>
 </ul>
@@ -263,7 +263,7 @@
 13  LTWR    Least Total Work Remaining      Dynamic 
 14  MTWR    Most Total Work Remaining       Dynamic </code></pre>
 <p>进而，组合其中的多个规则可以得到更多组合式规则。本文特别列出文献 <sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup> 提出的一个组合式规则，姑且以作者姓氏命名为 <code>HH</code>。</p>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">z_{i,j} = \left (t_{i,j}+w_{i,j} \uparrow, \,\, r_{i,j}-1.5\,p_{i,j} \downarrow \right )</div>
 <script type="math/tex; mode=display">z_{i,j} = \left (t_{i,j}+w_{i,j} \uparrow, \,\, r_{i,j}-1.5\,p_{i,j} \downarrow \right )</script>
 </div>

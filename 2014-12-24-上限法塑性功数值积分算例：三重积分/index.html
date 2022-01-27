@@ -143,12 +143,12 @@
 <p>发布于：2014-12-24 | 分类：<a href="../categories/numeric%20calculation/">numeric calculation</a></p>
 <hr />
 <p>当上限法拓展应用到三维成形问题，三重积分就在所难免了；并且考虑到积分区域无法解析表达，此时数值积分是唯一的选择。之前文章给出了平面问题中上限法塑性功数值积分算例，本文即以具体示例介绍三维上限法计算过程中可能遇到的体积积分问题。</p>
-<p>算例：在半径为1的八分之一球体区域<span><span class="MathJax_Preview">\Omega</span><script type="math/tex">\Omega</script></span>（第一卦限）上计算<span><span class="MathJax_Preview">f(x,y,z)</span><script type="math/tex">f(x,y,z)</script></span>的积分</p>
-<div>
+<p>算例：在半径为1的八分之一球体区域<span class="arithmatex"><span class="MathJax_Preview">\Omega</span><script type="math/tex">\Omega</script></span>（第一卦限）上计算<span class="arithmatex"><span class="MathJax_Preview">f(x,y,z)</span><script type="math/tex">f(x,y,z)</script></span>的积分</p>
+<div class="arithmatex">
 <div class="MathJax_Preview">\int_{\Omega}{f(x,y,z)\,\mathrm{d}V}</div>
 <script type="math/tex; mode=display">\int_{\Omega}{f(x,y,z)\,\mathrm{d}V}</script>
 </div>
-<p>特别地，当<span><span class="MathJax_Preview">f(x,y,z)=1</span><script type="math/tex">f(x,y,z)=1</script></span>时，其几何意义为八分之一球的体积。</p>
+<p>特别地，当<span class="arithmatex"><span class="MathJax_Preview">f(x,y,z)=1</span><script type="math/tex">f(x,y,z)=1</script></span>时，其几何意义为八分之一球的体积。</p>
 <h2 id="_2">计算思路<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>思路其实很明晰：</p>
 <ol>
@@ -162,7 +162,7 @@
 <li>
 <p>进行数值积分</p>
 <p>将积分区域离散后，以有限积分点的插值数据来替代单元上连续的函数值，得到每个单元的数值积分结果，最后求和。</p>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">\int_{\Omega}{f(x,y,z)\,\mathrm{d}V} = \sum_{i=1}^m{\left[\int_{V_i}f(x_i,y_i,z_i)\,\mathrm{d}V \right]} = \sum_{i=1}^m{f(x_i,y_i,z_i)\,V_i}</div>
 <script type="math/tex; mode=display">\int_{\Omega}{f(x,y,z)\,\mathrm{d}V} = \sum_{i=1}^m{\left[\int_{V_i}f(x_i,y_i,z_i)\,\mathrm{d}V \right]} = \sum_{i=1}^m{f(x_i,y_i,z_i)\,V_i}</script>
 </div>
@@ -175,7 +175,7 @@
 </blockquote>
 <p>本次计算中采用的是四面体单元，因为四面体具有简易的体积计算公式。积分方案为Hammer积分，根据积分精度可选取线性、二次及三次积分点，参见王勖成《有限单元法》Page 151。本次计算直接采用线性的积分方案，即以四面体单元四个节点上函数值的平均值作为单元的函数值。</p>
 <p><img alt="" src="../images/2014-12-24-01.jpg" /></p>
-<p>计算过程中，选取不同的被积函数<span><span class="MathJax_Preview">f(x,y,z)</span><script type="math/tex">f(x,y,z)</script></span>、同时设置不同的单元数，并与matlab数值积分结果进行对比，如下表所示。</p>
+<p>计算过程中，选取不同的被积函数<span class="arithmatex"><span class="MathJax_Preview">f(x,y,z)</span><script type="math/tex">f(x,y,z)</script></span>、同时设置不同的单元数，并与matlab数值积分结果进行对比，如下表所示。</p>
 <table>
 <thead>
 <tr>
@@ -189,7 +189,7 @@
 </thead>
 <tbody>
 <tr>
-<td align="center"><span><span class="MathJax_Preview">f(x,\,y,\,z)=1</span><script type="math/tex">f(x,\,y,\,z)=1</script></span></td>
+<td align="center"><span class="arithmatex"><span class="MathJax_Preview">f(x,\,y,\,z)=1</span><script type="math/tex">f(x,\,y,\,z)=1</script></span></td>
 <td align="center">0.402571</td>
 <td align="center">0.515488</td>
 <td align="center">0.522304</td>
@@ -197,7 +197,7 @@
 <td align="center">0.523599</td>
 </tr>
 <tr>
-<td align="center"><span><span class="MathJax_Preview">f(x,\,y,\,z)=\sin^2\left(x+y^2+\sqrt{z}\right)</span><script type="math/tex">f(x,\,y,\,z)=\sin^2\left(x+y^2+\sqrt{z}\right)</script></span></td>
+<td align="center"><span class="arithmatex"><span class="MathJax_Preview">f(x,\,y,\,z)=\sin^2\left(x+y^2+\sqrt{z}\right)</span><script type="math/tex">f(x,\,y,\,z)=\sin^2\left(x+y^2+\sqrt{z}\right)</script></span></td>
 <td align="center">0.300058</td>
 <td align="center">0.405632</td>
 <td align="center">0.410014</td>

@@ -151,7 +151,7 @@
 <p>发布于：2014-12-19 | 分类：<a href="../categories/numeric%20calculation/">numeric calculation</a></p>
 <hr />
 <p>数值积分一般都是机械求积，避开寻求原函数的困难，转为被积函数值的计算问题。对于插值型的求积公式，n阶积分（n+1个积分点）至少具有n阶代数精度。如果对插值节点的选取作出要求，则可进一步提高积分精度。</p>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">
 \int_{a}^{b}f(x)\mathrm{d}x \approx \sum_{k=0}^{n}A_k\,f(x_k)
 </div>
@@ -160,10 +160,10 @@
 </script>
 </div>
 <p>例如，等距选取积分点则得到<code>牛顿-科斯特（Newton-Cotes）</code>公式。特别地，1，2阶的牛顿-科斯特公式分别是常用的<code>梯形公式</code>和<code>辛普森（Simpson）</code>公式。由于积分点作了等距的要求，作为回报，当阶数n为偶数时，牛顿-科斯特公式至少具有n+1次代数精度。</p>
-<p>不过，当阶数较大（n<span><span class="MathJax_Preview">\ge</span><script type="math/tex">\ge</script></span>8）时，积分系数会出现负值，即计算不具有稳定性。所以又引进了复化求积公式——把积分区间划分为若干子区间，再在每个子区间采用低阶的求积公式。</p>
-<p>再如，<code>高斯积分公式</code>对积分点的选取采用了更高的要求——以积分点<span><span class="MathJax_Preview">x_0,x_1,\cdots,x_n</span><script type="math/tex">x_0,x_1,\cdots,x_n</script></span>为零点的多项式<span><span class="MathJax_Preview">\omega_{n+1}(x)</span><script type="math/tex">\omega_{n+1}(x)</script></span>满足：与任何次数不超过n的多项式<span><span class="MathJax_Preview">p_k(x)</span><script type="math/tex">p_k(x)</script></span>带权正交。</p>
+<p>不过，当阶数较大（n<span class="arithmatex"><span class="MathJax_Preview">\ge</span><script type="math/tex">\ge</script></span>8）时，积分系数会出现负值，即计算不具有稳定性。所以又引进了复化求积公式——把积分区间划分为若干子区间，再在每个子区间采用低阶的求积公式。</p>
+<p>再如，<code>高斯积分公式</code>对积分点的选取采用了更高的要求——以积分点<span class="arithmatex"><span class="MathJax_Preview">x_0,x_1,\cdots,x_n</span><script type="math/tex">x_0,x_1,\cdots,x_n</script></span>为零点的多项式<span class="arithmatex"><span class="MathJax_Preview">\omega_{n+1}(x)</span><script type="math/tex">\omega_{n+1}(x)</script></span>满足：与任何次数不超过n的多项式<span class="arithmatex"><span class="MathJax_Preview">p_k(x)</span><script type="math/tex">p_k(x)</script></span>带权正交。</p>
 <p>相应的回报是：<code>n</code>阶高斯积分公式具有<code>2n+1</code>次代数精度。</p>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">
 a \le x_0 \le x_1 \le \cdots \le x_n \le b
 </div>
@@ -171,7 +171,7 @@ a \le x_0 \le x_1 \le \cdots \le x_n \le b
 a \le x_0 \le x_1 \le \cdots \le x_n \le b
 </script>
 </div>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">
 \omega_{n+1}(x) = (x-x_0)(x-x_1)\cdots(x-x_n)
 </div>
@@ -179,7 +179,7 @@ a \le x_0 \le x_1 \le \cdots \le x_n \le b
 \omega_{n+1}(x) = (x-x_0)(x-x_1)\cdots(x-x_n)
 </script>
 </div>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">
 p_k(x) = a_k x^k + a_{k-1} x^{k-1} + \cdots + a_0 \,\,\,(k \le n)
 </div>
@@ -187,7 +187,7 @@ p_k(x) = a_k x^k + a_{k-1} x^{k-1} + \cdots + a_0 \,\,\,(k \le n)
 p_k(x) = a_k x^k + a_{k-1} x^{k-1} + \cdots + a_0 \,\,\,(k \le n)
 </script>
 </div>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">
 \int_{a}^{b}p_k(x) \omega_{n+1}(x) \rho(x) \mathrm{d}x = 0
 </div>
@@ -196,9 +196,9 @@ p_k(x) = a_k x^k + a_{k-1} x^{k-1} + \cdots + a_0 \,\,\,(k \le n)
 </script>
 </div>
 <h2 id="gauss-legendre">Gauss-Legendre求积公式<a class="headerlink" href="#gauss-legendre" title="Permanent link">&para;</a></h2>
-<p>选取不同的权系数及积分区间，可以得到不同的高斯型求积公式。<code>Legendre</code>多项式是区间<span><span class="MathJax_Preview">[-1,1]</span><script type="math/tex">[-1,1]</script></span>，权函数<span><span class="MathJax_Preview">\rho(x)=1</span><script type="math/tex">\rho(x)=1</script></span>时，<span><span class="MathJax_Preview">\lbrace 1,x,\cdots,x^n,\cdots\rbrace</span><script type="math/tex">\lbrace 1,x,\cdots,x^n,\cdots\rbrace</script></span>正交化得到的多项式，因此其零点即为高斯积分点。同理，<code>Chebyshev</code>多项式的零点是另一类高斯型求积公式的积分点。</p>
+<p>选取不同的权系数及积分区间，可以得到不同的高斯型求积公式。<code>Legendre</code>多项式是区间<span class="arithmatex"><span class="MathJax_Preview">[-1,1]</span><script type="math/tex">[-1,1]</script></span>，权函数<span class="arithmatex"><span class="MathJax_Preview">\rho(x)=1</span><script type="math/tex">\rho(x)=1</script></span>时，<span class="arithmatex"><span class="MathJax_Preview">\lbrace 1,x,\cdots,x^n,\cdots\rbrace</span><script type="math/tex">\lbrace 1,x,\cdots,x^n,\cdots\rbrace</script></span>正交化得到的多项式，因此其零点即为高斯积分点。同理，<code>Chebyshev</code>多项式的零点是另一类高斯型求积公式的积分点。</p>
 <p><code>Gauss-Legendre</code>求积公式表示为：</p>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">
 \int_{-1}^{1} f(x) \mathrm{d}x \approx \sum_{k=0}^n A_k\,f(x_k)
 </div>
@@ -206,8 +206,8 @@ p_k(x) = a_k x^k + a_{k-1} x^{k-1} + \cdots + a_0 \,\,\,(k \le n)
 \int_{-1}^{1} f(x) \mathrm{d}x \approx \sum_{k=0}^n A_k\,f(x_k)
 </script>
 </div>
-<p>其中，<span><span class="MathJax_Preview">x_k</span><script type="math/tex">x_k</script></span>是n+1次<code>Legendre</code>多项式<span><span class="MathJax_Preview">P_n(x)</span><script type="math/tex">P_n(x)</script></span></p>
-<div>
+<p>其中，<span class="arithmatex"><span class="MathJax_Preview">x_k</span><script type="math/tex">x_k</script></span>是n+1次<code>Legendre</code>多项式<span class="arithmatex"><span class="MathJax_Preview">P_n(x)</span><script type="math/tex">P_n(x)</script></span></p>
+<div class="arithmatex">
 <div class="MathJax_Preview">
 P_n(x) = \frac{1}{2^n\,n!}\,\frac{\mathrm{d}^n}{\mathrm{d}x^n}(x^2-1)^n \quad n=0,1,2,\cdots
 </div>
@@ -222,16 +222,16 @@ P_n(x) = \frac{1}{2^n\,n!}\,\frac{\mathrm{d}^n}{\mathrm{d}x^n}(x^2-1)^n \quad n=
 <p>积分点可以通过求解<code>Legendre</code>多项式的零点得到，需要注意的是n阶<code>gauss-Legendre</code>公式的积分点是n+1阶<code>Legendre</code>多项式的零点。</p>
 </li>
 <li>
-<p>根据定义，积分系数可以通过依次代入被积函数<span><span class="MathJax_Preview">x^k\,\,(k=0,1,2,\cdots,2n+1)</span><script type="math/tex">x^k\,\,(k=0,1,2,\cdots,2n+1)</script></span>，求解代数方程组得到。然而，这样的方法较为复杂，一般推荐以下便于计算机计算的方法：</p>
+<p>根据定义，积分系数可以通过依次代入被积函数<span class="arithmatex"><span class="MathJax_Preview">x^k\,\,(k=0,1,2,\cdots,2n+1)</span><script type="math/tex">x^k\,\,(k=0,1,2,\cdots,2n+1)</script></span>，求解代数方程组得到。然而，这样的方法较为复杂，一般推荐以下便于计算机计算的方法：</p>
 </li>
 </ul>
-<p>求解第<span><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>个积分系数<span><span class="MathJax_Preview">A_k</span><script type="math/tex">A_k</script></span>时，构造被积函数：</p>
+<p>求解第<span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>个积分系数<span class="arithmatex"><span class="MathJax_Preview">A_k</span><script type="math/tex">A_k</script></span>时，构造被积函数：</p>
 <p>\begin{align*}
 f_k(x) &amp;= \frac{(x-x_0)(x-x_1)\cdots(x-x_{k-1})(x-x_{k+1})\cdots(x-x_n)}{(x_k-x_0)(x_k-x_1)\cdots(x_k-x_{k-1})(x_k-x_{k+1})\cdots(x_k-x_n)} \\
 &amp;= \frac{\omega_{n+1}(x)}{(x-x_k)\,\omega'_{n+1}(x_k)}
 \end{align*}</p>
-<p>显然该函数在<span><span class="MathJax_Preview">x_k</span><script type="math/tex">x_k</script></span>点的函数值为1，在其他积分点上的函数值为0，于是进行多项式积分就可以得到积分系数</p>
-<div>
+<p>显然该函数在<span class="arithmatex"><span class="MathJax_Preview">x_k</span><script type="math/tex">x_k</script></span>点的函数值为1，在其他积分点上的函数值为0，于是进行多项式积分就可以得到积分系数</p>
+<div class="arithmatex">
 <div class="MathJax_Preview">
 A_k = \sum_{k=0}^{n}A_k\,f(x_k) = \int_{a}^{b}f_k(x)\,\mathrm{d}x
 </div>
@@ -239,8 +239,8 @@ A_k = \sum_{k=0}^{n}A_k\,f(x_k) = \int_{a}^{b}f_k(x)\,\mathrm{d}x
 A_k = \sum_{k=0}^{n}A_k\,f(x_k) = \int_{a}^{b}f_k(x)\,\mathrm{d}x
 </script>
 </div>
-<p>另外，需要通过换元，将<code>Legendre</code>多项式的标准积分区间<span><span class="MathJax_Preview">[-1,1]</span><script type="math/tex">[-1,1]</script></span>转换到一般积分区间<span><span class="MathJax_Preview">[a,b]</span><script type="math/tex">[a,b]</script></span>：</p>
-<div>
+<p>另外，需要通过换元，将<code>Legendre</code>多项式的标准积分区间<span class="arithmatex"><span class="MathJax_Preview">[-1,1]</span><script type="math/tex">[-1,1]</script></span>转换到一般积分区间<span class="arithmatex"><span class="MathJax_Preview">[a,b]</span><script type="math/tex">[a,b]</script></span>：</p>
+<div class="arithmatex">
 <div class="MathJax_Preview">
 \int_{a}^{b}f(x)\mathrm{d}x = \frac{b-a}{2}\,\int_{-1}^{1}f\left(\frac{b-a}{2}\,t + \frac{b+a}{2}\right)\mathrm{d}t
 </div>
@@ -268,9 +268,9 @@ A_k = \sum_{k=0}^{n}A_k\,f(x_k) = \int_{a}^{b}f_k(x)\,\mathrm{d}x
 U_j &amp;= \frac{b-a}{2}\,u_j + \frac{b+a}{2} \\
 V_{ji} &amp;= \alpha(U_j)\,v_i + \beta(U_j)
 \end{align*}</p>
-<p><span><span class="MathJax_Preview">v_i, \, u_j</span><script type="math/tex">v_i, \, u_j</script></span>分别是<span><span class="MathJax_Preview">y,\, x</span><script type="math/tex">y,\, x</script></span>方向在标准区间的积分点，<span><span class="MathJax_Preview">n,\,m</span><script type="math/tex">n,\,m</script></span>分别是这两个方向的积分点个数。</p>
+<p><span class="arithmatex"><span class="MathJax_Preview">v_i, \, u_j</span><script type="math/tex">v_i, \, u_j</script></span>分别是<span class="arithmatex"><span class="MathJax_Preview">y,\, x</span><script type="math/tex">y,\, x</script></span>方向在标准区间的积分点，<span class="arithmatex"><span class="MathJax_Preview">n,\,m</span><script type="math/tex">n,\,m</script></span>分别是这两个方向的积分点个数。</p>
 <h2 id="matlab">Matlab实现<a class="headerlink" href="#matlab" title="Permanent link">&para;</a></h2>
-<p>以上两节介绍了<code>Gauss-Legendre</code>数值积分中积分点、积分系数的求解方法，以及二重积分的计算方案，接下来使用Matlab实现以上过程。为减小参数个数，假设两个方向的积分点数相同，即之前式子中<span><span class="MathJax_Preview">m=n</span><script type="math/tex">m=n</script></span>。</p>
+<p>以上两节介绍了<code>Gauss-Legendre</code>数值积分中积分点、积分系数的求解方法，以及二重积分的计算方案，接下来使用Matlab实现以上过程。为减小参数个数，假设两个方向的积分点数相同，即之前式子中<span class="arithmatex"><span class="MathJax_Preview">m=n</span><script type="math/tex">m=n</script></span>。</p>
 <pre class="codehilite"><code>function res = guasslegendre(fun, a, b, c, d, n)
 % -----------------------------------------------------------------------
 % Gauss-Legendre数值积分计算二重积分
@@ -313,7 +313,7 @@ res = (b-a)/2.0*sum(w(:));
 </code></pre>
 
 <p>作为测试，分别使用以上代码及Matlab自带的数值积分函数<code>integral2</code>对下面二重积分进行计算：</p>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">
 I = \int_{-1}^1\!\!\int_x^{\mathrm{e}^{x^2}}\,e^{-\left(x^2+y^2\right)}\,\mathrm{d}y\,\mathrm{d}x
 </div>
@@ -324,7 +324,7 @@ I = \int_{-1}^1\!\!\int_x^{\mathrm{e}^{x^2}}\,e^{-\left(x^2+y^2\right)}\,\mathrm
 <table>
 <thead>
 <tr>
-<th>阶数<span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span></th>
+<th>阶数<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span></th>
 <th>计算值</th>
 </tr>
 </thead>
@@ -343,8 +343,8 @@ I = \int_{-1}^1\!\!\int_x^{\mathrm{e}^{x^2}}\,e^{-\left(x^2+y^2\right)}\,\mathrm
 </tr>
 </tbody>
 </table>
-<p>表中数据为以上代码的计算值，<code>integral2</code>计算值为：<span><span class="MathJax_Preview">1.206561586856674</span><script type="math/tex">1.206561586856674</script></span>。由于积分区间正是标准的<span><span class="MathJax_Preview">[-1,1]</span><script type="math/tex">[-1,1]</script></span>，5阶Gauss-Legendre数值积分即<span><span class="MathJax_Preview">6\times6</span><script type="math/tex">6\times6</script></span>个积分点就可将误差控制在<span><span class="MathJax_Preview">10^{-5}</span><script type="math/tex">10^{-5}</script></span>以下。</p>
-<p>不过，以上代码仅仅是<code>Gauss-Legendre</code>数值积分基本原理的实现，若想用于实际问题，尚需进一步的改进。当积分区间跨度增大时，其计算精度将急剧下降，例如上述积分在<span><span class="MathJax_Preview">[-2,11]</span><script type="math/tex">[-2,11]</script></span>区间进行时，计算结果如下：</p>
+<p>表中数据为以上代码的计算值，<code>integral2</code>计算值为：<span class="arithmatex"><span class="MathJax_Preview">1.206561586856674</span><script type="math/tex">1.206561586856674</script></span>。由于积分区间正是标准的<span class="arithmatex"><span class="MathJax_Preview">[-1,1]</span><script type="math/tex">[-1,1]</script></span>，5阶Gauss-Legendre数值积分即<span class="arithmatex"><span class="MathJax_Preview">6\times6</span><script type="math/tex">6\times6</script></span>个积分点就可将误差控制在<span class="arithmatex"><span class="MathJax_Preview">10^{-5}</span><script type="math/tex">10^{-5}</script></span>以下。</p>
+<p>不过，以上代码仅仅是<code>Gauss-Legendre</code>数值积分基本原理的实现，若想用于实际问题，尚需进一步的改进。当积分区间跨度增大时，其计算精度将急剧下降，例如上述积分在<span class="arithmatex"><span class="MathJax_Preview">[-2,11]</span><script type="math/tex">[-2,11]</script></span>区间进行时，计算结果如下：</p>
 <pre class="codehilite"><code>&gt;&gt; fun=@(x,y)exp(-x.^2-y.^2);
 &gt;&gt; integral2(fun,-2,11,@(x)x,@(x)exp(x.^2))
 

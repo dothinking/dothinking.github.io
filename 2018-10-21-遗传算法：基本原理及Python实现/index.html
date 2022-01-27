@@ -335,7 +335,7 @@ class RouletteWheelSelection(Selection):
         # pay attention to deep copy these objects
         population.individuals = np.array([copy.deepcopy(I) for I in selected_individuals])</code></pre>
 <p><strong>2.2 交叉</strong></p>
-<p>从选择后的样本中随机选择两个个体<code>a</code>和<code>b</code>，以一定的概率进行交叉操作：将随机位置的对应基因（例如<span><span class="MathJax_Preview">g_a</span><script type="math/tex">g_a</script></span>，<span><span class="MathJax_Preview">g_b</span><script type="math/tex">g_b</script></span>）按系数<span><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>进行线性插值，其余位置保持不变，从而得到两个新的个体<code>a'</code>和<code>b'</code>。</p>
+<p>从选择后的样本中随机选择两个个体<code>a</code>和<code>b</code>，以一定的概率进行交叉操作：将随机位置的对应基因（例如<span class="arithmatex"><span class="MathJax_Preview">g_a</span><script type="math/tex">g_a</script></span>，<span class="arithmatex"><span class="MathJax_Preview">g_b</span><script type="math/tex">g_b</script></span>）按系数<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>进行线性插值，其余位置保持不变，从而得到两个新的个体<code>a'</code>和<code>b'</code>。</p>
 <p>对于交叉位置的基因：</p>
 <p>\begin{align*}
 g_a' &amp;= g_a + (g_b-g_a)(1-\alpha)\\\
@@ -351,7 +351,7 @@ g_b' &amp;= g_b
 a' &amp;= a + (b-a)(1-\alpha)\beta\\\
 b' &amp;= b - (b-a)(1-\alpha)\beta
 \end{align*}</p>
-<p>其中，<span><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>表示是否进行交叉的<code>0-1</code>向量。</p>
+<p>其中，<span class="arithmatex"><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>表示是否进行交叉的<code>0-1</code>向量。</p>
 <pre class="highlight"><code class="language-python"># ......接上一段代码
 
 #----------------------------------------------------------
@@ -409,7 +409,7 @@ class Crossover:
 
         population.individuals = np.array(new_individuals[0:population.size+1])</code></pre>
 <p><strong>2.3 变异</strong></p>
-<p>浮点数编码个体的变异操作为将随即位置的基因<code>g</code>增加或减少一个随机值。这个随机值由允许变化区间乘以一个[0,1]区间的随机数<span><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>来确定。例如基因<code>g</code>的区间为<code>[L,U]</code>，则变异后的基因<code>g'</code>：</p>
+<p>浮点数编码个体的变异操作为将随即位置的基因<code>g</code>增加或减少一个随机值。这个随机值由允许变化区间乘以一个[0,1]区间的随机数<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>来确定。例如基因<code>g</code>的区间为<code>[L,U]</code>，则变异后的基因<code>g'</code>：</p>
 <p>\begin{align*}
 g &amp;= g - (g-L)\alpha\,\,\,(rand() \leq 0.5)\\\
 g &amp;= g + (U-g)\alpha\,\,\,(rand() &gt; 0.5)
@@ -457,7 +457,7 @@ class Mutation:
             self.mutate_individual(individual, pos, alpha)</code></pre>
 <h3 id="3">3 遗传算法<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
 <p>本次实现的遗传算法默认求最小值，因此适应度函数应为目标函数值的反函数。并且考虑到它将作为选择概率，即函数值应非负。于是，此处设置为如下形式：</p>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">
 f(x) = \arctan(-x) + \pi
 </div>
@@ -506,8 +506,8 @@ class GA():
         # return the best individual
         return self.population.best(fun_evaluation, self.fun_fitness)</code></pre>
 <h2 id="_3">测试<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<p>采用二元函数<code>Schaffer_N4</code>进行测试，最小值点<span><span class="MathJax_Preview">f(0,1.25313)=0.292579</span><script type="math/tex">f(0,1.25313)=0.292579</script></span>。</p>
-<div>
+<p>采用二元函数<code>Schaffer_N4</code>进行测试，最小值点<span class="arithmatex"><span class="MathJax_Preview">f(0,1.25313)=0.292579</span><script type="math/tex">f(0,1.25313)=0.292579</script></span>。</p>
+<div class="arithmatex">
 <div class="MathJax_Preview">
 f(x,y) = 0.5 + \frac{\cos^2 \left[\sin\left(|x^2-y^2| \right) \right] -0.5}{\left[1+0.001\left(x^2+y^2\right)\right]^2} \,\,\,\, \left(-10 \leq (x,y) \leq 10\right)
 </div>

@@ -158,16 +158,16 @@
 <p><img alt="" src="../images/2017-03-09-01.png" /></p>
 <ul>
 <li>
-<p><code>纬度</code>是地球上某点与球心的连线与地球赤道面所成的线面角（如图所示<span><span class="MathJax_Preview">\varphi</span><script type="math/tex">\varphi</script></span>），北纬为正数，南纬为负数。</p>
+<p><code>纬度</code>是地球上某点与球心的连线与地球赤道面所成的线面角（如图所示<span class="arithmatex"><span class="MathJax_Preview">\varphi</span><script type="math/tex">\varphi</script></span>），北纬为正数，南纬为负数。</p>
 </li>
 <li>
-<p><code>经度</code>是地球上某点经线平面与本初子午面所成的二面角（如图所示的<span><span class="MathJax_Preview">\lambda</span><script type="math/tex">\lambda</script></span>），东经为正数，西经为负数。</p>
+<p><code>经度</code>是地球上某点经线平面与本初子午面所成的二面角（如图所示的<span class="arithmatex"><span class="MathJax_Preview">\lambda</span><script type="math/tex">\lambda</script></span>），东经为正数，西经为负数。</p>
 </li>
 <li>
-<p><code>方位角</code>是从某点的指北方向线起，依顺时针方向到目标方向线之间的水平夹角（如图所示<span><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>）。</p>
+<p><code>方位角</code>是从某点的指北方向线起，依顺时针方向到目标方向线之间的水平夹角（如图所示<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>）。</p>
 </li>
 </ul>
-<p>根据上述定义可知，在单位球面上，经纬度<span><span class="MathJax_Preview">(\varphi,\lambda)</span><script type="math/tex">(\varphi,\lambda)</script></span>与球坐标<span><span class="MathJax_Preview">(\Phi, \Theta)</span><script type="math/tex">(\Phi, \Theta)</script></span>之间的对应关系为：</p>
+<p>根据上述定义可知，在单位球面上，经纬度<span class="arithmatex"><span class="MathJax_Preview">(\varphi,\lambda)</span><script type="math/tex">(\varphi,\lambda)</script></span>与球坐标<span class="arithmatex"><span class="MathJax_Preview">(\Phi, \Theta)</span><script type="math/tex">(\Phi, \Theta)</script></span>之间的对应关系为：</p>
 <p>\begin{align*}
     \Phi   &amp;= \frac{\pi}{2} - \varphi \\
     \Theta &amp;=
@@ -177,7 +177,7 @@
             \end{cases}
 \end{align*}</p>
 <p>于是，直角坐标系与球坐标系的对应关系</p>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">
 \left\{ 
     \begin{array}{c}
@@ -198,7 +198,7 @@
 </script>
 </div>
 <p>转换到经纬度坐标系下为：</p>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">
 \left\{ 
     \begin{array}{c}
@@ -219,15 +219,15 @@
 </script>
 </div>
 <h2 id="_3">球面距离公式<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<p>球面上两点P、Q的最短距离为过P、Q的大圆对应两点之间的劣弧的长度（如图实线所示<span><span class="MathJax_Preview">\overset{\frown}{PQ}</span><script type="math/tex">\overset{\frown}{PQ}</script></span>）。</p>
-<p>球面距离<span><span class="MathJax_Preview">d</span><script type="math/tex">d</script></span>的常用计算公式为<code>Haversine</code>公式 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>：</p>
+<p>球面上两点P、Q的最短距离为过P、Q的大圆对应两点之间的劣弧的长度（如图实线所示<span class="arithmatex"><span class="MathJax_Preview">\overset{\frown}{PQ}</span><script type="math/tex">\overset{\frown}{PQ}</script></span>）。</p>
+<p>球面距离<span class="arithmatex"><span class="MathJax_Preview">d</span><script type="math/tex">d</script></span>的常用计算公式为<code>Haversine</code>公式 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>：</p>
 <p>\begin{align*}
 a &amp;= \sin^2\frac{\Delta\varphi}{2} + \cos\varphi_1 \cos\varphi_2 \, sin^2\frac{\Delta\lambda}{2}\\
 \delta &amp;= 2\,atan2\frac{\sqrt{a}}{\sqrt{1-a}} \\
 d &amp;= R\,\delta\\
 \tag{I}
 \end{align*}</p>
-<p>其中，<span><span class="MathJax_Preview">\varphi</span><script type="math/tex">\varphi</script></span>是纬度，<span><span class="MathJax_Preview">\lambda</span><script type="math/tex">\lambda</script></span>是经度，<span><span class="MathJax_Preview">R</span><script type="math/tex">R</script></span>是地球平均半径（<span><span class="MathJax_Preview">R=6371km</span><script type="math/tex">R=6371km</script></span>）。<span><span class="MathJax_Preview">\Delta\varphi=\varphi_2-\varphi_1</span><script type="math/tex">\Delta\varphi=\varphi_2-\varphi_1</script></span>，<span><span class="MathJax_Preview">\Delta\lambda=\lambda_2-\lambda_1</span><script type="math/tex">\Delta\lambda=\lambda_2-\lambda_1</script></span>
+<p>其中，<span class="arithmatex"><span class="MathJax_Preview">\varphi</span><script type="math/tex">\varphi</script></span>是纬度，<span class="arithmatex"><span class="MathJax_Preview">\lambda</span><script type="math/tex">\lambda</script></span>是经度，<span class="arithmatex"><span class="MathJax_Preview">R</span><script type="math/tex">R</script></span>是地球平均半径（<span class="arithmatex"><span class="MathJax_Preview">R=6371km</span><script type="math/tex">R=6371km</script></span>）。<span class="arithmatex"><span class="MathJax_Preview">\Delta\varphi=\varphi_2-\varphi_1</span><script type="math/tex">\Delta\varphi=\varphi_2-\varphi_1</script></span>，<span class="arithmatex"><span class="MathJax_Preview">\Delta\lambda=\lambda_2-\lambda_1</span><script type="math/tex">\Delta\lambda=\lambda_2-\lambda_1</script></span>
 分别为纬度、经度的差值。</p>
 <div class="admonition warning">
 <p class="admonition-title">注意：</p>
@@ -238,7 +238,7 @@ d &amp;= R\,\delta\\
 </div>
 <p><strong>分析：</strong> 根据经纬度得到P、Q点的笛卡尔坐标，代入两点间距离公式计算球心角对应的弦长，最终得到球心角。</p>
 <p>P、Q在笛卡尔坐标系下表示为：</p>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">
 \left\{ 
     \begin{array}{c}
@@ -284,9 +284,9 @@ PQ^2 &amp;= (\Delta x)^2 + (\Delta y)^2 + (\Delta z)^2 \\
      &amp;= 2 - 2\,\cos\Delta\varphi + 4\,\cos\varphi_1 \cos\varphi_2 \sin^2\frac{\Delta\lambda}{2}\\
      &amp;= 4\,sin^2\frac{\Delta\varphi}{2} + 4\,\cos\varphi_1 \cos\varphi_2 \sin^2\frac{\Delta\lambda}{2}
 \end{align*}</p>
-<p>令<span><span class="MathJax_Preview">a=(PQ/2)^2</span><script type="math/tex">a=(PQ/2)^2</script></span>即可得到<code>Haversine</code>公式。</p>
+<p>令<span class="arithmatex"><span class="MathJax_Preview">a=(PQ/2)^2</span><script type="math/tex">a=(PQ/2)^2</script></span>即可得到<code>Haversine</code>公式。</p>
 <p>以上式为基础，可以进一步推导余弦形式的球面距离公式：</p>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">
     a = \sin^2\frac{\delta}{2}
 </div>
@@ -305,11 +305,11 @@ PQ^2 &amp;= (\Delta x)^2 + (\Delta y)^2 + (\Delta z)^2 \\
 \end{align*}</p>
 <div class="admonition note">
 <p class="admonition-title">说明：</p>
-<p>以上关于角度的推导基于单位球，即<span><span class="MathJax_Preview">OP=OQ=1</span><script type="math/tex">OP=OQ=1</script></span>。</p>
+<p>以上关于角度的推导基于单位球，即<span class="arithmatex"><span class="MathJax_Preview">OP=OQ=1</span><script type="math/tex">OP=OQ=1</script></span>。</p>
 </div>
 <h2 id="_4">方位角公式<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
-<p>方位角<span><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>的计算公式：</p>
-<div>
+<p>方位角<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>的计算公式：</p>
+<div class="arithmatex">
 <div class="MathJax_Preview">
 \theta = atan2\frac{\sin\Delta\lambda \cos\varphi_2}{\cos\varphi_1 \sin\varphi_2-\sin\varphi_1 \cos\varphi_2\,\cos\Delta\lambda}
 \tag{II}
@@ -319,7 +319,7 @@ PQ^2 &amp;= (\Delta x)^2 + (\Delta y)^2 + (\Delta z)^2 \\
 \tag{II}
 </script>
 </div>
-<p><strong>分析：</strong> 如下图所示，P点处方位角<span><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>为过P点的两个大圆在该点处切线方向向量<span><span class="MathJax_Preview">\boldsymbol{\tau_1},\,\boldsymbol{\tau_2}</span><script type="math/tex">\boldsymbol{\tau_1},\,\boldsymbol{\tau_2}</script></span>的夹角。 </p>
+<p><strong>分析：</strong> 如下图所示，P点处方位角<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>为过P点的两个大圆在该点处切线方向向量<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{\tau_1},\,\boldsymbol{\tau_2}</span><script type="math/tex">\boldsymbol{\tau_1},\,\boldsymbol{\tau_2}</script></span>的夹角。 </p>
 <p><img alt="" src="../images/2017-03-09-02.png" /></p>
 <p>\begin{align*}
     \boldsymbol{\tau_1} &amp;= \boldsymbol{\alpha} \times \boldsymbol{n_1} = \boldsymbol{\alpha} \times \left( \boldsymbol{\beta} \times \boldsymbol{\alpha} \right) \\
@@ -332,10 +332,10 @@ PQ^2 &amp;= (\Delta x)^2 + (\Delta y)^2 + (\Delta z)^2 \\
     \boldsymbol{\gamma} &amp;= \left( 0, \, 0, \, 1\right)
 \end{align*}</p>
 <p>易知 
-<span><span class="MathJax_Preview">\Vert \boldsymbol{\alpha} \Vert = \Vert \boldsymbol{\beta} \Vert = \Vert \boldsymbol{\gamma} \Vert = 1</span><script type="math/tex">\Vert \boldsymbol{\alpha} \Vert = \Vert \boldsymbol{\beta} \Vert = \Vert \boldsymbol{\gamma} \Vert = 1</script></span>，
+<span class="arithmatex"><span class="MathJax_Preview">\Vert \boldsymbol{\alpha} \Vert = \Vert \boldsymbol{\beta} \Vert = \Vert \boldsymbol{\gamma} \Vert = 1</span><script type="math/tex">\Vert \boldsymbol{\alpha} \Vert = \Vert \boldsymbol{\beta} \Vert = \Vert \boldsymbol{\gamma} \Vert = 1</script></span>，
 进而可知 
-<span><span class="MathJax_Preview">\Vert \boldsymbol{\tau_1} \Vert = \sin\delta</span><script type="math/tex">\Vert \boldsymbol{\tau_1} \Vert = \sin\delta</script></span>，
-<span><span class="MathJax_Preview">\Vert \boldsymbol{\tau_2} \Vert = \cos\varphi_1</span><script type="math/tex">\Vert \boldsymbol{\tau_2} \Vert = \cos\varphi_1</script></span>。</p>
+<span class="arithmatex"><span class="MathJax_Preview">\Vert \boldsymbol{\tau_1} \Vert = \sin\delta</span><script type="math/tex">\Vert \boldsymbol{\tau_1} \Vert = \sin\delta</script></span>，
+<span class="arithmatex"><span class="MathJax_Preview">\Vert \boldsymbol{\tau_2} \Vert = \cos\varphi_1</span><script type="math/tex">\Vert \boldsymbol{\tau_2} \Vert = \cos\varphi_1</script></span>。</p>
 <p>参考向量叉积的运算规律 <sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup> <sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>，进行如下计算：</p>
 <p>\begin{align*}
     \boldsymbol{\tau_1} \cdot \boldsymbol{\tau_2} &amp;= \left[ \boldsymbol{\alpha} \times \left( \boldsymbol{\beta} \times \boldsymbol{\alpha} \right) \right] \cdot
@@ -367,7 +367,7 @@ PQ^2 &amp;= (\Delta x)^2 + (\Delta y)^2 + (\Delta z)^2 \\
                &amp;= \frac{t}{\sin\delta}
     \tag{**}\label{eq:2}
 \end{align*}</p>
-<p>其中，<span><span class="MathJax_Preview">t = \cos\varphi_1 \sin\varphi_2 - \sin\varphi_1 \cos\varphi_2 \cos\Delta\lambda</span><script type="math/tex">t = \cos\varphi_1 \sin\varphi_2 - \sin\varphi_1 \cos\varphi_2 \cos\Delta\lambda</script></span>。</p>
+<p>其中，<span class="arithmatex"><span class="MathJax_Preview">t = \cos\varphi_1 \sin\varphi_2 - \sin\varphi_1 \cos\varphi_2 \cos\Delta\lambda</span><script type="math/tex">t = \cos\varphi_1 \sin\varphi_2 - \sin\varphi_1 \cos\varphi_2 \cos\Delta\lambda</script></span>。</p>
 <p>结合式\eqref{eq:1}和式\eqref{eq:2}可得：</p>
 <p>\begin{align*}
 \tan^2\theta &amp;= \sec^2\theta - 1\\
@@ -377,23 +377,23 @@ PQ^2 &amp;= (\Delta x)^2 + (\Delta y)^2 + (\Delta z)^2 \\
              &amp;= \left( \frac{\cos\varphi_2 \, \sin\Delta\lambda}{t} \right)^2
 \tag{***}\label{eq:2.5}
 \end{align*}</p>
-<p>即可解出<span><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>的表达式。</p>
+<p>即可解出<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>的表达式。</p>
 <h2 id="_5">已知起始点、方位角及距离，求目标位置<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
-<p>已知起始点经纬度<span><span class="MathJax_Preview">P(\varphi_1,\lambda_1)</span><script type="math/tex">P(\varphi_1,\lambda_1)</script></span>，方向角<span><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>及球面距离<span><span class="MathJax_Preview">d</span><script type="math/tex">d</script></span>，计算目标位置<span><span class="MathJax_Preview">Q(\varphi_2,\lambda_2)</span><script type="math/tex">Q(\varphi_2,\lambda_2)</script></span>的公式为：</p>
+<p>已知起始点经纬度<span class="arithmatex"><span class="MathJax_Preview">P(\varphi_1,\lambda_1)</span><script type="math/tex">P(\varphi_1,\lambda_1)</script></span>，方向角<span class="arithmatex"><span class="MathJax_Preview">\theta</span><script type="math/tex">\theta</script></span>及球面距离<span class="arithmatex"><span class="MathJax_Preview">d</span><script type="math/tex">d</script></span>，计算目标位置<span class="arithmatex"><span class="MathJax_Preview">Q(\varphi_2,\lambda_2)</span><script type="math/tex">Q(\varphi_2,\lambda_2)</script></span>的公式为：</p>
 <p>\begin{align*}
     \varphi_2 &amp;= asin \left( \sin\varphi_1 \cos\delta + \cos\varphi_1 \sin\delta \cos\theta \right)\\
     \lambda_2 &amp;= \lambda_1 + atan2 \frac{\sin\theta \sin\delta \cos\varphi_1}{\cos\delta-\sin\varphi_1 \sin\varphi_2}
     \tag{III}\label{eq:3}
 \end{align*}</p>
-<p>其中，球心角<span><span class="MathJax_Preview">\delta = d/R</span><script type="math/tex">\delta = d/R</script></span>。</p>
+<p>其中，球心角<span class="arithmatex"><span class="MathJax_Preview">\delta = d/R</span><script type="math/tex">\delta = d/R</script></span>。</p>
 <p><strong>分析：</strong> 根据球面距离公式和方位角公式反求目标位置即可。</p>
 <p>结合式\eqref{eq:1}和式\eqref{eq:2}分别得到：
 \begin{align*}
     \sin\delta \cos\theta &amp;= \cos\varphi_1 \sin\varphi_2 - \sin\varphi_1 \cos\varphi_2 \cos\Delta\lambda \tag{①}\label{eq:4}\\
     \cos\delta &amp;= \sin\varphi_1 \sin\varphi_2 + \cos\varphi_1 \cos\varphi_2 \cos\Delta\lambda \tag{②}\label{eq:5}
 \end{align*}</p>
-<p><span><span class="MathJax_Preview">\eqref{eq:4} \times \cos\varphi_1 + \eqref{eq:5} \times \sin\varphi_1</span><script type="math/tex">\eqref{eq:4} \times \cos\varphi_1 + \eqref{eq:5} \times \sin\varphi_1</script></span>得：</p>
-<div>
+<p><span class="arithmatex"><span class="MathJax_Preview">\eqref{eq:4} \times \cos\varphi_1 + \eqref{eq:5} \times \sin\varphi_1</span><script type="math/tex">\eqref{eq:4} \times \cos\varphi_1 + \eqref{eq:5} \times \sin\varphi_1</script></span>得：</p>
+<div class="arithmatex">
 <div class="MathJax_Preview">
     \sin\varphi_2 = \sin\varphi_1 \cos\delta + \cos\varphi_1 \sin\delta \cos\theta
 </div>
@@ -403,7 +403,7 @@ PQ^2 &amp;= (\Delta x)^2 + (\Delta y)^2 + (\Delta z)^2 \\
 </div>
 <p>即可解出\eqref{eq:3}的第一个式子。</p>
 <p>结合式\eqref{eq:2}和式\eqref{eq:2.5}可得：</p>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">
     \sin\theta = \frac{\sin\Delta\lambda \, \cos\varphi_2}{\sin\delta}
 </div>
@@ -412,7 +412,7 @@ PQ^2 &amp;= (\Delta x)^2 + (\Delta y)^2 + (\Delta z)^2 \\
 </script>
 </div>
 <p>即</p>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">
     \sin\Delta\lambda = \frac{\sin\theta\,\sin\delta}{\cos\varphi_2}
 </div>
@@ -421,7 +421,7 @@ PQ^2 &amp;= (\Delta x)^2 + (\Delta y)^2 + (\Delta z)^2 \\
 </script>
 </div>
 <p>由式\eqref{eq:1}可知：</p>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">
     \cos\Delta\lambda = \frac{\cos\delta-\sin\varphi_1 \, \sin\varphi_2}{\cos\varphi_1 \, \cos\varphi_2}
 </div>
@@ -430,7 +430,7 @@ PQ^2 &amp;= (\Delta x)^2 + (\Delta y)^2 + (\Delta z)^2 \\
 </script>
 </div>
 <p>以上两个式子相除即可得到：</p>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">
     \tan\Delta\lambda = \frac{\sin\theta \sin\delta \cos\varphi_1}{\cos\delta-\sin\varphi_1 \sin\varphi_2}
 </div>
@@ -438,7 +438,7 @@ PQ^2 &amp;= (\Delta x)^2 + (\Delta y)^2 + (\Delta z)^2 \\
     \tan\Delta\lambda = \frac{\sin\theta \sin\delta \cos\varphi_1}{\cos\delta-\sin\varphi_1 \sin\varphi_2}
 </script>
 </div>
-<p>于是，解出Q点的经度<span><span class="MathJax_Preview">\lambda_2 = \lambda_1 + \Delta\lambda</span><script type="math/tex">\lambda_2 = \lambda_1 + \Delta\lambda</script></span>如式\eqref{eq:5}的第二式所示。</p>
+<p>于是，解出Q点的经度<span class="arithmatex"><span class="MathJax_Preview">\lambda_2 = \lambda_1 + \Delta\lambda</span><script type="math/tex">\lambda_2 = \lambda_1 + \Delta\lambda</script></span>如式\eqref{eq:5}的第二式所示。</p>
 <div class="footnote">
 <hr />
 <ol>

@@ -162,7 +162,7 @@
 <p>为了加深对应力张量是线性变换的矩阵的理解，进行如下计算：<strong>从线性变换的角度求出变换矩阵（即应力张量），并验证其相似性</strong>。</p>
 <p>为了计算方便又不失一般性，取如下图所示的计算条件：</p>
 <p><img alt="计算坐标系" src="../images/2013-07-31-01.png" /></p>
-<p><span><span class="MathJax_Preview">S_1</span><script type="math/tex">S_1</script></span>、<span><span class="MathJax_Preview">S_2</span><script type="math/tex">S_2</script></span>分别为全局绝对坐标系<span><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span>下的两个局部坐标系（他们由截取<span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点的两两相互垂直的平面的法向决定），<span><span class="MathJax_Preview">S_1</span><script type="math/tex">S_1</script></span>和全局坐标系重合，<span><span class="MathJax_Preview">S_2</span><script type="math/tex">S_2</script></span>为全局坐标系绕<span><span class="MathJax_Preview">z</span><script type="math/tex">z</script></span>轴逆时针旋转90°得到。<span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点应力状态在<span><span class="MathJax_Preview">S_1</span><script type="math/tex">S_1</script></span>、<span><span class="MathJax_Preview">S_2</span><script type="math/tex">S_2</script></span>系下，分别用一个应力张量表示，并且是相似的。接下来就从线性变换角度进行计算说明。</p>
+<p><span class="arithmatex"><span class="MathJax_Preview">S_1</span><script type="math/tex">S_1</script></span>、<span class="arithmatex"><span class="MathJax_Preview">S_2</span><script type="math/tex">S_2</script></span>分别为全局绝对坐标系<span class="arithmatex"><span class="MathJax_Preview">S</span><script type="math/tex">S</script></span>下的两个局部坐标系（他们由截取<span class="arithmatex"><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点的两两相互垂直的平面的法向决定），<span class="arithmatex"><span class="MathJax_Preview">S_1</span><script type="math/tex">S_1</script></span>和全局坐标系重合，<span class="arithmatex"><span class="MathJax_Preview">S_2</span><script type="math/tex">S_2</script></span>为全局坐标系绕<span class="arithmatex"><span class="MathJax_Preview">z</span><script type="math/tex">z</script></span>轴逆时针旋转90°得到。<span class="arithmatex"><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点应力状态在<span class="arithmatex"><span class="MathJax_Preview">S_1</span><script type="math/tex">S_1</script></span>、<span class="arithmatex"><span class="MathJax_Preview">S_2</span><script type="math/tex">S_2</script></span>系下，分别用一个应力张量表示，并且是相似的。接下来就从线性变换角度进行计算说明。</p>
 <h2 id="_2">局部坐标系的基及过渡矩阵<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>根据局部坐标轴在全局坐标系下的方向余弦容易得到他们的基分别为：</p>
 <p>\[
@@ -180,13 +180,13 @@
 0 &amp; 0 &amp; 1
 \end{pmatrix}
 \]</p>
-<p><span><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>基到<span><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>基的过渡矩阵<span><span class="MathJax_Preview">W</span><script type="math/tex">W</script></span>满足</p>
-<div>
+<p><span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>基到<span class="arithmatex"><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>基的过渡矩阵<span class="arithmatex"><span class="MathJax_Preview">W</span><script type="math/tex">W</script></span>满足</p>
+<div class="arithmatex">
 <div class="MathJax_Preview">\beta = \alpha\,W</div>
 <script type="math/tex; mode=display">\beta = \alpha\,W</script>
 </div>
-<p>同理<span><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>基到<span><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>基的过渡矩阵<span><span class="MathJax_Preview">W^{-1}</span><script type="math/tex">W^{-1}</script></span>满足</p>
-<div>
+<p>同理<span class="arithmatex"><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>基到<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>基的过渡矩阵<span class="arithmatex"><span class="MathJax_Preview">W^{-1}</span><script type="math/tex">W^{-1}</script></span>满足</p>
+<div class="arithmatex">
 <div class="MathJax_Preview">\alpha = \beta\,W^{-1}</div>
 <script type="math/tex; mode=display">\alpha = \beta\,W^{-1}</script>
 </div>
@@ -216,13 +216,13 @@ W^{-1} = \beta^{-1}\,\alpha =
 \sigma_{31} &amp; \sigma_{32} &amp; \sigma_{33}
 \end{pmatrix}
 \]</p>
-<p>设<span><span class="MathJax_Preview">T</span><script type="math/tex">T</script></span>表示应力张量对应的线性变换，<span><span class="MathJax_Preview">T(\alpha_1)</span><script type="math/tex">T(\alpha_1)</script></span>表示<span><span class="MathJax_Preview">\alpha_1</span><script type="math/tex">\alpha_1</script></span>截面上的应力，显然</p>
-<div>
+<p>设<span class="arithmatex"><span class="MathJax_Preview">T</span><script type="math/tex">T</script></span>表示应力张量对应的线性变换，<span class="arithmatex"><span class="MathJax_Preview">T(\alpha_1)</span><script type="math/tex">T(\alpha_1)</script></span>表示<span class="arithmatex"><span class="MathJax_Preview">\alpha_1</span><script type="math/tex">\alpha_1</script></span>截面上的应力，显然</p>
+<div class="arithmatex">
 <div class="MathJax_Preview">T(\alpha_1) = \left(\sigma_{11},\,\sigma_{12},\,\sigma_{13}\right)^T</div>
 <script type="math/tex; mode=display">T(\alpha_1) = \left(\sigma_{11},\,\sigma_{12},\,\sigma_{13}\right)^T</script>
 </div>
-<p><span><span class="MathJax_Preview">T(\beta_1)</span><script type="math/tex">T(\beta_1)</script></span>表示<span><span class="MathJax_Preview">S_2</span><script type="math/tex">S_2</script></span>坐标系下<span><span class="MathJax_Preview">\beta_1</span><script type="math/tex">\beta_1</script></span>截面上的应力，对应的是全局坐标系下<span><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span>截面的应力</p>
-<div>
+<p><span class="arithmatex"><span class="MathJax_Preview">T(\beta_1)</span><script type="math/tex">T(\beta_1)</script></span>表示<span class="arithmatex"><span class="MathJax_Preview">S_2</span><script type="math/tex">S_2</script></span>坐标系下<span class="arithmatex"><span class="MathJax_Preview">\beta_1</span><script type="math/tex">\beta_1</script></span>截面上的应力，对应的是全局坐标系下<span class="arithmatex"><span class="MathJax_Preview">y</span><script type="math/tex">y</script></span>截面的应力</p>
+<div class="arithmatex">
 <div class="MathJax_Preview">T(\beta_1) = \left(\sigma_{21},\,\sigma_{22},\,\sigma_{23}\right)^T</div>
 <script type="math/tex; mode=display">T(\beta_1) = \left(\sigma_{21},\,\sigma_{22},\,\sigma_{23}\right)^T</script>
 </div>
@@ -242,7 +242,7 @@ T(\beta) = T\left(\beta_1,\,\beta_2,\,\beta_3\right) =
 \sigma_{23} &amp; -\sigma_{13} &amp; \sigma_{33}
 \end{pmatrix}
 \]</p>
-<p>根据<span><span class="MathJax_Preview">T(\alpha) = \alpha\,A</span><script type="math/tex">T(\alpha) = \alpha\,A</script></span>，<span><span class="MathJax_Preview">T(\beta) = \beta\,B</span><script type="math/tex">T(\beta) = \beta\,B</script></span>，得到线性变换在基<span><span class="MathJax_Preview">\alpha,\,\beta</span><script type="math/tex">\alpha,\,\beta</script></span>下的矩阵分别为</p>
+<p>根据<span class="arithmatex"><span class="MathJax_Preview">T(\alpha) = \alpha\,A</span><script type="math/tex">T(\alpha) = \alpha\,A</script></span>，<span class="arithmatex"><span class="MathJax_Preview">T(\beta) = \beta\,B</span><script type="math/tex">T(\beta) = \beta\,B</script></span>，得到线性变换在基<span class="arithmatex"><span class="MathJax_Preview">\alpha,\,\beta</span><script type="math/tex">\alpha,\,\beta</script></span>下的矩阵分别为</p>
 <p>\[
 A = \alpha^{-1}\,T(\alpha) = 
 \begin{pmatrix}
@@ -258,9 +258,9 @@ B = \beta^{-1}\,T(\beta) =
 \sigma_{23} &amp; -\sigma_{13} &amp; \sigma_{33}
 \end{pmatrix}
 \]</p>
-<p>也就是<span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点在<span><span class="MathJax_Preview">S_1</span><script type="math/tex">S_1</script></span>、<span><span class="MathJax_Preview">S_2</span><script type="math/tex">S_2</script></span>坐标系下的应力张量。由于表示上的缘故，这里为转置关系。</p>
+<p>也就是<span class="arithmatex"><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点在<span class="arithmatex"><span class="MathJax_Preview">S_1</span><script type="math/tex">S_1</script></span>、<span class="arithmatex"><span class="MathJax_Preview">S_2</span><script type="math/tex">S_2</script></span>坐标系下的应力张量。由于表示上的缘故，这里为转置关系。</p>
 <h2 id="_4">相似关系<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
-<p>验证可知<span><span class="MathJax_Preview">W^{-1}\,A\,W=B</span><script type="math/tex">W^{-1}\,A\,W=B</script></span>，即<span><span class="MathJax_Preview">A \sim B</span><script type="math/tex">A \sim B</script></span></p>
+<p>验证可知<span class="arithmatex"><span class="MathJax_Preview">W^{-1}\,A\,W=B</span><script type="math/tex">W^{-1}\,A\,W=B</script></span>，即<span class="arithmatex"><span class="MathJax_Preview">A \sim B</span><script type="math/tex">A \sim B</script></span></p>
 <p>\[
 \begin{align*}
 W^{-1}\,A\,W &amp;=
@@ -289,24 +289,24 @@ W^{-1}\,A\,W &amp;=
 \]</p>
 <p>至此，可以清晰看出不同坐标系下应力张量与不同基下线性变换矩阵的等价关系。</p>
 <h2 id="_5">线性空间的证明<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
-<p>上述关于线性变换的理解都是基于<span><span class="MathJax_Preview">\sigma_{ij}\,n_j=p_i</span><script type="math/tex">\sigma_{ij}\,n_j=p_i</script></span>的形式而推出的，显得还不够严谨。比如，没有证明截面位置、截面应力可以做成一个线性空间，也没有证明从截面位置到截面应力的变换是线性变换。</p>
+<p>上述关于线性变换的理解都是基于<span class="arithmatex"><span class="MathJax_Preview">\sigma_{ij}\,n_j=p_i</span><script type="math/tex">\sigma_{ij}\,n_j=p_i</script></span>的形式而推出的，显得还不够严谨。比如，没有证明截面位置、截面应力可以做成一个线性空间，也没有证明从截面位置到截面应力的变换是线性变换。</p>
 <p>本着彻底打通这条思路的心思，下面开始这两个问题的分析。</p>
 <h3 id="_6">线性空间的定义<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
-<p>设<span><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>是一个非空集合，<span><span class="MathJax_Preview">R</span><script type="math/tex">R</script></span>为实数域。如果对于<span><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>中任意两个元素<span><span class="MathJax_Preview">\alpha,\,\beta</span><script type="math/tex">\alpha,\,\beta</script></span>，<span><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>中总有唯一的一个元素<span><span class="MathJax_Preview">\gamma</span><script type="math/tex">\gamma</script></span>与之对应，称为<span><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>与<span><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>的和，记作<span><span class="MathJax_Preview">\gamma = \alpha+\beta</span><script type="math/tex">\gamma = \alpha+\beta</script></span>；又对于<span><span class="MathJax_Preview">R</span><script type="math/tex">R</script></span>中任一数<span><span class="MathJax_Preview">\lambda</span><script type="math/tex">\lambda</script></span>与<span><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>中任一元素<span><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>，<span><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>中总有唯一的一个元素<span><span class="MathJax_Preview">\delta</span><script type="math/tex">\delta</script></span>与之对应，称为<span><span class="MathJax_Preview">\lambda</span><script type="math/tex">\lambda</script></span>与<span><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>的积，记作<span><span class="MathJax_Preview">\delta = \lambda\,\alpha</span><script type="math/tex">\delta = \lambda\,\alpha</script></span>。</p>
-<p>并且这两种运算满足以下八条运算规律（其中<span><span class="MathJax_Preview">\alpha,\,\beta,\,\gamma \in V</span><script type="math/tex">\alpha,\,\beta,\,\gamma \in V</script></span>，<span><span class="MathJax_Preview">\lambda,\,\mu \in R</span><script type="math/tex">\lambda,\,\mu \in R</script></span>）：</p>
+<p>设<span class="arithmatex"><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>是一个非空集合，<span class="arithmatex"><span class="MathJax_Preview">R</span><script type="math/tex">R</script></span>为实数域。如果对于<span class="arithmatex"><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>中任意两个元素<span class="arithmatex"><span class="MathJax_Preview">\alpha,\,\beta</span><script type="math/tex">\alpha,\,\beta</script></span>，<span class="arithmatex"><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>中总有唯一的一个元素<span class="arithmatex"><span class="MathJax_Preview">\gamma</span><script type="math/tex">\gamma</script></span>与之对应，称为<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>与<span class="arithmatex"><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>的和，记作<span class="arithmatex"><span class="MathJax_Preview">\gamma = \alpha+\beta</span><script type="math/tex">\gamma = \alpha+\beta</script></span>；又对于<span class="arithmatex"><span class="MathJax_Preview">R</span><script type="math/tex">R</script></span>中任一数<span class="arithmatex"><span class="MathJax_Preview">\lambda</span><script type="math/tex">\lambda</script></span>与<span class="arithmatex"><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>中任一元素<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>，<span class="arithmatex"><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>中总有唯一的一个元素<span class="arithmatex"><span class="MathJax_Preview">\delta</span><script type="math/tex">\delta</script></span>与之对应，称为<span class="arithmatex"><span class="MathJax_Preview">\lambda</span><script type="math/tex">\lambda</script></span>与<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>的积，记作<span class="arithmatex"><span class="MathJax_Preview">\delta = \lambda\,\alpha</span><script type="math/tex">\delta = \lambda\,\alpha</script></span>。</p>
+<p>并且这两种运算满足以下八条运算规律（其中<span class="arithmatex"><span class="MathJax_Preview">\alpha,\,\beta,\,\gamma \in V</span><script type="math/tex">\alpha,\,\beta,\,\gamma \in V</script></span>，<span class="arithmatex"><span class="MathJax_Preview">\lambda,\,\mu \in R</span><script type="math/tex">\lambda,\,\mu \in R</script></span>）：</p>
 <blockquote>
 <ol>
-<li><span><span class="MathJax_Preview">\alpha+\beta=\beta+\alpha</span><script type="math/tex">\alpha+\beta=\beta+\alpha</script></span>  </li>
-<li><span><span class="MathJax_Preview">(\alpha+\beta)+\gamma = \alpha + (\beta+\gamma)</span><script type="math/tex">(\alpha+\beta)+\gamma = \alpha + (\beta+\gamma)</script></span>  </li>
-<li>在<span><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>中存在零元素<span><span class="MathJax_Preview">0</span><script type="math/tex">0</script></span>，对任何<span><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>都满足<span><span class="MathJax_Preview">\alpha+0=\alpha</span><script type="math/tex">\alpha+0=\alpha</script></span>  </li>
-<li>对任何<span><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>，都有<span><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>的负元素<span><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>满足<span><span class="MathJax_Preview">\alpha+\beta=0</span><script type="math/tex">\alpha+\beta=0</script></span>  </li>
-<li><span><span class="MathJax_Preview">1\cdot\alpha=\alpha</span><script type="math/tex">1\cdot\alpha=\alpha</script></span>  </li>
-<li><span><span class="MathJax_Preview">\lambda\,(\mu\,\alpha) = (\lambda\,\mu)\,\alpha</span><script type="math/tex">\lambda\,(\mu\,\alpha) = (\lambda\,\mu)\,\alpha</script></span>  </li>
-<li><span><span class="MathJax_Preview">(\lambda+\mu)\,\alpha = \lambda\,\alpha+\mu\,\alpha</span><script type="math/tex">(\lambda+\mu)\,\alpha = \lambda\,\alpha+\mu\,\alpha</script></span>  </li>
-<li><span><span class="MathJax_Preview">\lambda\,(\alpha+\beta) = \lambda\,\alpha + \lambda\,\beta</span><script type="math/tex">\lambda\,(\alpha+\beta) = \lambda\,\alpha + \lambda\,\beta</script></span></li>
+<li><span class="arithmatex"><span class="MathJax_Preview">\alpha+\beta=\beta+\alpha</span><script type="math/tex">\alpha+\beta=\beta+\alpha</script></span>  </li>
+<li><span class="arithmatex"><span class="MathJax_Preview">(\alpha+\beta)+\gamma = \alpha + (\beta+\gamma)</span><script type="math/tex">(\alpha+\beta)+\gamma = \alpha + (\beta+\gamma)</script></span>  </li>
+<li>在<span class="arithmatex"><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>中存在零元素<span class="arithmatex"><span class="MathJax_Preview">0</span><script type="math/tex">0</script></span>，对任何<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>都满足<span class="arithmatex"><span class="MathJax_Preview">\alpha+0=\alpha</span><script type="math/tex">\alpha+0=\alpha</script></span>  </li>
+<li>对任何<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>，都有<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>的负元素<span class="arithmatex"><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>满足<span class="arithmatex"><span class="MathJax_Preview">\alpha+\beta=0</span><script type="math/tex">\alpha+\beta=0</script></span>  </li>
+<li><span class="arithmatex"><span class="MathJax_Preview">1\cdot\alpha=\alpha</span><script type="math/tex">1\cdot\alpha=\alpha</script></span>  </li>
+<li><span class="arithmatex"><span class="MathJax_Preview">\lambda\,(\mu\,\alpha) = (\lambda\,\mu)\,\alpha</span><script type="math/tex">\lambda\,(\mu\,\alpha) = (\lambda\,\mu)\,\alpha</script></span>  </li>
+<li><span class="arithmatex"><span class="MathJax_Preview">(\lambda+\mu)\,\alpha = \lambda\,\alpha+\mu\,\alpha</span><script type="math/tex">(\lambda+\mu)\,\alpha = \lambda\,\alpha+\mu\,\alpha</script></span>  </li>
+<li><span class="arithmatex"><span class="MathJax_Preview">\lambda\,(\alpha+\beta) = \lambda\,\alpha + \lambda\,\beta</span><script type="math/tex">\lambda\,(\alpha+\beta) = \lambda\,\alpha + \lambda\,\beta</script></span></li>
 </ol>
 </blockquote>
-<p>那么，<span><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>就称为实数域<span><span class="MathJax_Preview">R</span><script type="math/tex">R</script></span>上的线性空间（或向量空间）。</p>
+<p>那么，<span class="arithmatex"><span class="MathJax_Preview">V</span><script type="math/tex">V</script></span>就称为实数域<span class="arithmatex"><span class="MathJax_Preview">R</span><script type="math/tex">R</script></span>上的线性空间（或向量空间）。</p>
 <h3 id="_7">线性空间的证明<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
 <p>截面应力空间显然是一个线性空间，因为它是一个一般的三维向量空间。对于截面位置空间，需要证明其对于某种定义的加法和乘法运算封闭，且满足上述运算律。</p>
 <p>截面位置空间是由方向余弦描述的，</p>
@@ -316,8 +316,8 @@ W^{-1}\,A\,W &amp;=
 \beta &amp;= \left(m_1,\,m_2,\,m_3\right) = \left(\cos\langle{\vec{m},\,x}\rangle,\,\cos\langle{\vec{m},\,y}\rangle,\,\cos\langle{\vec{m},\,z}\rangle\right)
 \end{align*}
 \]</p>
-<p>其中，<span><span class="MathJax_Preview">\langle{\vec{n},\,x}\rangle</span><script type="math/tex">\langle{\vec{n},\,x}\rangle</script></span>表示截面法线与x轴的夹角，其余以此类推。</p>
-<p><span><span class="MathJax_Preview">n_1,\,n_2,\,n_3</span><script type="math/tex">n_1,\,n_2,\,n_3</script></span>取值范围为<span><span class="MathJax_Preview">[-1,\,1]</span><script type="math/tex">[-1,\,1]</script></span>，且满足<span><span class="MathJax_Preview">n_1^2+n_2^2+n_3^2=1</span><script type="math/tex">n_1^2+n_2^2+n_3^2=1</script></span>。显然常规的加法和数乘运算不满足封闭条件。</p>
+<p>其中，<span class="arithmatex"><span class="MathJax_Preview">\langle{\vec{n},\,x}\rangle</span><script type="math/tex">\langle{\vec{n},\,x}\rangle</script></span>表示截面法线与x轴的夹角，其余以此类推。</p>
+<p><span class="arithmatex"><span class="MathJax_Preview">n_1,\,n_2,\,n_3</span><script type="math/tex">n_1,\,n_2,\,n_3</script></span>取值范围为<span class="arithmatex"><span class="MathJax_Preview">[-1,\,1]</span><script type="math/tex">[-1,\,1]</script></span>，且满足<span class="arithmatex"><span class="MathJax_Preview">n_1^2+n_2^2+n_3^2=1</span><script type="math/tex">n_1^2+n_2^2+n_3^2=1</script></span>。显然常规的加法和数乘运算不满足封闭条件。</p>
 <p>考虑到截面空间的描述特征，采用 <strong>球坐标系下角度的代数加法和数乘运算</strong> 来定义。</p>
 <p><img alt="球坐标系" src="../images/2013-07-31-02.png" /></p>
 <p>球坐标系下，</p>
@@ -339,10 +339,10 @@ W^{-1}\,A\,W &amp;=
 <p>在这种加法和数乘运算的定义下，显然对元素是封闭的，并且简单验证就可知同时满足加法的两个运算律、数乘的三个运算律。</p>
 <ul>
 <li>
-<p>零元素：取<span><span class="MathJax_Preview">\varphi=\theta=0</span><script type="math/tex">\varphi=\theta=0</script></span>可得零元素<span><span class="MathJax_Preview">(0,\,0,\,1)</span><script type="math/tex">(0,\,0,\,1)</script></span></p>
+<p>零元素：取<span class="arithmatex"><span class="MathJax_Preview">\varphi=\theta=0</span><script type="math/tex">\varphi=\theta=0</script></span>可得零元素<span class="arithmatex"><span class="MathJax_Preview">(0,\,0,\,1)</span><script type="math/tex">(0,\,0,\,1)</script></span></p>
 </li>
 <li>
-<p>负元素：取<span><span class="MathJax_Preview">\beta=\left(-\sin\varphi_1\,\cos\theta_1,\,-\sin\varphi_1\,\sin\theta_1,\,\cos\varphi_1\right)</span><script type="math/tex">\beta=\left(-\sin\varphi_1\,\cos\theta_1,\,-\sin\varphi_1\,\sin\theta_1,\,\cos\varphi_1\right)</script></span>，可得<span><span class="MathJax_Preview">\alpha+\beta=(0,\,0,\,1)</span><script type="math/tex">\alpha+\beta=(0,\,0,\,1)</script></span>为零元素</p>
+<p>负元素：取<span class="arithmatex"><span class="MathJax_Preview">\beta=\left(-\sin\varphi_1\,\cos\theta_1,\,-\sin\varphi_1\,\sin\theta_1,\,\cos\varphi_1\right)</span><script type="math/tex">\beta=\left(-\sin\varphi_1\,\cos\theta_1,\,-\sin\varphi_1\,\sin\theta_1,\,\cos\varphi_1\right)</script></span>，可得<span class="arithmatex"><span class="MathJax_Preview">\alpha+\beta=(0,\,0,\,1)</span><script type="math/tex">\alpha+\beta=(0,\,0,\,1)</script></span>为零元素</p>
 </li>
 <li>
 <p>单位1：显然1即为单位元素</p>
@@ -350,7 +350,7 @@ W^{-1}\,A\,W &amp;=
 </ul>
 <p>综上可知，截面位置对于如上定义的运算可以作为一个线性空间。</p>
 <h2 id="_8">线性变换的证明<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
-<p>线性变换的证明只需证明变换满足线性运算，对于此变换<span><span class="MathJax_Preview">T(n)=\sigma\,n</span><script type="math/tex">T(n)=\sigma\,n</script></span>满足</p>
+<p>线性变换的证明只需证明变换满足线性运算，对于此变换<span class="arithmatex"><span class="MathJax_Preview">T(n)=\sigma\,n</span><script type="math/tex">T(n)=\sigma\,n</script></span>满足</p>
 <p>\[
 \begin{align*}
 T(\alpha + \beta) &amp;= \sigma\,(\alpha+\beta) = \sigma\,\alpha+\sigma\,\beta = T(\alpha)+T(\beta) \\\

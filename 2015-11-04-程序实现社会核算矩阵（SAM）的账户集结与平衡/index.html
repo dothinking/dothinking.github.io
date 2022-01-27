@@ -170,11 +170,11 @@
 </li>
 </ol>
 <h2 id="_2">合并矩阵<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>假设<span><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>是一个元素为0或1的行向量，则根据矩阵乘法运算规律可知，矩阵<span><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span>左乘<span><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>的效果为：将矩阵<span><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span>的某些行相加，而这些行恰好是行向量<span><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>中元素1对应的位置，如下图所示。同理，矩阵<span><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span>右乘元素为0或1的列向量<span><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>，可以将<span><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>中元素1位置对应矩阵<span><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span>的列求和。</p>
+<p>假设<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>是一个元素为0或1的行向量，则根据矩阵乘法运算规律可知，矩阵<span class="arithmatex"><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span>左乘<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>的效果为：将矩阵<span class="arithmatex"><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span>的某些行相加，而这些行恰好是行向量<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>中元素1对应的位置，如下图所示。同理，矩阵<span class="arithmatex"><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span>右乘元素为0或1的列向量<span class="arithmatex"><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>，可以将<span class="arithmatex"><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>中元素1位置对应矩阵<span class="arithmatex"><span class="MathJax_Preview">M</span><script type="math/tex">M</script></span>的列求和。</p>
 <p><img alt="" src="../images/2015-11-04_02.png" /></p>
 <p>因此，得到结论：<strong>左乘0-1行向量可以合并行，右乘0-1列向量可以合并列</strong>。</p>
-<p>于是，将合并不同行的行向量<span><span class="MathJax_Preview">(\alpha_1, \alpha_2, \cdots)</span><script type="math/tex">(\alpha_1, \alpha_2, \cdots)</script></span>组合为矩阵<span><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span>；由于需要合并的列与行是相对应的，所以右乘的合并矩阵即为<span><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span>的转置矩阵<span><span class="MathJax_Preview">A^T</span><script type="math/tex">A^T</script></span>。最终，合并后的矩阵<span><span class="MathJax_Preview">N=A\,M\,A^T</span><script type="math/tex">N=A\,M\,A^T</script></span>。</p>
-<p>根据以上推理，本例的合并矩阵<span><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span>如下图所示：</p>
+<p>于是，将合并不同行的行向量<span class="arithmatex"><span class="MathJax_Preview">(\alpha_1, \alpha_2, \cdots)</span><script type="math/tex">(\alpha_1, \alpha_2, \cdots)</script></span>组合为矩阵<span class="arithmatex"><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span>；由于需要合并的列与行是相对应的，所以右乘的合并矩阵即为<span class="arithmatex"><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span>的转置矩阵<span class="arithmatex"><span class="MathJax_Preview">A^T</span><script type="math/tex">A^T</script></span>。最终，合并后的矩阵<span class="arithmatex"><span class="MathJax_Preview">N=A\,M\,A^T</span><script type="math/tex">N=A\,M\,A^T</script></span>。</p>
+<p>根据以上推理，本例的合并矩阵<span class="arithmatex"><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span>如下图所示：</p>
 <p><img alt="" src="../images/2015-11-04_03.png" /></p>
 <p>例如，第一行的行向量只有第1个元素为1，表示提取原矩阵的第一行；第二行的第2,4个元素为1，表示提取原矩阵的第二、四行，即合并B、D商品，其他以此类推。对于本例SAM矩阵行列数较少的情况，可以直接写出合并矩阵A。但是，如果实际情况下行列数非常多（例如实际处理时为94×94），则需要程序自动生成。观察以上示例矩阵，可知其具有如下规律：</p>
 <ul>
@@ -182,7 +182,7 @@
 <li>两个紫色的矩阵块完全一致，其特点为需要合并位置的元素为1，其余位置元素为0；</li>
 <li>橙色矩阵块为一个单位矩阵。</li>
 </ul>
-<p>所以构造合并矩阵<span><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span>的思路为：生成紫色的矩阵块→扩充为左上角部分矩阵→生成右下角单位矩阵→扩充为完整的合并矩阵。这在Matlab中很容易实现，关键代码如下：</p>
+<p>所以构造合并矩阵<span class="arithmatex"><span class="MathJax_Preview">A</span><script type="math/tex">A</script></span>的思路为：生成紫色的矩阵块→扩充为左上角部分矩阵→生成右下角单位矩阵→扩充为完整的合并矩阵。这在Matlab中很容易实现，关键代码如下：</p>
 <pre class="highlight"><code class="language-matlab">% 读入指定区域的原始数据
 data = xlsread(filename,input_sheet,range);
 data(isnan(data)) = 0.0;   % 将空值设为0

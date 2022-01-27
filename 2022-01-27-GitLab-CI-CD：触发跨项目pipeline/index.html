@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2022-01-27-GitLab-CI-CD%EF%BC%9A%E8%A7%A6%E5%8F%91%E8%B7%A8%E9%A1%B9%E7%9B%AEpipeline/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>GitLab CI CD：跨项目触发pipeline - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">分类 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/CAD-CAE%20integration/" class="dropdown-item">CAD/CAE integration</a>
+</li>
+                                    
+<li>
+    <a href="../categories/devops/" class="dropdown-item">devops</a>
+</li>
+                                    
+<li>
+    <a href="../categories/feeling/" class="dropdown-item">feeling</a>
+</li>
+                                    
+<li>
+    <a href="../categories/finite%20element%20analysis/" class="dropdown-item">finite element analysis</a>
+</li>
+                                    
+<li>
+    <a href="../categories/machine%20learning/" class="dropdown-item">machine learning</a>
+</li>
+                                    
+<li>
+    <a href="../categories/mathematics/" class="dropdown-item">mathematics</a>
+</li>
+                                    
+<li>
+    <a href="../categories/numeric%20calculation/" class="dropdown-item">numeric calculation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/optimization/" class="dropdown-item">optimization</a>
+</li>
+                                    
+<li>
+    <a href="../categories/plasticity%20theory/" class="dropdown-item">plasticity theory</a>
+</li>
+                                    
+<li>
+    <a href="../categories/process%20automation/" class="dropdown-item">process automation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/python-vba-cpp/" class="dropdown-item">python/vba/cpp</a>
+</li>
+                                    
+<li>
+    <a href="../categories/web%20development/" class="dropdown-item">web development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../archive/" class="nav-link">归档</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../about/" class="nav-link">关于</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2022-01-27-GitLab-CI-CD：触发跨项目pipeline.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#gitlab ci cdpipeline" class="nav-link">GitLab CI CD：跨项目触发pipeline</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">基本思路：创建发布仓库</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">具体流程</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">最终效果</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_4" class="nav-link">实现细节</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#ymal" class="nav-link">完整ymal文件</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="gitlab ci cdpipeline">GitLab CI CD：跨项目触发pipeline<a class="headerlink" href="#gitlab ci cdpipeline" title="Permanent link">&para;</a></h1>
+<p>发布于：2022-01-27 | 分类：<a href="../categories/devops/">devops</a></p>
+<hr />
+<p>近期遇到一个问题，如何灵活管理分系统的版本号和最终产品的版本号。例如，对于前后端分离且分仓库管理的Web项目，前、后端维护各自的版本号（前端1.2.3，后端1.3.4），并且发布Web产品时自动根据<code>tag</code>（1.0.0）作为产品的版本号编译到页面上。注意问题在于：<strong>最终产品的版本号很可能与前、后端都不相同，因此通过前端或者后端仓库提交<code>tag</code>发布产品都不合适</strong>。</p>
+<h2 id="_1">基本思路：创建发布仓库<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>因此考虑新建一个发布仓库，仅维护汇总后的前后端更新日志和发布版本号。同时考虑到产品发布后的<code>hotfix</code>，也支持直接从受影响的前端或者后端仓库提交修复并部署。</p>
+<p>综合来说，涉及两类自动化流程：</p>
+<ul>
+<li>
+<p>从发布仓库发布产品，同时触发前、后端仓库的部署，并根据提供的<code>tag</code>更新产品版本号</p>
+</li>
+<li>
+<p>从前、后端发布<code>hotfix</code>，仅触发各自的部署，且不更新产品版本号，而是沿用发布仓库最新的<code>tag</code></p>
+</li>
+</ul>
+<p>为简化表述，用<code>A</code>表示发布仓库，分别用<code>B1</code>、<code>B2</code>表示前、后端仓库，则可用下图表示以上流程。</p>
+<p><img alt="general-flow" src="../images/2022-01-27-01.png" /></p>
+<h2 id="_2">具体流程<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>基本设定：</p>
+<ul>
+<li>
+<p>仓库<code>B1</code>和<code>B2</code>任意提交触发编译<code>build</code>，忽略测试<code>test</code>，如果是<code>release</code>分支则触发部署<code>deploy</code></p>
+</li>
+<li>
+<p>仓库<code>A</code>仅在提交<code>tag</code>后触发流程</p>
+</li>
+</ul>
+<p>考虑到模块化和就近原则，仓库<code>A</code>负责获取当前最新的<code>tag</code>作为产品版本号，仓库<code>B1</code>、<code>B2</code>负责各自的编译和发布，只不过编译前需要拿到产品版本号。参考下图具体流程：</p>
+<ul>
+<li>
+<p>如果从仓库<code>A</code>提交<code>tag</code>触发流程，则直接获取最新版本号，然后分别触发仓库<code>B1</code>和<code>B2</code>的流程。</p>
+<p>以<code>B1</code>为例，注意此时直接到<code>build</code>这个任务；<code>B2</code>同理，不再赘述。</p>
+</li>
+<li>
+<p>如果从仓库<code>B1</code>提交，由于编译前需要获取产品当前版本号，因此通过<code>trigger A</code>任务触发仓库<code>A</code>的流程。</p>
+<p>类似上文所述<code>A</code>的流程，只不过此时需要根据原始仓库（即<code>B1</code>）确定只触发<code>B1</code>的流程，进而来到<code>B1</code>的<code>build</code>。</p>
+</li>
+</ul>
+<p><img alt="detail-flow" src="../images/2022-01-27-02.png" /></p>
+<h2 id="_3">最终效果<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>借助 GitLab CI/CD 的基本功能，执行效果参考下图，可见完整实现了上述流程。</p>
+<ul>
+<li>从<code>A</code>发布版本<code>1.1.0</code></li>
+</ul>
+<p><img alt="result-1" src="../images/2022-01-27-03.png" /></p>
+<ul>
+<li>从<code>B1</code>的<code>release</code>分支提交<code>hotfix</code></li>
+</ul>
+<p><img alt="result-2" src="../images/2022-01-27-04.png" /></p>
+<h2 id="_4">实现细节<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>总结几个关键点：</p>
+<ul>
+<li>
+<p>跨项目触发流程，例如上图中<code>B1</code>中<code>trigger A</code>和<code>A</code>中<code>trigger B1</code>、<code>trigger B2</code></p>
+</li>
+<li>
+<p>执行任务的时机，例如<code>B1</code>中<code>trigger A</code>仅在直接提交时执行，而<code>build</code>仅当从上游流水<code>pipeline</code>触发时执行。</p>
+</li>
+<li>
+<p>跨项目触发流程时传递参数，例如通过<code>B1</code>的<code>trigger A</code>进入<code>A</code>的流程时，传递表明原始仓库即<code>B1</code>的参数，以便选择性进入<code>trigger B1</code></p>
+</li>
+</ul>
+<h3 id="_5">跨项目触发流程<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>这是本文的基础，具体说明参考官方文档 <a href="https://docs.gitlab.com/ee/ci/pipelines/multi_project_pipelines.html">Multi-project pipelines</a>。</p>
+<pre class="highlight"><code class="language-yml">downstream-job:
+  variables:
+    UPSTREAM_BRANCH: $CI_COMMIT_REF_NAME
+  trigger:
+    project: path/to/downstream/project
+    branch: stable-11-2</code></pre>
+<ul>
+<li>
+<p><code>trigger</code>关键字指定将要触发的下游项目的具体路径，同时可以指定基于的分支<code>branch</code></p>
+<p>如果忽略分支即默认最新分支，则可以合并为<code>trigger: path/to/downstream/project</code></p>
+</li>
+<li>
+<p><code>variables</code>关键字将当前流程的参数传递到下游流程的每个任务中去，例如此处<code>$CI_COMMIT_REF_NAME</code>表示当前分支名</p>
+<p>更多内置参数参考 <a href="https://docs.gitlab.com/ee/ci/variables/predefined_variables.html">Predefined CI/CD variables</a></p>
+</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">注意：</p>
+<p><code>trigger:project</code>不支持变量输入，<code>trigger:branch</code>支持变量输入。</p>
+</div>
+<h3 id="_6">任务执行条件<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>GitLab CI/CD通过 <a href="https://docs.gitlab.com/ee/ci/yaml/index.html#only--except"><code>only / except</code></a> 和 <a href="https://docs.gitlab.com/ee/ci/yaml/index.html#rules"><code>rules</code></a> 关键字，以非常灵活的方式将任务加入或者排除当前流程。</p>
+<p>本文相关的几个例子：</p>
+<ul>
+<li>
+<p>从上游仓库触发<code>B1</code>不执行<code>trigger A</code></p>
+<pre class="highlight"><code class="language-yml">trigger_a:
+    stage: trigger
+    trigger: path/to/A
+    except:
+        - pipelines</code></pre>
+</li>
+<li>
+<p>当且仅当从上游仓库触发<code>B1</code>时才执行<code>build</code></p>
+<pre class="highlight"><code class="language-yml">build:
+    stage: build
+    script:
+        - ...
+    only:
+        - pipelines</code></pre>
+</li>
+<li>
+<p>从上游仓库触发<code>B1</code>且当前分支是<code>release</code>时才执行<code>deploy</code></p>
+<pre class="highlight"><code class="language-yml">deploy:
+    stage: deploy
+    script:
+        - echo "Deploying application only if branch=release..."
+    rules: 
+        - if: $CI_PIPELINE_SOURCE=="pipeline" &amp;&amp; $SOURCE_BRANCH=="release"
+</code></pre>
+<p>其中，<code>CI_PIPELINE_SOURCE</code>也是默认CI/CD参数，表示流程的触发源，值<code>pipeline</code>表明从上游流程触发而来；<code>SOURCE_BRANCH</code>也是从上游流程传递过来的表明当前分支的自定义参数。</p>
+</li>
+<li>
+<p><code>A</code>中<code>get version number</code>任务只有在<code>tag</code>提交或者从其他流程触发而来才执行</p>
+<pre class="highlight"><code class="language-yml">get_version_number:
+    stage: prepare
+    script:
+        - ...
+    only:
+        - /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
+        - pipelines</code></pre>
+</li>
+<li>
+<p><code>A</code>中<code>trigger B1</code>任务满足以下两种情形之一即可执行：</p>
+<ul>
+<li>
+<p>直接从<code>A</code>仓库<code>tag</code>提交</p>
+</li>
+<li>
+<p>从其他流程触发且自定义参数<code>SOURCE_PROJECT</code>的值等于<code>B1</code>即从<code>B1</code>触发的流程</p>
+</li>
+</ul>
+<pre class="highlight"><code class="language-yml">trigger_b1:
+    stage: trigger
+    trigger: 
+        project: path/to/B1
+        branch: $TARGET_BRANCH
+    rules: 
+        - if: $CI_COMMIT_TAG =~ /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
+        - if: $CI_PIPELINE_SOURCE=="pipeline" &amp;&amp; $SOURCE_PROJECT=="B1"</code></pre>
+</li>
+</ul>
+<h2 id="ymal">完整<code>ymal</code>文件<a class="headerlink" href="#ymal" title="Permanent link">&para;</a></h2>
+<p>补充一点：本例的产品版本号是通过保存文件的形式在两个流程间传递的，因此需要保证各流程都在同一台gitlab-runner上执行。而这，可以通过设定相同的<code>tags</code>来实现。</p>
+<p>最后，分别列出各仓库的ymal文件。</p>
+<pre class="highlight"><code class="language-yml"># .gitlab-ci.yml for project A
+
+variables:
+  PROJECT_B1: "B1"
+  PROJECT_B2: "B2"
+  VERSION_FILE: /tmp/version
+  TARGET_BRANCH: "release"
+
+stages:
+  - prepare
+  - trigger
+
+check_version:
+  stage: prepare
+  script:
+    - VERSION=$(git describe --tags $(git rev-list --tags --max-count=1))  # recent tag
+    - if [ "$VERSION" = "" ]; then VERSION="1.0.0"; fi
+    - VERSION="$VERSION.$(date +%Y%m%d)"
+    - echo $VERSION&gt;$VERSION_FILE
+  only:
+    - /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
+    - pipelines
+  tags:
+    - shell_runner
+
+
+trigger_b1:
+  stage: trigger
+  variables:
+    SOURCE_BRANCH: $TARGET_BRANCH
+  trigger: 
+    project: path/to/B1
+    branch: $TARGET_BRANCH
+  rules: 
+    - if: $CI_COMMIT_TAG =~ /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
+    - if: $CI_PIPELINE_SOURCE=="pipeline" &amp;&amp; $SOURCE_PROJECT==$PROJECT_B1
+
+
+trigger_b2:
+  stage: trigger
+  variables:
+    SOURCE_BRANCH: $TARGET_BRANCH
+  trigger: 
+    project: path/to/B2
+    branch: $TARGET_BRANCH
+  rules: 
+    - if: $CI_COMMIT_TAG =~ /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
+    - if: $CI_PIPELINE_SOURCE=="pipeline" &amp;&amp; $SOURCE_PROJECT==$PROJECT_B2</code></pre>
+<pre class="highlight"><code class="language-yml"># .gitlab-ci.yml for project B1; same with B2
+
+stages:
+  - trigger
+  - build
+  - deploy
+
+trigger_a:
+    variables:  
+      SOURCE_PROJECT: $CI_PROJECT_NAME
+      TARGET_BRANCH: $CI_COMMIT_REF_NAME
+    stage: trigger
+    trigger: path/to/A
+    except:
+      - pipelines
+
+
+build:
+  stage: build
+  script:
+    - VERSION=$(cat $VERSION_FILE)
+    - echo $VERSION
+  only:
+    - pipelines
+  tags:
+    - shell_runner
+
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying application only if branch=release..."
+  rules: 
+    - if: $CI_PIPELINE_SOURCE=="pipeline" &amp;&amp; $SOURCE_BRANCH=="release"
+  tags:
+    - shell_runner</code></pre></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

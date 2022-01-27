@@ -185,17 +185,17 @@ s_{ij} - s_{ik} \geq p_{ik} \,\, or \,\, s_{ik}-s_{ij}  \geq p_{ij} &amp; (i,j),
 \end{align*}</p>
 <p>其中两个基本变量：</p>
 <ul>
-<li><span><span class="MathJax_Preview">s_{ij}</span><script type="math/tex">s_{ij}</script></span> 表示工序 <span><span class="MathJax_Preview">(i,j)</span><script type="math/tex">(i,j)</script></span> 即作业 <span><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span> 的某个在机器 <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> 上进行的工序的开始时间</li>
-<li><span><span class="MathJax_Preview">p_{ij}</span><script type="math/tex">p_{ij}</script></span> 表示作业 <span><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span> 的某个在机器 <span><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> 上进行的工序所需的加工时间</li>
+<li><span class="arithmatex"><span class="MathJax_Preview">s_{ij}</span><script type="math/tex">s_{ij}</script></span> 表示工序 <span class="arithmatex"><span class="MathJax_Preview">(i,j)</span><script type="math/tex">(i,j)</script></span> 即作业 <span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span> 的某个在机器 <span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> 上进行的工序的开始时间</li>
+<li><span class="arithmatex"><span class="MathJax_Preview">p_{ij}</span><script type="math/tex">p_{ij}</script></span> 表示作业 <span class="arithmatex"><span class="MathJax_Preview">j</span><script type="math/tex">j</script></span> 的某个在机器 <span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> 上进行的工序所需的加工时间</li>
 </ul>
 <p>四个基本约束：</p>
 <ul>
 <li>第一个表明工序的开始时间非负</li>
-<li>第二个定义了最大完工时间 <span><span class="MathJax_Preview">c_m</span><script type="math/tex">c_m</script></span></li>
+<li>第二个定义了最大完工时间 <span class="arithmatex"><span class="MathJax_Preview">c_m</span><script type="math/tex">c_m</script></span></li>
 <li>第三个是工序序列约束，即同一个作业的相邻工序必须满足先后顺序</li>
 <li>第四个是资源约束，即每一台机器在某个时刻只能加工一道工序</li>
 </ul>
-<p>我们需要特别关注一下第四式，因为它出现了一个 <strong>或</strong> 的约束关系，但线性规划问题的约束式通常都是 <strong>与</strong> 也就是且的关系。为了正确实施这个约束，我们需要引入额外的变量 <span><span class="MathJax_Preview">b_{jk}</span><script type="math/tex">b_{jk}</script></span>，表示分配到机器 <span><span class="MathJax_Preview">m_i</span><script type="math/tex">m_i</script></span> 的所有工序中任意两者例如工序 <span><span class="MathJax_Preview">(i,j)</span><script type="math/tex">(i,j)</script></span> 和工序 <span><span class="MathJax_Preview">(i,k)</span><script type="math/tex">(i,k)</script></span> 的先后关系：</p>
+<p>我们需要特别关注一下第四式，因为它出现了一个 <strong>或</strong> 的约束关系，但线性规划问题的约束式通常都是 <strong>与</strong> 也就是且的关系。为了正确实施这个约束，我们需要引入额外的变量 <span class="arithmatex"><span class="MathJax_Preview">b_{jk}</span><script type="math/tex">b_{jk}</script></span>，表示分配到机器 <span class="arithmatex"><span class="MathJax_Preview">m_i</span><script type="math/tex">m_i</script></span> 的所有工序中任意两者例如工序 <span class="arithmatex"><span class="MathJax_Preview">(i,j)</span><script type="math/tex">(i,j)</script></span> 和工序 <span class="arithmatex"><span class="MathJax_Preview">(i,k)</span><script type="math/tex">(i,k)</script></span> 的先后关系：</p>
 <p>\begin{align*}
 b_{jk} = 
 \begin{cases}
@@ -204,8 +204,8 @@ b_{jk} =
 1 &amp; if \,\, (i,k) \rightarrow (i,j)
 \end{cases}
 \end{align*}</p>
-<p>即，<span><span class="MathJax_Preview">b_{jk}</span><script type="math/tex">b_{jk}</script></span> 是一个 <span><span class="MathJax_Preview">0-1</span><script type="math/tex">0-1</script></span> 变量，当工序 <span><span class="MathJax_Preview">(i,j)</span><script type="math/tex">(i,j)</script></span> 排在工序 <span><span class="MathJax_Preview">(i,k)</span><script type="math/tex">(i,k)</script></span> 之前取值 0，否则 1。</p>
-<p>于是，原来写法中逻辑 <strong>或</strong> 的两种情况被等效为 <span><span class="MathJax_Preview">0-1</span><script type="math/tex">0-1</script></span> 变量 <span><span class="MathJax_Preview">b_{jk}</span><script type="math/tex">b_{jk}</script></span> 的两种可能。进而，改写约束式的思路是合并/统一原来两个分支，一旦确定 <span><span class="MathJax_Preview">b_{jk}</span><script type="math/tex">b_{jk}</script></span> 则退化为其中一个分支。这一步还需要一点小技巧，最终约束四被改写为以下两个式子：</p>
+<p>即，<span class="arithmatex"><span class="MathJax_Preview">b_{jk}</span><script type="math/tex">b_{jk}</script></span> 是一个 <span class="arithmatex"><span class="MathJax_Preview">0-1</span><script type="math/tex">0-1</script></span> 变量，当工序 <span class="arithmatex"><span class="MathJax_Preview">(i,j)</span><script type="math/tex">(i,j)</script></span> 排在工序 <span class="arithmatex"><span class="MathJax_Preview">(i,k)</span><script type="math/tex">(i,k)</script></span> 之前取值 0，否则 1。</p>
+<p>于是，原来写法中逻辑 <strong>或</strong> 的两种情况被等效为 <span class="arithmatex"><span class="MathJax_Preview">0-1</span><script type="math/tex">0-1</script></span> 变量 <span class="arithmatex"><span class="MathJax_Preview">b_{jk}</span><script type="math/tex">b_{jk}</script></span> 的两种可能。进而，改写约束式的思路是合并/统一原来两个分支，一旦确定 <span class="arithmatex"><span class="MathJax_Preview">b_{jk}</span><script type="math/tex">b_{jk}</script></span> 则退化为其中一个分支。这一步还需要一点小技巧，最终约束四被改写为以下两个式子：</p>
 <p>\begin{align*}
 \begin{cases}
 s_{ij}-s_{ik} \geq p_{ik} - C*(1-b_{jk})  &amp; (i,j), (i,k) \in \mathbb{O}, \,\, j \neq k \\
@@ -213,8 +213,8 @@ s_{ij}-s_{ik} \geq p_{ik} - C*(1-b_{jk})  &amp; (i,j), (i,k) \in \mathbb{O}, \,\
 s_{ik}-s_{ij} \geq p_{ij} - C*b_{jk}      &amp; (i,j), (i,k) \in \mathbb{O}, \,\, j \neq k
 \end{cases}
 \end{align*}</p>
-<p>其中，<span><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span> 是一个足够大例如满足 <span><span class="MathJax_Preview">C&gt;\Sigma \, p_{ij}</span><script type="math/tex">C>\Sigma \, p_{ij}</script></span> 的常数。</p>
-<p>验证一下，假设工序 <span><span class="MathJax_Preview">(i,j)</span><script type="math/tex">(i,j)</script></span> 排在工序 <span><span class="MathJax_Preview">(i,k)</span><script type="math/tex">(i,k)</script></span> 之前即 <span><span class="MathJax_Preview">b_{jk}=0</span><script type="math/tex">b_{jk}=0</script></span>，则第二式反映正确的约束关系，而第一式显然成立即不反应任何有效信息；相反，<span><span class="MathJax_Preview">b_{jk}=1</span><script type="math/tex">b_{jk}=1</script></span> 时，第一式反映目标约束而第二式显然成立。</p>
+<p>其中，<span class="arithmatex"><span class="MathJax_Preview">C</span><script type="math/tex">C</script></span> 是一个足够大例如满足 <span class="arithmatex"><span class="MathJax_Preview">C&gt;\Sigma \, p_{ij}</span><script type="math/tex">C>\Sigma \, p_{ij}</script></span> 的常数。</p>
+<p>验证一下，假设工序 <span class="arithmatex"><span class="MathJax_Preview">(i,j)</span><script type="math/tex">(i,j)</script></span> 排在工序 <span class="arithmatex"><span class="MathJax_Preview">(i,k)</span><script type="math/tex">(i,k)</script></span> 之前即 <span class="arithmatex"><span class="MathJax_Preview">b_{jk}=0</span><script type="math/tex">b_{jk}=0</script></span>，则第二式反映正确的约束关系，而第一式显然成立即不反应任何有效信息；相反，<span class="arithmatex"><span class="MathJax_Preview">b_{jk}=1</span><script type="math/tex">b_{jk}=1</script></span> 时，第一式反映目标约束而第二式显然成立。</p>
 <h2 id="pulp_2">PuLP 模型<a class="headerlink" href="#pulp_2" title="Permanent link">&para;</a></h2>
 <p>使用 PuLP 建模和求解的步骤与 Google OR-Tools 极为类似，但 PuLP 并未提供如 OR-Tools 一般便捷的建立约束的 API。例如，OR-Tools 的区间类型变量配合 <code>NoOverlap</code> 约束可以很方便地实现机器上工序不重叠的约束（即上一节描述的约束四），但 PuLP 需要更基础的数学操作，例如上一节进行的约束转换即为此服务。</p>
 <p>PuLP 建模常用的API：</p>

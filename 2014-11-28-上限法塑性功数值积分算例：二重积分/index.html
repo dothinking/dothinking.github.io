@@ -160,7 +160,7 @@
 </li>
 </ul>
 <p>本文分别使用以上两种方法计算下面二重积分，以直观认识及分析二者的区别：</p>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">
 W = \int\limits_{-1}^1 {\int\limits_{-1}^1 {f(x,\,y)}} \mathrm{d}x\mathrm{d}y 
 = \int\limits_{-1}^1 {\int\limits_{-1}^1 {\cos\dfrac{\pi\,(x + y)}{2}}}\mathrm{d}x\mathrm{d}y
@@ -178,8 +178,8 @@ W &amp;= -\dfrac{2}{\pi}\,\int\limits_{-1}^1{\left.{\sin\dfrac{\pi\,(x+y)}{2}} \
 &amp;= -\frac{16}{\pi ^2} \approx 1.6211
 \end{align*}</p>
 <h2 id="_3">高斯积分<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<p>由于目标函数恰好在Gauss-Legendre的标准积分区间<span><span class="MathJax_Preview">[-1,1]</span><script type="math/tex">[-1,1]</script></span>，可以直接取积分点代入二重高斯积分公式。于是<span><span class="MathJax_Preview">W</span><script type="math/tex">W</script></span>的<span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>阶Gauss-Legendre积分近似值就可通过下式求得</p>
-<div>
+<p>由于目标函数恰好在Gauss-Legendre的标准积分区间<span class="arithmatex"><span class="MathJax_Preview">[-1,1]</span><script type="math/tex">[-1,1]</script></span>，可以直接取积分点代入二重高斯积分公式。于是<span class="arithmatex"><span class="MathJax_Preview">W</span><script type="math/tex">W</script></span>的<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>阶Gauss-Legendre积分近似值就可通过下式求得</p>
+<div class="arithmatex">
 <div class="MathJax_Preview">
 {W_n} = \sum\limits_{i=0}^n {\sum\limits_{j=0}^n{A_i\,A_j\,f(x_i,\,y_j)} }
 </div>
@@ -187,14 +187,14 @@ W &amp;= -\dfrac{2}{\pi}\,\int\limits_{-1}^1{\left.{\sin\dfrac{\pi\,(x+y)}{2}} \
 {W_n} = \sum\limits_{i=0}^n {\sum\limits_{j=0}^n{A_i\,A_j\,f(x_i,\,y_j)} }
 </script>
 </div>
-<p>其中<span><span class="MathJax_Preview">x_i,\,x_j</span><script type="math/tex">x_i,\,x_j</script></span>分别为<span><span class="MathJax_Preview">x,\,y</span><script type="math/tex">x,\,y</script></span>方向的积分点，<span><span class="MathJax_Preview">A_i</span><script type="math/tex">A_i</script></span>为对应的积分系数。</p>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">x_i,\,x_j</span><script type="math/tex">x_i,\,x_j</script></span>分别为<span class="arithmatex"><span class="MathJax_Preview">x,\,y</span><script type="math/tex">x,\,y</script></span>方向的积分点，<span class="arithmatex"><span class="MathJax_Preview">A_i</span><script type="math/tex">A_i</script></span>为对应的积分系数。</p>
 <p>积分点及求积系数的求解可以参考相关文献。为方便起见，这里直接给出前2阶Gauss-Legendre求积公式的节点及系数：</p>
 <table>
 <thead>
 <tr>
-<th>阶数<span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span></th>
-<th>积分点<span><span class="MathJax_Preview">\mathrm{x}</span><script type="math/tex">\mathrm{x}</script></span></th>
-<th>求积系数<span><span class="MathJax_Preview">\mathrm{A}</span><script type="math/tex">\mathrm{A}</script></span></th>
+<th>阶数<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span></th>
+<th>积分点<span class="arithmatex"><span class="MathJax_Preview">\mathrm{x}</span><script type="math/tex">\mathrm{x}</script></span></th>
+<th>求积系数<span class="arithmatex"><span class="MathJax_Preview">\mathrm{A}</span><script type="math/tex">\mathrm{A}</script></span></th>
 </tr>
 </thead>
 <tbody>
@@ -205,13 +205,13 @@ W &amp;= -\dfrac{2}{\pi}\,\int\limits_{-1}^1{\left.{\sin\dfrac{\pi\,(x+y)}{2}} \
 </tr>
 <tr>
 <td>1</td>
-<td><span><span class="MathJax_Preview">\biggl[-\dfrac{1}{\sqrt{3}},\,\dfrac{1}{\sqrt{3}}\biggr]</span><script type="math/tex">\biggl[-\dfrac{1}{\sqrt{3}},\,\dfrac{1}{\sqrt{3}}\biggr]</script></span></td>
-<td><span><span class="MathJax_Preview">\biggl[1,\,1\biggr]</span><script type="math/tex">\biggl[1,\,1\biggr]</script></span></td>
+<td><span class="arithmatex"><span class="MathJax_Preview">\biggl[-\dfrac{1}{\sqrt{3}},\,\dfrac{1}{\sqrt{3}}\biggr]</span><script type="math/tex">\biggl[-\dfrac{1}{\sqrt{3}},\,\dfrac{1}{\sqrt{3}}\biggr]</script></span></td>
+<td><span class="arithmatex"><span class="MathJax_Preview">\biggl[1,\,1\biggr]</span><script type="math/tex">\biggl[1,\,1\biggr]</script></span></td>
 </tr>
 <tr>
 <td>2</td>
-<td><span><span class="MathJax_Preview">\biggl[-\dfrac{\sqrt{15}}{5},\,0,\,\dfrac{\sqrt{15}}{5}\biggr]</span><script type="math/tex">\biggl[-\dfrac{\sqrt{15}}{5},\,0,\,\dfrac{\sqrt{15}}{5}\biggr]</script></span></td>
-<td><span><span class="MathJax_Preview">\biggl[\dfrac{5}{9},\,\dfrac{8}{9},\,\dfrac{5}{9}\biggr]</span><script type="math/tex">\biggl[\dfrac{5}{9},\,\dfrac{8}{9},\,\dfrac{5}{9}\biggr]</script></span></td>
+<td><span class="arithmatex"><span class="MathJax_Preview">\biggl[-\dfrac{\sqrt{15}}{5},\,0,\,\dfrac{\sqrt{15}}{5}\biggr]</span><script type="math/tex">\biggl[-\dfrac{\sqrt{15}}{5},\,0,\,\dfrac{\sqrt{15}}{5}\biggr]</script></span></td>
+<td><span class="arithmatex"><span class="MathJax_Preview">\biggl[\dfrac{5}{9},\,\dfrac{8}{9},\,\dfrac{5}{9}\biggr]</span><script type="math/tex">\biggl[\dfrac{5}{9},\,\dfrac{8}{9},\,\dfrac{5}{9}\biggr]</script></span></td>
 </tr>
 </tbody>
 </table>
@@ -225,18 +225,18 @@ W &amp;= -\dfrac{2}{\pi}\,\int\limits_{-1}^1{\left.{\sin\dfrac{\pi\,(x+y)}{2}} \
 </code></pre>
 
 <p>于是得到</p>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">{W_0} = 4,\,{W_1} = 1.5188,\,{W_2} = 1.6234</div>
 <script type="math/tex; mode=display">{W_0} = 4,\,{W_1} = 1.5188,\,{W_2} = 1.6234</script>
 </div>
 <h2 id="_4">单元离散后积分<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
-<p>为简单起见，将积分区域离散为<span><span class="MathJax_Preview">N=n^2</span><script type="math/tex">N=n^2</script></span>个面积相等的小区域，则每个单元的面积<span><span class="MathJax_Preview">\Delta S=\dfrac{4}{N}</span><script type="math/tex">\Delta S=\dfrac{4}{N}</script></span>。当单元<span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>足够小时，可以以单元4个节点对应函数值的平均值来近似该单元区域内被积函数值，于是<span><span class="MathJax_Preview">W</span><script type="math/tex">W</script></span>可以表示为</p>
+<p>为简单起见，将积分区域离散为<span class="arithmatex"><span class="MathJax_Preview">N=n^2</span><script type="math/tex">N=n^2</script></span>个面积相等的小区域，则每个单元的面积<span class="arithmatex"><span class="MathJax_Preview">\Delta S=\dfrac{4}{N}</span><script type="math/tex">\Delta S=\dfrac{4}{N}</script></span>。当单元<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>足够小时，可以以单元4个节点对应函数值的平均值来近似该单元区域内被积函数值，于是<span class="arithmatex"><span class="MathJax_Preview">W</span><script type="math/tex">W</script></span>可以表示为</p>
 <p>\begin{align*}
 {W_n} &amp;= \sum_{m=1}^{N} {\int\limits_{y_{m-1}}^{y_m} {\int\limits_{x_{m-1}}^{x_m}} {f(x,\,y)\,\mathrm{d}x\mathrm{d}y} } \\
 &amp;= \sum_{m=1}^{N} {\left[{\frac{1}{4}\sum_{i=1}^2 {\sum_{j=1}^2 {f(x_i,\,y_j)\,\Delta S}}} \right]} \\
 &amp;= \Delta S\,\sum_{m=1}^{N} {\sum_{i=1}^2 {\sum_{j=1}^2 {\frac{f(x_i,\,y_j)}{4}} } }
 \end{align*}</p>
-<p>其中<span><span class="MathJax_Preview">x_1,\,x_2</span><script type="math/tex">x_1,\,x_2</script></span>为单元<span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>的节点的两个横坐标。 </p>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">x_1,\,x_2</span><script type="math/tex">x_1,\,x_2</script></span>为单元<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>的节点的两个横坐标。 </p>
 <p><img alt="" src="../images/2014-11-28-01.png" /></p>
 <p>上式可以理解为将区域离散后，每个单元的每个节点都为最终的积分值贡献&frac14;的作用。单从节点来看，内层节点贡献为1，边界节点（除4个角节点外）贡献&frac12;，4个角节点贡献&frac14;。这很容易通过Matlab编程实现，代码如下：</p>
 <pre class="codehilite"><code>function w = fun_trapezoid(n,f)
@@ -250,7 +250,7 @@ W &amp;= -\dfrac{2}{\pi}\,\int\limits_{-1}^1{\left.{\sin\dfrac{\pi\,(x+y)}{2}} \
 </code></pre>
 
 <p>于是得到</p>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">{W_{10}} = 1.2865,\,{W_{100}} = 1.5886,\,{W_{5000}} = 1.6205</div>
 <script type="math/tex; mode=display">{W_{10}} = 1.2865,\,{W_{100}} = 1.5886,\,{W_{5000}} = 1.6205</script>
 </div>
@@ -261,7 +261,7 @@ W &amp;= -\dfrac{2}{\pi}\,\int\limits_{-1}^1{\left.{\sin\dfrac{\pi\,(x+y)}{2}} \
 &amp;= \sum_{m=1}^{N} {\left[{\frac{1}{36} \sum_{i=1}^3 {\sum_{j=1}^3 {A_i\,A_j\,f(x_i,\,y_j)\,\Delta S}}} \right]} \\
 &amp;= \dfrac{\Delta S}{36}\,\sum_{m=1}^{N} {\sum_{i=1}^3 {\sum_{j=1}^3 {A_i\,A_j\,f(x_i,\,y_j)} } }
 \end{align*}</p>
-<p>其中<span><span class="MathJax_Preview">x_1,\,x_2,\,x_3</span><script type="math/tex">x_1,\,x_2,\,x_3</script></span>分别为单元<span><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>边界的三个等分点的横坐标。<span><span class="MathJax_Preview">A=[1,4,1]</span><script type="math/tex">A=[1,4,1]</script></span>为积分系数。</p>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">x_1,\,x_2,\,x_3</span><script type="math/tex">x_1,\,x_2,\,x_3</script></span>分别为单元<span class="arithmatex"><span class="MathJax_Preview">m</span><script type="math/tex">m</script></span>边界的三个等分点的横坐标。<span class="arithmatex"><span class="MathJax_Preview">A=[1,4,1]</span><script type="math/tex">A=[1,4,1]</script></span>为积分系数。</p>
 <p><img alt="" src="../images/2014-11-28-02.png" /></p>
 <p>Matlab代码为</p>
 <pre class="codehilite"><code>function w = fun_simpson(n,f)
@@ -279,7 +279,7 @@ W &amp;= -\dfrac{2}{\pi}\,\int\limits_{-1}^1{\left.{\sin\dfrac{\pi\,(x+y)}{2}} \
 </code></pre>
 
 <p>最终计算结果为</p>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">{W_2} = 1.6285,\,{W_5} = 1.6213,\,{W_{10}} = 1.6211</div>
 <script type="math/tex; mode=display">{W_2} = 1.6285,\,{W_5} = 1.6213,\,{W_{10}} = 1.6211</script>
 </div>

@@ -158,12 +158,12 @@
 <p>根据我对应力张量的阶段性认识，相应分为三部分进行记录。本文介绍第一部分，应力的基本知识和常规认识。</p>
 <h2 id="_2">应力<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>初中物理已指出，因外力作用而在物体内部产生的力称为<code>内力</code>。单位面积上的内力即是<code>应力</code>，表征内力的强度。</p>
-<p>为了研究某一点<span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>处的应力，用任意截面在<span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点处切开物体，如下图所示。根据定义可以得到<span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点的正应力<span><span class="MathJax_Preview">\sigma</span><script type="math/tex">\sigma</script></span>、切应力<span><span class="MathJax_Preview">\tau</span><script type="math/tex">\tau</script></span>，他们的合成即为全应力。</p>
+<p>为了研究某一点<span class="arithmatex"><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>处的应力，用任意截面在<span class="arithmatex"><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点处切开物体，如下图所示。根据定义可以得到<span class="arithmatex"><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点的正应力<span class="arithmatex"><span class="MathJax_Preview">\sigma</span><script type="math/tex">\sigma</script></span>、切应力<span class="arithmatex"><span class="MathJax_Preview">\tau</span><script type="math/tex">\tau</script></span>，他们的合成即为全应力。</p>
 <p><img alt="应力示意图" src="../images/2013-07-30-01.png" /></p>
-<p>需要注意的是，一个确定的截面对应了一组正应力和切应力。但是过<span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点有无数的截面，那么如何才能真正描述<span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点的应力状态呢？</p>
+<p>需要注意的是，一个确定的截面对应了一组正应力和切应力。但是过<span class="arithmatex"><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点有无数的截面，那么如何才能真正描述<span class="arithmatex"><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点的应力状态呢？</p>
 <h2 id="_3">应力状态<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p><code>应力状态</code>是受力物体某一点各个截面上应力的变化情况。上面已经意识到过一点有无数的截面，只有任意截面上的应力分量都被确定，才能说应力状态是确定的。</p>
-<p>通常在无数的截面中，任意取三个互相垂直的截面，并以他们的法线方向建立笛卡尔坐标系。也即在<span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点截取一个无限小的平行六面体，称为<code>单元体</code>。</p>
+<p>通常在无数的截面中，任意取三个互相垂直的截面，并以他们的法线方向建立笛卡尔坐标系。也即在<span class="arithmatex"><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点截取一个无限小的平行六面体，称为<code>单元体</code>。</p>
 <p><img alt="单元体" src="../images/2013-07-30-02.png" /></p>
 <p>单元体无限小，因此单元体上相互平行的两个平面视为过该点的同一平面，也即他俩的应力是相同的。这样只用三个互相垂直的截面上的应力即可分析问题。</p>
 <p>由于单元体处于静力平衡状态，由绕各轴合力矩为零可以得到切应力互等定律。</p>
@@ -174,8 +174,8 @@
 <h2 id="_4">应力张量<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p>根据上面单元体上的应力分量，是否可以求出下图所示任意截面上的应力分量？</p>
 <p><img alt="截面应力分量" src="../images/2013-07-30-03.png" /></p>
-<p>答案是肯定的。根据三个方向的静力平衡就可以计算得到上图法向为<span><span class="MathJax_Preview">\vec{n}=(n_1,n_2,n_3)</span><script type="math/tex">\vec{n}=(n_1,n_2,n_3)</script></span>截面上的应力分量。于是，三个互相垂直的截面上的9个应力分量可以确定任意截面的应力，也就是说这一点的应力状态被完全确定了。并且，从这三个正交截面的选取上来看，他们和坐标系无关。</p>
-<p>于是，我们把单元体上的九个应力分量作为一个整体来描述<span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点的应力状态，称作<code>应力张量</code>，记作</p>
+<p>答案是肯定的。根据三个方向的静力平衡就可以计算得到上图法向为<span class="arithmatex"><span class="MathJax_Preview">\vec{n}=(n_1,n_2,n_3)</span><script type="math/tex">\vec{n}=(n_1,n_2,n_3)</script></span>截面上的应力分量。于是，三个互相垂直的截面上的9个应力分量可以确定任意截面的应力，也就是说这一点的应力状态被完全确定了。并且，从这三个正交截面的选取上来看，他们和坐标系无关。</p>
+<p>于是，我们把单元体上的九个应力分量作为一个整体来描述<span class="arithmatex"><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>点的应力状态，称作<code>应力张量</code>，记作</p>
 <p>\[
 \sigma_{ij} = 
 \begin{pmatrix}
@@ -189,7 +189,7 @@
 <p>确定方法依然是求解静力平衡方程。</p>
 <h3 id="_6">应力张量不变量<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
 <p>在求解主应力的过程中会得到以主应力为未知数的三次方程，叫做<code>状态方程</code>。</p>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">\sigma^3-I_1\,\sigma^2+I_2\,\sigma-I_3=0</div>
 <script type="math/tex; mode=display">\sigma^3-I_1\,\sigma^2+I_2\,\sigma-I_3=0</script>
 </div>
@@ -221,26 +221,26 @@ I_3 &amp;= \sigma_x \, \sigma_y \, \sigma_z + 2\,\tau_{xy}\,\tau_{yz}\,\tau_{zx}
 </thead>
 <tbody>
 <tr>
-<td><span><span class="MathJax_Preview">\left(0,\,\pm\dfrac{1}{\sqrt{2}},\,\pm\dfrac{1}{\sqrt{2}}\right)</span><script type="math/tex">\left(0,\,\pm\dfrac{1}{\sqrt{2}},\,\pm\dfrac{1}{\sqrt{2}}\right)</script></span></td>
-<td><span><span class="MathJax_Preview">\pm\dfrac{\sigma_2-\sigma_3}{2}</span><script type="math/tex">\pm\dfrac{\sigma_2-\sigma_3}{2}</script></span></td>
-<td><span><span class="MathJax_Preview">\dfrac{\sigma_2+\sigma_3}{2}</span><script type="math/tex">\dfrac{\sigma_2+\sigma_3}{2}</script></span></td>
+<td><span class="arithmatex"><span class="MathJax_Preview">\left(0,\,\pm\dfrac{1}{\sqrt{2}},\,\pm\dfrac{1}{\sqrt{2}}\right)</span><script type="math/tex">\left(0,\,\pm\dfrac{1}{\sqrt{2}},\,\pm\dfrac{1}{\sqrt{2}}\right)</script></span></td>
+<td><span class="arithmatex"><span class="MathJax_Preview">\pm\dfrac{\sigma_2-\sigma_3}{2}</span><script type="math/tex">\pm\dfrac{\sigma_2-\sigma_3}{2}</script></span></td>
+<td><span class="arithmatex"><span class="MathJax_Preview">\dfrac{\sigma_2+\sigma_3}{2}</span><script type="math/tex">\dfrac{\sigma_2+\sigma_3}{2}</script></span></td>
 </tr>
 <tr>
-<td><span><span class="MathJax_Preview">\left(\pm\dfrac{1}{\sqrt{2}},\,0,\,\pm\dfrac{1}{\sqrt{2}}\right)</span><script type="math/tex">\left(\pm\dfrac{1}{\sqrt{2}},\,0,\,\pm\dfrac{1}{\sqrt{2}}\right)</script></span></td>
-<td><span><span class="MathJax_Preview">\pm\dfrac{\sigma_1-\sigma_3}{2}</span><script type="math/tex">\pm\dfrac{\sigma_1-\sigma_3}{2}</script></span></td>
-<td><span><span class="MathJax_Preview">\dfrac{\sigma_1+\sigma_3}{2}</span><script type="math/tex">\dfrac{\sigma_1+\sigma_3}{2}</script></span></td>
+<td><span class="arithmatex"><span class="MathJax_Preview">\left(\pm\dfrac{1}{\sqrt{2}},\,0,\,\pm\dfrac{1}{\sqrt{2}}\right)</span><script type="math/tex">\left(\pm\dfrac{1}{\sqrt{2}},\,0,\,\pm\dfrac{1}{\sqrt{2}}\right)</script></span></td>
+<td><span class="arithmatex"><span class="MathJax_Preview">\pm\dfrac{\sigma_1-\sigma_3}{2}</span><script type="math/tex">\pm\dfrac{\sigma_1-\sigma_3}{2}</script></span></td>
+<td><span class="arithmatex"><span class="MathJax_Preview">\dfrac{\sigma_1+\sigma_3}{2}</span><script type="math/tex">\dfrac{\sigma_1+\sigma_3}{2}</script></span></td>
 </tr>
 <tr>
-<td><span><span class="MathJax_Preview">\left(\pm\dfrac{1}{\sqrt{2}},\,\pm\dfrac{1}{\sqrt{2}}\,0,\right)</span><script type="math/tex">\left(\pm\dfrac{1}{\sqrt{2}},\,\pm\dfrac{1}{\sqrt{2}}\,0,\right)</script></span></td>
-<td><span><span class="MathJax_Preview">\pm\dfrac{\sigma_1-\sigma_2}{2}</span><script type="math/tex">\pm\dfrac{\sigma_1-\sigma_2}{2}</script></span></td>
-<td><span><span class="MathJax_Preview">\dfrac{\sigma_1+\sigma_2}{2}</span><script type="math/tex">\dfrac{\sigma_1+\sigma_2}{2}</script></span></td>
+<td><span class="arithmatex"><span class="MathJax_Preview">\left(\pm\dfrac{1}{\sqrt{2}},\,\pm\dfrac{1}{\sqrt{2}}\,0,\right)</span><script type="math/tex">\left(\pm\dfrac{1}{\sqrt{2}},\,\pm\dfrac{1}{\sqrt{2}}\,0,\right)</script></span></td>
+<td><span class="arithmatex"><span class="MathJax_Preview">\pm\dfrac{\sigma_1-\sigma_2}{2}</span><script type="math/tex">\pm\dfrac{\sigma_1-\sigma_2}{2}</script></span></td>
+<td><span class="arithmatex"><span class="MathJax_Preview">\dfrac{\sigma_1+\sigma_2}{2}</span><script type="math/tex">\dfrac{\sigma_1+\sigma_2}{2}</script></span></td>
 </tr>
 </tbody>
 </table>
 <p>由于塑性变形是由切应力引起的，所以最大切应力可以作为屈服准则。</p>
 <h3 id="_8">应力张量分解<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
 <p>将三个正应力的平均值叫作平均应力或者静水应力，应力张量减去这部分后得到<code>应力偏张量</code>。应力偏张量同样有三个不变量。</p>
-<div>
+<div class="arithmatex">
 <div class="MathJax_Preview">\sigma_m = \dfrac{1}{3}\left(\sigma_x+\sigma_y+\sigma_z\right) = \dfrac{1}{3}\left(\sigma_{11}+\sigma_{22}+\sigma_{33}\right)</div>
 <script type="math/tex; mode=display">\sigma_m = \dfrac{1}{3}\left(\sigma_x+\sigma_y+\sigma_z\right) = \dfrac{1}{3}\left(\sigma_{11}+\sigma_{22}+\sigma_{33}\right)</script>
 </div>
@@ -268,7 +268,7 @@ I_3 &amp;= \sigma_x \, \sigma_y \, \sigma_z + 2\,\tau_{xy}\,\tau_{yz}\,\tau_{zx}
 </ul>
 <h2 id="_9">应力平衡微分方程<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
 <p>以上说明的都是一点的应力状态，而物体内部不同点的应力状态一般是不同的，那么如何描述相邻点间的应力变化关系呢？</p>
-<p>以物体内某一点<span><span class="MathJax_Preview">P(x,y,z)</span><script type="math/tex">P(x,y,z)</script></span>为顶点截取边长分别为dx,dy,dz的直角平行六面体微元，如下图所示，则另一顶点的坐标为<span><span class="MathJax_Preview">(x+dx,y+dy,z+dz)</span><script type="math/tex">(x+dx,y+dy,z+dz)</script></span>。</p>
+<p>以物体内某一点<span class="arithmatex"><span class="MathJax_Preview">P(x,y,z)</span><script type="math/tex">P(x,y,z)</script></span>为顶点截取边长分别为dx,dy,dz的直角平行六面体微元，如下图所示，则另一顶点的坐标为<span class="arithmatex"><span class="MathJax_Preview">(x+dx,y+dy,z+dz)</span><script type="math/tex">(x+dx,y+dy,z+dz)</script></span>。</p>
 <p><img alt="直角平行六面体微元" src="../images/2013-07-30-04.png" /></p>
 <p>根据静力平衡方程，并处理掉高阶小量，得到应力平衡微分方程：</p>
 <p>\[

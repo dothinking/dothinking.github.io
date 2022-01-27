@@ -149,12 +149,12 @@
 <p><a href="../2018-10-21-%E9%81%97%E4%BC%A0%E7%AE%97%E6%B3%95%EF%BC%9A%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86%E5%8F%8APython%E5%AE%9E%E7%8E%B0/">前文</a>基于经典遗传算法的基本原理，使用Python的<code>Numpy</code>模块实现了求解单目标无约束优化问题的程序。但是，针对二元函数最小值的求解结果表明其精度有待提高，本文将根据自适应遗传算法（Adaptive Genetic Algorithm，AGA）的原理改进之前的代码。</p>
 <p>自适应遗传算法的改进点在于 <strong>自适应调整遗传参数</strong>，使得保持群体多样性的同时，保证了算法的收敛性。例如对于基本遗传算法，交叉、变异的概率是固定的，自适应策略则要求在进化过程中进行自适应调整：开始阶段选取较大交叉、变异概率，这样的粗略搜索过程有利于保持种群多样性，后期则调整为较小值以进行细致搜索，防止破化最优解，加快收敛速度。</p>
 <h2 id="_2">自适应交叉概率<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>本文采用的自适应策略为根据参与交叉操作的两个个体<code>a</code>、<code>b</code>的适应度<span><span class="MathJax_Preview">f_a, f_b</span><script type="math/tex">f_a, f_b</script></span>调整交叉概率：适应度越大交叉概率越小，反之同理。首先设定交叉概率区间<span><span class="MathJax_Preview">[P_{min}, P_{max}]</span><script type="math/tex">[P_{min}, P_{max}]</script></span>，然后计算种群个体适应度<span><span class="MathJax_Preview">f_i</span><script type="math/tex">f_i</script></span>，及平均适应度<span><span class="MathJax_Preview">f_{avg}</span><script type="math/tex">f_{avg}</script></span>、最大适应度<span><span class="MathJax_Preview">f_{max}</span><script type="math/tex">f_{max}</script></span>，那么交叉概率<span><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>由下式确定：</p>
+<p>本文采用的自适应策略为根据参与交叉操作的两个个体<code>a</code>、<code>b</code>的适应度<span class="arithmatex"><span class="MathJax_Preview">f_a, f_b</span><script type="math/tex">f_a, f_b</script></span>调整交叉概率：适应度越大交叉概率越小，反之同理。首先设定交叉概率区间<span class="arithmatex"><span class="MathJax_Preview">[P_{min}, P_{max}]</span><script type="math/tex">[P_{min}, P_{max}]</script></span>，然后计算种群个体适应度<span class="arithmatex"><span class="MathJax_Preview">f_i</span><script type="math/tex">f_i</script></span>，及平均适应度<span class="arithmatex"><span class="MathJax_Preview">f_{avg}</span><script type="math/tex">f_{avg}</script></span>、最大适应度<span class="arithmatex"><span class="MathJax_Preview">f_{max}</span><script type="math/tex">f_{max}</script></span>，那么交叉概率<span class="arithmatex"><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>由下式确定：</p>
 <p>\begin{align*}
 P &amp;= P_{max}\,\,\,(f &lt; f_{avg})\\\
 P &amp;= P_{max} - (P_{max}-P_{min}) \frac{f-f_{avg}}{f_{max}-f_{avg}} \,\,\,(f \geq f_{avg})
 \end{align*}</p>
-<p>其中，<span><span class="MathJax_Preview">f=max(f_a, f_b)</span><script type="math/tex">f=max(f_a, f_b)</script></span>为参与交叉操作的两个个体中适应度较大者。</p>
+<p>其中，<span class="arithmatex"><span class="MathJax_Preview">f=max(f_a, f_b)</span><script type="math/tex">f=max(f_a, f_b)</script></span>为参与交叉操作的两个个体中适应度较大者。</p>
 <p>得益于之前程序的非耦合性，只需修改<code>GAOperators</code>模块的<code>Crossover</code>类即可。</p>
 <pre class="highlight"><code class="language-python">#----------------------------------------------------------
 # GAOperators.py: Selection, Crossover, Mmutation
@@ -239,13 +239,13 @@ if __name__ == '__main__':
     # 自适应Crossover实例创建方式
     C = Crossover([0.5, 0.9], 0.75)</code></pre>
 <h2 id="_3">自适应变异程度<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<p>前文的变异操作由变异概率和变异程度（下式中的<span><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>）共同决定：</p>
+<p>前文的变异操作由变异概率和变异程度（下式中的<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>）共同决定：</p>
 <p>\begin{align*}
 g &amp;= g - (g-L)\alpha\,\,\,(rand() \leq 0.5)\\\
 g &amp;= g + (U-g)\alpha\,\,\,(rand()&gt;0.5)
 \end{align*}</p>
-<p>为了使种群在进化的后期趋于稳定，应减小变异作用。相应措施为减小变异概率或者变异程度，本文采用与进化代数负相关的变异程度值，即设置<span><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>与进化代数<span><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>，总代数<span><span class="MathJax_Preview">N</span><script type="math/tex">N</script></span>的关系为：</p>
-<div>
+<p>为了使种群在进化的后期趋于稳定，应减小变异作用。相应措施为减小变异概率或者变异程度，本文采用与进化代数负相关的变异程度值，即设置<span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>与进化代数<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>，总代数<span class="arithmatex"><span class="MathJax_Preview">N</span><script type="math/tex">N</script></span>的关系为：</p>
+<div class="arithmatex">
 <div class="MathJax_Preview">
 \alpha = 1.0 - rand()^{1.0-\frac{n}{N}}
 </div>
@@ -266,8 +266,8 @@ g &amp;= g + (U-g)\alpha\,\,\,(rand()&gt;0.5)
 rate = 1.0 - np.random.rand()**(1.0-n/gen)
 self.mutation.mutate(self.population, rate)</code></pre>
 <h2 id="_4">测试<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
-<p>依然采用二元函数<code>Schaffer_N4</code>进行测试，最小值点<span><span class="MathJax_Preview">f(0,1.25313)=0.292579</span><script type="math/tex">f(0,1.25313)=0.292579</script></span>。</p>
-<div>
+<p>依然采用二元函数<code>Schaffer_N4</code>进行测试，最小值点<span class="arithmatex"><span class="MathJax_Preview">f(0,1.25313)=0.292579</span><script type="math/tex">f(0,1.25313)=0.292579</script></span>。</p>
+<div class="arithmatex">
 <div class="MathJax_Preview">
 f(x,y) = 0.5 + \frac{\cos^2 \left[\sin\left(|x^2-y^2| \right) \right] -0.5}{\left[1+0.001\left(x^2+y^2\right)\right]^2} \,\,\,\, \left(-10 \leq (x,y) \leq 10\right)
 </div>

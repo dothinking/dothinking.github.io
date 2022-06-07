@@ -142,13 +142,14 @@
 <h1 id="pythonpdf">Python处理PDF的第三方库对比<a class="headerlink" href="#pythonpdf" title="Permanent link">&para;</a></h1>
 <p>发布于：2021-01-02 | 分类：<a href="../categories/process%20automation/">process automation</a></p>
 <hr />
+<p><em>2022.06.07修订：新增第三方库<code>borb</code>。初稿写于2021.01.02，彼时<code>borb</code>才发布1.0版没几个月；两年不到，Github上已近三千赞。</em></p>
 <p>PDF（Portable Document Format）是一种便携文档格式，便于跨操作系统传播文档。PDF文档遵循标准格式，因此存在很多可以操作PDF文档的工具，Python自然也不例外。面多众多的Python第三方库，本文从功能、开源协议及社区活跃度三方面加以对比，以便根据具体需求选择合适的库。</p>
 <h2 id="_1">概况<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p>功能对比从大粒度上分成了<code>提取内容</code>、<code>操作页面</code>和<code>创建内容</code>三方面。前两者分别是针对已经存在的PDF文档的读和写操作，最后一项从内容上创建新文档。考虑到时效性，以下对比列出了撰文时相应的最新版本。</p>
+<p>功能对比从大粒度上分成了 <strong>提取内容</strong>、<strong>操作页面</strong> 和 <strong>创建内容</strong> 三方面。前两者分别是针对已经存在的PDF文档的读和写操作，最后一项从内容上创建新文档。考虑到时效性，以下对比列出了撰文时（2021.01）相应的最新版本。</p>
 <ul>
-<li><code>提取内容</code>如文本、图片、元信息</li>
-<li><code>操作页面</code>特指操作已经存在的页面例如分割、合并、裁剪、旋转等</li>
-<li><code>创建内容</code>指创建或修改页面内容，例如文本、图片、形状</li>
+<li><strong>提取内容</strong> 如文本、图片、元信息</li>
+<li><strong>操作页面</strong> 特指操作已经存在的页面例如分割、合并、裁剪、旋转等</li>
+<li><strong>创建内容</strong> 指创建或修改页面内容，例如文本、图片、形状</li>
 </ul>
 <table>
 <thead>
@@ -242,17 +243,38 @@
 <td>√</td>
 <td>基于<a href="https://mupdf.com/"><code>mupdf</code></a>；以处理速度著称，参考<a href="https://pymupdf.readthedocs.io/en/latest/app1.html">此处</a></td>
 </tr>
+<tr>
+<td><a href="https://github.com/jorisschellekens/borb">borb</a></td>
+<td>2.0.27</td>
+<td>3.6+</td>
+<td>AGPL</td>
+<td>非常活跃</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>纯Python库，支持读、写、操作PDF文档，兼顾底层和高级应用</td>
+</tr>
 </tbody>
 </table>
+<p><em><code>borb</code>于 2022.06 新加入对比，时间点以此为准。</em></p>
 <h2 id="_2">点评<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
-<li><code>PyPDF2</code>系列、<code>pdfrw</code>及<code>pikepdf</code>专注对已经存在的PDF的操作（分割、合并、旋转等），前两者基本处于停止维护的状态。</li>
-<li><code>pdfplumber</code>及其依赖<code>pdfminer.six</code>专注PDF内容提取，例如文本（位置、字体及颜色等）和形状（矩形、直线、曲线），前者还有解析表格的功能。</li>
-<li><code>ReportLab</code>专注PDF页面内容（文本、图、表等）的创建。</li>
-<li><code>PyMuPDF</code>功能全面且速度快，但是<code>GPL v3</code>的开源协议对商用不友好。</li>
+<li>
+<p><code>PyPDF2</code>系列、<code>pdfrw</code>及<code>pikepdf</code>专注对已经存在的PDF的操作（分割、合并、旋转等），前两者基本处于停止维护的状态。</p>
+</li>
+<li>
+<p><code>pdfplumber</code>及其依赖<code>pdfminer.six</code>专注PDF内容提取，例如文本（位置、字体及颜色等）和形状（矩形、直线、曲线），前者还有解析表格的功能。</p>
+</li>
+<li>
+<p><code>ReportLab</code>专注PDF页面内容（文本、图、表等）的创建。</p>
+</li>
+<li>
+<p><code>PyMuPDF</code>和<code>borb</code>同时支持读、写及PDF页面操作，功能最为全面。其中，<code>PyMuPDF</code>尤其以速度快著称，而<code>borb</code>是新开发并深得好评的库，潜力无穷。但是，二者同为<code>GPL</code>家族的开源协议，对商用不太友好*。</p>
+</li>
 </ul>
+<p><code>*</code> <em>支持免费使用，但是要求引用其的程序也必须遵守相应协议即开源。如果需要闭源使用的话，需要向作者申请付费的商用授权。</em></p>
 <p>最后，用下图的总结结束全文。</p>
-<p><img alt="" src="../images/2021-01-02-01.png" /></p></div>
+<p><img alt="" src="../images/2021-01-02-01.drawio.png" /></p></div>
             </div>
         </div>
 

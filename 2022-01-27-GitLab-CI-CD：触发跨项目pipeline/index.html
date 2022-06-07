@@ -167,7 +167,7 @@
 </li>
 </ul>
 <p>为简化表述，用<code>A</code>表示发布仓库，分别用<code>B1</code>、<code>B2</code>表示前、后端仓库，则可用下图表示以上流程。</p>
-<p><img alt="general-flow" src="../images/2022-01-27-01.png" /></p>
+<p><img alt="general-flow" src="../images/2022-01-27-01.drawio.png" /></p>
 <h2 id="_2">具体流程<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>基本设定：</p>
 <ul>
@@ -189,7 +189,7 @@
 <p>类似上文所述<code>A</code>的流程，只不过此时需要根据原始仓库（即<code>B1</code>）确定只触发<code>B1</code>的流程，进而来到<code>B1</code>的<code>build</code>。</p>
 </li>
 </ul>
-<p><img alt="detail-flow" src="../images/2022-01-27-02.png" /></p>
+<p><img alt="detail-flow" src="../images/2022-01-27-02.drawio.png" /></p>
 <h2 id="_3">最终效果<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p>借助 GitLab CI/CD 的基本功能，执行效果参考下图，可见完整实现了上述流程。</p>
 <ul>

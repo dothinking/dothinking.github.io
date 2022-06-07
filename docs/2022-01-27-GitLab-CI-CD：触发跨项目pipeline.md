@@ -22,7 +22,7 @@ tags: [GitLab]
 
 为简化表述，用`A`表示发布仓库，分别用`B1`、`B2`表示前、后端仓库，则可用下图表示以上流程。
 
-![general-flow](images/2022-01-27-01.png)
+![general-flow](images/2022-01-27-01.drawio.png)
 
 
 ## 具体流程
@@ -43,7 +43,7 @@ tags: [GitLab]
 
     类似上文所述`A`的流程，只不过此时需要根据原始仓库（即`B1`）确定只触发`B1`的流程，进而来到`B1`的`build`。
 
-![detail-flow](images/2022-01-27-02.png)
+![detail-flow](images/2022-01-27-02.drawio.png)
 
 
 ## 最终效果

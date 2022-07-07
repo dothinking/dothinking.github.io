@@ -152,7 +152,7 @@
                     <div class="col-md-9" role="main">
 
 <h1 id="spp">空间金字塔池化（SPP）关键参数计算<a class="headerlink" href="#spp" title="Permanent link">&para;</a></h1>
-<p>发布于：2022-07-03 | 分类：<a href="../categories/mathematics/">mathematics</a></p>
+<p>发布于：2022-07-03 | 分类：<a href="../categories/mathematics/">mathematics</a> , <a href="../categories/machine%20learning/">machine learning</a></p>
 <hr />
 <p>空间金字塔池化（Spatial Pyramid Pooling）方法关联了不定尺寸输出的卷积层和固定大小的全连接层，一方面可以适应不同尺寸图片输入，避免了统一图片大小的前处理操作；另一方面可以提取不同尺寸的空间特征信息，进而提升模型对于空间布局和物体变形的鲁棒性。SPP的基本原理请参考<a href="https://arxiv.org/abs/1406.4729">原论文</a>或<a href="https://zhuanlan.zhihu.com/p/64510297">相关解读</a>，本文基于输入输出尺寸，分析SPP关键参数例如窗口尺寸（kernel）、步长（stride）及边距（padding）的计算方法。</p>
 <h2 id="_1">问题提出<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
@@ -344,7 +344,7 @@ k \geq 2p \geq (n-1)*s+k-w => s \leq \frac {w} {n-1}
 <p>如果沿着青色箭头方向往 <span class="arithmatex"><span class="MathJax_Preview">P_2</span><script type="math/tex">P_2</script></span>方向走，窗口大小始终大于步长，即带重叠模式的池化。</p>
 </li>
 </ul>
-<p>以 <span class="arithmatex"><span class="MathJax_Preview">P_1</span><script type="math/tex">P_1</script></span> 方向为例，因为 <span class="arithmatex"><span class="MathJax_Preview">k,s</span><script type="math/tex">k,s</script></span> 都是正整数，我们取 <span class="arithmatex"><span class="MathJax_Preview">P_0</span><script type="math/tex">P_0</script></span> 右侧最接近的正整数值，即 $k = s = \lceil w/n \rceil $，于是得到了网上常见的初步修正的公式，即上文的公式（3）。</p>
+<p>以 <span class="arithmatex"><span class="MathJax_Preview">P_1</span><script type="math/tex">P_1</script></span> 方向为例，因为 <span class="arithmatex"><span class="MathJax_Preview">k,s</span><script type="math/tex">k,s</script></span> 都是正整数，我们取 <span class="arithmatex"><span class="MathJax_Preview">P_0</span><script type="math/tex">P_0</script></span> 右侧最接近的正整数值，即 <span class="arithmatex"><span class="MathJax_Preview">k = s = \lceil w / n \rceil</span><script type="math/tex">k = s = \lceil w / n \rceil</script></span> ，于是得到了网上常见的初步修正的公式，即上文的公式（3）。</p>
 <p>至此，可以解释和统一之前的计算方法。</p>
 <h3 id="3">公式（3）在什么情况下不再适用？<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
 <p>对照可行域图就很好解释了——绿色线段上可能不存在整数解。</p>

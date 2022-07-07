@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2022-07-03-%E7%A9%BA%E9%97%B4%E9%87%91%E5%AD%97%E5%A1%94%E6%B1%A0%E5%8C%96%EF%BC%88SPP%EF%BC%89%E5%85%B3%E9%94%AE%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>空间金字塔池化（SPP）关键参数计算 - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link href="../css/extra.css" rel="stylesheet">
+
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">分类 <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/CAD-CAE%20integration/" class="dropdown-item">CAD/CAE integration</a>
+</li>
+                                    
+<li>
+    <a href="../categories/devops/" class="dropdown-item">devops</a>
+</li>
+                                    
+<li>
+    <a href="../categories/feeling/" class="dropdown-item">feeling</a>
+</li>
+                                    
+<li>
+    <a href="../categories/finite%20element%20analysis/" class="dropdown-item">finite element analysis</a>
+</li>
+                                    
+<li>
+    <a href="../categories/machine%20learning/" class="dropdown-item">machine learning</a>
+</li>
+                                    
+<li>
+    <a href="../categories/mathematics/" class="dropdown-item">mathematics</a>
+</li>
+                                    
+<li>
+    <a href="../categories/numeric%20calculation/" class="dropdown-item">numeric calculation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/optimization/" class="dropdown-item">optimization</a>
+</li>
+                                    
+<li>
+    <a href="../categories/plasticity%20theory/" class="dropdown-item">plasticity theory</a>
+</li>
+                                    
+<li>
+    <a href="../categories/process%20automation/" class="dropdown-item">process automation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/python-vba-cpp/" class="dropdown-item">python/vba/cpp</a>
+</li>
+                                    
+<li>
+    <a href="../categories/web%20development/" class="dropdown-item">web development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="navitem">
+                                <a href="../archive/" class="nav-link">归档</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../about/" class="nav-link">关于</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2022-07-03-空间金字塔池化（SPP）关键参数计算.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#spp" class="nav-link">空间金字塔池化（SPP）关键参数计算</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">问题提出</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">原始论文公式</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">初步修正的公式</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_4" class="nav-link">可行域分析</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#_5" class="nav-link">完整算法</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="spp">空间金字塔池化（SPP）关键参数计算<a class="headerlink" href="#spp" title="Permanent link">&para;</a></h1>
+<p>发布于：2022-07-03 | 分类：<a href="../categories/mathematics/">mathematics</a></p>
+<hr />
+<p>空间金字塔池化（Spatial Pyramid Pooling）方法关联了不定尺寸输出的卷积层和固定大小的全连接层，一方面可以适应不同尺寸图片输入，避免了统一图片大小的前处理操作；另一方面可以提取不同尺寸的空间特征信息，进而提升模型对于空间布局和物体变形的鲁棒性。SPP的基本原理请参考<a href="https://arxiv.org/abs/1406.4729">原论文</a>或<a href="https://zhuanlan.zhihu.com/p/64510297">相关解读</a>，本文基于输入输出尺寸，分析SPP关键参数例如窗口尺寸（kernel）、步长（stride）及边距（padding）的计算方法。</p>
+<h2 id="_1">问题提出<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>已知卷积后输出尺寸 <span class="arithmatex"><span class="MathJax_Preview">(w, h)</span><script type="math/tex">(w, h)</script></span>，空间金字塔池化后目标输出 <span class="arithmatex"><span class="MathJax_Preview">(n_w, n_h)</span><script type="math/tex">(n_w, n_h)</script></span>，计算池化层的窗口尺寸<span class="arithmatex"><span class="MathJax_Preview">(k_w, k_h)</span><script type="math/tex">(k_w, k_h)</script></span>，步长<span class="arithmatex"><span class="MathJax_Preview">(s_w, s_h)</span><script type="math/tex">(s_w, s_h)</script></span>及边距<span class="arithmatex"><span class="MathJax_Preview">(p_w, p_h)</span><script type="math/tex">(p_w, p_h)</script></span>。为了简化描述，以下仅基于其中一个维度计算，另一维度采用完全相同的计算公式。因此，相应参数简化为：</p>
+<p><strong>已知输入、输出尺寸<span class="arithmatex"><span class="MathJax_Preview">w</span><script type="math/tex">w</script></span>和<span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>，求池化窗口尺寸<span class="arithmatex"><span class="MathJax_Preview">(k)</span><script type="math/tex">(k)</script></span>，步长<span class="arithmatex"><span class="MathJax_Preview">(s)</span><script type="math/tex">(s)</script></span>及边距<span class="arithmatex"><span class="MathJax_Preview">(p)</span><script type="math/tex">(p)</script></span></strong>。</p>
+<p>如果正向计算，公式为：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+n = \left \lfloor \frac {w+2p-k} {s} \right \rfloor + 1
+\tag{1}
+</div>
+<script type="math/tex; mode=display">
+n = \left \lfloor \frac {w+2p-k} {s} \right \rfloor + 1
+\tag{1}
+</script>
+</div>
+<p>其中 <span class="arithmatex"><span class="MathJax_Preview">\lfloor x \rfloor</span><script type="math/tex">\lfloor x \rfloor</script></span> 表示对<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>向下取整，例如 <span class="arithmatex"><span class="MathJax_Preview">\lfloor 1.5 \rfloor = 1</span><script type="math/tex">\lfloor 1.5 \rfloor = 1</script></span>，同理向上取整符号及例子：<span class="arithmatex"><span class="MathJax_Preview">\lceil 1.5 \rceil = 2</span><script type="math/tex">\lceil 1.5 \rceil = 2</script></span>。</p>
+<h2 id="_2">原始论文公式<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p><a href="https://arxiv.org/abs/1406.4729">原论文</a>中的计算公式：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+k = \left \lceil \frac {w} {n} \right \rceil, 
+\quad 
+s = \left \lfloor \frac {w} {n} \right \rfloor, 
+\quad
+p = 0
+\tag{2}
+</div>
+<script type="math/tex; mode=display">
+k = \left \lceil \frac {w} {n} \right \rceil, 
+\quad 
+s = \left \lfloor \frac {w} {n} \right \rfloor, 
+\quad
+p = 0
+\tag{2}
+</script>
+</div>
+<p>有些解读论文的博文指出了问题及反例：</p>
+<p>取 <span class="arithmatex"><span class="MathJax_Preview">w=7, n=4</span><script type="math/tex">w=7, n=4</script></span>，根据公式（2）得出 <span class="arithmatex"><span class="MathJax_Preview">k=2,s=1,p=0</span><script type="math/tex">k=2,s=1,p=0</script></span>，</p>
+<p>然而将池化参数带入公式（1）却得出矛盾的结果：<span class="arithmatex"><span class="MathJax_Preview">n=5</span><script type="math/tex">n=5</script></span>！</p>
+<div class="admonition warning">
+<p class="admonition-title">注意：</p>
+<p>这是作者为论文中特定场景提出的，确实并不具备（作者也没声明）通用性。</p>
+</div>
+<h2 id="_3">初步修正的公式<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>参考<a href="https://www.cnblogs.com/marsggbo/p/8572846.html">博文</a>，给出了如下通用性更好的公式：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+k = s = \left \lceil \frac {w} {n} \right \rceil \\\\
+p = \left \lfloor \frac {k*n-w+1} {2} \right \rfloor 
+\tag{3}
+</div>
+<script type="math/tex; mode=display">
+k = s = \left \lceil \frac {w} {n} \right \rceil \\\\
+p = \left \lfloor \frac {k*n-w+1} {2} \right \rfloor 
+\tag{3}
+</script>
+</div>
+<p>对上一个例子 <span class="arithmatex"><span class="MathJax_Preview">w=7, n=4</span><script type="math/tex">w=7, n=4</script></span>，根据公式（3）可以得出正确结果： <span class="arithmatex"><span class="MathJax_Preview">k=2,s=2,p=1</span><script type="math/tex">k=2,s=2,p=1</script></span>。</p>
+<p>但还是可以找到有问题的例子：</p>
+<p>取 <span class="arithmatex"><span class="MathJax_Preview">w=5, n=4</span><script type="math/tex">w=5, n=4</script></span>，根据公式（3）得出 <span class="arithmatex"><span class="MathJax_Preview">k=2,s=2,p=2</span><script type="math/tex">k=2,s=2,p=2</script></span>，</p>
+<p>带入公式（1）验证没问题，但是 <strong>pytorch要求 padding 不超过 kernel 的一半</strong> 即 <span class="arithmatex"><span class="MathJax_Preview">k &gt;= 2p</span><script type="math/tex">k >= 2p</script></span>，显然此处不满足。</p>
+<h2 id="_4">可行域分析<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>为了方便分析这个问题，先排除两种特殊情况：</p>
+<ul>
+<li>
+<p>当 <span class="arithmatex"><span class="MathJax_Preview">n&gt;w</span><script type="math/tex">n>w</script></span> 时，不符合SPP的物理意义</p>
+</li>
+<li>
+<p>当 <span class="arithmatex"><span class="MathJax_Preview">n=1</span><script type="math/tex">n=1</script></span> 即输出为1时，取窗口正好为输入尺寸：<span class="arithmatex"><span class="MathJax_Preview">k=w, s=1, p=0</span><script type="math/tex">k=w, s=1, p=0</script></span></p>
+</li>
+</ul>
+<p>于是在 <span class="arithmatex"><span class="MathJax_Preview">w \geq n \gt 1</span><script type="math/tex">w \geq n \gt 1</script></span> 条件下，列出以下限制条件/不等式：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+(n-1)*s+k-w \leq 2p \lt n*s+k-w
+\tag{4-1}
+</div>
+<script type="math/tex; mode=display">
+(n-1)*s+k-w \leq 2p \lt n*s+k-w
+\tag{4-1}
+</script>
+</div>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+0 \leq 2p \leq k
+\tag{4-2}
+</div>
+<script type="math/tex; mode=display">
+0 \leq 2p \leq k
+\tag{4-2}
+</script>
+</div>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+1 \leq s \leq k \leq w
+\tag{4-3}
+</div>
+<script type="math/tex; mode=display">
+1 \leq s \leq k \leq w
+\tag{4-3}
+</script>
+</div>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+(n-1)*s+k \geq w + p
+\tag{4-4}
+</div>
+<script type="math/tex; mode=display">
+(n-1)*s+k \geq w + p
+\tag{4-4}
+</script>
+</div>
+<p>其中，</p>
+<ul>
+<li>不等式（4-1）直接从等式（1）去掉取整符号得到；</li>
+<li>不等式（4-2）避免引入过多无意义的边距信息，也是 pytorch 中的一个限制；</li>
+<li>不等式（4-3）要求步长不大于窗口大小，否则跳过了有效区域；</li>
+<li>不等式（4-4）左边表示池化操作的实际作用范围，右边表示特征图的有效位置，因此整个式子要求池化操作覆盖所有有效区域。</li>
+</ul>
+<p>将不等式（4-1）左半部分取整得到 <span class="arithmatex"><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> 的计算公式：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+p = \left \lceil \frac {(n-1)*s + k - w} {2} \right \rceil 
+\tag{5}
+</div>
+<script type="math/tex; mode=display">
+p = \left \lceil \frac {(n-1)*s + k - w} {2} \right \rceil 
+\tag{5}
+</script>
+</div>
+<p>代入 <span class="arithmatex"><span class="MathJax_Preview">k=s</span><script type="math/tex">k=s</script></span>，公式（5）退化为公式（3）计算 <span class="arithmatex"><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> 的部分，表明它是公式（5）更具一般性，公式（3）的 <span class="arithmatex"><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> 只是一个特例。</p>
+<p>结合（4-1）左半部分和（4-2）右半部分：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+k \geq 2p \geq (n-1)*s+k-w =&gt; s \leq \frac {w} {n-1}
+</div>
+<script type="math/tex; mode=display">
+k \geq 2p \geq (n-1)*s+k-w => s \leq \frac {w} {n-1}
+</script>
+</div>
+<p>结合（4-1）右半部分和（4-3）：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+0 \leq 2p \lt n*s+k-w \leq n*k+k-w =&gt; k \gt \frac {w} {n+1}
+</div>
+<script type="math/tex; mode=display">
+0 \leq 2p \lt n*s+k-w \leq n*k+k-w => k \gt \frac {w} {n+1}
+</script>
+</div>
+<p>不等式（4-4）缩放一下去掉 <span class="arithmatex"><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+(n-1)*s+k \geq w
+</div>
+<script type="math/tex; mode=display">
+(n-1)*s+k \geq w
+</script>
+</div>
+<p>综合得到：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\begin{cases}
+    1 \leq s \leq \frac {w} {n-1} \\\\
+    \frac {w} {n+1} \lt k \leq w \\\\
+    k \geq s \\\\
+    k \geq (1-n)*s + w
+\end{cases}
+\tag{6}
+</div>
+<script type="math/tex; mode=display">
+\begin{cases}
+    1 \leq s \leq \frac {w} {n-1} \\\\
+    \frac {w} {n+1} \lt k \leq w \\\\
+    k \geq s \\\\
+    k \geq (1-n)*s + w
+\end{cases}
+\tag{6}
+</script>
+</div>
+<p>注意各个参数都是非负整数，但此刻先不做区分，直接线性规划求解可行域，得到下图。</p>
+<p><img alt="general-flow" src="../images/2022-07-03.drawio.png" /></p>
+<p>显然，解可能不唯一。我们先得到一个特征点 <span class="arithmatex"><span class="MathJax_Preview">P_0(w/n, w/n)</span><script type="math/tex">P_0(w/n, w/n)</script></span>，然后基于不同的策略有不同的选择：</p>
+<ul>
+<li>
+<p>如果沿着绿色箭头方向往 <span class="arithmatex"><span class="MathJax_Preview">P_1</span><script type="math/tex">P_1</script></span> 方向走，窗口大小始终与步长相等，即传统的池化模式。</p>
+</li>
+<li>
+<p>如果沿着青色箭头方向往 <span class="arithmatex"><span class="MathJax_Preview">P_2</span><script type="math/tex">P_2</script></span>方向走，窗口大小始终大于步长，即带重叠模式的池化。</p>
+</li>
+</ul>
+<p>以 <span class="arithmatex"><span class="MathJax_Preview">P_1</span><script type="math/tex">P_1</script></span> 方向为例，因为 <span class="arithmatex"><span class="MathJax_Preview">k,s</span><script type="math/tex">k,s</script></span> 都是正整数，我们取 <span class="arithmatex"><span class="MathJax_Preview">P_0</span><script type="math/tex">P_0</script></span> 右侧最接近的正整数值，即 $k = s = \lceil w/n \rceil $，于是得到了网上常见的初步修正的公式，即上文的公式（3）。</p>
+<p>至此，可以解释和统一之前的计算方法。</p>
+<h3 id="3">公式（3）在什么情况下不再适用？<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<p>对照可行域图就很好解释了——绿色线段上可能不存在整数解。</p>
+<p>例如例子中 <span class="arithmatex"><span class="MathJax_Preview">w=5,n=4</span><script type="math/tex">w=5,n=4</script></span>，绿色线段两个端点的 <span class="arithmatex"><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span> 坐标分别为 1.25 和 1.667，二者之间并不存在正整数。</p>
+<p>那么，公式（3）在什么条件下才适用呢？令 <span class="arithmatex"><span class="MathJax_Preview">w=a*n+b</span><script type="math/tex">w=a*n+b</script></span>，其中 <span class="arithmatex"><span class="MathJax_Preview">0 \leq b \lt n</span><script type="math/tex">0 \leq b \lt n</script></span>，则</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\frac {w} {n-1} = \frac {a*n+b} {n-1} = a + \frac {a+b} {n-1}
+</div>
+<script type="math/tex; mode=display">
+\frac {w} {n-1} = \frac {a*n+b} {n-1} = a + \frac {a+b} {n-1}
+</script>
+</div>
+<p>显然，<span class="arithmatex"><span class="MathJax_Preview">w/(n-1)</span><script type="math/tex">w/(n-1)</script></span> 的整数部分至少达到 <span class="arithmatex"><span class="MathJax_Preview">a+1</span><script type="math/tex">a+1</script></span> 即 <span class="arithmatex"><span class="MathJax_Preview">(a+b)/(n-1) \geq 1</span><script type="math/tex">(a+b)/(n-1) \geq 1</script></span> 时，绿色线段标注的可行域上才有整数解。因此，公式（3）的使用条件：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\left \lfloor \frac {w} {n} \right \rfloor + \left(w \mod n\right) + 1 \geq n
+\tag{7}
+</div>
+<script type="math/tex; mode=display">
+\left \lfloor \frac {w} {n} \right \rfloor + \left(w \mod n\right) + 1 \geq n
+\tag{7}
+</script>
+</div>
+<h3 id="3_1">如何处理公式（3）不适用的情况？<a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h3>
+<p>当 <span class="arithmatex"><span class="MathJax_Preview">w,n</span><script type="math/tex">w,n</script></span> 不满足不等式（7）时，公式（3）失效，那就走 <span class="arithmatex"><span class="MathJax_Preview">P_2</span><script type="math/tex">P_2</script></span> 的路线，如青色箭头所示：</p>
+<ul>
+<li>
+<p>此种情况下往右显然不存在可行的<span class="arithmatex"><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span>了，于是向左一步得到 <span class="arithmatex"><span class="MathJax_Preview">P_0</span><script type="math/tex">P_0</script></span> 附近的 <span class="arithmatex"><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span>；</p>
+</li>
+<li>
+<p>然后向上增大 <span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> 知道满足可行域要求。</p>
+</li>
+</ul>
+<p>以上过程反映了公式（2）的思路，但是为了更具通用性，确定 <span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> 时需要检查是否落在可行域内。将公式（2）中 <span class="arithmatex"><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span> 的表达式代入（4-4）的缩放式得到 <span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>，然后将 <span class="arithmatex"><span class="MathJax_Preview">k,s</span><script type="math/tex">k,s</script></span> 代入公式（5）计算 <span class="arithmatex"><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>，最终得到公式（2）的更一般形式：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+s = \left \lfloor \frac {w} {n} \right \rfloor,
+\quad
+k = w - (n-1)*s,
+\quad
+p = 0
+\tag{8}
+</div>
+<script type="math/tex; mode=display">
+s = \left \lfloor \frac {w} {n} \right \rfloor,
+\quad
+k = w - (n-1)*s,
+\quad
+p = 0
+\tag{8}
+</script>
+</div>
+<p>回到 <span class="arithmatex"><span class="MathJax_Preview">w=5,n=4</span><script type="math/tex">w=5,n=4</script></span> 的例子，代入上式得到 <span class="arithmatex"><span class="MathJax_Preview">k=2, s=1, p=0</span><script type="math/tex">k=2, s=1, p=0</script></span>，满足所有约束。</p>
+<div class="admonition warning">
+<p class="admonition-title">注意：</p>
+<p>上式和公式（2）的最直接区别是 <span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> 的计算方法。公式（2）在定义 <span class="arithmatex"><span class="MathJax_Preview">k,s</span><script type="math/tex">k,s</script></span> 的同时强行设定 <span class="arithmatex"><span class="MathJax_Preview">p=0</span><script type="math/tex">p=0</script></span>（或者说忽略了 <span class="arithmatex"><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> 的计算），实际上三者是相互关联的。公式（8）通过构造 <span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>，使 <span class="arithmatex"><span class="MathJax_Preview">p=0</span><script type="math/tex">p=0</script></span> 自然得到满足。</p>
+</div>
+<h2 id="_5">完整算法<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>适用条件：<span class="arithmatex"><span class="MathJax_Preview">w \geq n \gt 1</span><script type="math/tex">w \geq n \gt 1</script></span>，不满足此条件时，参考上文例外描述。
+特别说明：以下算法优先选择传统非重叠的池化方式，只有在无法满足时，才考虑重叠的池化方式。如果倾向于重叠的池化方式，则直接进入第（2）部分即可。</p>
+<p>（1）当 <span class="arithmatex"><span class="MathJax_Preview">\lfloor w/n \rfloor + \left(w \mod n\right) + 1 \geq n</span><script type="math/tex">\lfloor w/n \rfloor + \left(w \mod n\right) + 1 \geq n</script></span> 时，</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+s = k = \left \lceil \frac {w} {n} \right \rceil,
+\quad
+p = \left \lceil \frac {n*k - w} {2} \right \rceil 
+</div>
+<script type="math/tex; mode=display">
+s = k = \left \lceil \frac {w} {n} \right \rceil,
+\quad
+p = \left \lceil \frac {n*k - w} {2} \right \rceil 
+</script>
+</div>
+<p>（2）<span class="arithmatex"><span class="MathJax_Preview">\lfloor w/n \rfloor + \left(w \mod n\right) + 1 \lt n</span><script type="math/tex">\lfloor w/n \rfloor + \left(w \mod n\right) + 1 \lt n</script></span> 时，</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+s = \left \lfloor \frac {w} {n} \right \rfloor,
+\quad
+k = w - (n-1)*s,
+\quad
+p = 0
+</div>
+<script type="math/tex; mode=display">
+s = \left \lfloor \frac {w} {n} \right \rfloor,
+\quad
+k = w - (n-1)*s,
+\quad
+p = 0
+</script>
+</div></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+        <script src="../search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

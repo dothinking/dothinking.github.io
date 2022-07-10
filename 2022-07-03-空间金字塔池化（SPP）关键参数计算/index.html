@@ -195,7 +195,7 @@ p = 0
 <p>然而将池化参数带入公式（1）却得出矛盾的结果：<span class="arithmatex"><span class="MathJax_Preview">n=5</span><script type="math/tex">n=5</script></span>！</p>
 <div class="admonition warning">
 <p class="admonition-title">注意：</p>
-<p>这是作者为论文中特定场景提出的，确实并不具备（作者也没声明）通用性。</p>
+<p>这是作者为论文中特定场景提出的，确实并不具备（作者也没主张）其通用性。</p>
 </div>
 <h2 id="_3">初步修正的公式<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p>参考<a href="https://www.cnblogs.com/marsggbo/p/8572846.html">博文</a>，给出了如下通用性更好的公式：</p>
@@ -284,7 +284,7 @@ p = \left \lceil \frac {(n-1)*s + k - w} {2} \right \rceil
 \tag{5}
 </script>
 </div>
-<p>代入 <span class="arithmatex"><span class="MathJax_Preview">k=s</span><script type="math/tex">k=s</script></span>，公式（5）退化为公式（3）计算 <span class="arithmatex"><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> 的部分，表明它是公式（5）更具一般性，公式（3）的 <span class="arithmatex"><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> 只是一个特例。</p>
+<p>将 <span class="arithmatex"><span class="MathJax_Preview">k=s</span><script type="math/tex">k=s</script></span> 代入上式即可得到公式（3）中计算 <span class="arithmatex"><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> 的部分，表明上式更具一般性，公式（3）计算 <span class="arithmatex"><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> 的方法只是公式（5）一个特例。</p>
 <p>结合（4-1）左半部分和（4-2）右半部分：</p>
 <div class="arithmatex">
 <div class="MathJax_Preview">
@@ -345,8 +345,8 @@ k \geq 2p \geq (n-1)*s+k-w => s \leq \frac {w} {n-1}
 </li>
 </ul>
 <p>以 <span class="arithmatex"><span class="MathJax_Preview">P_1</span><script type="math/tex">P_1</script></span> 方向为例，因为 <span class="arithmatex"><span class="MathJax_Preview">k,s</span><script type="math/tex">k,s</script></span> 都是正整数，我们取 <span class="arithmatex"><span class="MathJax_Preview">P_0</span><script type="math/tex">P_0</script></span> 右侧最接近的正整数值，即 <span class="arithmatex"><span class="MathJax_Preview">k = s = \lceil w / n \rceil</span><script type="math/tex">k = s = \lceil w / n \rceil</script></span> ，于是得到了网上常见的初步修正的公式，即上文的公式（3）。</p>
-<p>至此，可以解释和统一之前的计算方法。</p>
-<h3 id="3">公式（3）在什么情况下不再适用？<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<p>至此，可以统一上文提及的计算方法，并且完美解释以下两个问题：</p>
+<h3 id="a3">（a）公式（3）在什么情况下不再适用？<a class="headerlink" href="#a3" title="Permanent link">&para;</a></h3>
 <p>对照可行域图就很好解释了——绿色线段上可能不存在整数解。</p>
 <p>例如例子中 <span class="arithmatex"><span class="MathJax_Preview">w=5,n=4</span><script type="math/tex">w=5,n=4</script></span>，绿色线段两个端点的 <span class="arithmatex"><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span> 坐标分别为 1.25 和 1.667，二者之间并不存在正整数。</p>
 <p>那么，公式（3）在什么条件下才适用呢？令 <span class="arithmatex"><span class="MathJax_Preview">w=a*n+b</span><script type="math/tex">w=a*n+b</script></span>，其中 <span class="arithmatex"><span class="MathJax_Preview">0 \leq b \lt n</span><script type="math/tex">0 \leq b \lt n</script></span>，则</p>
@@ -358,25 +358,63 @@ k \geq 2p \geq (n-1)*s+k-w => s \leq \frac {w} {n-1}
 \frac {w} {n-1} = \frac {a*n+b} {n-1} = a + \frac {a+b} {n-1}
 </script>
 </div>
-<p>显然，<span class="arithmatex"><span class="MathJax_Preview">w/(n-1)</span><script type="math/tex">w/(n-1)</script></span> 的整数部分至少达到 <span class="arithmatex"><span class="MathJax_Preview">a+1</span><script type="math/tex">a+1</script></span> 即 <span class="arithmatex"><span class="MathJax_Preview">(a+b)/(n-1) \geq 1</span><script type="math/tex">(a+b)/(n-1) \geq 1</script></span> 时，绿色线段标注的可行域上才有整数解。因此，公式（3）的使用条件：</p>
+<p>显然，<span class="arithmatex"><span class="MathJax_Preview">w/(n-1)</span><script type="math/tex">w/(n-1)</script></span> 的整数部分至少达到 <span class="arithmatex"><span class="MathJax_Preview">a+1</span><script type="math/tex">a+1</script></span> 即 <span class="arithmatex"><span class="MathJax_Preview">(a+b)/(n-1) \geq 1</span><script type="math/tex">(a+b)/(n-1) \geq 1</script></span> 时，绿色线段标注的可行域上才有整数解：</p>
 <div class="arithmatex">
 <div class="MathJax_Preview">
 \left \lfloor \frac {w} {n} \right \rfloor + \left(w \mod n\right) + 1 \geq n
-\tag{7}
 </div>
 <script type="math/tex; mode=display">
 \left \lfloor \frac {w} {n} \right \rfloor + \left(w \mod n\right) + 1 \geq n
+</script>
+</div>
+<p>进一步考虑端点上的情况，即上式取等号，此时 <span class="arithmatex"><span class="MathJax_Preview">w/(n-1)</span><script type="math/tex">w/(n-1)</script></span> 恰好为整数，且 <span class="arithmatex"><span class="MathJax_Preview">k=s=w/(n-1)</span><script type="math/tex">k=s=w/(n-1)</script></span>，参考公式（5）可知：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+p = \left \lceil \frac {n*k - w} {2} \right \rceil 
+  = \left \lceil \frac {w} {2 *(n-1)} \right \rceil 
+  = \left \lceil \frac {k} {2} \right \rceil 
+</div>
+<script type="math/tex; mode=display">
+p = \left \lceil \frac {n*k - w} {2} \right \rceil 
+  = \left \lceil \frac {w} {2 *(n-1)} \right \rceil 
+  = \left \lceil \frac {k} {2} \right \rceil 
+</script>
+</div>
+<p>结合 <span class="arithmatex"><span class="MathJax_Preview">k \geq 2p</span><script type="math/tex">k \geq 2p</script></span> 的限定条件，此时要求 <span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> 即 <span class="arithmatex"><span class="MathJax_Preview">w/(n-1)</span><script type="math/tex">w/(n-1)</script></span> 必须为偶数。</p>
+<p>综上，公式（3）的使用条件：</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+t = \left \lfloor \frac {w} {n} \right \rfloor + \left(w \mod n\right) + 1
+</div>
+<script type="math/tex; mode=display">
+t = \left \lfloor \frac {w} {n} \right \rfloor + \left(w \mod n\right) + 1
+</script>
+</div>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+t \gt n \quad \lor \quad
+\left(
+t = n \quad \land \quad w/(n-1) \mod 2 = 0
+\right)
+\tag{7}
+</div>
+<script type="math/tex; mode=display">
+t \gt n \quad \lor \quad
+\left(
+t = n \quad \land \quad w/(n-1) \mod 2 = 0
+\right)
 \tag{7}
 </script>
 </div>
-<h3 id="3_1">如何处理公式（3）不适用的情况？<a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h3>
+<p>其中，<span class="arithmatex"><span class="MathJax_Preview">\lor</span><script type="math/tex">\lor</script></span> 和 <span class="arithmatex"><span class="MathJax_Preview">\land</span><script type="math/tex">\land</script></span> 分别表示“或”和“且”。</p>
+<h3 id="b3">（b）如何处理公式（3）不适用的情况？<a class="headerlink" href="#b3" title="Permanent link">&para;</a></h3>
 <p>当 <span class="arithmatex"><span class="MathJax_Preview">w,n</span><script type="math/tex">w,n</script></span> 不满足不等式（7）时，公式（3）失效，那就走 <span class="arithmatex"><span class="MathJax_Preview">P_2</span><script type="math/tex">P_2</script></span> 的路线，如青色箭头所示：</p>
 <ul>
 <li>
 <p>此种情况下往右显然不存在可行的<span class="arithmatex"><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span>了，于是向左一步得到 <span class="arithmatex"><span class="MathJax_Preview">P_0</span><script type="math/tex">P_0</script></span> 附近的 <span class="arithmatex"><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span>；</p>
 </li>
 <li>
-<p>然后向上增大 <span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> 知道满足可行域要求。</p>
+<p>然后向上增大 <span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> 直到满足可行域要求。</p>
 </li>
 </ul>
 <p>以上过程反映了公式（2）的思路，但是为了更具通用性，确定 <span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> 时需要检查是否落在可行域内。将公式（2）中 <span class="arithmatex"><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span> 的表达式代入（4-4）的缩放式得到 <span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>，然后将 <span class="arithmatex"><span class="MathJax_Preview">k,s</span><script type="math/tex">k,s</script></span> 代入公式（5）计算 <span class="arithmatex"><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span>，最终得到公式（2）的更一般形式：</p>
@@ -404,9 +442,8 @@ p = 0
 <p>上式和公式（2）的最直接区别是 <span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span> 的计算方法。公式（2）在定义 <span class="arithmatex"><span class="MathJax_Preview">k,s</span><script type="math/tex">k,s</script></span> 的同时强行设定 <span class="arithmatex"><span class="MathJax_Preview">p=0</span><script type="math/tex">p=0</script></span>（或者说忽略了 <span class="arithmatex"><span class="MathJax_Preview">p</span><script type="math/tex">p</script></span> 的计算），实际上三者是相互关联的。公式（8）通过构造 <span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>，使 <span class="arithmatex"><span class="MathJax_Preview">p=0</span><script type="math/tex">p=0</script></span> 自然得到满足。</p>
 </div>
 <h2 id="_5">完整算法<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
-<p>适用条件：<span class="arithmatex"><span class="MathJax_Preview">w \geq n \gt 1</span><script type="math/tex">w \geq n \gt 1</script></span>，不满足此条件时，参考上文例外描述。
-特别说明：以下算法优先选择传统非重叠的池化方式，只有在无法满足时，才考虑重叠的池化方式。如果倾向于重叠的池化方式，则直接进入第（2）部分即可。</p>
-<p>（1）当 <span class="arithmatex"><span class="MathJax_Preview">\lfloor w/n \rfloor + \left(w \mod n\right) + 1 \geq n</span><script type="math/tex">\lfloor w/n \rfloor + \left(w \mod n\right) + 1 \geq n</script></span> 时，</p>
+<p><strong>已知输入、输出尺寸 <span class="arithmatex"><span class="MathJax_Preview">w</span><script type="math/tex">w</script></span> 和 <span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span>（<span class="arithmatex"><span class="MathJax_Preview">w \geq n</span><script type="math/tex">w \geq n</script></span>），求SPP池化层的窗口尺寸<span class="arithmatex"><span class="MathJax_Preview">(k)</span><script type="math/tex">(k)</script></span>，步长<span class="arithmatex"><span class="MathJax_Preview">(s)</span><script type="math/tex">(s)</script></span>及边距<span class="arithmatex"><span class="MathJax_Preview">(p)</span><script type="math/tex">(p)</script></span></strong>。</p>
+<p>（1）当满足不等式（7）时，</p>
 <div class="arithmatex">
 <div class="MathJax_Preview">
 s = k = \left \lceil \frac {w} {n} \right \rceil,
@@ -419,7 +456,7 @@ s = k = \left \lceil \frac {w} {n} \right \rceil,
 p = \left \lceil \frac {n*k - w} {2} \right \rceil 
 </script>
 </div>
-<p>（2）<span class="arithmatex"><span class="MathJax_Preview">\lfloor w/n \rfloor + \left(w \mod n\right) + 1 \lt n</span><script type="math/tex">\lfloor w/n \rfloor + \left(w \mod n\right) + 1 \lt n</script></span> 时，</p>
+<p>（2）当不满足不等式（7）时，</p>
 <div class="arithmatex">
 <div class="MathJax_Preview">
 s = \left \lfloor \frac {w} {n} \right \rfloor,
@@ -435,7 +472,8 @@ k = w - (n-1)*s,
 \quad
 p = 0
 </script>
-</div></div>
+</div>
+<p>注意：以上算法优先选择传统非重叠的池化方式，只有在无法满足时，才考虑重叠的池化方式。如果倾向于重叠的池化方式，则直接选择第（2）部分计算公式即可。</p></div>
             </div>
         </div>
 

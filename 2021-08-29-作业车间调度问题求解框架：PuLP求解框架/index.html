@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         <meta name="author" content="dothinking">
-        <link rel="canonical" href="https://dothinking.github.io/2021-08-29-%E4%BD%9C%E4%B8%9A%E8%BD%A6%E9%97%B4%E8%B0%83%E5%BA%A6%E9%97%AE%E9%A2%98%E6%B1%82%E8%A7%A3%E6%A1%86%E6%9E%B6%EF%BC%9APuLP%E6%B1%82%E8%A7%A3%E5%99%A8/">
+        <link rel="canonical" href="https://dothinking.github.io/2021-08-29-%E4%BD%9C%E4%B8%9A%E8%BD%A6%E9%97%B4%E8%B0%83%E5%BA%A6%E9%97%AE%E9%A2%98%E6%B1%82%E8%A7%A3%E6%A1%86%E6%9E%B6%EF%BC%9APuLP%E6%B1%82%E8%A7%A3%E6%A1%86%E6%9E%B6/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>作业车间调度问题求解框架：PuLP 求解器 - 格致</title>
+        <title>作业车间调度问题求解框架：PuLP 求解框架 - 格致</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -102,7 +102,7 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2021-08-29-作业车间调度问题求解框架：PuLP求解器.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2021-08-29-作业车间调度问题求解框架：PuLP求解框架.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -122,7 +122,7 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#pulp" class="nav-link">作业车间调度问题求解框架：PuLP 求解器</a>
+            <li class="nav-item" data-level="1"><a href="#pulp" class="nav-link">作业车间调度问题求解框架：PuLP 求解框架</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-level="2"><a href="#pulp_1" class="nav-link">PuLP</a>
               <ul class="nav flex-column">
@@ -151,10 +151,10 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="pulp">作业车间调度问题求解框架：PuLP 求解器<a class="headerlink" href="#pulp" title="Permanent link">&para;</a></h1>
+<h1 id="pulp">作业车间调度问题求解框架：PuLP 求解框架<a class="headerlink" href="#pulp" title="Permanent link">&para;</a></h1>
 <p>发布于：2021-08-29 | 分类：<a href="../categories/optimization/">optimization</a> , <a href="../categories/mathematics/">mathematics</a></p>
 <hr />
-<p>本文根据作业车间调度问题的数学描述，利用 Python 整数规划包 PuLP 进行建模和求解，并集成到 <code>jsp_framework</code> 框架中。</p>
+<p>本文根据作业车间调度问题的数学描述，利用 Python 整数规划框架 PuLP 进行建模，并分别使用默认的<code>CBC</code>求解器及商业求解器<code>Gurobi</code>求解。</p>
 <h2 id="pulp_1">PuLP<a class="headerlink" href="#pulp_1" title="Permanent link">&para;</a></h2>
 <p>PuLP 是开源基金会 <a href="https://github.com/coin-or">COIN-OR</a> (Computational Infrastructure for Operations Research) 维护的一个线性规划建模工具（LP modeler），内置了 CBC（COIN-OR Branch-and-Cut）求解器，也支持集成各种开源（如GLPK） 或者商业（CPLEX、GUROBI等）的线性规划求解器。</p>
 <blockquote>
@@ -273,7 +273,7 @@ s_{ik}-s_{ij} \geq p_{ij} - C*b_{jk}      &amp; (i,j), (i,k) \in \mathbb{O}, \,\
         problem.update_solution(solution) # update solution</code></pre>
 <div class="admonition warning">
 <p class="admonition-title">注意</p>
-<p>当前版本采用了默认的 CBC （COIN-OR Branch-and-Cut）求解器。</p>
+<p>当前版本支持 CBC（COIN-OR Branch-and-Cut）、SCIP （开源） 和 Gurobi（商业）求解器。其中 CBC 为 Pulp 默认求解器，开箱即用；其余二者需要自行下载安装和授权。</p>
 </div>
 <h3 id="pulp_3">PuLP 建模<a class="headerlink" href="#pulp_3" title="Permanent link">&para;</a></h3>
 <p>即上一代码片段 <code>self.__create_model(solution)</code> 的具体展开。</p>
@@ -361,7 +361,8 @@ names = ['ft06', 'la01', 'ft10', 'swv01', 'la38', \
 problems = [JSProblem(benchmark=name) for name in names]
 
 # solver
-solvers = [PuLPSolver(max_time=300)]
+solvers = [PuLPSolver(name=name, solver_name=name, max_time=300) \
+    for name in ('cbc', 'gurobi')]
 
 # solve 
 benchmark = BenchMark(problems=problems, solvers=solvers, num_threads=5)
@@ -370,19 +371,33 @@ benchmark.run(show_info=True)</code></pre>
 <pre class="highlight"><code>+----+---------+--------+---------------+--------------+----------+---------+-------+
 | ID | Problem | Solver | job x machine |   Optimum    | Solution | Error % |  Time |
 +----+---------+--------+---------------+--------------+----------+---------+-------+
-| 1  |   ft06  |  pulp  |     6 x 6     |      55      |   55.0   |   0.0   |  3.5  |
-| 2  |   la01  |  pulp  |     10 x 5    |     666      |  666.0   |   0.0   | 209.0 |
-| 3  |   ft10  |  pulp  |    10 x 10    |     930      |  1034.0  |   11.2  | 301.2 |
-| 4  |  swv01  |  pulp  |    20 x 10    |     1407     |  2941.0  |  109.0  | 301.2 |
-| 5  |   la38  |  pulp  |    15 x 15    |     1196     |  1769.0  |   47.9  | 301.2 |
-| 6  |   ta31  |  pulp  |    30 x 15    |     1764     | 13294.0  |  653.6  | 301.1 |
-| 7  |  swv12  |  pulp  |    50 x 10    | (2972, 3003) |  9527.0  |  218.9  | 309.9 |
-| 8  |   ta42  |  pulp  |    30 x 20    | (1867, 1956) | 23202.0  |  1113.8 | 507.1 |
-| 9  |   ta54  |  pulp  |    50 x 15    |     2839     | 26229.0  |  823.9  | 608.0 |
-| 10 |   ta70  |  pulp  |    50 x 20    |     2995     | 36851.0  |  1130.4 | 625.6 |
+| 1  |   ft06  |  cbc   |     6 x 6     |      55      |   55.0   |   0.0   |  3.5  |
+| 2  |   la01  |  cbc   |     10 x 5    |     666      |  666.0   |   0.0   | 209.0 |
+| 3  |   ft10  |  cbc   |    10 x 10    |     930      |  1034.0  |   11.2  | 301.2 |
+| 4  |  swv01  |  cbc   |    20 x 10    |     1407     |  2941.0  |  109.0  | 301.2 |
+| 5  |   la38  |  cbc   |    15 x 15    |     1196     |  1769.0  |   47.9  | 301.2 |
+| 6  |   ta31  |  cbc   |    30 x 15    |     1764     | 13294.0  |  653.6  | 301.1 |
+| 7  |  swv12  |  cbc   |    50 x 10    | (2972, 3003) |  9527.0  |  218.9  | 309.9 |
+| 8  |   ta42  |  cbc   |    30 x 20    | (1867, 1956) | 23202.0  |  1113.8 | 507.1 |
+| 9  |   ta54  |  cbc   |    50 x 15    |     2839     | 26229.0  |  823.9  | 608.0 |
+| 10 |   ta70  |  cbc   |    50 x 20    |     2995     | 36851.0  |  1130.4 | 625.6 |
 +----+---------+--------+---------------+--------------+----------+---------+-------+</code></pre>
-<p>计算效果并不理想，只有前两个问题即工序总数 50 以内得到了最优解，其余案例误差较大。由此表明，<strong>PuLP 默认的 CBC 求解器在作业车间调度问题上的性能不如 Google OR-Tools 的约束求解器 CpSolver</strong>。</p>
-<p>PuLP 支持其他求解器例如商业求解器 CPLEX 和 GUROBI，有机会可以对比一下结果。</p></div>
+<pre class="highlight"><code>+----+---------+--------+---------------+--------------+----------+---------+-------+
+| ID | Problem | Solver | job x machine |   Optimum    | Solution | Error % |  Time |
++----+---------+--------+---------------+--------------+----------+---------+-------+
+| 1  |   ft06  | gurobi |     6 x 6     |      55      |   55.0   |   0.0   |  0.7  |
+| 2  |   la01  | gurobi |     10 x 5    |     666      |  666.0   |   0.0   |  5.2  |
+| 3  |   ft10  | gurobi |    10 x 10    |     930      |  930.0   |   0.0   |  60.2 |
+| 4  |  swv01  | gurobi |    20 x 10    |     1407     |  1757.0  |   24.9  | 301.4 |
+| 5  |   la38  | gurobi |    15 x 15    |     1196     |  1196.0  |   0.0   | 300.9 |
+| 6  |   ta31  | gurobi |    30 x 15    |     1764     |  2142.0  |   21.4  | 304.5 |
+| 7  |  swv12  | gurobi |    50 x 10    | (2972, 3003) | unsolved |   n.a.  | 308.9 |
+| 8  |   ta42  | gurobi |    30 x 20    | (1867, 1956) |  2457.0  |   28.5  | 362.8 |
+| 9  |   ta54  | gurobi |    50 x 15    |     2839     | unsolved |   n.a.  | 607.6 |
+| 10 |   ta70  | gurobi |    50 x 20    |     2995     |  4513.0  |   50.7  | 608.2 |
++----+---------+--------+---------------+--------------+----------+---------+-------+</code></pre>
+<p><code>cbc</code>求解器的计算效果并不理想，只有前两个问题即工序总数 50 以内得到了最优解，其余案例误差较大。<code>Gurobi</code>的结果略有改进，前5题结果尚可，后5题或者无法求解或者误差较大，整体不如前文的OR-Tools 约束求解器。</p>
+<p>由此表明，对于作业车间调度问题，<strong>混合整数规划求解器</strong>（如CBC、Gurobi）的求解性能不如**约束求解器**（如Google OR-Tools 的CpSolver）。</p></div>
             </div>
         </div>
 

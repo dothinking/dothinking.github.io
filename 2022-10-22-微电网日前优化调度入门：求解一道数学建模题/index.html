@@ -215,7 +215,7 @@ class Model:
     def output(self): return np.array([v.value() for v in self.variables])</code></pre>
 <p>接下来依次建立电网、新能源（风机、光伏）及蓄电池的模型。</p>
 <h3 id="1">(1) 电网模型<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
-<p>电网模型继承自<code>Model</code>基类，同时新增了**卖电收益**属性，并且满足容量约束即每个时刻的出力不能超过限定值，目标函数为运行成本即用电费用与卖电收益的差值。</p>
+<p>电网模型继承自<code>Model</code>基类，同时新增了 <strong>卖电收益</strong> 属性，并且满足容量约束即每个时刻的出力不能超过限定值，目标函数为运行成本即用电费用与卖电收益的差值。</p>
 <p>直观地，任意时刻可以用一个变量 <span class="arithmatex"><span class="MathJax_Preview">p^i</span><script type="math/tex">p^i</script></span> 来表示电网的出力：正值表示从电网买电，或者负值表示卖电给电网。但是，<strong>事先并不知道 <span class="arithmatex"><span class="MathJax_Preview">p^i</span><script type="math/tex">p^i</script></span> 的正负</strong>，也就没法计算此刻的运行成本（不能将线性规划变量直接用于<code>if-else</code>语句中）。因此，引入买电、卖电两个中间变量来分开描述：</p>
 <ul>
 <li><span class="arithmatex"><span class="MathJax_Preview">p^i_f \geq 0</span><script type="math/tex">p^i_f \geq 0</script></span> 表示 <span class="arithmatex"><span class="MathJax_Preview">i</span><script type="math/tex">i</script></span> 时刻从电网买电量；</li>
@@ -278,7 +278,7 @@ c^i = p^i_f * u_1 * dt - p^i_t * u_2 * dt
         self.objective = pulp.lpSum([v*x for v,x in zip(vars_from, self.unit_cost)])*dt - \
             pulp.lpSum([v*x for v,x in zip(vars_to, self.unit_profit)])*dt</code></pre>
 <h3 id="2">(2) 新能源发电模型<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
-<p>将风机和光伏抽象为新能源发电模型，约束条件为**每一时刻的电力供应不大于预测出力，如果不允许弃风弃光的话，则等于预测出力值**。因此，在<code>Model</code>类基础上增加两个输入参数：</p>
+<p>将风机和光伏抽象为新能源发电模型，约束条件为 <strong>每一时刻的电力供应不大于预测出力，如果不允许弃风弃光的话，则等于预测出力值</strong>。因此，在<code>Model</code>类基础上增加两个输入参数：</p>
 <ul>
 <li><code>forecast</code>：每一时刻的出力预测，即一个列向量/数组/时间序列；</li>
 <li><code>allow_curtailment</code>：是否允许弃风弃光，默认允许。</li>
@@ -554,7 +554,7 @@ print(f'弃风率：{round(1-wt.utilization,4)}，弃光率：{round(1-pv.utiliz
 <pre class="highlight"><code>Status: Optimal
 全天总供电费用：1785.1532 元，负荷平均购电单价：0.5397 元/kWh
 弃风率：0.5399，弃光率：0.6923</code></pre>
-<p>因为可以根据经济最优选择合适的电力来源，这一调度方案的平均用电成本低于前两问。例如，凌晨时段网电电价本来就低，所以选择直接弃掉此时的风机和光伏电力（参考综合弃风弃光率）；高网电电价时段择机考虑风电和光伏。<a href="https://blog.csdn.net/kobeyu652453/article/details/106525235">这篇文章</a> 从电价解析的角度分析了这个问题，人为分析的策略与本文优化的结果很接近，可以作为参考。</p>
+<p>因为可以根据经济最优选择合适的电力来源，这一调度方案的平均用电成本低于前两问。例如，凌晨时段网电电价本来就低，所以选择直接弃掉此时的风机和光伏电力（参见弃风弃光率）；网电峰电时段择机考虑风电和光伏。<a href="https://blog.csdn.net/kobeyu652453/article/details/106525235">这篇文章</a> 从电价解析的角度分析了这个问题，人为分析的策略与本文优化的结果很接近，可以作为参考。</p>
 <p><img alt="img" src="../images/2022-10-22-01.png" /></p>
 <h3 id="3_1">(3) 最优日前调度方案二<a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h3>
 <blockquote>
@@ -583,13 +583,13 @@ print(f'弃风率：{round(1-wt.utilization,4)}，弃光率：{round(1-pv.utiliz
 <pre class="highlight"><code>Status: Optimal
 全天总供电费用：2210.4672 元，负荷平均购电单价：0.6683 元/kWh
 弃风率：0.0，弃光率：0.0</code></pre>
-<p>相比基础场景（1）第二问的平均用电成本0.6879，本方案用电成本有所降低。结合下图具体调度结果可知，蓄电池将凌晨高成本的新能源电力转移到了网电的峰电时段，因此比直接在凌晨时段卖高成本的新能源电力更为划算。<a href="https://blog.csdn.net/kobeyu652453/article/details/106562951">这篇文章</a>也有对这一问的解答，可以作为参考。</p>
+<p>相比基础场景（1）第二问的平均用电成本0.6879，本方案用电成本有所降低。结合下图具体调度可知，蓄电池将凌晨高成本的新能源电力转移到了网电的峰电时段，因此比直接在凌晨时段卖高成本的新能源电力更为划算。<a href="https://blog.csdn.net/kobeyu652453/article/details/106562951">这篇文章</a>也解答了本问题，可以作为参考。</p>
 <p><img alt="img" src="../images/2022-10-22-02.png" /></p>
 <h3 id="4_1">(4) 最优日前调度方案三<a class="headerlink" href="#4_1" title="Permanent link">&para;</a></h3>
 <blockquote>
 <p>问题：考虑蓄电池作用，且微网与电网允许交换功率不超过150kW，以负荷供电成本最小为目标（允许弃风弃光），建立优化模型，给出最优调度方案，包括各时段负荷的供电构成（kW）、全天总供电费用(元)和平均购电单价（元/kWh），分析可再生能源的利用情况及蓄电池参与调节后产生的影响。</p>
 </blockquote>
-<p>这一问是在上一调度方案的基础上允许弃风弃光，同理略作修改即可。</p>
+<p>这一调度方案是在问题（3）的基础上允许弃风弃光，同理略作修改即可。</p>
 <pre class="highlight"><code class="language-python"># grid
 grid = Grid(name='grid', capacity=150, unit_cost=unit_cost, unit_profit=unit_profit) 
 

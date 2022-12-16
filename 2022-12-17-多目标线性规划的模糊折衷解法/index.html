@@ -128,7 +128,7 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">多目标线性规划的模糊折衷算法</a>
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">模糊折衷算法</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -161,13 +161,20 @@
 <blockquote>
 <p>本节参考：<a href="https://imonce.github.io/2019/11/28/%E5%A4%9A%E7%9B%AE%E6%A0%87%E4%BC%98%E5%8C%96%E7%AE%80%E8%BF%B0/">多目标优化简述 </a></p>
 </blockquote>
-<h2 id="_3">多目标线性规划的模糊折衷算法<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h2 id="_3">模糊折衷算法<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p>多目标线性规划是多目标规划的子集，其中目标函数和约束都是线性函数形式。下面形式以最小化为例：</p>
-<p>$$
-\min \, \boldsymbol{Z} = \left[\boldsymbol{c}_1^T \boldsymbol{x}, ..., \boldsymbol{c}_n^T \boldsymbol{x} \right] \</p>
-<p>s.t. \quad \boldsymbol{A}\boldsymbol{x} \leq 0 \</p>
-<p>\quad\,\quad \boldsymbol{H}\boldsymbol{x} = 0
-$$</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\min \, \boldsymbol{Z} = \left[\boldsymbol{c}_1^T \boldsymbol{x}, ..., \boldsymbol{c}_n^T \boldsymbol{x} \right] \\
+s.t. \quad \boldsymbol{A}\boldsymbol{x} \leq 0 \\
+\quad\,\quad \boldsymbol{H}\boldsymbol{x} = 0
+</div>
+<script type="math/tex; mode=display">
+\min \, \boldsymbol{Z} = \left[\boldsymbol{c}_1^T \boldsymbol{x}, ..., \boldsymbol{c}_n^T \boldsymbol{x} \right] \\
+s.t. \quad \boldsymbol{A}\boldsymbol{x} \leq 0 \\
+\quad\,\quad \boldsymbol{H}\boldsymbol{x} = 0
+</script>
+</div>
 <p>本文参考以下文章实现多目标线性规划的模糊折衷算法：</p>
 <blockquote>
 <p>李学全,李辉;多目标线性规划的模糊折衷算法[J];中南大学学报(自然科学版);2004年03期</p>
@@ -190,20 +197,34 @@ u_i(\boldsymbol{x}) = \frac{z_i(\boldsymbol{x})-z_i^-(\boldsymbol{x})}{z_i^+(\bo
 </li>
 <li>
 <p>第一阶段，以最小化所有隶属度函数的最大值分量为规划目标，开展单目标线性规划；</p>
-<p>$$
-\min \, \lambda \</p>
-<p>s.t. \quad \lambda \geq u_i(\boldsymbol{x})  \</p>
-<p>\quad\,\quad \boldsymbol{A}\boldsymbol{x} \leq 0, \boldsymbol{H}\boldsymbol{x} = 0
-$$</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\min \, \lambda \\
+s.t. \quad \lambda \geq u_i(\boldsymbol{x})  \\    
+\quad\,\quad \boldsymbol{A}\boldsymbol{x} \leq 0, \boldsymbol{H}\boldsymbol{x} = 0
+</div>
+<script type="math/tex; mode=display">
+\min \, \lambda \\
+s.t. \quad \lambda \geq u_i(\boldsymbol{x})  \\    
+\quad\,\quad \boldsymbol{A}\boldsymbol{x} \leq 0, \boldsymbol{H}\boldsymbol{x} = 0
+</script>
+</div>
 <p>解得 <span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{x}^*</span><script type="math/tex">\boldsymbol{x}^*</script></span>，对应隶属度函数 <span class="arithmatex"><span class="MathJax_Preview">u^*(\boldsymbol{x})</span><script type="math/tex">u^*(\boldsymbol{x})</script></span>。</p>
 </li>
 <li>
 <p>第二阶段，以第一阶段求得的隶属度 <span class="arithmatex"><span class="MathJax_Preview">u^*(\boldsymbol{x})</span><script type="math/tex">u^*(\boldsymbol{x})</script></span> 为最大值约束，最小化所有隶属度函数之和，获得多目标折衷规划结果。</p>
-<p>$$
-\min \, \lambda = \frac{\Sigma_i {\lambda_i}}{n} \</p>
-<p>s.t. \quad u_i(\boldsymbol{x}) \leq \lambda_i \leq u^*(\boldsymbol{x})  \</p>
-<p>\quad\,\quad \boldsymbol{A}\boldsymbol{x} \leq 0, \boldsymbol{H}\boldsymbol{x} = 0
-$$</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\min \, \lambda = \frac{\Sigma_i {\lambda_i}}{n} \\
+s.t. \quad u_i(\boldsymbol{x}) \leq \lambda_i \leq u^*(\boldsymbol{x})  \\    
+\quad\,\quad \boldsymbol{A}\boldsymbol{x} \leq 0, \boldsymbol{H}\boldsymbol{x} = 0
+</div>
+<script type="math/tex; mode=display">
+\min \, \lambda = \frac{\Sigma_i {\lambda_i}}{n} \\
+s.t. \quad u_i(\boldsymbol{x}) \leq \lambda_i \leq u^*(\boldsymbol{x})  \\    
+\quad\,\quad \boldsymbol{A}\boldsymbol{x} \leq 0, \boldsymbol{H}\boldsymbol{x} = 0
+</script>
+</div>
 </li>
 </ul>
 <p>综上，对于 <span class="arithmatex"><span class="MathJax_Preview">n</span><script type="math/tex">n</script></span> 个目标的线性规划问题，需要进行 <span class="arithmatex"><span class="MathJax_Preview">2n+2</span><script type="math/tex">2n+2</script></span> 次单目标线性规划问题的求解。</p>
@@ -258,15 +279,26 @@ $$</p>
 </blockquote>
 <h2 id="_4">算例<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p>直接使用原论文中的例子：</p>
-<p>$$
-\max Z_1 = 2x_1 + 5x_2 + 7x_3 + x_4  \
-\max Z_2 = 4x_1 +  x_2 + 3x_3 + 11x_4  \
-\max Z_3 = 9x_1 + 3x_2 +  x_3 + 2x_4  \
-\min W_1 = 1.5x_1 + 2x_2 + 0.3x_3 + 3x_4  \
-\min W_2 = 0.5x_1 + x_2  + 0.7x_3 + 2x_4  \</p>
-<p>s.t. \quad 3x_1 + 4.5x_2 + 1.5x_3 + 7.5x_4 = 150  \
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\max Z_1 = 2x_1 + 5x_2 + 7x_3 + x_4  \\
+\max Z_2 = 4x_1 +  x_2 + 3x_3 + 11x_4  \\
+\max Z_3 = 9x_1 + 3x_2 +  x_3 + 2x_4  \\
+\min W_1 = 1.5x_1 + 2x_2 + 0.3x_3 + 3x_4  \\
+\min W_2 = 0.5x_1 + x_2  + 0.7x_3 + 2x_4  \\
+s.t. \quad 3x_1 + 4.5x_2 + 1.5x_3 + 7.5x_4 = 150  \\
 x_1 \geq 0, x_2 \geq 0, x_3 \geq 0, x_4 \geq 0
-$$</p>
+</div>
+<script type="math/tex; mode=display">
+\max Z_1 = 2x_1 + 5x_2 + 7x_3 + x_4  \\
+\max Z_2 = 4x_1 +  x_2 + 3x_3 + 11x_4  \\
+\max Z_3 = 9x_1 + 3x_2 +  x_3 + 2x_4  \\
+\min W_1 = 1.5x_1 + 2x_2 + 0.3x_3 + 3x_4  \\
+\min W_2 = 0.5x_1 + x_2  + 0.7x_3 + 2x_4  \\
+s.t. \quad 3x_1 + 4.5x_2 + 1.5x_3 + 7.5x_4 = 150  \\
+x_1 \geq 0, x_2 \geq 0, x_3 \geq 0, x_4 \geq 0
+</script>
+</div>
 <p>注意将最大化目标函数取反统一为最小化，然后按照 <code>pulp</code> 语法建模即可。最终结果与论文一致。</p>
 <pre class="highlight"><code class="language-python"># variables
 x = [pulp.LpVariable(name=f'x_{i+1}', lowBound=0) for i in range(4)]

@@ -12,13 +12,10 @@
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
         <link href="../css/extra.css" rel="stylesheet">
-
-        <script src="../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../js/bootstrap.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
     </head>
 
     <body>
@@ -213,7 +210,7 @@ errors.log
 <p class="admonition-title">注意</p>
 <p>默认情况下，便携式Python并未预置<code>pip</code>。如果需要安装第三方库，可以先安装<code>pip</code>，然后<code>python -m pip install xxx</code>安装需要的库。最后发布给用户使用时，删除<code>pip</code>以减小体积，且不影响已经安装的库。</p>
 <blockquote>
-<p><a href="https://baijiahao.baidu.com/s?id=1592976804446590381">嵌入式Python : 如何在U盘安装绿色版 Python</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/33900815">嵌入式Python : 如何在U盘安装绿色版 Python</a></p>
 </blockquote>
 </div>
 <h3 id="1">1. 新建空目录，初始化项目<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
@@ -325,13 +322,15 @@ def division(a, b):
                 <p>Copyright &copy; 2016 - 2021 Dothinking</p>
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
         <script>
             var base_url = "..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
-        <script src="../js/base.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
-        <script src="../search/main.js" defer></script>
+        <script src="../js/base.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+        <script src="../search/main.js"></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">

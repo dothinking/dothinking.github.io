@@ -12,13 +12,10 @@
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
         <link href="../css/extra.css" rel="stylesheet">
-
-        <script src="../js/jquery-1.10.2.min.js" defer></script>
-        <script src="../js/bootstrap.min.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
     </head>
 
     <body>
@@ -177,26 +174,26 @@
 <table>
 <thead>
 <tr>
-<th align="left">key</th>
-<th align="left">description</th>
+<th style="text-align: left;">key</th>
+<th style="text-align: left;">description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">bbox</td>
-<td align="left">图片区域：左上角、右下角坐标 (x0, y0, x1, y1)</td>
+<td style="text-align: left;">bbox</td>
+<td style="text-align: left;">图片区域：左上角、右下角坐标 (x0, y0, x1, y1)</td>
 </tr>
 <tr>
-<td align="left">width, height</td>
-<td align="left">图片原始宽度和高度</td>
+<td style="text-align: left;">width, height</td>
+<td style="text-align: left;">图片原始宽度和高度</td>
 </tr>
 <tr>
-<td align="left">ext</td>
-<td align="left">图片后缀名</td>
+<td style="text-align: left;">ext</td>
+<td style="text-align: left;">图片后缀名</td>
 </tr>
 <tr>
-<td align="left">image</td>
-<td align="left"><code>bytes</code>格式的图片内容</td>
+<td style="text-align: left;">image</td>
+<td style="text-align: left;"><code>bytes</code>格式的图片内容</td>
 </tr>
 </tbody>
 </table>
@@ -207,22 +204,22 @@
 <table>
 <thead>
 <tr>
-<th align="left">key</th>
-<th align="left">description</th>
+<th style="text-align: left;">key</th>
+<th style="text-align: left;">description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">xref</td>
-<td align="left">图片内容索引号，<code>fitz.Pixmap(doc, xref)</code>获取到位图内容</td>
+<td style="text-align: left;">xref</td>
+<td style="text-align: left;">图片内容索引号，<code>fitz.Pixmap(doc, xref)</code>获取到位图内容</td>
 </tr>
 <tr>
-<td align="left">smask</td>
-<td align="left">图片遮罩（Soft Mask）索引号，存储通道数据</td>
+<td style="text-align: left;">smask</td>
+<td style="text-align: left;">图片遮罩（Soft Mask）索引号，存储通道数据</td>
 </tr>
 <tr>
-<td align="left">width, height</td>
-<td align="left">图片原始宽度和高度</td>
+<td style="text-align: left;">width, height</td>
+<td style="text-align: left;">图片原始宽度和高度</td>
 </tr>
 </tbody>
 </table>
@@ -392,13 +389,15 @@ The turquoise color you see in the PDF is not part of the image, but part of PDF
                 <p>Copyright &copy; 2016 - 2021 Dothinking</p>
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
         <script>
             var base_url = "..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
         </script>
-        <script src="../js/base.js" defer></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
-        <script src="../search/main.js" defer></script>
+        <script src="../js/base.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+        <script src="../search/main.js"></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">

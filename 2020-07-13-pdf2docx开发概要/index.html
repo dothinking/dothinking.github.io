@@ -140,12 +140,12 @@
 <p>发布于：2020-07-13 | 分类：<a href="../categories/process%20automation/">process automation</a></p>
 <hr />
 <p><strong>PDF转Word</strong> 是一个古老的话题，其难点在于建立PDF基于元素位置的格式与Word基于内容的格式之间的映射关系。<a href="https://solidframework.net/"><code>Solid Documents</code></a>是这方面的佼佼者，其技术的应用案例：在线PDF转换网站<a href="https://smallpdf.com/pdf-to-word">Smallpdf</a>。</p>
-<p>在某个项目的调研过程中，作者尝试了这个话题，编写了一个用于转换PDF到Word的Python库<code>pdf2docx</code>——借助<code>PyMuPDF</code>从PDF文件提取内容，基于位置规则解析内容，最后用<code>python-docx</code>创建Word文件。</p>
+<p>在某个项目的调研过程中，我尝试了这个话题，编写了一个用于转换PDF到Word的Python库<code>pdf2docx</code>——借助<code>PyMuPDF</code>从PDF文件提取内容，基于位置规则解析内容，最后用<code>python-docx</code>创建Word文件。</p>
 <blockquote>
 <p><a href="https://github.com/dothinking/pdf2docx">https://github.com/dothinking/pdf2docx</a></p>
 </blockquote>
 <p>本文记录主要开发思路，具体细节随着版本升级可能略有差异。</p>
-<p><img alt="sample" src="https://camo.githubusercontent.com/a581ee7caccdcf093648d54445fcc689a32ef205a81594c94b2e410cbde07757/68747470733a2f2f73312e617831782e636f6d2f323032302f30382f30342f6144727978312e706e67" /></p>
+<p><img alt="sample" src="../images/2020-07-13.png" /></p>
 <h2 id="_1">思路<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <ul>
 <li>

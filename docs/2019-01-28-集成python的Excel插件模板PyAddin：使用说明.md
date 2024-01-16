@@ -87,7 +87,7 @@ tags: [VBA, python]
 
     默认情况下，便携式Python并未预置`pip`。如果需要安装第三方库，可以先安装`pip`，然后`python -m pip install xxx`安装需要的库。最后发布给用户使用时，删除`pip`以减小体积，且不影响已经安装的库。
     
-    > [嵌入式Python : 如何在U盘安装绿色版 Python](https://baijiahao.baidu.com/s?id=1592976804446590381)
+    > [嵌入式Python : 如何在U盘安装绿色版 Python](https://zhuanlan.zhihu.com/p/33900815)
 
 ### 1. 新建空目录，初始化项目
 

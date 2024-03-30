@@ -202,20 +202,8 @@ c_{ij} - c_{ik} \geq p_{ij} \,\, or \,\, c_{ik}-c_{ij}  \geq p_{ik} &amp; (i,j),
 <pre class="highlight"><code class="language-python">def NewIntervalVar(self, start, size, end, name): pass</code></pre>
 <p>其中，<code>start</code>、<code>end</code> 及 <code>size</code> 分别表示区间的开始、结束位置及区间的大小，并且始终满足 <span class="arithmatex"><span class="MathJax_Preview">start + size = end</span><script type="math/tex">start + size = end</script></span>。对于本问题，<code>start</code>、<code>end</code> 为上一步的 <span class="arithmatex"><span class="MathJax_Preview">s_{ij}</span><script type="math/tex">s_{ij}</script></span> 和 <span class="arithmatex"><span class="MathJax_Preview">c_{ij}</span><script type="math/tex">c_{ij}</script></span>，<code>size</code> 为工序加工时间常量。</p>
 <h2 id="jsp_framework">基于 <code>jsp_framework</code> 实现<a class="headerlink" href="#jsp_framework" title="Permanent link">&para;</a></h2>
-<p><code>OR-Tools</code> 的官方文档提供了一个求解作业车间调度问题的 <a href="https://developers.google.cn/optimization/scheduling/job_shop">完整案例</a>，本文将基于本系列的 <code>jsp_framework</code> 实现。</p>
-<ul>
-<li>
-<p>基本流程（参考 <a href="../2021-08-14-%E4%BD%9C%E4%B8%9A%E8%BD%A6%E9%97%B4%E8%B0%83%E5%BA%A6%E9%97%AE%E9%A2%98%E6%B1%82%E8%A7%A3%E6%A1%86%E6%9E%B6%EF%BC%9APython%E5%BB%BA%E6%A8%A1/">Python建模</a> 部分）：</p>
-<p>自定义一个继承自 <code>JSSolver</code> 的 <code>GoogleORCPSolver</code> 类，然后重点实现 <code>do_solve()</code> 方法。</p>
-</li>
-<li>
-<p>完整代码参考：</p>
-<blockquote>
-<p><a href="https://github.com/dothinking/jsp_framework/blob/dev/jsp_fwk/solver/ortools.py">https://github.com/dothinking/jsp_framework/blob/dev/jsp_fwk/solver/ortools.py</a></p>
-</blockquote>
-</li>
-</ul>
-<p>其中，</p>
+<p><code>OR-Tools</code> 的官方文档提供了一个求解作业车间调度问题的 <a href="https://developers.google.cn/optimization/scheduling/job_shop">完整案例</a>，本文将基于本系列的 <code>jsp_framework</code> 实现。参考 <a href="../2021-08-14-%E4%BD%9C%E4%B8%9A%E8%BD%A6%E9%97%B4%E8%B0%83%E5%BA%A6%E9%97%AE%E9%A2%98%E6%B1%82%E8%A7%A3%E6%A1%86%E6%9E%B6%EF%BC%9APython%E5%BB%BA%E6%A8%A1/">Python建模</a> 部分，基本流程为：</p>
+<p>自定义一个继承自 <code>JSSolver</code> 的 <code>GoogleORCPSolver</code> 类，然后重点实现 <code>do_solve()</code> 方法。完整代码参考<a href="https://github.com/dothinking/jsp_framework/blob/master/jsp/solver/ortools.py">ortools.py</a>。其中，</p>
 <ul>
 <li>
 <p>为了避免求解规模太大而失去响应，人为设定运行时间的上限：</p>
@@ -223,14 +211,13 @@ c_{ij} - c_{ik} \geq p_{ij} \,\, or \,\, c_{ik}-c_{ij}  \geq p_{ik} &amp; (i,j),
 </li>
 <li>
 <p>为了实时输出当前最优解，定义如下执行回调函数的类：</p>
-<pre class="highlight"><code class="language-python">
-class VarArraySolutionPrinter(cp_model.CpSolverSolutionCallback):
+<pre class="highlight"><code class="language-python">class VarArraySolutionPrinter(cp_model.CpSolverSolutionCallback):
     '''Output intermediate solutions.'''
-    def __init__(self, variables:dict, problem:JSProblem, solution:JSSolution):
+    def __init__(self, variables:dict, solver:JSSolver, solution:JSSolution):
         '''Initialize with variable map: operation step -&gt; OR-Tools variable.'''
         cp_model.CpSolverSolutionCallback.__init__(self)
         self.__variables = variables
-        self.__problem = problem
+        self.__solver = solver
         self.__solution = solution
 
     def on_solution_callback(self):
@@ -240,7 +227,7 @@ class VarArraySolutionPrinter(cp_model.CpSolverSolutionCallback):
             op.update_start_time(self.Value(var.start))
 
         # update solution
-        self.__problem.update_solution(self.__solution)</code></pre>
+        self.__solver.update_solution(self.__solution)</code></pre>
 <p>相应地，将普通的求解方式：</p>
 <pre class="highlight"><code class="language-python">status = solver.Solve(model)</code></pre>
 <p>改为：</p>
@@ -251,8 +238,8 @@ status = solver.SolveWithSolutionCallback(model, solution_printer)</code></pre>
 <h2 id="_2">计算实例<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>最后，求解几个标准问题。求解时间上限设定为300秒。</p>
 <pre class="highlight"><code class="language-python"># benchmark.py
-from jsp_fwk import (JSProblem, BenchMark)
-from jsp_fwk.solver import GoogleORCPSolver
+from jsp import (JSProblem, BenchMark)
+from jsp.solver import GoogleORCPSolver
 
 # problems
 names = ['ft06', 'la01', 'ft10', 'swv01', 'la38', \

@@ -241,10 +241,7 @@ s_{ik}-s_{ij} \geq p_{ij} - C*b_{jk}      &amp; (i,j), (i,k) \in \mathbb{O}, \,\
 </li>
 </ul>
 <h2 id="jsp_framework">基于 <code>jsp_framework</code> 实现<a class="headerlink" href="#jsp_framework" title="Permanent link">&para;</a></h2>
-<p>本文参考 <a href="https://github.com/KevinLu43/JSP-by-using-Mathematical-Programming-in-Python/">案例</a>，基于 <code>jsp_framework</code> 进行实现和集成，完整代码参考：</p>
-<blockquote>
-<p><a href="https://github.com/dothinking/jsp_framework/blob/dev/jsp_fwk/solver/pulp.py">https://github.com/dothinking/jsp_framework/blob/dev/jsp_fwk/solver/pulp.py</a></p>
-</blockquote>
+<p>本文参考 <a href="https://github.com/KevinLu43/JSP-by-using-Mathematical-Programming-in-Python/">案例</a>，基于 <code>jsp_framework</code> 进行实现和集成，完整代码<a href="https://github.com/dothinking/jsp_framework/blob/master/jsp/solver/pulp.py">参考</a>。</p>
 <h3 id="_2">基本流程<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
 <p>参考 <a href="../2021-08-14-%E4%BD%9C%E4%B8%9A%E8%BD%A6%E9%97%B4%E8%B0%83%E5%BA%A6%E9%97%AE%E9%A2%98%E6%B1%82%E8%A7%A3%E6%A1%86%E6%9E%B6%EF%BC%9APython%E5%BB%BA%E6%A8%A1/">Python建模</a>，自定义一个继承自 JSSolver 的 PuLPSolver 类，然后重点实现 <code>do_solve()</code> 方法。</p>
 <pre class="highlight"><code class="language-python">class PuLPSolver(JSSolver):
@@ -267,7 +264,7 @@ s_{ik}-s_{ij} \geq p_{ij} - C*b_{jk}      &amp; (i,j), (i,k) \in \mathbb{O}, \,\
         # assign pulp solution back to JSPSolution
         for op, var in variables.items():
             op.update_start_time(var.varValue)        
-        problem.update_solution(solution) # update solution</code></pre>
+        self.update_solution(solution) # update solution</code></pre>
 <div class="admonition warning">
 <p class="admonition-title">注意</p>
 <p>当前版本支持 CBC（COIN-OR Branch-and-Cut）、SCIP （开源） 和 Gurobi（商业）求解器。其中 CBC 为 Pulp 默认求解器，开箱即用；其余二者需要自行下载安装和授权。</p>
@@ -325,8 +322,8 @@ model += s_max</code></pre>
 <li>最大加工周期约束</li>
 </ul>
 <pre class="highlight"><code class="language-python"># (1) the max start time
-for _, ops in solution.job_ops.items():
-    last_op = ops[-1]
+for job in solution.job_ops:
+    last_op = job.tail_job_op
     model += (s_max-variables[last_op]) &gt;= last_op.source.duration</code></pre>
 <ul>
 <li>作业视角的工序顺序约束</li>
@@ -347,10 +344,10 @@ for op_a, op_b in combinations:
 </li>
 </ul>
 <h2 id="_3">计算实例<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<p>最后，求解几个标准问题。与Google OR-Tools一样，求解时间上限设定为300秒。</p>
+<p>最后，求解几个标准问题。与 Google OR-Tools 一样，求解时间上限设定为300秒。</p>
 <pre class="highlight"><code class="language-python"># benchmark.py
-from jsp_fwk import (JSProblem, BenchMark)
-from jsp_fwk.solver import PuLPSolver
+from jsp import (JSProblem, BenchMark)
+from jsp.solver import PuLPSolver
 
 # problems
 names = ['ft06', 'la01', 'ft10', 'swv01', 'la38', \

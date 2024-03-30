@@ -133,11 +133,11 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#4 5" class="nav-link">开启/关闭自动计算 4 5</a>
+            <li class="nav-item" data-level="2"><a href="#_4" class="nav-link">开启/关闭自动计算</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#_4" class="nav-link">引用管理</a>
+            <li class="nav-item" data-level="2"><a href="#_5" class="nav-link">引用管理</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -196,7 +196,7 @@ if status:
 # reset protection status
 if status:
     sheet.Protect()</code></pre>
-<h2 id="4 5">开启/关闭自动计算 <sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> <sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup><a class="headerlink" href="#4 5" title="Permanent link">&para;</a></h2>
+<h2 id="_4">开启/关闭自动计算 <sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> <sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup><a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p>Excel默认开启自动计算，那么当工作表内单元格公式非常多时，每录入一个数据都将触发相关单元格的更新计算，影响操作效率。因此此种情况下，一般先设置为手动更新，待输入完成后设置自动更新。以下为示例代码：</p>
 <pre class="highlight"><code class="language-python"># sample Excel and workbook
 app = win32com.client.Dispatch("Excel.Application")
@@ -218,7 +218,7 @@ app.Calculation = -4135 # xlCalculationManual
 # 
 app.Calculation = -4105
 wb.Application.CalculateFullRebuild()</code></pre>
-<h2 id="_4">引用管理<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h2 id="_5">引用管理<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
 <p>VBA代码可能跨工作簿引用函数，例如COM组件中的类和方法，但前期可能没有正确加载该引用。手工加载引用的流程为：<code>Developer</code> -&gt; <code>Visual basic</code> -&gt; <code>Tools</code> -&gt; <code>References...</code>，而<code>workbook.VBProject.References</code>则从程序设置的角度管理当前VBA工程已经添加的引用。</p>
 <p>一个引用通常包含名称、路径、版本号等信息，我们首先可以遍历显示所有已加载引用的信息：</p>
 <pre class="highlight"><code class="language-python">for ref in wb.VBProject.References:

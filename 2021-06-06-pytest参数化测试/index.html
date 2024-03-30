@@ -125,19 +125,19 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#pytestfixture 1" class="nav-link">从pytest.fixture()开始 1</a>
+            <li class="nav-item" data-level="2"><a href="#pytestfixture" class="nav-link">从pytest.fixture()开始</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#pytestmarkparametrize 2" class="nav-link">再到@pytest.mark.parametrize 2</a>
+            <li class="nav-item" data-level="2"><a href="#pytestmarkparametrize" class="nav-link">再到@pytest.mark.parametrize</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#3" class="nav-link">动态生成参数化测试案例 3</a>
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">动态生成参数化测试案例</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#4 5" class="nav-link">注册命令行参数 4 5</a>
+            <li class="nav-item" data-level="2"><a href="#_3" class="nav-link">注册命令行参数</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -163,7 +163,7 @@
 <li>默认测试所有案例</li>
 <li>如果输入参数<code>n</code>，则只测试前<code>n</code>个案例</li>
 </ul>
-<h2 id="pytestfixture 1">从pytest.fixture()开始 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup><a class="headerlink" href="#pytestfixture 1" title="Permanent link">&para;</a></h2>
+<h2 id="pytestfixture">从pytest.fixture()开始 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup><a class="headerlink" href="#pytestfixture" title="Permanent link">&para;</a></h2>
 <p>顾名思义，<code>fixture</code>是辅助测试函数的工装夹具，其中<code>params</code>参数提供了参数化输入的功能，每一个参数都会被创建为一个独立的测试案例。一个简单的例子：</p>
 <pre class="highlight"><code class="language-python"># test.py
 import pytest
@@ -186,7 +186,7 @@ test.py::test[test-002] Testing test-002
 PASSED
 test.py::test[test-003] Testing test-003
 PASSED</code></pre>
-<h2 id="pytestmarkparametrize 2">再到@pytest.mark.parametrize <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup><a class="headerlink" href="#pytestmarkparametrize 2" title="Permanent link">&para;</a></h2>
+<h2 id="pytestmarkparametrize">再到@pytest.mark.parametrize <sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup><a class="headerlink" href="#pytestmarkparametrize" title="Permanent link">&para;</a></h2>
 <p>与<code>fixture</code>类似，<code>pytest.mark.parametrize</code>装饰器也提供了参数化输入的功能。<code>fixture</code>例子中，测试函数的参数<code>get_input</code>是一个<code>fixture</code>，本例中<code>get_input</code>是一个自定义的参数名称。</p>
 <pre class="highlight"><code class="language-python">import pytest
 
@@ -197,7 +197,7 @@ inputs = ['test-001', 'test-002', 'test-003']
 def test(get_input):
     print(f'Testing {get_input}')</code></pre>
 <p>以上两种方式都满足了 <strong>为每一个样本创建独立测试案例</strong> 的需求，然而问题是输入参数是以硬编码的方式写死的，可扩展性很差。于是，引出了下面的参数化测试方法。</p>
-<h2 id="3">动态生成参数化测试案例 <sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup><a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<h2 id="_2">动态生成参数化测试案例 <sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup><a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p><code>pytest_generate_tests(metafunc)</code>是pytest自带的在收集测试函数时调用的钩子函数，以便按照自定义方式、动态地生成参数化方案。其中，<code>metafunc</code>参数可以检查请求的测试上下文，</p>
 <ul>
 <li>
@@ -220,7 +220,7 @@ def pytest_generate_tests(metafunc):
 def test(get_input):
     print(f'Testing {get_input}')</code></pre>
 <p>这个例子不再直接给出硬编码的<code>test-001</code>~<code>test-003</code>，而是根据需要动态生成的，这为实际应用带来无限可能。但是，其中测试案例个数<code>3</code>还是硬编码方式写入的！为了实现终极目标，我们必须引入命令行参数。</p>
-<h2 id="4 5">注册命令行参数 <sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> <sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup><a class="headerlink" href="#4 5" title="Permanent link">&para;</a></h2>
+<h2 id="_3">注册命令行参数 <sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> <sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup><a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p><code>pytest_addoption(parser)</code>是另一个pytest钩子函数，可以让用户注册一个自定义的命令行参数，然后通过<code>fixture</code>或其他钩子获取用户输入。</p>
 <ul>
 <li><code>parser.addoption</code>注册命令行参数</li>

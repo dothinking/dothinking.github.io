@@ -129,11 +129,11 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#1" class="nav-link">官方示例 1</a>
+            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">官方示例</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">调用自定义函数</a>
+            <li class="nav-item" data-level="2"><a href="#_2" class="nav-link">调用自定义函数</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -168,7 +168,7 @@ python setup.py install
 
 <p>导入mlab库后即可方便地使用matlab函数了：</p>
 <pre class="highlight"><code class="language-python">from mlab.releases import latest_release as matlab</code></pre>
-<h2 id="1">官方示例 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup><a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<h2 id="_1">官方示例 <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <pre class="codehilite"><code>from mlab.releases import latest_release as matlab
 import numpy as np
 
@@ -177,7 +177,7 @@ matlab.surf(np.subtract.outer(np.sin(x),np.cos(x)))
 </code></pre>
 
 <p><img alt="" src="../images/2015-11-15-01.png" /></p>
-<h2 id="_1">调用自定义函数<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h2 id="_2">调用自定义函数<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>当然，也可以调用自定义的matlab函数。例如新建函数文件<code>myfun.m</code>，保存在当前python代码所在目录：</p>
 <pre class="codehilite"><code>function [y1, y2] = myfun(x,y)
     y1 = x + 1;

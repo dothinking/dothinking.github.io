@@ -182,9 +182,9 @@
     '''General Priority Dispatching Solver.'''    
 
     def do_solve(self, problem: JSProblem):
-        solution = JSSolution(problem=problem)
+        solution = JSSolution(problem=problem, direct_mode=False)
         self.solving_iteration(solution=solution)
-        problem.update_solution(solution=solution)
+        self.update_solution(solution=solution)
 
 
     def solving_iteration(self, solution:JSSolution):
@@ -194,19 +194,17 @@
 
         # dispatch operation by priority
         while head_ops:
-            # sort by priority            
-            head_ops.sort(key=lambda op: self.__dispatching_rule(op, solution))
-
             # dispatch operation with the first priority
-            op = head_ops[0]
+            op = min(head_ops, key=lambda op: self.__dispatching_rule(op, solution))
             solution.dispatch(op)
 
             # update imminent operations
+            pos = head_ops.index(op)
             next_job_op = op.next_job_op
             if next_job_op is None:
-                head_ops = head_ops[1:]
+                head_ops = head_ops[0:pos] + head_ops[pos+1:]
             else:
-                head_ops[0] = next_job_op</code></pre>
+                head_ops[pos] = next_job_op</code></pre>
 <p>其中，定义规则的函数签名为：</p>
 <pre class="highlight"><code class="language-python">def user_defined_rule(op:OperationStep, solution:JSSolution):
     pass</code></pre>
@@ -286,8 +284,8 @@
 <p><code>HH</code> 优先加工可以尽早开始的工序，在此基础上选择相对复杂的工序，即具备条件且复杂度高的事情先做</p>
 </li>
 </ul>
-<pre class="highlight"><code class="language-python">from jsp_fwk import (JSProblem, BenchMark)
-from jsp_fwk.solver import PriorityDispatchSolver
+<pre class="highlight"><code class="language-python">from jsp import (JSProblem, BenchMark)
+from jsp.solver import PriorityDispatchSolver
 
 # create problem from benchmark
 names = ['ft06', 'la01', 'ft10', 'swv01', 'la38', 'ta24', \

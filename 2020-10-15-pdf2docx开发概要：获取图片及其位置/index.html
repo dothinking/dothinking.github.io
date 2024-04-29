@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,9 +10,13 @@
         <link rel="shortcut icon" href="../img/favicon.ico">
         <title>pdf2docx开发概要：获取图片及其位置 - 格致</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
-        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
         <link href="../css/extra.css" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
         <script>hljs.highlightAll();</script> 
@@ -23,7 +27,7 @@
             <div class="container">
                 <a class="navbar-brand" href="..">格致</a>
                 <!-- Expander button -->
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -31,8 +35,8 @@
                 <div id="navbar-collapse" class="navbar-collapse collapse">
                         <!-- Main navigation -->
                         <ul class="nav navbar-nav">
-                            <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">分类 <b class="caret"></b></a>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">分类</a>
                                 <ul class="dropdown-menu">
                                     
 <li>
@@ -84,22 +88,22 @@
 </li>
                                 </ul>
                             </li>
-                            <li class="navitem">
+                            <li class="nav-item">
                                 <a href="../archive/" class="nav-link">归档</a>
                             </li>
-                            <li class="navitem">
+                            <li class="nav-item">
                                 <a href="../about/" class="nav-link">关于</a>
                             </li>
                         </ul>
 
-                    <ul class="nav navbar-nav ml-auto">
+                    <ul class="nav navbar-nav ms-md-auto">
                         <li class="nav-item">
-                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2020-10-15-pdf2docx开发概要：获取图片及其位置.md" class="nav-link"><i class="fa fa-github"></i> Edit on GitHub</a>
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2020-10-15-pdf2docx开发概要：获取图片及其位置.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
                             </li>
                     </ul>
                 </div>
@@ -108,44 +112,44 @@
 
         <div class="container">
             <div class="row">
-                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
     <div class="navbar-header">
-        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
             <span class="fa fa-angle-down"></span>
         </button>
     </div>
 
     
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#pdf2docx" class="nav-link">pdf2docx开发概要：获取图片及其位置</a>
+            <li class="nav-item" data-bs-level="1"><a href="#pdf2docx" class="nav-link">pdf2docx开发概要：获取图片及其位置</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#pagegettextrawdict pagegetimagelist" class="nav-link">page.getText('rawdict') 与 page.getImageList()</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#1 rawdictgetimagelist" class="nav-link">1. rawdict或getImageList获取图片的背景色错误</a>
+            <li class="nav-item" data-bs-level="2"><a href="#pagegettextrawdict pagegetimagelist" class="nav-link">page.getText('rawdict') 与 page.getImageList()</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#2 getimagelist" class="nav-link">2. getImageList不包含同一图片的不同实例</a>
+            <li class="nav-item" data-bs-level="2"><a href="#1 rawdictgetimagelist" class="nav-link">1. rawdict或getImageList获取图片的背景色错误</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#3 rawdict" class="nav-link">3. rawdict仅包含完全显示在页面内的图片</a>
+            <li class="nav-item" data-bs-level="2"><a href="#2 getimagelist" class="nav-link">2. getImageList不包含同一图片的不同实例</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#4 rawdict" class="nav-link">4. rawdict可能包含“虚假”图片</a>
+            <li class="nav-item" data-bs-level="2"><a href="#3 rawdict" class="nav-link">3. rawdict仅包含完全显示在页面内的图片</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#5 pdf" class="nav-link">5. PDF扫描图片的一些例外</a>
+            <li class="nav-item" data-bs-level="2"><a href="#4 rawdict" class="nav-link">4. rawdict可能包含“虚假”图片</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-level="2"><a href="#_1" class="nav-link">总结</a>
+            <li class="nav-item" data-bs-level="2"><a href="#5 pdf" class="nav-link">5. PDF扫描图片的一些例外</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_1" class="nav-link">总结</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -389,8 +393,7 @@ The turquoise color you see in the PDF is not part of the image, but part of PDF
                 <p>Copyright &copy; 2016 - 2021 Dothinking</p>
             <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
-        <script src="../js/jquery-3.6.0.min.js"></script>
-        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/bootstrap.bundle.min.js"></script>
         <script>
             var base_url = "..",
                 shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
@@ -404,7 +407,7 @@ The turquoise color you see in the PDF is not part of the image, but part of PDF
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="searchModalLabel">Search</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p>From here you can search these documents. Enter your search terms below.</p>
@@ -424,7 +427,7 @@ The turquoise color you see in the PDF is not part of the image, but part of PDF
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <table class="table">

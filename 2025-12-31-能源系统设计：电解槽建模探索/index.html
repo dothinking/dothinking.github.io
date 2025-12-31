@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2025-12-31-%E8%83%BD%E6%BA%90%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%EF%BC%9A%E7%94%B5%E8%A7%A3%E6%A7%BD%E5%BB%BA%E6%A8%A1%E6%8E%A2%E7%B4%A2/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>能源系统设计：电解槽建模探索 - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="../css/extra.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">分类</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/CAD-CAE%20integration/" class="dropdown-item">CAD/CAE integration</a>
+</li>
+                                    
+<li>
+    <a href="../categories/devops/" class="dropdown-item">devops</a>
+</li>
+                                    
+<li>
+    <a href="../categories/energy/" class="dropdown-item">energy</a>
+</li>
+                                    
+<li>
+    <a href="../categories/feeling/" class="dropdown-item">feeling</a>
+</li>
+                                    
+<li>
+    <a href="../categories/finite%20element%20analysis/" class="dropdown-item">finite element analysis</a>
+</li>
+                                    
+<li>
+    <a href="../categories/machine%20learning/" class="dropdown-item">machine learning</a>
+</li>
+                                    
+<li>
+    <a href="../categories/mathematics/" class="dropdown-item">mathematics</a>
+</li>
+                                    
+<li>
+    <a href="../categories/numeric%20calculation/" class="dropdown-item">numeric calculation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/optimization/" class="dropdown-item">optimization</a>
+</li>
+                                    
+<li>
+    <a href="../categories/plasticity%20theory/" class="dropdown-item">plasticity theory</a>
+</li>
+                                    
+<li>
+    <a href="../categories/process%20automation/" class="dropdown-item">process automation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/python-vba-cpp/" class="dropdown-item">python/vba/cpp</a>
+</li>
+                                    
+<li>
+    <a href="../categories/web%20development/" class="dropdown-item">web development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../archive/" class="nav-link">归档</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../about/" class="nav-link">关于</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2025-12-31-能源系统设计：电解槽建模探索.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#_1" class="nav-link">能源系统设计：电解槽建模探索</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#_2" class="nav-link">问题描述</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#vs" class="nav-link">电解槽整体模型 v.s. 分组模型</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#vs_1" class="nav-link">电解槽线性模型 v.s. 分段线性模型</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#vs_2" class="nav-link">电解槽启停约束 v.s. 无启停约束</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="_1">能源系统设计：电解槽建模探索<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>发布于：2025-12-31 | 分类：<a href="../categories/energy/">energy</a> , <a href="../categories/mathematics/">mathematics</a> , <a href="../categories/optimization/">optimization</a></p>
+<hr />
+<p>电解槽是氢氨醇能源系统的一个关键组件，负责将可再生能源电力转换为绿氢。在能源系统优化设计中，电解槽模型可能影响系统容量配置及调度策略。本文通过数值实验探究电解槽建模的关键参数如电耗系数、启停约束、分组策略等对绿氢生产的影响。</p>
+<h2 id="_2">问题描述<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>假设一个简单的能源系统如下图所示，包含45MW风电、25MW光伏、20MW电解槽和储氢罐等主要组件。本文不涉及具体组件的数学建模过程，而是在假定已经具备模型的基础上，以最小化运行成本为目标函数，求解并对比不同电解槽建模方式下的绿氢生产。主要对比项目如下：</p>
+<ul>
+<li>
+<p>电解槽整体模型 v.s. 分组模型</p>
+</li>
+<li>
+<p>电解槽线性模型 v.s. 分段线性模型</p>
+</li>
+<li>
+<p>电解槽启停约束 v.s. 无启停约束</p>
+</li>
+</ul>
+<pre class="highlight"><code>                          │      ┌───────┐      │                 
+                          │      │  H2   ◄──────┼                 
+            ┌──────┐      │      │ TANK  │      │                 
+            │ WIND │      │      │ 32kNm3┼──────►                 
+            │ 45MW ┼──────►      └───────┘      │                 
+            └──────┘      │                     │                 
+                          │                     │       ┌──────┐  
+                          │      ┌───────┐      ├───────►  H2  │  
+                          │      │  ALK  │      │       └──────┘  
+            ┌──────┐      ┼──────►  20MW ┼──────►                 
+            │  PV  │      │      │       │      │                 
+            │ 25MW ┼──────┤      └───────┘      │                 
+            └──────┘      │                     │                 
+                          │                     │                 
+                          ▼                     ▼                 
+                     electricity             hydrogen             </code></pre>
+<p>数值仿真时间范围为间隔1小时的一周共计24*7=168小时，相应风光出力曲线如下图所示。</p>
+<p><img alt="" src="../images/2025-12-31-01.png" /></p>
+<h2 id="vs">电解槽整体模型 v.s. 分组模型<a class="headerlink" href="#vs" title="Permanent link">&para;</a></h2>
+<p>假设电解槽单槽参数如下表所示。整体建模表示将20MW电解槽作为一个整体进行优化计算，分组建模则表示将20MW电解槽拆分为4个5MW的单槽。相比分组建模，整体建模明显减少变量数，计算效率高；但是最低工作功率 20x30%=6MW，相比实际单槽的 5x30%=1.5MW 高出很多，不利于弱风弱光场景下（例如风光出力曲线的[72,96]区间）的新能源消纳。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">额定功率</th>
+<th style="text-align: center;">平均电耗</th>
+<th style="text-align: center;">工作区间</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">5MW</td>
+<td style="text-align: center;">5.18 kWh/Nm3</td>
+<td style="text-align: center;">30%-100%</td>
+</tr>
+</tbody>
+</table>
+<p>通过优化计算得到电解槽消纳风光功率的曲线如下图所示。可以看到，弱风弱光区间 [78,102] 内，整体建模的电解槽因为此刻风光功率低于工作区间下限而处于停机状态，而分组模型则可以启动部分电解槽工作。最终，分组模型相比整体模型提升绿氢产量约 3.51%。</p>
+<p><img alt="" src="../images/2025-12-31-02.png" /></p>
+<p><strong>本质上，整体模型等效于假定4个单体电解槽具有完全相同的行为，进而合并为一个虚拟电解槽。因此，通过简化模型提升了计算效率，同时因为简化带来的强约束（单体电解槽行为一致）也导致精度的损失</strong>。</p>
+<p>从当前试验来看，3.51% 的差异还算可以接受；此外，此类系统通常配置储能，在储能的调节下，这个差异可以进一步减小。例如，在原系统基础上引入 6MW/12MWh 的储能后，两种建模方式的绿氢产量差异可以减小到0.22%。</p>
+<p><img alt="" src="../images/2025-12-31-03.png" /></p>
+<p>综上，实际使用中，<strong>可以视场景需求选择整体模型或分组模型</strong>。</p>
+<h2 id="vs_1">电解槽线性模型 v.s. 分段线性模型<a class="headerlink" href="#vs_1" title="Permanent link">&para;</a></h2>
+<p>上一组试验我们采用的是线性模型，即假设电解槽在任何工作功率下电耗均为 5.18 kWh/Nm3。然而，实际电解槽的电耗通常是非线性的，即不同工作功率对应不同的电耗系数。我们选择有限功率点后进行分段线性化，即可得到分段线性模型，如下图所示。</p>
+<p><img alt="" src="../images/2025-12-31-04.png" /></p>
+<p>分段线性模型将引入更多变量，必然影响计算效率，但相比简单线性模型是否更能准确反映电解槽的行为例如最终的产氢量？从电耗曲线图来看，二者确实差异较大。但转换为相应功率点下的单位氢气产量图，如下所示，二者则相当接近。因此，可以推论分段线性模型相比线性模型对最终产氢量的影响应该不大。</p>
+<p><img alt="" src="../images/2025-12-31-05.png" /></p>
+<p>接下来看看数值试验结果是否支持这一推论。我们采用分组模型分别建模4台电解槽，然后对比简单线性和分段线性模型的功率消耗（下图）及绿氢产量。结果发现，简单线性模型的绿氢产量增加了 0.67%。也就是说，分段线性模型以较大计算效率损失为代价，仅仅带来了 0.67% 的精度提升。</p>
+<p>综上，<strong>使用分段线性模型的意义并不大</strong>。</p>
+<p><img alt="" src="../images/2025-12-31-06.png" /></p>
+<p>最后，验证一下分段线性模型的实施效果以及探究为什么简单线性模型的绿氢产量高于分段线性模型。将4个电解槽在所有时刻的电耗计算值分别绘制散点图和频率图，如下所示。</p>
+<ul>
+<li>
+<p>从散点图可以看到，分段线性模型在各个功率点的电耗计算值与理论输入值基本一致，验证模型约束正确。</p>
+</li>
+<li>
+<p>从频率图可以看到，输入功率基本集中在 [90%,100%] 区间；结合本节第一张图，此区间内简单线性模型的电耗系数正好小于分段线性模型，因为简单线性模型的制氢量会稍高。</p>
+</li>
+</ul>
+<p><img alt="" src="../images/2025-12-31-07.png" /></p>
+<p><img alt="" src="../images/2025-12-31-08.png" /></p>
+<h2 id="vs_2">电解槽启停约束 v.s. 无启停约束<a class="headerlink" href="#vs_2" title="Permanent link">&para;</a></h2>
+<p>能源系统优化计算需要兼顾频繁启停电解槽对使用寿命的影响。启停约束一般通过引入启停成本到目标函数来间接实现，相应地，计算时间也会显著增加。</p>
+<p>本节基于简单线性、分组电解槽模型，分别施加和不施加启停约束，得到功率消耗结果如下图所示。如果不约束启停，4个电解槽在弱风弱光区间都存在频繁启停的现象；而一旦约束后，1-3号电解槽处于停机状态，仅由4号电解槽进行功率消耗。从最终制氢量来看，施加启停约束导致制氢量略微减小（-0.013%）。</p>
+<p>综上，<strong>在更多关注氢气产量例如配置优化的场景下，可以忽略启停约束以提高计算效率；而调度优化场景下，则需要施加启停约束以确保调度合理性</strong>。</p>
+<p><img alt="" src="../images/2025-12-31-09.png" /></p>
+<p><img alt="" src="../images/2025-12-31-10.png" /></p>
+<p><img alt="" src="../images/2025-12-31-11.png" /></p>
+<p><img alt="" src="../images/2025-12-31-12.png" /></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

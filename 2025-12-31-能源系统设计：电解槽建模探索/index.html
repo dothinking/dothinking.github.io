@@ -137,11 +137,19 @@
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-bs-level="2"><a href="#vs_1" class="nav-link">电解槽线性模型 v.s. 分段线性模型</a>
+            <li class="nav-item" data-bs-level="2"><a href="#vs vs" class="nav-link">电解槽电耗模型：简单线性 v.s. 分段线性 v.s. 阶梯函数</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-            <li class="nav-item" data-bs-level="2"><a href="#vs_2" class="nav-link">电解槽启停约束 v.s. 无启停约束</a>
+            <li class="nav-item" data-bs-level="2"><a href="#vs_1" class="nav-link">电解槽启停约束 v.s. 无启停约束</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#vs_2" class="nav-link">电解槽爬坡约束 v.s. 无爬坡约束</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_3" class="nav-link">结果汇总</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -157,16 +165,21 @@
 <hr />
 <p>电解槽是氢氨醇能源系统的一个关键组件，负责将可再生能源电力转换为绿氢。在能源系统优化设计中，电解槽模型可能影响系统容量配置及调度策略。本文通过数值实验探究电解槽建模的关键参数如电耗系数、启停约束、分组策略等对绿氢生产的影响。</p>
 <h2 id="_2">问题描述<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>假设一个简单的能源系统如下图所示，包含45MW风电、25MW光伏、20MW电解槽和储氢罐等主要组件。本文不涉及具体组件的数学建模过程，而是在假定已经具备模型的基础上，以最小化运行成本为目标函数，求解并对比不同电解槽建模方式下的绿氢生产。主要对比项目如下：</p>
+<p>假设一个简单的能源系统如下图所示，包含45MW风电、25MW光伏、20MW电解槽和储氢罐等主要组件。本文不涉及具体组件的数学建模过程，而是在假定已经具备模型的基础上，求解并对比不同电解槽建模方式下的绿氢生产。</p>
+<p>数值仿真时间范围为间隔1小时的一周共计24*7=168小时，容量配置已知，目标函数为最小化运行成本，即进行调度优化。求解器为开源的 <a href="https://github.com/ERGO-Code/Highs">HiGHS</a>。</p>
+<p>主要对比项目如下：</p>
 <ul>
 <li>
 <p>电解槽整体模型 v.s. 分组模型</p>
 </li>
 <li>
-<p>电解槽线性模型 v.s. 分段线性模型</p>
+<p>电解槽电耗简单线性模型 v.s. 分段线性模型 v.s. 阶梯函数模型</p>
 </li>
 <li>
 <p>电解槽启停约束 v.s. 无启停约束</p>
+</li>
+<li>
+<p>电解槽爬坡约束 v.s. 无爬坡约束</p>
 </li>
 </ul>
 <pre class="highlight"><code>                          │      ┌───────┐      │                 
@@ -185,7 +198,7 @@
                           │                     │                 
                           ▼                     ▼                 
                      electricity             hydrogen             </code></pre>
-<p>数值仿真时间范围为间隔1小时的一周共计24*7=168小时，相应风光出力曲线如下图所示。</p>
+<p>风光出力曲线如下图所示。</p>
 <p><img alt="" src="../images/2025-12-31-01.png" /></p>
 <h2 id="vs">电解槽整体模型 v.s. 分组模型<a class="headerlink" href="#vs" title="Permanent link">&para;</a></h2>
 <p>假设电解槽单槽参数如下表所示。整体建模表示将20MW电解槽作为一个整体进行优化计算，分组建模则表示将20MW电解槽拆分为4个5MW的单槽。相比分组建模，整体建模明显减少变量数，计算效率高；但是最低工作功率 20x30%=6MW，相比实际单槽的 5x30%=1.5MW 高出很多，不利于弱风弱光场景下（例如风光出力曲线的[72,96]区间）的新能源消纳。</p>
@@ -200,7 +213,7 @@
 <tbody>
 <tr>
 <td style="text-align: center;">5MW</td>
-<td style="text-align: center;">5.18 kWh/Nm3</td>
+<td style="text-align: center;">5.20 kWh/Nm3</td>
 <td style="text-align: center;">30%-100%</td>
 </tr>
 </tbody>
@@ -211,33 +224,149 @@
 <p>从当前试验来看，3.51% 的差异还算可以接受；此外，此类系统通常配置储能，在储能的调节下，这个差异可以进一步减小。例如，在原系统基础上引入 6MW/12MWh 的储能后，两种建模方式的绿氢产量差异可以减小到0.22%。</p>
 <p><img alt="" src="../images/2025-12-31-03.png" /></p>
 <p>综上，实际使用中，<strong>可以视场景需求选择整体模型或分组模型</strong>。</p>
-<h2 id="vs_1">电解槽线性模型 v.s. 分段线性模型<a class="headerlink" href="#vs_1" title="Permanent link">&para;</a></h2>
-<p>上一组试验我们采用的是线性模型，即假设电解槽在任何工作功率下电耗均为 5.18 kWh/Nm3。然而，实际电解槽的电耗通常是非线性的，即不同工作功率对应不同的电耗系数。我们选择有限功率点后进行分段线性化，即可得到分段线性模型，如下图所示。</p>
-<p><img alt="" src="../images/2025-12-31-04.png" /></p>
-<p>分段线性模型将引入更多变量，必然影响计算效率，但相比简单线性模型是否更能准确反映电解槽的行为例如最终的产氢量？从电耗曲线图来看，二者确实差异较大。但转换为相应功率点下的单位氢气产量图，如下所示，二者则相当接近。因此，可以推论分段线性模型相比线性模型对最终产氢量的影响应该不大。</p>
-<p><img alt="" src="../images/2025-12-31-05.png" /></p>
-<p>接下来看看数值试验结果是否支持这一推论。我们采用分组模型分别建模4台电解槽，然后对比简单线性和分段线性模型的功率消耗（下图）及绿氢产量。结果发现，简单线性模型的绿氢产量增加了 0.67%。也就是说，分段线性模型以较大计算效率损失为代价，仅仅带来了 0.67% 的精度提升。</p>
-<p>综上，<strong>使用分段线性模型的意义并不大</strong>。</p>
-<p><img alt="" src="../images/2025-12-31-06.png" /></p>
-<p>最后，验证一下分段线性模型的实施效果以及探究为什么简单线性模型的绿氢产量高于分段线性模型。将4个电解槽在所有时刻的电耗计算值分别绘制散点图和频率图，如下所示。</p>
+<h2 id="vs vs">电解槽电耗模型：简单线性 v.s. 分段线性 v.s. 阶梯函数<a class="headerlink" href="#vs vs" title="Permanent link">&para;</a></h2>
+<p>电解槽的电耗通常是非线性的，即不同工作功率对应不同的电耗系数。上一组试验我们采用的是简单线性模型，即假设电解槽在任何工作功率下的电耗均为 5.20 kWh/Nm3。另外，我们还可以采用分段线性函数或者阶梯函数简化电耗非线性，如下图所示。</p>
 <ul>
 <li>
-<p>从散点图可以看到，分段线性模型在各个功率点的电耗计算值与理论输入值基本一致，验证模型约束正确。</p>
+<p>分段线性模型：将电耗曲线表示为多个功率区间，电耗系数在每一个功率区间内进行线性化。</p>
 </li>
 <li>
-<p>从频率图可以看到，输入功率基本集中在 [90%,100%] 区间；结合本节第一张图，此区间内简单线性模型的电耗系数正好小于分段线性模型，因为简单线性模型的制氢量会稍高。</p>
+<p>阶梯函数模型：将电耗曲线表示为多个功率区间，电耗系数在每一个功率区间内保持不变。</p>
 </li>
 </ul>
+<p><img alt="" src="../images/2025-12-31-04.png" /></p>
+<p>分段线性或者阶梯函数模型都引入了更多变量，必然影响计算效率，但相比简单线性模型是否更能准确反映电解槽的行为例如最终的产氢量？从电耗曲线来看，三者确实差异较大。但转换为相应功率点下的单位氢气产量，如下图所示，虽然阶梯函数模型相比简单线性模型更为接近分段线性模型曲线，整体上三者相当接近。因此，可以推论无论分段线性模型还是阶梯函数模型，相比线性模型对最终产氢量的影响应该不大。</p>
+<p><img alt="" src="../images/2025-12-31-05.png" /></p>
+<p>接下来看看数值试验结果是否支持这一推论。我们采用分组模型分别建模4台电解槽，然后对比各个模型的功率消耗（下图）及绿氢产量。结果发现，以简单线性模型为基准，分段线性模型的绿氢产量减少了 0.67%，阶梯函数模型则增加了0.49% —— 也就是说，分段线性和阶梯函数模型以较大计算效率损失为代价，仅仅带来了微弱的精度提升。</p>
+<p>因此，可以得出结论：<strong>使用分段线性或者阶梯函数模型的实际意义并不大</strong>。</p>
+<p><img alt="" src="../images/2025-12-31-06.png" /></p>
+<p>最后，验证一下分段线性和阶梯模型的实施效果。将4个电解槽在所有时刻的电耗计算值绘制成散点图，如下所示，两个模型在各个功率点的电耗计算值与理论输入值基本一致，验证模型约束正确。</p>
 <p><img alt="" src="../images/2025-12-31-07.png" /></p>
-<p><img alt="" src="../images/2025-12-31-08.png" /></p>
-<h2 id="vs_2">电解槽启停约束 v.s. 无启停约束<a class="headerlink" href="#vs_2" title="Permanent link">&para;</a></h2>
+<p>最后，留下一个思考题：</p>
+<p>这个计算案例中，为什么分段线性模型和阶梯函数模型的绿氢产量相比简单线性模型分别是偏低和偏高？</p>
+<h2 id="vs_1">电解槽启停约束 v.s. 无启停约束<a class="headerlink" href="#vs_1" title="Permanent link">&para;</a></h2>
 <p>能源系统优化计算需要兼顾频繁启停电解槽对使用寿命的影响。启停约束一般通过引入启停成本到目标函数来间接实现，相应地，计算时间也会显著增加。</p>
 <p>本节基于简单线性、分组电解槽模型，分别施加和不施加启停约束，得到功率消耗结果如下图所示。如果不约束启停，4个电解槽在弱风弱光区间都存在频繁启停的现象；而一旦约束后，1-3号电解槽处于停机状态，仅由4号电解槽进行功率消耗。从最终制氢量来看，施加启停约束导致制氢量略微减小（-0.013%）。</p>
-<p>综上，<strong>在更多关注氢气产量例如配置优化的场景下，可以忽略启停约束以提高计算效率；而调度优化场景下，则需要施加启停约束以确保调度合理性</strong>。</p>
+<p>综上，针对具体需求可灵活调整启停约束：<strong>在更多关注氢气产量例如配置优化的场景下，可以忽略启停约束以提高计算效率；而调度优化场景下，则需要考虑启停约束以确保调度方案的合理性</strong>。</p>
 <p><img alt="" src="../images/2025-12-31-09.png" /></p>
 <p><img alt="" src="../images/2025-12-31-10.png" /></p>
 <p><img alt="" src="../images/2025-12-31-11.png" /></p>
-<p><img alt="" src="../images/2025-12-31-12.png" /></p></div>
+<p><img alt="" src="../images/2025-12-31-12.png" /></p>
+<h2 id="vs_2">电解槽爬坡约束 v.s. 无爬坡约束<a class="headerlink" href="#vs_2" title="Permanent link">&para;</a></h2>
+<p>电解槽的爬坡约束用于限制其功率变化速率，以保护设备安全运行。类似启停约束，爬坡约束也会增加计算复杂度。</p>
+<p>由于本文数值仿真时间步长较大，人为限定正负爬坡率不超过30%/h（碱液电解槽实际爬坡率大于此值），以突出爬坡约束效果。本节基于简单线性、分组电解槽模型，得到施加爬坡约束前后的功率消耗结果如下图所示。二者在功率急剧变化区间存在差异，例如t=48-49h，无爬坡约束时，功率变化达到了12MW，超出了爬坡限制 20*30%=6MW；施加爬坡约束后，功率平缓下降。爬坡约束限制了电解槽消纳波动的可再生能源的能力，因此最终氢气产量降低了1.56%。</p>
+<p><img alt="" src="../images/2025-12-31-13.png" /></p>
+<p><img alt="" src="../images/2025-12-31-14.png" /></p>
+<h2 id="_3">结果汇总<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>通过以上数值实验，我们可以看出不同电解槽建模方式对能源系统设计的影响。</p>
+<ul>
+<li>
+<p>整体模型适用于计算效率要求较高的场景，而分组模型则在弱风弱光条件下表现更好。</p>
+</li>
+<li>
+<p>电耗模型方面，简单线性模型已能较好地反映电解槽行为，分段线性和阶梯函数模型的优势有限。</p>
+</li>
+<li>
+<p>启停和爬坡约束则需根据具体需求灵活调整，以平衡计算效率和调度合理性。</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">序<br>号</th>
+<th style="text-align: center;">整体<br>模型</th>
+<th style="text-align: center;">分组<br>模型</th>
+<th style="text-align: center;">简单<br>线性</th>
+<th style="text-align: center;">分段<br>线性</th>
+<th style="text-align: center;">阶梯<br>函数</th>
+<th style="text-align: center;">启停<br>约束</th>
+<th style="text-align: center;">爬坡<br>约束</th>
+<th style="text-align: center;">计算<br>时间</th>
+<th style="text-align: center;">氢气<br>产量</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">1.12</td>
+<td style="text-align: center;"></td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">2.43</td>
+<td style="text-align: center;">+3.51%</td>
+<td>对比1</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">12.08</td>
+<td style="text-align: center;">-0.23%</td>
+<td>对比2</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">62.57</td>
+<td style="text-align: center;">+0.49%</td>
+<td>对比2</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">11.16</td>
+<td style="text-align: center;">-0.013%</td>
+<td>对比2</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">x</td>
+<td style="text-align: center;">5.92</td>
+<td style="text-align: center;">-1.56%</td>
+<td>对比2</td>
+</tr>
+</tbody>
+</table></div>
             </div>
         </div>
 

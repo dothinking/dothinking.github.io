@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2026-05-04-%E5%9F%BA%E4%BA%8EGPT2%E7%9A%84%E5%8F%A4%E8%AF%97%E7%94%9F%E6%88%90%E5%99%A8%EF%BC%9A%E7%9B%91%E7%9D%A3%E5%BE%AE%E8%B0%83%E7%AF%87/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>基于GPT2的古诗生成器 —— SFT 篇 - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="../css/extra.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">分类</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/CAD-CAE%20integration/" class="dropdown-item">CAD/CAE integration</a>
+</li>
+                                    
+<li>
+    <a href="../categories/devops/" class="dropdown-item">devops</a>
+</li>
+                                    
+<li>
+    <a href="../categories/energy/" class="dropdown-item">energy</a>
+</li>
+                                    
+<li>
+    <a href="../categories/feeling/" class="dropdown-item">feeling</a>
+</li>
+                                    
+<li>
+    <a href="../categories/finite%20element%20analysis/" class="dropdown-item">finite element analysis</a>
+</li>
+                                    
+<li>
+    <a href="../categories/machine%20learning/" class="dropdown-item">machine learning</a>
+</li>
+                                    
+<li>
+    <a href="../categories/mathematics/" class="dropdown-item">mathematics</a>
+</li>
+                                    
+<li>
+    <a href="../categories/numeric%20calculation/" class="dropdown-item">numeric calculation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/optimization/" class="dropdown-item">optimization</a>
+</li>
+                                    
+<li>
+    <a href="../categories/plasticity%20theory/" class="dropdown-item">plasticity theory</a>
+</li>
+                                    
+<li>
+    <a href="../categories/process%20automation/" class="dropdown-item">process automation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/python-vba-cpp/" class="dropdown-item">python/vba/cpp</a>
+</li>
+                                    
+<li>
+    <a href="../categories/web%20development/" class="dropdown-item">web development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../archive/" class="nav-link">归档</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../about/" class="nav-link">关于</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2026-05-04-基于GPT2的古诗生成器：监督微调篇.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#gpt2 sft" class="nav-link">基于GPT2的古诗生成器 —— SFT 篇</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#0 sft" class="nav-link">0. 从"续写"到"创作"：为什么需要SFT</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#1 sft" class="nav-link">1. SFT 数据集设计</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#2_1" class="nav-link">2. 数据加载与处理</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#3_1" class="nav-link">3. 训练配置及结果</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#4" class="nav-link">4. 推理实现</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#5 sft" class="nav-link">5. 小结：SFT的得与失</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="gpt2 sft">基于GPT2的古诗生成器 —— SFT 篇<a class="headerlink" href="#gpt2 sft" title="Permanent link">&para;</a></h1>
+<p>发布于：2026-05-04 | 分类：<a href="../categories/machine%20learning/">machine learning</a></p>
+<hr />
+<p>预训练模型只会"接龙"，如何让它听懂"写一首思乡诗"这样的指令？本篇详解监督微调（SFT）的完整流程：从数据集构造、Completion-Only损失掩码，到7.7分钟完成训练，让模型从"续写机器"进化为"指令诗人"。</p>
+<p>本文可以配合此处 <a href="https://github.com/dothinking/llm_learning/tree/main/sft">源码</a> 阅读和理解。</p>
+<h2 id="0 sft">0. 从"续写"到"创作"：为什么需要SFT<a class="headerlink" href="#0 sft" title="Permanent link">&para;</a></h2>
+<p>在上一篇中，我们训练了一个72M参数的GPT2模型，它在古诗续写上表现不错——给它"白日依山尽"，它能往下接（虽然大概率不是"黄河入海流"）。但如果你对它说"写一首思乡诗"，它会怎么做？</p>
+<p>答案是：它根本不知道你在说什么，而是接着这句话续写。</p>
+<pre class="highlight"><code>写一首思乡诗，写千里送情。
+看江山满目，古今陈迹，无限凄凉。
+回首关河万里，关塞隔云长。
+多少伤心事，都付寒螀。
+我亦平生心事，算年年客里，都是思量。
+只当时明月，依旧照离肠。</code></pre>
+<p>这个六字的输入让它切换到词的频道，然后关键字“思乡”触发了相关的意向。模型有响应有输出，但不是遵循你的指令的输出，例如这个例子中连“古诗”的形式都不具备。这就是预训练模型的根本局限：<strong>它只会接龙，不会按需创作/对话</strong>。它不理解"指令"这个概念，不知道"写一首XX诗"是一个需要执行的任务。</p>
+<h3 id="sft">SFT的目标：指令遵循能力<a class="headerlink" href="#sft" title="Permanent link">&para;</a></h3>
+<p><strong>监督微调</strong>（Supervised Fine-Tuning, SFT）的核心目标，就是让模型获得**指令遵循**（Instruction Following）能力。具体来说：</p>
+<ul>
+<li>预训练阶段：模型学习 <code>P(token_n | token_1, token_2, ..., token_{n-1})</code>——给定上文，预测下文</li>
+<li>SFT阶段：模型学习 <code>P(answer | instruction)</code>——给定指令，生成回答</li>
+</ul>
+<p>这个转变看似简单，实则深刻。预训练让模型掌握了语言的"语法"（格律、韵律、词汇搭配），SFT则让模型学会了语言的"应用"（理解意图、执行任务）。</p>
+<h3 id="_1">指令微调的核心思想<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>SFT的训练方式非常直观：用 <strong>"问题-答案"对</strong> 训练模型。每条训练数据包含：</p>
+<ul>
+<li><strong>指令（instruction）</strong>：用户想要什么，比如"创作一首思乡诗"</li>
+<li><strong>回答（answer）</strong>：期望的输出，比如一首完整的思乡诗</li>
+</ul>
+<p>监督微调训练时，训练数据不再是简单的文本/诗词本身，而是把指令和回答拼接成一段文本，让模型学习：<strong>看到指令后，应该生成什么样的回答</strong>。</p>
+<p>监督微调的训练流程与预训练是一样的，只不过分词器和模型直接加载预训练的成果即可，不再赘述；接下来重点关注数据集的构建与处理，以及训练配置。</p>
+<h2 id="1 sft">1. SFT 数据集设计<a class="headerlink" href="#1 sft" title="Permanent link">&para;</a></h2>
+<p>为了让模型具备指令遵循能力，我们设计了三种指令类型，覆盖不同的创作场景：</p>
+<h4 id="1">（1）体裁创作<a class="headerlink" href="#1" title="Permanent link">&para;</a></h4>
+<p>指令格式：<code>"以白日依山尽为出句，续写绝句/律诗"</code> / <code>"续写律诗，古戍依重险"</code></p>
+<p>这类指令训练模型理解 <strong>诗歌体裁</strong> 的概念。绝句四句、律诗八句，模型需要学会根据体裁要求控制输出长度和格式。</p>
+<h4 id="2">（2）主题创作<a class="headerlink" href="#2" title="Permanent link">&para;</a></h4>
+<p>指令格式：<code>"以思乡为主题，写一首诗"</code> / <code>"创作一首愁绪诗"</code></p>
+<p>这类指令训练模型理解 <strong>主题/情感</strong> 的概念。模型需要学会围绕特定主题组织意象和情感表达，例如思乡诗多用"月"、"雁"、"故园"，愁绪诗多用"泪"、"残"、"孤"。</p>
+<h4 id="3">（3）诗人仿写<a class="headerlink" href="#3" title="Permanent link">&para;</a></h4>
+<p>指令格式：<code>"请仿写李白的诗"</code> / <code>"请仿写白居易的诗"</code></p>
+<p>这类指令训练模型理解 <strong>风格</strong> 的概念。李白飘逸豪放，白居易平易近人，模型需要学会模仿不同诗人的语言风格。</p>
+<h3 id="_2">数据来源与采样策略<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>数据集共约 <strong>49,256条</strong> 指令-回答对，从原始诗歌语料中按以下策略采样构造：</p>
+<table>
+<thead>
+<tr>
+<th>指令类型</th>
+<th>数量</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>体裁创作</td>
+<td>20,000</td>
+<td>从 5.4万+ 唐诗中随机选取绝句和律诗</td>
+</tr>
+<tr>
+<td>主题创作</td>
+<td>20,000</td>
+<td>排列组合带有主题、标签的诗词数据集</td>
+</tr>
+<tr>
+<td>诗人仿写</td>
+<td>9256</td>
+<td>从 5.4万+ 唐诗中选取13位著名诗人作品</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_3">数据格式<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>每条数据在CSV中的存储格式为：</p>
+<pre class="highlight"><code class="language-csv">instruction,answer
+创作一首思乡诗,客里春光又可怜，客怀乡思总凄然。风尘未扫燕南地，雨雪偏深蓟北天。...
+仿写李白的诗,头陀悬万仞，远眺望华峰。聊借金沙水，洗开九芙蓉。...
+续写律诗，古戍依重险,高楼见五梁。山根盘驿道，河水浸城墙。...</code></pre>
+<p>训练时，在数据加载与处理环节，将指令和回答拼接为统一格式：</p>
+<pre class="highlight"><code>{instruction}\n输出：{answer}</code></pre>
+<p>例如：</p>
+<pre class="highlight"><code>创作一首思乡诗
+输出：客里春光又可怜，客怀乡思总凄然。风尘未扫燕南地，雨雪偏深蓟北天。...</code></pre>
+<p>这里 <code>\n输出：</code> 是一个**分隔标记**，它告诉模型：前面的部分是指令，后面的部分是你需要生成的回答。这个标记在后续的Completion-Only损失掩码中起到关键作用。</p>
+<h3 id="_4">关于体裁创作中出句续写的特殊处理<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>出句续写有一个微妙的细节，以"续写律诗，古戍依重险"为例：</p>
+<ul>
+<li><strong>指令</strong>：<code>续写律诗，古戍依重险</code></li>
+<li><strong>回答</strong>：<code>高楼见五梁。山根盘驿道，河水浸城墙。庭树巢鹦鹉，园花隐麝香。忽然江浦上，忆作捕鱼郎。</code></li>
+</ul>
+<p>注意，训练数据中回答部分 <strong>不包含出句</strong>，只包含后续的诗句。推理时，用户输入出句，模型自动续写后面的内容；如果为了显示完整诗，可以在推理时额外拼接出句和模型生成的内容。</p>
+<p>如果将全诗作为回答内容进行训练，因为重复出句为第一句的预期和模型预训练阶段学会的诗句接龙能力不符，最终效果为生成诗作无法保证第一句和出句保持一致（尽管相关）。</p>
+<p>例如可能得到符合预期的输出：</p>
+<blockquote>
+<p>输入：以白日依山尽为出句，续写律诗</p>
+<p>输出：<strong>白日依山近</strong>，青山入寺微。僧归云半出，蝉噪雨初归。地静人稀到，天空鸟自飞。禅翁心不动，独坐掩柴扉。</p>
+</blockquote>
+<p>但大多数情况下模型输出的第一句不会和出句保持一致：</p>
+<blockquote>
+<p>输入：以白日依山尽为出句，续写绝句</p>
+<p>输出：<strong>白昼连山尽</strong>，清风拂槛斜。主人方闭户，稚子正烹茶。</p>
+</blockquote>
+<h2 id="2_1">2. 数据加载与处理<a class="headerlink" href="#2_1" title="Permanent link">&para;</a></h2>
+<p>数据加载与处理的基本流程和预训练阶段是一样的，但 SFT 最关键的技术细节是不能让模型学习"重复指令"。</p>
+<p>考虑一条训练数据：</p>
+<pre class="highlight"><code>创作一首思乡诗
+输出：秦燕千树地，富贵出山庄。...</code></pre>
+<p>如果我们不做任何处理，直接把整段文本喂给模型做语言建模训练，模型会学到什么？</p>
+<p>它会学到：看到 <code>创作一首思乡诗\n输出：</code> 时，预测 <code>秦</code>；看到 <code>创作一首思乡诗\n输出：秦</code> 时，预测 <code>燕</code>……这没问题。</p>
+<p>但它同时也会学到：看到 <code>创作一首</code> 时，预测 <code>思乡诗</code>；看到 <code>创作</code> 时，预测 <code>一首</code>……</p>
+<p><strong>模型在浪费容量学习"重复指令"</strong>。我们真正关心的是模型能否根据指令生成好的回答，而不是它能否一字不差地复述指令文本。更严重的是，指令文本（如"创作一首思乡诗"）在数据集中高频重复出现，如果不加掩码，模型会过度拟合这些指令文本，导致：
+- 浪费模型容量在无意义的"指令复述"上
+- 可能削弱模型对回答部分的关注
+- 推理时如果指令稍有变化，模型可能表现不佳</p>
+<h3 id="datacollatorforcompletiononlylm">DataCollatorForCompletionOnlyLM 的完整实现解析<a class="headerlink" href="#datacollatorforcompletiononlylm" title="Permanent link">&para;</a></h3>
+<p>解决方案是自定义一个 Data Collator，在构建批次数据时，将指令部分的 label 设为 <code>-100</code>（PyTorch CrossEntropyLoss 的特殊忽略标记）。于是，在 SFT 训练中 <strong>只对模型的"输出/响应"部分计算损失</strong>，而忽略"指令/输入"部分。</p>
+<p>完整实现如下：</p>
+<pre class="highlight"><code class="language-python">class DataCollatorForCompletionOnlyLM:
+    def __init__(self, tokenizer, response_template="输出："):
+        self.tokenizer = tokenizer
+        self.response_template_ids = tokenizer.encode(
+            response_template, add_special_tokens=False
+        )
+
+    def __call__(self, features):
+        # 1. 对批次中的序列进行 padding
+        batch = self.tokenizer.pad(features, return_tensors="pt")
+        # 2. 克隆 input_ids 作为 labels
+        labels = batch["input_ids"].clone()
+
+        # 3. 逐条处理：找到"输出："标记，将其之前的部分设为 -100
+        for i in range(len(labels)):
+            input_ids = labels[i].tolist()
+            template_len = len(self.response_template_ids)
+            for j in range(len(input_ids) - template_len + 1):
+                if input_ids[j:j+template_len] == self.response_template_ids:
+                    labels[i, :j+template_len] = -100
+                    break
+
+        batch["labels"] = labels
+        return batch</code></pre>
+<p>核心逻辑简单直白：定位 <code>输出：</code> 标记，将指令部分的 label 设为 -100，返回包含 labels 的批次字典。Trainer 会自动将 <code>labels</code> 传入模型的 <code>forward</code> 方法，模型内部会计算 CrossEntropyLoss，自动忽略 label 为 <code>-100</code> 的位置。</p>
+<p>以"创作一首思乡诗\n输出：秦燕千树地"为例：</p>
+<pre class="highlight"><code>token:   创  作  一  首  思  乡  诗  \n  输  出  ：  秦  燕  千  树  地
+input:   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16
+label:  -100 -100 -100 -100 -100 -100 -100 -100 -100 -100 -100 12  13  14  15  16
+        ↑_____________________指令部分，label=-100________________↑  ↑_回答部分，正常计算loss_↑</code></pre>
+<p>模型在位置11（<code>：</code>）处，需要预测位置12（<code>秦</code>）；在位置12处，需要预测位置13（<code>燕</code>）……依此类推；而位置1到11的预测任务被完全忽略。</p>
+<h3 id="data_collator train_dataset">data_collator 与 train_dataset 的配合机制<a class="headerlink" href="#data_collator train_dataset" title="Permanent link">&para;</a></h3>
+<p><code>train_dataset</code> 和 <code>data_collator</code> 在 Trainer 中构成**数据准备管道**的两个关键环节：</p>
+<pre class="highlight"><code>┌─────────────────────────────────────────────────────────────────┐
+│                      Trainer 训练循环                           │
+├─────────────────────────────────────────────────────────────────┤
+│  1. 从 train_dataset 中随机抽取 batch_size 条数据               │
+│           ↓                                                    │
+│  2. 将抽取的数据组成一个列表（features）                         │
+│           ↓                                                    │
+│  3. 调用 data_collator(features) 进行批次处理                   │
+│           ↓                                                    │
+│  4. 返回完整的批次字典（包含 input_ids, attention_mask, labels）│
+│           ↓                                                    │
+│  5. 送入模型进行前向传播和损失计算                               │
+└─────────────────────────────────────────────────────────────────┘</code></pre>
+<p>假设 <code>batch_size=2</code>，数据集包含以下两条数据：</p>
+<pre class="highlight"><code class="language-python"># train_dataset[0]
+{
+    "input_ids": [101, 2003, 3000, 102],      # "指令：问题？输出：答案"
+    "attention_mask": [1, 1, 1, 1]
+}
+
+# train_dataset[1]  
+{
+    "input_ids": [101, 4000, 5000, 6000, 102],  # "指令：更长的问题？输出：更长的答案"
+    "attention_mask": [1, 1, 1, 1, 1]
+}</code></pre>
+<p><strong>步骤 1：Trainer 抽取数据</strong></p>
+<pre class="highlight"><code class="language-python">indices = [0, 1]  # 随机抽取的索引
+features = [train_dataset[i] for i in indices]</code></pre>
+<p><strong>步骤 2：调用 data_collator</strong></p>
+<pre class="highlight"><code class="language-python">batch = data_collator(features)
+
+# batch["input_ids"]（padding 后）
+[[101, 2003, 3000, 102, 0],   # 第 0 条：padding 1 个 0
+ [101, 4000, 5000, 6000, 102]] # 第 1 条：无需 padding
+
+# batch["labels"]（处理后）  
+[[-100, -100, 3000, 102, -100],  # 前两个 token 设为 -100（指令部分）
+ [-100, -100, -100, 6000, 102]]  # 前三个 token 设为 -100</code></pre>
+<p><strong>步骤 3：送入模型</strong></p>
+<pre class="highlight"><code class="language-python">outputs = model(
+    input_ids=batch["input_ids"],
+    attention_mask=batch["attention_mask"],
+    labels=batch["labels"]  # 用于计算损失
+)
+loss = outputs.loss  # 只计算 labels != -100 位置的损失</code></pre>
+<p>完整数据流如下：</p>
+<pre class="highlight"><code>CSV 文件
+   ↓
+load_dataset() 加载原始数据
+   ↓
+map(tokenize_function) 进行 tokenize（格式：f"{instruction}\n输出：{answer}"）
+   ↓
+train_dataset（每条数据是一个字典）
+   ↓
+Trainer 按 batch_size 抽取数据
+   ↓
+DataCollatorForCompletionOnlyLM(features) 组装批次并构建 labels
+   ↓
+model(input_ids, attention_mask, labels)
+   ↓
+计算损失（只在 labels != -100 的位置）</code></pre>
+<h3 id="datacollatorforlanguagemodeling">与 DataCollatorForLanguageModeling 的对比<a class="headerlink" href="#datacollatorforlanguagemodeling" title="Permanent link">&para;</a></h3>
+<p>预训练阶段使用的是 HuggingFace 官方的 <code>DataCollatorForLanguageModeling(mlm=False)</code>：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>DataCollatorForLanguageModeling</th>
+<th>DataCollatorForCompletionOnlyLM</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用途</td>
+<td>预训练（因果语言建模）</td>
+<td>SFT（指令微调）</td>
+</tr>
+<tr>
+<td>labels 构造</td>
+<td><code>labels = input_ids.clone()</code></td>
+<td>同上，但指令部分设为 -100</td>
+</tr>
+<tr>
+<td>忽略部分</td>
+<td>仅忽略 padding token</td>
+<td>忽略指令 + padding</td>
+</tr>
+<tr>
+<td>损失计算范围</td>
+<td>整个序列（除padding）</td>
+<td>仅回答部分</td>
+</tr>
+</tbody>
+</table>
+<p>核心区别在于：预训练阶段，整个序列都是"学习目标"——每个位置都在预测下一个token；SFT阶段，只有回答部分是学习目标——指令只是"条件"，不需要被预测。</p>
+<hr />
+<h2 id="3_1">3. 训练配置及结果<a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h2>
+<p>SFT的训练参数与预训练的主要不同在于：<strong>更小的学习率，更少的训练轮数</strong>。</p>
+<pre class="highlight"><code class="language-python">training_args = TrainingArguments(
+    output_dir="checkpoints",
+    num_train_epochs=3,                    # 仅3轮，避免过拟合
+    per_device_train_batch_size=32,        # 单卡batch size
+    gradient_accumulation_steps=4,         # 梯度累积，等效batch=128
+    save_steps=200,
+    logging_steps=100,
+    learning_rate=3e-5,                    # 预训练的1/10
+    weight_decay=0.01,
+    fp16=False,
+)</code></pre>
+<p>预训练阶段学习率为 <code>3e-4</code>，SFT阶段降至 <code>3e-5</code>，仅为预训练的 <strong>1/10</strong>。原因在于：</p>
+<ul>
+<li>预训练是从随机权重开始，需要大步长快速收敛</li>
+<li>SFT是从已训练好的权重开始，只需要**微调**，大步长会破坏预训练学到的知识</li>
+<li>过大的学习率会导致**灾难性遗忘**——模型忘记了预训练学到的格律、韵律等基础能力</li>
+</ul>
+<p>预训练跑了10个epoch，SFT只需要3个epoch。因为：</p>
+<ul>
+<li>SFT数据集（4.9万条）远小于预训练数据集（85万首）</li>
+<li>指令遵循是一个相对"简单"的任务——模型已经会写诗，只需要学会"听懂指令"</li>
+<li>更多的epoch容易导致过拟合——模型可能记住特定的指令-回答对，而非学会泛化的指令遵循能力</li>
+</ul>
+<p>得益于GPT2仅72M参数的小体量，SFT训练非常高效：</p>
+<ul>
+<li><strong>总步数</strong>：1,155步（3 epochs × 49,256 samples / 128 effective batch size）</li>
+<li><strong>训练耗时</strong>：约460秒（<strong>7.7分钟</strong>）</li>
+<li><strong>训练速度</strong>：约2.5步/秒</li>
+</ul>
+<p>Loss从初始的约4.5快速下降到1.5左右，仅用3个epoch就达到了稳定状态。这说明：</p>
+<ol>
+<li>预训练模型的基础能力扎实——它已经会写诗，SFT只是"教会它听懂指令"</li>
+<li>学习率设置合理——没有出现loss震荡或发散</li>
+<li>数据质量和数量充足——4.9万条数据足以覆盖主要的指令类型</li>
+</ol>
+<p>训练完成后，我们测试了模型在不同指令类型上的表现。</p>
+<h4 id="_5">体裁及出句续写示例<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<pre class="highlight"><code>输入：续写律诗，白日依山尽
+输出：青山绕涧斜。草迷藏虎迹，松老避僧家。径僻惟栽药，门闲未种花。更逢樵父说，来往问桑麻。</code></pre>
+<p>模型在给定出句"白日依山尽"后，续写了完整的五言律诗。续写内容延续出句的写景画面，并体现律诗的押韵、对仗和起承转合等格律要求。</p>
+<h4 id="_6">主题创作示例<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
+<pre class="highlight"><code>输入：创作一首思乡诗
+输出：久负林泉志，频为江海游。故园归未得，归梦绕沧洲。</code></pre>
+<p>模型成功生成了一首五言绝句，首句“久负林泉志”以“负”字暗藏遗憾，隐逸山水之愿长年被辜负；“频为江海游”以“频”字道出世事羁縻、身不由己的漂泊感。两句形成理想与现实的张力，为后文思归埋下伏笔。。</p>
+<h4 id="_7">诗人仿写示例<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
+<pre class="highlight"><code>输入：请仿写白居易的诗
+输出：昨日已寒食，今朝又清明。出门何所适，出门无所行。新旧半衰谢，旧来多变更。唯有一旬日，相随还入城。</code></pre>
+<p>这首诗语言平易、情感自然，感时伤逝而不雕琢，颇具白居易质朴含蓄的风格。虽然与真正的白居易诗相比还有差距，但风格方向是接近的。</p>
+<h2 id="4">4. 推理实现<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<p>推理脚本 <code>chat.py</code> 实现了交互式对话功能：</p>
+<pre class="highlight"><code class="language-python">def poem_chat():
+    while True:
+        user_input = input("\n输入：")
+        if user_input.lower() == 'quit':
+            break
+
+        # 拼接指令格式
+        prompt = f"{user_input}\n输出："
+        inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+
+        with torch.no_grad():
+            outputs = model.generate(
+                **inputs,
+                max_new_tokens=100,
+                do_sample=True,
+                top_p=0.9,
+                temperature=0.7,
+                repetition_penalty=1.2,
+                eos_token_id=tokenizer.eos_token_id,
+                pad_token_id=tokenizer.eos_token_id
+            )
+
+        full_result = tokenizer.decode(outputs[0], skip_special_tokens=True)
+
+        # 提取"输出："之后的内容作为回答
+        if "输出：" in full_result:
+            answer = full_result.split("输出：")[-1].strip()
+        else:
+            answer = full_result
+
+        print(f"\n古诗生成器：{answer}")</code></pre>
+<p>推理流程与训练时的数据格式完全一致：</p>
+<ul>
+<li>用户输入指令（如"创作一首思乡诗"）</li>
+<li>脚本自动拼接 <code>\n输出：</code> 形成完整prompt</li>
+<li>模型生成文本</li>
+<li>从生成结果中提取 <code>输出：</code> 之后的部分作为回答展示</li>
+</ul>
+<p>这种设计保证了 <strong>训练和推理的一致性</strong> —— 模型在训练时学到的模式（看到指令+<code>输出：</code>后生成回答）与推理时的输入格式完全匹配。</p>
+<h2 id="5 sft">5. 小结：SFT的得与失<a class="headerlink" href="#5 sft" title="Permanent link">&para;</a></h2>
+<p>SFT是从"语言模型"到"AI助手"的关键一步。通过仅3个epoch的训练，我们让一个只会续写的预训练模型学会了听懂指令，能够根据不同的体裁、主题和风格要求生成符合预期的古诗。</p>
+<p>SFT虽然有效，但**全量微调**（更新全部72M参数）存在几个固有问题：</p>
+<ul>
+<li>
+<p><strong>灾难性遗忘</strong>：更新全部参数可能覆盖预训练阶段学到的通用语言能力。虽然本项目通过低学习率（3e-5）和少epoch（3轮）缓解了这个问题，但风险始终存在。</p>
+</li>
+<li>
+<p><strong>过拟合风险</strong>：4.9万条数据对于72M参数来说并不算多。全量微调时，模型可能记住训练数据中的特定模式，而非学会泛化的指令遵循能力。</p>
+</li>
+<li>
+<p><strong>存储成本</strong>：每个微调任务都需要保存一份完整的模型副本（约300MB）。如果要对同一个基座模型做多个下游任务的微调，存储开销会线性增长。</p>
+</li>
+</ul>
+<p>有没有一种方法，既能获得SFT的指令遵循能力，又能避免全量微调的上述问题？下一篇我们将用LoRA（Low-Rank Adaptation）重新训练同一个SFT任务，看看"四两拨千斤"的高效微调是如何实现的。</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

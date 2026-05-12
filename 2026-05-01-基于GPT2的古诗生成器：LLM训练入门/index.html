@@ -163,10 +163,9 @@
 <h1 id="gpt2llm">基于GPT2的古诗生成器：LLM训练入门<a class="headerlink" href="#gpt2llm" title="Permanent link">&para;</a></h1>
 <p>发布于：2026-05-01 | 分类：<a href="../categories/machine%20learning/">machine learning</a></p>
 <hr />
-<p>本项目在了解Transformer基本原理的基础上，从零构建一个会写诗的大语言模型，走通从预训练到监督微调的全流程，见证模型从牙牙学语到像模像样创作诗词的进化过程。核心目标不是训练一个"最强古诗生成器"，而是**通过实操理解LLM训练的每一个环节**。</p>
+<p>本项目在了解Transformer基本原理的基础上，从零构建一个会写诗的大语言模型，走通从预训练到监督微调的全流程，见证模型从牙牙学语到像模像样创作诗词的进化过程。核心目标不是训练一个"最强古诗生成器"，而是 <strong>通过实操理解LLM训练的每一个环节</strong>。</p>
 <p>本项目着眼于工程应用，因此不准备从零构建Transformer模型，而是基于HuggingFace生态，直接复用其已经封装好的模型和训练逻辑，从而更多专注于数据集构建、模型配置和训练参数。</p>
-<p>本项目所有代码在<a href="https://www.scnet.cn/">国家超算互联网</a>免费提供试用的 64GB 显存异构加速卡上运行，特此感谢。</p>
-<p><a href="https://github.com/dothinking/llm_learning">https://github.com/dothinking/llm_learning</a></p>
+<p>本项目完整代码：<a href="https://github.com/dothinking/llm_learning">https://github.com/dothinking/llm_learning</a></p>
 <h2 id="llm">项目全景：一条完整的LLM训练流水线<a class="headerlink" href="#llm" title="Permanent link">&para;</a></h2>
 <p>大模型训练的典型流程包括三个阶段：预训练、监督微调（全量SFT、LoRA）和对齐/偏好微调（例如DPO）。预训练让模型“会说人话”（掌握诗词的语言规律），监督微调让模型“听懂人话”（理解对话指令），偏好微调则进一步让模型“说得好听”（对齐人类偏好）。</p>
 <pre class="highlight"><code>                                  ┌────────┐                    
@@ -458,7 +457,31 @@ pip install accelerate&gt;=0.28.0</code></pre>
 <p>LoRA模型仅训练了约 <strong>154万</strong> 参数（占总参数的2.13%），就达到了与全量SFT相当的效果。</p>
 <h2 id="_7">总结<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
 <p>本文概述了基于GPT2的古诗生成器项目全貌。项目基于HuggingFace生态，使用85万+首古诗词完成预训练，构造4.9万条指令-回答对进行监督微调，完整走通了LLM训练的核心流程。72M参数的迷你GPT2即便在消费级GPU上也能轻松完成全部训练：预训练模型学会了诗句接龙，SFT模型具备了按主题、体裁、诗人风格创作的能力，LoRA模型仅训练2.13%参数便达到同等效果。</p>
-<p>接下来三篇文章将逐一深入每个阶段的技术细节。例如，下一篇将开启 <strong>预训练</strong> ：喂85万首诗词，让BPE分词器"认识"汉字，让GPT2模型从"牙牙学语"进化到具备"诗句接龙"的能力。</p></div>
+<p>接下来几篇文章将逐一深入每个阶段的技术细节。</p>
+<ul>
+<li><a href="../2026-05-02-%E5%9F%BA%E4%BA%8EGPT2%E7%9A%84%E5%8F%A4%E8%AF%97%E7%94%9F%E6%88%90%E5%99%A8%EF%BC%9A%E9%A2%84%E8%AE%AD%E7%BB%83%E7%AF%87/">预训练篇</a> —— 从随机权重到诗句接龙：BPE分词器 + GPT2 + 85万首古诗</li>
+<li><a href="../2026-05-04-%E5%9F%BA%E4%BA%8EGPT2%E7%9A%84%E5%8F%A4%E8%AF%97%E7%94%9F%E6%88%90%E5%99%A8%EF%BC%9A%E7%9B%91%E7%9D%A3%E5%BE%AE%E8%B0%83%E7%AF%87/">SFT篇</a> —— 让模型听懂人话：Completion-Only掩码 + 全量指令微调</li>
+<li><a href="../2026-05-05-%E5%9F%BA%E4%BA%8EGPT2%E7%9A%84%E5%8F%A4%E8%AF%97%E7%94%9F%E6%88%90%E5%99%A8%EF%BC%9ALoRA%E7%AF%87/">LoRA篇</a> —— 四两拨千斤：2.13%参数的高效微调方案</li>
+</ul>
+<hr />
+<p><strong>Transformer 背景知识</strong></p>
+<ul>
+<li>
+<p><a href="https://mp.weixin.qq.com/s/4fyAAHOaETAg3y-j6xt1lw">Transformer 是怎么发明的？——回到深度学习的蛮荒时代@2016</a></p>
+</li>
+<li>
+<p><a href="https://mp.weixin.qq.com/s/p3-QpJJRGaA4e_69bMhMLg">原版 Transformer 面试题终结者：从 QKV 到 mHC 一网打尽</a></p>
+</li>
+<li>
+<p><a href="https://mp.weixin.qq.com/s/tAvG-490CbaV2t-WNzH8xw">终于把 Transformer 算法搞懂了！！</a></p>
+</li>
+<li>
+<p><a href="https://zhuanlan.zhihu.com/p/708415544">transformer数据流详解——矩阵维度变化</a></p>
+</li>
+<li>
+<p><a href="https://zhuanlan.zhihu.com/p/703178655">transformer代码实现及讲解</a></p>
+</li>
+</ul></div>
             </div>
         </div>
 

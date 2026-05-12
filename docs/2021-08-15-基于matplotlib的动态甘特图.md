@@ -140,7 +140,7 @@ matplotlib.animation.FuncAnimation(fig, func, frames=None, \
 > https://matplotlib.org/stable/api/_as_gen/matplotlib.animation.FuncAnimation.html
 
 
-!!! warning "关于`func`的进一步理解"
+!!! info "关于`func`的进一步理解"
 
     - 一般在`func`中更新已经创建好的对象的数据，例如`plt.plot()`返回的曲线；也可以清除之前的所有对象，再用新的数据重新绘图，特别是对不适用直接更新数据的场合，例如本文涉及的条形图。
 

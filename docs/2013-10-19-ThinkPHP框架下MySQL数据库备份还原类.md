@@ -178,19 +178,19 @@ import("ORG.Backup.MySQLReback");
 </table>
 ```
 
-!!! warning "注意"
-    - 数据库表中某些允许为空的字段，备份导出时字段为`''`，在还原数据库时会提示如下错误：
-    
-            MySQL Error : Incorrect date value: '' for column '×××××××××' at row 1
 
-        这种问题一般出现在`mysql 5.x`以上版本，因为要求空值写为`NULL`。可以在安装mysql的时候去除默认勾选的`enable strict SQL mode`，已经安装则需要修改mysql的配置文件`my.ini`。在`my.ini`中查找`sql-mode`，将默认的
+- 数据库表中某些允许为空的字段，备份导出时字段为`''`，在还原数据库时会提示如下错误：
 
-            sql-mode="STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+        MySQL Error : Incorrect date value: '' for column '×××××××××' at row 1
 
-        修改为 
-    
-            sql-mode="NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+    这种问题一般出现在`mysql 5.x`以上版本，因为要求空值写为`NULL`。可以在安装mysql的时候去除默认勾选的`enable strict SQL mode`，已经安装则需要修改mysql的配置文件`my.ini`。在`my.ini`中查找`sql-mode`，将默认的
 
-        然后重新启动Mysql服务。
+        sql-mode="STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
 
-    - 本文上述代码仅适用于本地开发环境，对于一些云计算平台，由于没有本地文件读写的权限，所以需要根据各自提供的API来修正文件操作。后续将以新浪云计算平台SAE为例，给出修改方案。
+    修改为 
+
+        sql-mode="NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+
+    然后重新启动Mysql服务。
+
+- 本文上述代码仅适用于本地开发环境，对于一些云计算平台，由于没有本地文件读写的权限，所以需要根据各自提供的API来修正文件操作。后续将以新浪云计算平台SAE为例，给出修改方案。

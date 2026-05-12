@@ -190,35 +190,37 @@ class Posts:
 
     def to_archive_pages(self):
         '''Create summary pages grouped by year.'''
-        lines = ['## Archives\n']
+        lines = ['## 归档\n']
         page_dir = os.path.join(self.docs_dir, self.archive_dir_name)
         for year in sorted(self._archives, reverse=True):
             len_posts = len(self._posts.get(year))
-            lines.append(f'- [{year} ({len_posts})]({self.archive_dir_name}/{year}.md)')
+            lines.append(f'[{year} ({len_posts})]({self.archive_dir_name}/{year}.md)')
 
-            # pages in each year
             self._to_summary_page(year, page_dir)
         
-        # top page
         with open(os.path.join(self.docs_dir, Posts.ARCHIVE_FILENAME), 'w', encoding='utf-8') as f:
             f.write('\n'.join(lines))            
 
 
-    def to_home_page(self, title:str='', count:int=5):
+    def to_home_page(self, title:str='', count:int=10):
         '''Create home page with latest posts and categories.'''
         lines = [title]
 
-        # latest posts
+        # latest posts as table
         lines.append('## 最近更新\n')
+        lines.append('| 日期 | 标题 |')
+        lines.append('|:----:|------|')
         for post in self._get_latest(count):
-            lines.append(post.to_hyperlink('.'))
+            filename = os.path.basename(post.post_path)
+            date_str = f'{post.year}-{post.month}-{post.day}'
+            lines.append(f'| {date_str} | [{post.title}](./{filename}) |')
 
-        # categories
+        # categories as tags
         lines.append('\n')
-        lines.append('## 更多分类\n')
+        lines.append('## 分类浏览\n')
         for c in sorted(self._categories):
             len_posts = len(self._posts.get(c))
-            lines.append(f'- [{c} ({len_posts})]({self.category_dir_name}/{to_dir_name(c)}.md)')
+            lines.append(f'[{c} ({len_posts})]({self.category_dir_name}/{to_dir_name(c)}.md)')
 
         with open(os.path.join(self.docs_dir, Posts.INDEX_FILENAME), 'w', encoding='utf-8') as f:
             f.write('\n'.join(lines))
@@ -275,8 +277,12 @@ class Posts:
     def _to_summary_page(self, category:str, page_dir:str):
         '''Store summary page under page_dir/category.md.'''
         lines = [f'## {category}\n\n']
+        lines.append('| 日期 | 标题 |')
+        lines.append('|:----:|------|')
         for post in self._posts.get(category, []):
-            lines.append(post.to_hyperlink('..'))
+            filename = os.path.basename(post.post_path)
+            date_str = f'{post.year}-{post.month}-{post.day}'
+            lines.append(f'| {date_str} | [{post.title}](../{filename}) |')
         text = '\n'.join(lines)
 
         with open(os.path.join(page_dir, f'{to_dir_name(category)}.md'), 'w', encoding='utf-8') as f:
@@ -300,7 +306,7 @@ class ConfigFile:
         else:
             site = 'My Blog'
             description = 'Welcome to my blog'
-        return f'# {site}\n\n{description}\n\n---\n\n'
+        return f'# {site}\n\n*{description}*\n\n---\n\n'
 
 
     def update(self, more_content):

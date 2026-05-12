@@ -270,7 +270,7 @@ s_{ik}-s_{ij} \geq p_{ij} - C*b_{jk}      &amp; (i,j), (i,k) \in \mathbb{O}, \,\
         for op, var in variables.items():
             op.update_start_time(var.varValue)        
         self.update_solution(solution) # update solution</code></pre>
-<div class="admonition warning">
+<div class="admonition info">
 <p class="admonition-title">注意</p>
 <p>当前版本支持 CBC（COIN-OR Branch-and-Cut）、SCIP （开源） 和 Gurobi（商业）求解器。其中 CBC 为 Pulp 默认求解器，开箱即用；其余二者需要自行下载安装和授权。</p>
 </div>

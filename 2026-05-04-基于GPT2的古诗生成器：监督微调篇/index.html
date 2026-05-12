@@ -8,7 +8,7 @@
         <meta name="author" content="dothinking">
         <link rel="canonical" href="https://dothinking.github.io/2026-05-04-%E5%9F%BA%E4%BA%8EGPT2%E7%9A%84%E5%8F%A4%E8%AF%97%E7%94%9F%E6%88%90%E5%99%A8%EF%BC%9A%E7%9B%91%E7%9D%A3%E5%BE%AE%E8%B0%83%E7%AF%87/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>基于GPT2的古诗生成器 —— SFT 篇 - 格致</title>
+        <title>基于GPT2的古诗生成器：SFT 篇 - 格致</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/fontawesome.min.css" rel="stylesheet">
         <link href="../css/brands.min.css" rel="stylesheet">
@@ -127,7 +127,7 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#gpt2 sft" class="nav-link">基于GPT2的古诗生成器 —— SFT 篇</a>
+            <li class="nav-item" data-bs-level="1"><a href="#gpt2sft" class="nav-link">基于GPT2的古诗生成器：SFT 篇</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-bs-level="2"><a href="#0 sft" class="nav-link">0. 从"续写"到"创作"：为什么需要SFT</a>
               <ul class="nav flex-column">
@@ -160,7 +160,7 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="gpt2 sft">基于GPT2的古诗生成器 —— SFT 篇<a class="headerlink" href="#gpt2 sft" title="Permanent link">&para;</a></h1>
+<h1 id="gpt2sft">基于GPT2的古诗生成器：SFT 篇<a class="headerlink" href="#gpt2sft" title="Permanent link">&para;</a></h1>
 <p>发布于：2026-05-04 | 分类：<a href="../categories/machine%20learning/">machine learning</a></p>
 <hr />
 <p>预训练模型只会"接龙"，如何让它听懂"写一首思乡诗"这样的指令？本篇详解监督微调（SFT）的完整流程：从数据集构造、Completion-Only损失掩码，到7.7分钟完成训练，让模型从"续写机器"进化为"指令诗人"。</p>
@@ -402,7 +402,6 @@ model(input_ids, attention_mask, labels)
 </tbody>
 </table>
 <p>核心区别在于：预训练阶段，整个序列都是"学习目标"——每个位置都在预测下一个token；SFT阶段，只有回答部分是学习目标——指令只是"条件"，不需要被预测。</p>
-<hr />
 <h2 id="3_1">3. 训练配置及结果<a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h2>
 <p>SFT的训练参数与预训练的主要不同在于：<strong>更小的学习率，更少的训练轮数</strong>。</p>
 <pre class="highlight"><code class="language-python">training_args = TrainingArguments(

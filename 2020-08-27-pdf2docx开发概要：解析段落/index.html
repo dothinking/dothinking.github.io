@@ -178,7 +178,7 @@
 </ul>
 </li>
 </ul>
-<div class="admonition warning">
+<div class="admonition info">
 <p class="admonition-title">注意</p>
 <ul>
 <li><code>docx</code>中无法直接设置两个表格的间距，创建表格时采用变通方式：在间距中插入空文本块，然后设置该文本块的段前间距。</li>
@@ -226,7 +226,7 @@
 <li>依次判断左、右边距差值，哪个差值小即为相应对齐方式</li>
 </ul>
 <p>最后，创建<code>docx</code>时通过设置段落的左/右缩进和对齐方式来实现。并且，左对齐方式还要通过 <strong>制表位</strong> 来保证段落内不同行的水平位置。</p>
-<div class="admonition warning">
+<div class="admonition info">
 <p class="admonition-title">重建docx时的一些优化处理</p>
 <ul>
 <li>同时设置左、右边距将严格限定段落的水平位置，可能导致意外的换行。因此，可以适当放宽“对面”的间距：左对齐时放宽（减小）右边距，右对齐放宽左边距，居中对齐则同时放宽左、右边距。</li>

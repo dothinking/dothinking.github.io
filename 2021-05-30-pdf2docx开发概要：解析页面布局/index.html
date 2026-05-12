@@ -223,7 +223,7 @@
 <h3 id="_6">竖直定位<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
 <p>每一个<code>Section</code>在页面竖直方向的位置 <strong>由前一个段落的段后间距</strong> 确定，因此在确定好<code>Section</code>后，计算当前<code>Section</code>开始位置<code>y0</code>与前一个<code>Section</code>结束位置<code>y1</code>的差值，作为<code>Section</code>的一个属性<code>before_space</code>。</p>
 <p>使用<code>python-docx</code>重建<code>Section</code>时，设置前一个<code>Section</code>最后一个段落的段后距离等于当前<code>Section</code>的<code>before_space</code>即可。两个<code>Column</code>之间设置列分隔符<code>WD_SECTION.NEW_COLUMN</code>。</p>
-<div class="admonition warning">
+<div class="admonition info">
 <p class="admonition-title">每一页第一个<code>Section</code>的处理</p>
 <ul>
 <li>计算<code>before_space</code>时，前一个参考位置为页面上边距。</li>

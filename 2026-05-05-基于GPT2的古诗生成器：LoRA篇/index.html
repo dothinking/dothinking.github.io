@@ -8,7 +8,7 @@
         <meta name="author" content="dothinking">
         <link rel="canonical" href="https://dothinking.github.io/2026-05-05-%E5%9F%BA%E4%BA%8EGPT2%E7%9A%84%E5%8F%A4%E8%AF%97%E7%94%9F%E6%88%90%E5%99%A8%EF%BC%9ALoRA%E7%AF%87/">
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>基于GPT2的古诗生成器 —— LoRA篇 - 格致</title>
+        <title>基于GPT2的古诗生成器：LoRA篇 - 格致</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/fontawesome.min.css" rel="stylesheet">
         <link href="../css/brands.min.css" rel="stylesheet">
@@ -127,7 +127,7 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-bs-level="1"><a href="#gpt2 lora" class="nav-link">基于GPT2的古诗生成器 —— LoRA篇</a>
+            <li class="nav-item" data-bs-level="1"><a href="#gpt2lora" class="nav-link">基于GPT2的古诗生成器：LoRA篇</a>
               <ul class="nav flex-column">
             <li class="nav-item" data-bs-level="2"><a href="#0 lora" class="nav-link">0. LoRA 原理</a>
               <ul class="nav flex-column">
@@ -160,7 +160,7 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="gpt2 lora">基于GPT2的古诗生成器 —— LoRA篇<a class="headerlink" href="#gpt2 lora" title="Permanent link">&para;</a></h1>
+<h1 id="gpt2lora">基于GPT2的古诗生成器：LoRA篇<a class="headerlink" href="#gpt2lora" title="Permanent link">&para;</a></h1>
 <p>发布于：2026-05-05 | 分类：<a href="../categories/machine%20learning/">machine learning</a></p>
 <hr />
 <p>在上一篇中，我们用全量SFT成功让模型学会了指令遵循。但全量微调（更新全部72M参数）存在存储成本、过拟合风险、灾难性遗忘这三个不容忽视的问题。这就引出了 <strong>参数高效微调</strong>（Parameter-Efficient Fine-Tuning, PEFT）的理念：冻结预训练模型的大部分参数，只训练一小部分新增参数，就能达到接近全量微调的效果。</p>

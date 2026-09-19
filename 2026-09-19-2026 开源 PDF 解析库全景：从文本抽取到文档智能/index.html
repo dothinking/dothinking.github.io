@@ -172,11 +172,11 @@
 <p>发布于：2026-09-19 | 分类：<a href="../categories/document%20analysis/">document analysis</a></p>
 <hr />
 <blockquote>
-<p>最近使用 Claude Opus 5 将一份扫描的PDF合同转换为markdown，惊异于圆形公章上公司名及手写签名都能正确识别，心血来潮想看看开源领域 PDF 文档解析库的发展状态。于是经过 Kimi、Qwen3.8-max 起草初稿、WorkBuddy 内置 Hy3 整理及 13 版修订、DeepSeek-v4.1-flash、Claude Opus 5 最终审核，生产了本文调研报告。</p>
+<p>最近使用 Claude Opus 5 将一份扫描的PDF合同转换为markdown，惊异于圆形公章上公司名及手写签名都能正确识别，心血来潮想看看开源领域 PDF 文档解析库的发展状态。于是经过 Kimi2.7、Qwen3.8-max 起草初稿、WorkBuddy 内置 Hunyuan 3 整理及 13 版修订、DeepSeek-v4.1-flash、Claude Opus 5 最终审核，生产了本文调研报告。</p>
 <p>区别于 <a href="../2021-01-02-Python%E5%A4%84%E7%90%86PDF%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E5%AF%B9%E6%AF%94/">Python处理PDF的第三方库对比</a> 关注对 PDF 文档本身的操作能力如提取/创建内容、增删页面等，本报告更偏向文档理解——语义级别的内容提取。</p>
 </blockquote>
-<p>PDF 作为事实上的“电子纸张”标准，承载了海量的论文、合同、财报、研报与档案。然而 PDF 本质是 <strong>面向“打印排版”的格式</strong> 而非结构化数据格式，文本、表格、公式、图片混杂，多栏、跨页、扫描件、水印等情形进一步加剧了机器理解的难度。随着 RAG（检索增强生成）、大模型训练语料构建、企业知识库与 Agent 工作流的兴起，对 PDF <strong>高质量、结构化解析</strong> 的需求从“能读出字”升级为“能还原版式、表格、公式与阅读顺序”。</p>
-<p>在合规（HIPAA / GDPR / 数据不出域）、成本（商业 API 按页计费，规模化后昂贵）与可控性（可微调、可私有化部署）三重驱动下，自托管开源方案成为企业级文档智能的可行乃至必选路径。而在纯离线/涉密场景，开源是唯一合规选项。因此，本报告围绕开源方案展开，按 <strong>OCR（光学字符识别）、版面分析、信息提取</strong> 三大理解能力维度，对 40+ 个主流开源库进行系统化梳理；其中信息提取细分为 <strong>信息抽取（结构化字段）、表格提取、公式提取</strong> 三类子任务。*</p>
+<p>PDF 作为事实上的“电子纸张”标准，承载了海量的论文、合同、财报、研报与档案。然而 PDF 本质是面向“打印排版”的格式，而非结构化数据格式，文本、表格、公式、图片混杂，多栏、跨页、扫描件、水印等情形进一步加剧了机器理解的难度。随着 RAG（检索增强生成）、大模型训练语料构建、企业知识库与 Agent 工作流的兴起，对 PDF <strong>高质量、结构化解析</strong> 的需求从“能读出字”升级为“能还原版式、表格、公式与阅读顺序”。</p>
+<p>在合规（HIPAA / GDPR / 数据不出域）、成本（商业 API 按页计费，规模化后昂贵）与可控性（可微调、可私有化部署）三重驱动下，自托管开源方案成为企业级文档智能的可行乃至必选路径。而在纯离线/涉密场景，开源是唯一合规选项。因此，本报告围绕开源方案展开，按 <strong>OCR（光学字符识别）、版面分析、信息提取</strong> 三大理解能力维度，对 40+ 个主流开源库进行系统化梳理；其中信息提取细分为 <strong>信息抽取（结构化字段）、表格提取、公式提取</strong> 三类子任务。</p>
 <p>本报告重点调研了 MinerU、Docling、Marker、olmOCR、Unstructured、DeepDoctection、DocXChain 等综合平台，Tesseract / PaddleOCR / EasyOCR / Surya / GOT-OCR 2.0 / HunyuanOCR / Dots.OCR 等识别引擎，以及 Camelot / Tabula / pdfplumber / TableTransformer 等表格与文本提取工具。报告给出精度基准对比，并总结以视觉语言模型（VLM）端到端为代表的下一代技术趋势。此外，针对通用视觉语言模型（VLM）作为解析后端，系统梳理了 PaddleOCR-VL、Qwen2.5-VL、InternVL2.5、GLM-4V-9B、MiniCPM-V 2.6、DeepSeek-OCR 等以 VLM 为底座的文档解析方案。</p>
 <p><strong>核心结论：</strong></p>
 <ul>
@@ -197,8 +197,9 @@
 </li>
 </ul>
 <h2 id="1 pdf">1. PDF 文档解析的挑战与技术演进<a class="headerlink" href="#1 pdf" title="Permanent link">&para;</a></h2>
-<p>一个完整的 PDF 解析系统通常需协同解决下表所示子任务。传统工具（如 <code>pdftotext</code>）在真实文档上暴露出典型失效：公式丢失或乱码；表格结构崩坏；图片被忽略；页眉页脚混入正文、段落被随意切割；多栏布局下阅读顺序错乱。其根源在于 PDF 不保存“语义结构”，仅保存“绘制指令”（字符、线段、图像的位置与样式）。</p>
-<p>更细分的难点包括：<strong>数字原生 PDF</strong>（含文本层）vs <strong>扫描版/图层型 PDF</strong>（文字不可复制、乱码）；<strong>有线表格</strong>（lattice）vs <strong>无线/白隙表格</strong>（stream）；合并单元格、跨页表格、嵌套表头；行内/行间公式；旋转版面与页眉页脚去噪；竖排文字、印章、手写。任何单一方案都难以覆盖全部长尾情形。</p>
+<p>一个完整的 PDF 解析系统通常需协同解决下表所示子任务。传统工具（如 <code>pdftotext</code>）在真实文档上暴露出典型失效：公式丢失或乱码；表格结构崩坏；图片被忽略；页眉页脚混入正文、段落被随意切割；多栏布局下阅读顺序错乱。其根源在于 PDF 不保存语义结构，仅保存绘制指令如字符、线段、图像的位置与样式。</p>
+<p>更细分的难点包括：<strong>数字原生 PDF</strong>（含文本层）vs <strong>扫描版/图层型 PDF</strong>（文字不可复制、乱码）；<strong>有线表格</strong>（lattice）vs <strong>无线/白隙表格</strong>（stream）；合并单元格、跨页表格、嵌套表头；行内/行间公式；旋转版面与页眉页脚去噪；竖排文字、印章、手写等等。</p>
+<p>任何单一方案都难以覆盖全部长尾情形。</p>
 <table>
 <thead>
 <tr>
@@ -254,7 +255,7 @@
 </ul>
 <h2 id="2">2. 技术体系与能力分类<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <h3 id="21">2.1　技术路线的两大范式<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
-<p>据公开资料，PDF 文档解析范式可以归为两类。2026 年头部项目已呈融合态势，例如 Docling 增加 Granite-Docling-258M VLM 路径；MinerU 同时保留经典管线后端供纯 CPU 场景；Marker 2 定位为“Surya 模型套件的编排器”，其质量上限即 Surya 的质量上限。</p>
+<p>据公开资料，PDF 文档解析范式可以归为两类。2026 年头部项目已呈融合态势，例如 Docling 增加 Granite-Docling-258M VLM 路径；MinerU 同时保留经典管线后端供纯 CPU 场景；Marker 2 定位为Surya 模型套件的编排器，其质量上限即 Surya 的质量上限。</p>
 <table>
 <thead>
 <tr>
@@ -301,7 +302,7 @@
 <tr>
 <td><strong>版面分析（Layout）</strong></td>
 <td>区分标题/正文/表格/图片/公式区域，还原阅读顺序与层级</td>
-<td>LayoutParser、PP-Structure、360LayoutAnalysis、DocLayout-YOLO、DocLayNet（Docling）、PDF-Extract-Kit（MinerU）</td>
+<td>LayoutParser、PP-Structure、360LayoutAnalysis、DocLayout-YOLO、DocLayNet（Docling）、PDF-Extract-Kit（MinerU 同团队工具包，含 DocLayout-YOLO / YOLO-v10 / LayoutLMv3 可选）</td>
 </tr>
 <tr>
 <td><strong>信息提取（IE）</strong></td>
@@ -338,7 +339,8 @@
 </tbody>
 </table>
 <blockquote>
-<p><strong>注</strong>：上表「信息提取三类子任务」列出的是**专用/代表性工具**；需强调，<strong>端到端文档解析系统（MinerU / Docling / Marker / olmOCR 等）同样内置表格提取、公式识别与 KIE 能力</strong>——二者并非互斥关系。选型时：若只需「拆出单张表/单个字段」，用专用工具（Camelot、pdfplumber、PP-ChatOCR）即可；若需「整文档结构化 + 阅读顺序 + 多格式输出」，则端到端平台更合适。</p>
+<p><strong>注</strong>：上表「信息提取三类子任务」列出的是 <strong>专用/代表性工具</strong>；需强调，<strong>端到端文档解析系统（MinerU / Docling / Marker / olmOCR 等）同样内置表格提取、公式识别与 KIE 能力</strong>——二者并非互斥关系。</p>
+<p>选型时，若只需拆出单张表/单个字段，用专用工具（Camelot、pdfplumber、PP-ChatOCR）即可；若需全文档结构化 + 阅读顺序 + 多格式输出，则端到端平台更合适。</p>
 </blockquote>
 <h2 id="3">3. 主流开源库<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
 <h3 id="31">3.1　综合型文档解析平台<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
@@ -393,9 +395,9 @@
 <p><strong>Unstructured（Unstructured.io）</strong> <code>版面·提取·转换</code></p>
 <ul>
 <li><strong>仓库</strong>：<code>Unstructured-IO/unstructured</code>；<strong>许可证</strong>：Apache-2.0（open-core，LICENSE 核验）。</li>
-<li><strong>定位</strong>：非结构化数据 ETL 库——不做“最强解析”，做“最通用元素化切分”，是 RAG/LLM 数据管道事实标准组件之一。</li>
+<li><strong>定位</strong>：非结构化数据 ETL 库——不做最强解析，做最通用元素化切分，是 RAG/LLM 数据管道事实标准组件之一。</li>
 <li><strong>核心能力</strong>：<code>partition</code> 系列 API 将 PDF/DOCX/PPTX/HTML/EML/图等 20+ 格式统一切分为带类型标签元素（Title/NarrativeText/Table/ListItem 等）并附页码/坐标；fast（文本层）/hi_res（版面+OCR）/ocr_only/auto 多策略；内置 chunking、清洗、staging（JSON/CSV/DataFrame）；与 LangChain、LlamaIndex 深度集成；可 Docker 化。</li>
-<li><strong>小结</strong>：以“信息提取 + 数据管道”见长；表格/公式极限还原不如 MinerU、PaddleOCR 等专业解析器。常见组合：Unstructured 做统一元素层，专业解析器做 PDF 深度解析。</li>
+<li><strong>小结</strong>：以信息提取 + 数据管道见长；表格/公式极限还原不如 MinerU、PaddleOCR 等专业解析器。常见组合：Unstructured 做统一元素层，专业解析器做 PDF 深度解析。</li>
 </ul>
 <p><strong>其他值得关注</strong>：</p>
 <ul>
@@ -505,7 +507,7 @@
 <td>研究用途（原仓库）/ Apache-2.0（HF 卡，存争议）</td>
 <td>50+</td>
 <td>580M</td>
-<td>端到端 VLM（ViTDet + Qwen-0.5B），统一文本/公式/图表/乐谱/分子式，显存 &lt;3GB</td>
+<td>阶跃星辰，端到端 VLM（ViTDet + Qwen-0.5B），统一文本/公式/图表/乐谱/分子式，显存 &lt;3GB</td>
 <td>科技文献/结构化文档、低显存</td>
 </tr>
 <tr>
@@ -529,7 +531,7 @@
 <td>Apache-2.0</td>
 <td>50+</td>
 <td>400M+</td>
-<td>"先分析后解析"复杂版面</td>
+<td>先分析后解析复杂版面</td>
 <td>复杂版面文档</td>
 </tr>
 <tr>
@@ -749,8 +751,8 @@
 <p>识别之前需先定位公式。专用检测模型包括 <strong>YOLOv8 微调（PDF-Extract-Kit，AP50≈87.7）</strong>、<strong>Pix2Text-MFD（AP50≈60.1）</strong>；UniMERNet 也提供基于 PDF-Extract-Kit MFD 的教程。</p>
 <p>综合工具包：</p>
 <ul>
-<li><strong>PDF-Extract-Kit（OpenDataLab）</strong>：布局检测（LayoutLMv3）+ 公式检测（YOLOv8）+ 公式识别（复用 UniMERNet 权重）+ OCR（PaddleOCR）的模块化工具包，公式识别直接调用 UniMERNet、无需额外微调；各子模型遵循各自许可证（见 4.3）。</li>
-<li><strong>Pix2Text（breezedeus）</strong>：国产"类 Mathpix"工具，覆盖公式检测+识别（底层复用 LaTeX-OCR），提供易用 API，适合中文公式快速接入。</li>
+<li><strong>PDF-Extract-Kit（OpenDataLab）</strong>：布局检测（<strong>DocLayout-YOLO 默认</strong>，另支持 YOLO-v10 与 <strong>LayoutLMv3 精度优先</strong>）+ 公式检测（YOLOv8）+ 公式识别（复用 UniMERNet 权重）+ OCR（PaddleOCR）的模块化工具包，公式识别直接调用 UniMERNet、无需额外微调；各子模型遵循各自许可证（见 4.3）。</li>
+<li><strong>Pix2Text（breezedeus）</strong>：国产类 Mathpix 工具，覆盖公式检测+识别（底层复用 LaTeX-OCR），提供易用 API，适合中文公式快速接入。</li>
 </ul>
 <p><strong>选型逻辑</strong>：追求真实场景复杂/手写公式精度且可商用 → <strong>UniMERNet</strong>（MinerU 默认）；追求中文本地化与高吞吐 → <strong>PP-FormulaNet_plus</strong>；只需块级公式快速验证 → <strong>LaTeX-OCR（pix2tex）</strong>；英文学术 PDF 数字化且不考虑商用 → <strong>Nougat</strong>；低显存统一 OCR+公式 → <strong>GOT-OCR 2.0</strong>；严禁依赖外部 API 的产线应避开 <strong>Mathpix</strong>。</p>
 <h4 id="343 kie">3.4.3　信息抽取（KIE）<a class="headerlink" href="#343 kie" title="Permanent link">&para;</a></h4>
@@ -870,7 +872,7 @@
 <td><strong>olmOCR</strong></td>
 <td>7B</td>
 <td>Apache-2.0</td>
-<td>GPT-4o 作**教师**生成训练数据、Qwen2-VL-7B 作**学生**基座微调（同一蒸馏链路两端，见 3.1），"小 VLM 做 OCR"</td>
+<td>GPT-4o 作为教师生成训练数据、Qwen2-VL-7B 作为学生基座微调，小 VLM 做 OCR</td>
 <td>英文学术文献</td>
 </tr>
 <tr>
@@ -917,12 +919,6 @@
 <td>Apache-2.0</td>
 <td>OCRBench SOTA，端侧友好</td>
 </tr>
-<tr>
-<td><strong>DeepSeek-OCR</strong></td>
-<td>—</td>
-<td>MIT</td>
-<td>低成本光学压缩</td>
-</tr>
 </tbody>
 </table>
 <h2 id="4">4. 综合对比分析<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
@@ -941,14 +937,14 @@
 <tr>
 <td>范式</td>
 <td>Pipeline + 可选 VLM</td>
-<td>Pipeline + MinerU2.5 VLM（双后端）</td>
+<td>Pipeline + MinerU2.5 VLM</td>
 <td>Surya 套件编排 + 可选 LLM 精修</td>
 <td>Pipeline + PaddleOCR-VL</td>
 </tr>
 <tr>
 <td>版面模型</td>
 <td>RT-DETR / Heron</td>
-<td>PDF-Extract-Kit</td>
+<td><strong>DocLayout-YOLO</strong>（PDF-Extract-Kit 为同团队工具包，可选 LayoutLMv3）</td>
 <td>Surya 20M 快速版面</td>
 <td>PP-DocLayout 系列</td>
 </tr>
@@ -1039,91 +1035,15 @@
 </tr>
 </tbody>
 </table>
-<h4 id="421 olmocr-bench">4.2.1　olmOCR-Bench<a class="headerlink" href="#421 olmocr-bench" title="Permanent link">&para;</a></h4>
-<p>Allen AI 第三方基准，1,403 份 PDF、8 类子集 macro-average（越高越好）。数字取自 olmOCR 仓库与 dots.ocr 仓库，两源完全一致。</p>
-<table>
-<thead>
-<tr>
-<th>模型（版本）</th>
-<th>Overall</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Mistral OCR (API)</td>
-<td>72.0</td>
-<td>商业 API 参照</td>
-</tr>
-<tr>
-<td>MinerU 2.5.4*</td>
-<td>75.2</td>
-<td>端到端</td>
-</tr>
-<tr>
-<td>DeepSeek-OCR (3B)</td>
-<td>75.7</td>
-<td></td>
-</tr>
-<tr>
-<td>Marker 1.10.1</td>
-<td>76.1</td>
-<td>balanced 路径</td>
-</tr>
-<tr>
-<td>dots.ocr (1.7B)</td>
-<td>79.1</td>
-<td></td>
-</tr>
-<tr>
-<td>PaddleOCR-VL* (0.9B)</td>
-<td>80.0</td>
-<td>小模型高调位</td>
-</tr>
-<tr>
-<td>olmOCR v0.4.0 (7B)</td>
-<td>82.4</td>
-<td>GPT-4o 教师蒸馏</td>
-</tr>
-<tr>
-<td>Surya OCR 2</td>
-<td>83.3</td>
-<td>Surya 模型栈新版</td>
-</tr>
-<tr>
-<td>dots.mocr (3B)</td>
-<td>83.9</td>
-<td>公实数值准确</td>
-</tr>
-<tr>
-<td>Chandra 2（Datalab）</td>
-<td>85.8–85.9</td>
-<td>Datalab 旗舰模型（2026）</td>
-</tr>
-<tr>
-<td>Nanonets OCR-3</td>
-<td>87.4</td>
-<td>商业/开源混合</td>
-</tr>
-<tr>
-<td>Infinity-Parser2-Pro</td>
-<td>87.6</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>星标（*）为各仓库官方复测版本。结论：dots.mocr 83.9 公实数值准确，但 2026 年已被 <strong>Chandra 2（85.8–85.9）、Infinity-Parser2-Pro（87.6）、Nanonets OCR-3（87.4）</strong> 等超越，"开源 SOTA 区间"说法已不成立；Surya OCR 2 自身为 83.3。端到端小模型已逼近甚至超过部分商业 API。</p>
-</blockquote>
-<h4 id="422 omnidocbench v16">4.2.2　OmniDocBench 综合得分对比（固定 v1.6 版本）<a class="headerlink" href="#422 omnidocbench v16" title="Permanent link">&para;</a></h4>
-<p>OmniDocBench（CVPR 2025，上海人工智能实验室 / OpenDataLab，arXiv:2412.07626）是当前文档解析选型的**核心综合基准**。其端到端 <strong>Overall（官方排行榜称 Accuracy，满分 100，越高越好）</strong> 由三项子指标按固定权重合成：</p>
-<p><strong>Overall = ((1 − TextEditDist) × 100 + TableTEDS + FormulaCDM) / 3</strong></p>
+<h4 id="421 omnidocbench v16">4.2.1　OmniDocBench v1.6<a class="headerlink" href="#421 omnidocbench v16" title="Permanent link">&para;</a></h4>
+<p>OmniDocBench（CVPR 2025，上海人工智能实验室 / OpenDataLab，arXiv:2412.07626）是当前文档解析选型的核心综合基准。其端到端 Overall（官方排行榜称 Accuracy，满分 100，越高越好）由三项子指标按固定权重合成：</p>
+<pre class="highlight"><code>Overall = ((1 − TextEditDist) × 100 + TableTEDS + FormulaCDM) / 3</code></pre>
 <ul>
 <li><strong>TextEditDist</strong>：纯文本归一化编辑距离（越低越好）；</li>
 <li><strong>TableTEDS</strong>：表格结构 TEDS 相似度；</li>
 <li><strong>FormulaCDM</strong>：公式字符检测匹配 CDM。</li>
 </ul>
-<p><strong>本报告固定 OmniDocBench v1.6 为统一口径</strong>（截至 2026-09 公开最完整的官方排行榜版本；v1.6 引入 MGAM 多粒度自适应匹配与 296 页 Hard 子集）。下表 Overall 取自官方排行榜，经 PaddleOCR-VL-1.6 论文 arXiv:2606.03264 Table 2 引用，并与 TeleOCR 论文 arXiv:2608.12898v3 Table 1「v1.6 Full」交叉校验（TeleOCR 96.87、OvisOCR2 96.58 等 2026 Q3 新模型已纳入下表）：</p>
+<p><strong>本报告固定 OmniDocBench v1.6 为统一口径</strong>（截至 2026-09 公开最完整的官方排行榜版本；v1.6 引入 MGAM 多粒度自适应匹配与 296 页 Hard 子集）。</p>
 <table>
 <thead>
 <tr>
@@ -1257,7 +1177,83 @@
 </tbody>
 </table>
 <blockquote>
-<p>数据出处：OmniDocBench 官方排行榜 <code>github.com/opendatalab/OmniDocBench</code>（Papers With Code / CodeSOTA 镜像），经 arXiv:2606.03264 与 arXiv:2608.12898v3 两篇 2026 论文交叉校验。所有数字为厂商/论文自报，建议以自有样本 POC 复测为最终裁决。</p>
+<p>数据出处：OmniDocBench 官方排行榜 <code>github.com/opendatalab/OmniDocBench</code>（Papers With Code / CodeSOTA 镜像），经 arXiv:2606.03264 与 arXiv:2608.12898v3 两篇 2026 论文交叉校验（TeleOCR 96.87、OvisOCR2 96.58 等 2026 Q3 新模型已纳入表中）。所有数字为厂商/论文自报，建议以自有样本 POC 复测为最终裁决。</p>
+</blockquote>
+<h4 id="422 olmocr-bench">4.2.2　olmOCR-Bench<a class="headerlink" href="#422 olmocr-bench" title="Permanent link">&para;</a></h4>
+<p>Allen AI 第三方基准，1,403 份 PDF、8 类子集 macro-average（越高越好）。数字取自 olmOCR 仓库与 dots.ocr 仓库，两源完全一致。</p>
+<table>
+<thead>
+<tr>
+<th>模型（版本）</th>
+<th>Overall</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mistral OCR (API)</td>
+<td>72.0</td>
+<td>商业 API 参照</td>
+</tr>
+<tr>
+<td>MinerU 2.5.4*</td>
+<td>75.2</td>
+<td>端到端</td>
+</tr>
+<tr>
+<td>DeepSeek-OCR (3B)</td>
+<td>75.7</td>
+<td></td>
+</tr>
+<tr>
+<td>Marker 1.10.1</td>
+<td>76.1</td>
+<td>balanced 路径</td>
+</tr>
+<tr>
+<td>dots.ocr (1.7B)</td>
+<td>79.1</td>
+<td></td>
+</tr>
+<tr>
+<td>PaddleOCR-VL* (0.9B)</td>
+<td>80.0</td>
+<td>小模型高调位</td>
+</tr>
+<tr>
+<td>olmOCR v0.4.0 (7B)</td>
+<td>82.4</td>
+<td>GPT-4o 教师蒸馏</td>
+</tr>
+<tr>
+<td>Surya OCR 2</td>
+<td>83.3</td>
+<td>Surya 模型栈新版</td>
+</tr>
+<tr>
+<td>dots.mocr (3B)</td>
+<td>83.9</td>
+<td>公实数值准确</td>
+</tr>
+<tr>
+<td>Chandra 2（Datalab）</td>
+<td>85.8–85.9</td>
+<td>Datalab 旗舰模型（2026）</td>
+</tr>
+<tr>
+<td>Nanonets OCR-3</td>
+<td>87.4</td>
+<td>商业/开源混合</td>
+</tr>
+<tr>
+<td>Infinity-Parser2-Pro</td>
+<td>87.6</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>星标（*）为各仓库官方复测版本。结论：dots.mocr 83.9 公实数值准确，但 2026 年已被 <strong>Chandra 2（85.8–85.9）、Infinity-Parser2-Pro（87.6）、Nanonets OCR-3（87.4）</strong> 等超越，“开源 SOTA 区间”说法已不成立；Surya OCR 2 自身为 83.3。端到端小模型已逼近甚至超过部分商业 API。</p>
 </blockquote>
 <h3 id="43">4.3　许可证与商用矩阵<a class="headerlink" href="#43" title="Permanent link">&para;</a></h3>
 <p>PDF 文档解析系统的许可证分「代码许可」与「权重许可」两层——<strong>代码开源 ≠ 权重可商用</strong>，商用前须逐一核对仓库 LICENSE 与模型卡。</p>
@@ -1396,7 +1392,7 @@
 <p><strong>VLM 端到端成为主流</strong>：Nougat→GOT-OCR 2.0→HunyuanOCR→Dots.OCR→MinerU 2.5 表明，单次前向推理统一检测/识别/版面/表格/公式/翻译，正系统性替代级联流水线。</p>
 </li>
 <li>
-<p><strong>VLM 小型化竞赛</strong>：1.2B 的 MinerU2.5、0.9B 的 PaddleOCR-VL、258M 的 Granite-Docling 相继刷榜，证明“分辨率工程 &gt; 参数堆叠”成为新范式，端侧/CPU 部署边界不断下移。</p>
+<p><strong>VLM 小型化竞赛</strong>：1.2B 的 MinerU2.5、0.9B 的 PaddleOCR-VL、258M 的 Granite-Docling 相继刷榜，证明分辨率工程 &gt; 参数堆叠成为新范式，端侧/CPU 部署边界不断下移。</p>
 </li>
 <li>
 <p><strong>双后端成为标配</strong>：管线（低成本兜底）+ VLM（高精度攻坚）二元架构 + 级联策略，是 2026 年生产系统主流拓扑。</p>
@@ -1415,164 +1411,132 @@
 <tr>
 <th>名称</th>
 <th>GitHub / 主页</th>
-<th>许可证</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>MinerU</td>
 <td>github.com/opendatalab/MinerU</td>
-<td>MinerU Open Source License（Apache-2.0 系，≥3.1.0）</td>
 </tr>
 <tr>
 <td>Docling</td>
 <td>github.com/docling-project/docling</td>
-<td>MIT</td>
 </tr>
 <tr>
 <td>Marker</td>
 <td>github.com/datalab-to/marker</td>
-<td>代码 Apache-2.0 + 权重 AI Pubs OpenRAIL-M（&lt;$5M 门槛，以最新官方仓库为准）</td>
 </tr>
 <tr>
 <td>olmOCR</td>
 <td>github.com/allenai/olmocr</td>
-<td>Apache-2.0</td>
 </tr>
 <tr>
 <td>Unstructured</td>
 <td>github.com/Unstructured-IO/unstructured</td>
-<td>Apache-2.0</td>
 </tr>
 <tr>
 <td>DeepDoctection</td>
 <td>github.com/deepdoctection/deepdoctection</td>
-<td>Apache-2.0</td>
 </tr>
 <tr>
 <td>DocXChain</td>
 <td>github.com/AlibabaResearch/AdvancedLiterateMachinery/tree/main/Applications/DocXChain</td>
-<td>开源</td>
 </tr>
 <tr>
 <td>Tesseract</td>
 <td>github.com/tesseract-ocr/tesseract</td>
-<td>Apache-2.0</td>
 </tr>
 <tr>
 <td>PaddleOCR</td>
 <td>github.com/PaddlePaddle/PaddleOCR</td>
-<td>Apache-2.0</td>
 </tr>
 <tr>
 <td>EasyOCR</td>
 <td>github.com/JaidedAI/EasyOCR</td>
-<td>Apache-2.0</td>
 </tr>
 <tr>
 <td>Surya</td>
 <td>github.com/VikParuchuri/surya</td>
-<td>代码 Apache-2.0；权重 Modified AI Pubs OpenRAIL-M（&lt;$5M 免费，旧 CC-BY-NC-SA 4.0）</td>
 </tr>
 <tr>
 <td>GOT-OCR 2.0</td>
 <td>github.com/Ucas-HaoranWei/GOT-OCR2.0</td>
-<td>研究用途（原仓库）/ Apache-2.0（HF 卡，存争议）</td>
 </tr>
 <tr>
 <td>HunyuanOCR</td>
 <td>github.com/Tencent/llm.hunyuan.ocr</td>
-<td>Tencent Hunyuan Community License（排除 EU/UK/韩国）</td>
 </tr>
 <tr>
 <td>Dots.OCR</td>
 <td>github.com/rednote-hilab/dots.ocr</td>
-<td>MIT</td>
 </tr>
 <tr>
 <td>LayoutParser</td>
 <td>github.com/Layout-Parser/layout-parser</td>
-<td>Apache-2.0</td>
 </tr>
 <tr>
 <td>PP-Structure</td>
 <td>github.com/PaddlePaddle/PaddleOCR</td>
-<td>Apache-2.0</td>
 </tr>
 <tr>
 <td>360LayoutAnalysis</td>
 <td>github.com/360AIResearch/360LayoutAnalysis</td>
-<td>开源</td>
 </tr>
 <tr>
 <td>Camelot</td>
-<td>github.com/camelot-dev/camelot（2026 v2.0.0 活跃维护；atlanhq fork 已归档只读）</td>
-<td>MIT</td>
+<td>github.com/camelot-dev/camelot</td>
 </tr>
 <tr>
 <td>Tabula</td>
 <td>github.com/tabulapdf/tabula</td>
-<td>MIT</td>
 </tr>
 <tr>
 <td>pdfplumber</td>
 <td>github.com/jsvine/pdfplumber</td>
-<td>MIT</td>
 </tr>
 <tr>
 <td>TableTransformer</td>
 <td>github.com/microsoft/table-transformer</td>
-<td>MIT</td>
 </tr>
 <tr>
 <td>PDFMiner.six</td>
 <td>github.com/pdfminer/pdfminer.six</td>
-<td>MIT</td>
 </tr>
 <tr>
 <td>PyMuPDF / 4LLM</td>
 <td>github.com/pymupdf/PyMuPDF</td>
-<td>AGPL-3.0</td>
 </tr>
 <tr>
 <td>markitdown</td>
 <td>github.com/microsoft/markitdown</td>
-<td>MIT</td>
 </tr>
 <tr>
 <td>Nougat</td>
 <td>github.com/facebookresearch/nougat</td>
-<td>CC-BY-NC（禁商用）</td>
 </tr>
 <tr>
 <td>pdf-craft</td>
 <td>github.com/oomol-lab/pdf-craft</td>
-<td>开源</td>
 </tr>
 <tr>
 <td>pandoc</td>
 <td>pandoc.org</td>
-<td>GPL-2.0</td>
 </tr>
 <tr>
 <td>SmolDocling</td>
 <td>github.com/docling-project/smoldocling</td>
-<td>与 Docling 兼容</td>
 </tr>
 <tr>
 <td>Parxy</td>
 <td>统一多解析器 API 网关</td>
-<td>—</td>
 </tr>
 <tr>
 <td>StructEqTable-Deploy</td>
 <td>github.com/UniModal4Reasoning/StructEqTable-Deploy</td>
-<td>—</td>
 </tr>
 <tr>
 <td>chunkr</td>
 <td>github.com/lumina-ai-inc/chunkr</td>
-<td>—</td>
 </tr>
 </tbody>
 </table>
@@ -1591,7 +1555,7 @@
 <li>TeleOCR, arXiv:2608.12898（OmniDocBench v1.6 96.87，2026 Q3 开源 SOTA）</li>
 <li>OvisOCR2（阿里 ATH-MaaS，OmniDocBench v1.6 96.58）；MinerU 3.4/4.0 发布说明（2026-06 / 2026 后续，GitHub opendatalab/MinerU）</li>
 </ol>
-<p><em>本报告由 Kimi、Qwen3.8-max、Hy3、DeepSeek-v4.1-flash、Claude Opus 5 基于公开技术资料、官方仓库、技术博客与 2025–2026 年公开基准整理，数据截至 2026-09。具体版本能力与许可证以各项目官方仓库最新声明为准。</em></p></div>
+<p><em>本报告由 Kimi2.7、Qwen3.8-max、Hunyuan3、DeepSeek-v4.1-flash、Claude Opus 5 基于公开技术资料、官方仓库、技术博客与 2025–2026 年公开基准整理，数据截至 2026-09。具体版本能力与许可证以各项目官方仓库最新声明为准。</em></p></div>
             </div>
         </div>
 

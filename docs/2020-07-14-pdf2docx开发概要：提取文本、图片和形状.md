@@ -1,5 +1,5 @@
 ---
-categories: [process automation]
+categories: [document analysis]
 tags: [python]
 ---
 

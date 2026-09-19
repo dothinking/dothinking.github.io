@@ -48,6 +48,10 @@
 </li>
                                     
 <li>
+    <a href="../categories/document%20analysis/" class="dropdown-item">document analysis</a>
+</li>
+                                    
+<li>
     <a href="../categories/energy/" class="dropdown-item">energy</a>
 </li>
                                     
@@ -157,7 +161,7 @@
                     <div class="col-md-9" role="main">
 
 <h1 id="pdf2docx">pdf2docx开发概要：解析页面布局<a class="headerlink" href="#pdf2docx" title="Permanent link">&para;</a></h1>
-<p>发布于：2021-05-30 | 分类：<a href="../categories/process%20automation/">process automation</a></p>
+<p>发布于：2021-05-30 | 分类：<a href="../categories/document%20analysis/">document analysis</a></p>
 <hr />
 <p><a href="../2020-07-14-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E6%8F%90%E5%8F%96%E6%96%87%E6%9C%AC%E3%80%81%E5%9B%BE%E7%89%87%E5%92%8C%E5%BD%A2%E7%8A%B6/">前文</a>介绍了从PDF直接提取出的基本数据：块元素<code>Block</code>和形状<code>Shape</code>，但是它们目前还只有位置数据，接下来要做的是解析语义数据，例如从块元素解析出表格和普通段落，从形状元素解析出文本样式例如下划线、高亮及其作用的文本、解析表格样式如边框颜色、背景色及其包含的段落。我们先从页面布局开始。</p>
 <h2 id="_1">数据结构<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>

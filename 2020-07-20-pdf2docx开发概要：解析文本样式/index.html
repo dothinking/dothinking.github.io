@@ -48,6 +48,10 @@
 </li>
                                     
 <li>
+    <a href="../categories/document%20analysis/" class="dropdown-item">document analysis</a>
+</li>
+                                    
+<li>
     <a href="../categories/energy/" class="dropdown-item">energy</a>
 </li>
                                     
@@ -145,7 +149,7 @@
                     <div class="col-md-9" role="main">
 
 <h1 id="pdf2docx">pdf2docx开发概要：解析文本样式<a class="headerlink" href="#pdf2docx" title="Permanent link">&para;</a></h1>
-<p>发布于：2020-07-20 | 分类：<a href="../categories/process%20automation/">process automation</a></p>
+<p>发布于：2020-07-20 | 分类：<a href="../categories/document%20analysis/">document analysis</a></p>
 <hr />
 <p><a href="../2020-07-14-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E6%8F%90%E5%8F%96%E6%96%87%E6%9C%AC%E3%80%81%E5%9B%BE%E7%89%87%E5%92%8C%E5%BD%A2%E7%8A%B6/">前文</a>介绍了<code>PyMuPDF</code>提取的原始数据，即文本、图片、超链接及形状。其中文本块自带了字体、颜色、斜体、粗体等属性，但是<code>高亮</code>、<code>下划线</code>、<code>删除线</code>等具体样式需要进一步根据 <strong>文本和形状的位置关系</strong> 来判定。</p>
 <h2 id="_1">解析思路<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>

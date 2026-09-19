@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="dothinking">
+        <link rel="canonical" href="https://dothinking.github.io/2026-09-19-2026%20%E5%BC%80%E6%BA%90%20PDF%20%E8%A7%A3%E6%9E%90%E5%BA%93%E5%85%A8%E6%99%AF%EF%BC%9A%E4%BB%8E%E6%96%87%E6%9C%AC%E6%8A%BD%E5%8F%96%E5%88%B0%E6%96%87%E6%A1%A3%E6%99%BA%E8%83%BD/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>2026 开源 PDF 解析库全景：从文本抽取到文档智能 - 格致</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <link href="../css/extra.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">格致</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown"  aria-expanded="false">分类</a>
+                                <ul class="dropdown-menu">
+                                    
+<li>
+    <a href="../categories/CAD-CAE%20integration/" class="dropdown-item">CAD/CAE integration</a>
+</li>
+                                    
+<li>
+    <a href="../categories/devops/" class="dropdown-item">devops</a>
+</li>
+                                    
+<li>
+    <a href="../categories/document%20analysis/" class="dropdown-item">document analysis</a>
+</li>
+                                    
+<li>
+    <a href="../categories/energy/" class="dropdown-item">energy</a>
+</li>
+                                    
+<li>
+    <a href="../categories/feeling/" class="dropdown-item">feeling</a>
+</li>
+                                    
+<li>
+    <a href="../categories/finite%20element%20analysis/" class="dropdown-item">finite element analysis</a>
+</li>
+                                    
+<li>
+    <a href="../categories/machine%20learning/" class="dropdown-item">machine learning</a>
+</li>
+                                    
+<li>
+    <a href="../categories/mathematics/" class="dropdown-item">mathematics</a>
+</li>
+                                    
+<li>
+    <a href="../categories/numeric%20calculation/" class="dropdown-item">numeric calculation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/optimization/" class="dropdown-item">optimization</a>
+</li>
+                                    
+<li>
+    <a href="../categories/plasticity%20theory/" class="dropdown-item">plasticity theory</a>
+</li>
+                                    
+<li>
+    <a href="../categories/process%20automation/" class="dropdown-item">process automation</a>
+</li>
+                                    
+<li>
+    <a href="../categories/python-vba-cpp/" class="dropdown-item">python/vba/cpp</a>
+</li>
+                                    
+<li>
+    <a href="../categories/web%20development/" class="dropdown-item">web development</a>
+</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../archive/" class="nav-link">归档</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../about/" class="nav-link">关于</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/dothinking/dothinking.github.io/edit/master/docs/2026-09-19-2026 开源 PDF 解析库全景：从文本抽取到文档智能.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#2026 pdf" class="nav-link">2026 开源 PDF 解析库全景：从文本抽取到文档智能</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#1 pdf" class="nav-link">1. PDF 文档解析的挑战与技术演进</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#2" class="nav-link">2. 技术体系与能力分类</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#3" class="nav-link">3. 主流开源库</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#4" class="nav-link">4. 综合对比分析</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#5" class="nav-link">5. 总结</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#a" class="nav-link">附录 A 项目索引</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#b" class="nav-link">附录 B 参考资料</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="2026 pdf">2026 开源 PDF 解析库全景：从文本抽取到文档智能<a class="headerlink" href="#2026 pdf" title="Permanent link">&para;</a></h1>
+<p>发布于：2026-09-19 | 分类：<a href="../categories/document%20analysis/">document analysis</a></p>
+<hr />
+<blockquote>
+<p>最近使用 Claude Opus 5 将一份扫描的PDF合同转换为markdown，惊异于圆形公章上公司名及手写签名都能正确识别，心血来潮想看看开源领域 PDF 文档解析库的发展状态。于是经过 Kimi、Qwen3.8-max 起草初稿、WorkBuddy 内置 Hy3 整理及 13 版修订、DeepSeek-v4.1-flash、Claude Opus 5 最终审核，生产了本文调研报告。</p>
+<p>区别于 <a href="../2021-01-02-Python%E5%A4%84%E7%90%86PDF%E7%9A%84%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%93%E5%AF%B9%E6%AF%94/">Python处理PDF的第三方库对比</a> 关注对 PDF 文档本身的操作能力如提取/创建内容、增删页面等，本报告更偏向文档理解——语义级别的内容提取。</p>
+</blockquote>
+<p>PDF 作为事实上的“电子纸张”标准，承载了海量的论文、合同、财报、研报与档案。然而 PDF 本质是 <strong>面向“打印排版”的格式</strong> 而非结构化数据格式，文本、表格、公式、图片混杂，多栏、跨页、扫描件、水印等情形进一步加剧了机器理解的难度。随着 RAG（检索增强生成）、大模型训练语料构建、企业知识库与 Agent 工作流的兴起，对 PDF <strong>高质量、结构化解析</strong> 的需求从“能读出字”升级为“能还原版式、表格、公式与阅读顺序”。</p>
+<p>在合规（HIPAA / GDPR / 数据不出域）、成本（商业 API 按页计费，规模化后昂贵）与可控性（可微调、可私有化部署）三重驱动下，自托管开源方案成为企业级文档智能的可行乃至必选路径。而在纯离线/涉密场景，开源是唯一合规选项。因此，本报告围绕开源方案展开，按 <strong>OCR（光学字符识别）、版面分析、信息提取</strong> 三大理解能力维度，对 40+ 个主流开源库进行系统化梳理；其中信息提取细分为 <strong>信息抽取（结构化字段）、表格提取、公式提取</strong> 三类子任务。*</p>
+<p>本报告重点调研了 MinerU、Docling、Marker、olmOCR、Unstructured、DeepDoctection、DocXChain 等综合平台，Tesseract / PaddleOCR / EasyOCR / Surya / GOT-OCR 2.0 / HunyuanOCR / Dots.OCR 等识别引擎，以及 Camelot / Tabula / pdfplumber / TableTransformer 等表格与文本提取工具。报告给出精度基准对比，并总结以视觉语言模型（VLM）端到端为代表的下一代技术趋势。此外，针对通用视觉语言模型（VLM）作为解析后端，系统梳理了 PaddleOCR-VL、Qwen2.5-VL、InternVL2.5、GLM-4V-9B、MiniCPM-V 2.6、DeepSeek-OCR 等以 VLM 为底座的文档解析方案。</p>
+<p><strong>核心结论：</strong></p>
+<ul>
+<li>
+<p><strong>中文团队主导创新节奏，中文生态居全球第一梯队</strong>：MinerU（80.2k★）、PaddleOCR（79k+★）、dots.ocr（小红书）、DeepSeek-OCR、GOT-OCR 2.0（阶跃星辰）等头部项目多来自中国团队，中文文档/公式/表格场景适配红利显著；OmniDocBench、olmOCR-Bench 等公开基准长期由中文项目占据前列。</p>
+</li>
+<li>
+<p><strong>技术范式已分化为“Pipeline 模块化”与“VLM 端到端”两派，且头部项目均已融合</strong>：2026 年实际格局是“管线（低成本兜底）+ VLM（高精度攻坚）”双后端并存，配合“默认快路径、低置信升级重路径”的级联策略。</p>
+</li>
+<li>
+<p><strong>精度维度</strong>：PaddleOCR-VL-1.6（0.9B 小模型，OmniDocBench v1.6 <strong>96.33</strong> 居小模型前列，2026 Q3 起已被 OvisOCR2 96.58 / TeleOCR 96.87 超越）与 MinerU2.5-Pro（95.75）同处第一梯队。</p>
+</li>
+<li>
+<p><strong>选型无单一赢家，须按场景匹配</strong>：追求中文文档与公式/表格精度选 MinerU 或 PaddleOCR；追求工程集成与多格式统一表示选 Docling；追求 CPU 轻量部署选 Marker（fast）或 PP-OCRv5 mobile；追求极致精度且有 GPU 选 dots.mocr / olmOCR / DeepSeek-OCR；面向 LLM/RAG 数据流水线选 Unstructured 与前述解析器组合。</p>
+</li>
+<li>
+<p><strong>许可证与部署维度</strong>：Docling（MIT、65+ 格式、可纯 CPU 运行）与 PaddleOCR（Apache-2.0，代码与权重均无商用限制）最宽松；MinerU（≥3.1.0 转 Apache-2.0 系 MinerU Open Source License）与 Marker（代码 Apache-2.0）2026 年也已大幅放宽，但二者模型权重仍设营收/融资门槛；Nougat 与 LayoutLMv3 权重 CC-BY-NC / CC BY-NC-SA 4.0，<strong>禁商用</strong>。</p>
+</li>
+</ul>
+<h2 id="1 pdf">1. PDF 文档解析的挑战与技术演进<a class="headerlink" href="#1 pdf" title="Permanent link">&para;</a></h2>
+<p>一个完整的 PDF 解析系统通常需协同解决下表所示子任务。传统工具（如 <code>pdftotext</code>）在真实文档上暴露出典型失效：公式丢失或乱码；表格结构崩坏；图片被忽略；页眉页脚混入正文、段落被随意切割；多栏布局下阅读顺序错乱。其根源在于 PDF 不保存“语义结构”，仅保存“绘制指令”（字符、线段、图像的位置与样式）。</p>
+<p>更细分的难点包括：<strong>数字原生 PDF</strong>（含文本层）vs <strong>扫描版/图层型 PDF</strong>（文字不可复制、乱码）；<strong>有线表格</strong>（lattice）vs <strong>无线/白隙表格</strong>（stream）；合并单元格、跨页表格、嵌套表头；行内/行间公式；旋转版面与页眉页脚去噪；竖排文字、印章、手写。任何单一方案都难以覆盖全部长尾情形。</p>
+<table>
+<thead>
+<tr>
+<th>子任务</th>
+<th>说明</th>
+<th>典型难点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>版面/布局检测</td>
+<td>定位标题、正文、图、表、公式、印章等区域</td>
+<td>多栏、图文混排、旋转、密集表格</td>
+</tr>
+<tr>
+<td>阅读顺序恢复</td>
+<td>按人类阅读顺序串联区域</td>
+<td>多栏论文、报纸、教材</td>
+</tr>
+<tr>
+<td>OCR 文字识别</td>
+<td>图像文字 → 字符序列</td>
+<td>多语言、手写体、低质扫描件</td>
+</tr>
+<tr>
+<td>表格识别</td>
+<td>还原行/列/单元格结构</td>
+<td>无线表、合并单元格、跨页表</td>
+</tr>
+<tr>
+<td>公式识别</td>
+<td>印刷/手写公式 → LaTeX</td>
+<td>嵌套结构、行内公式</td>
+</tr>
+<tr>
+<td>页眉页脚/水印剔除</td>
+<td>去除与正文无关的重复元素</td>
+<td>与正文的区分</td>
+</tr>
+<tr>
+<td>关键信息提取（KIE）</td>
+<td>抽取字段级语义（金额、日期、甲乙方等）</td>
+<td>版式多样性、少样本适应</td>
+</tr>
+</tbody>
+</table>
+<p>为了解决上述难点，PDF 文档解析技术经历了从 OCR 到文档智能的演进。</p>
+<ul>
+<li><strong>传统 ML 引擎</strong>（Tesseract v4+ LSTM）：CPU 友好、成熟稳定，但弱于版面与手写；</li>
+<li><strong>深度学习检测-识别级联</strong>（PaddleOCR、EasyOCR、Surya）：检测（DBNet/PP-YOLO）+ 识别（CRNN/SVTR）+ 版面（LayoutParser/PP-Structure），精度大幅提升；</li>
+<li><strong>端到端视觉语言模型（VLM）</strong>（Nougat、GOT-OCR 2.0、HunyuanOCR、Dots.OCR、olmOCR、MinerU 2.5 内置 VLM）：单次前向推理直接输出结构化文本/公式/表格，消除级联误差累积，成为 2025 年后的主流方向。</li>
+<li><strong>通用 VLM 作为解析后端</strong>（Qwen2.5-VL、InternVL2.5、GLM-4V-9B、MiniCPM-V 2.6）：并非专门的 PDF 解析器，但凭强大文档理解/定位能力被广泛封装为自研解析服务，或嵌入 MinerU/PP-Structure 的数据构建管线，是 VLM 范式在工程侧的延伸。</li>
+</ul>
+<h2 id="2">2. 技术体系与能力分类<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<h3 id="21">2.1　技术路线的两大范式<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<p>据公开资料，PDF 文档解析范式可以归为两类。2026 年头部项目已呈融合态势，例如 Docling 增加 Granite-Docling-258M VLM 路径；MinerU 同时保留经典管线后端供纯 CPU 场景；Marker 2 定位为“Surya 模型套件的编排器”，其质量上限即 Surya 的质量上限。</p>
+<table>
+<thead>
+<tr>
+<th>范式</th>
+<th>原理</th>
+<th>代表</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Pipeline 模块化</strong></td>
+<td>检测/识别/版面/表格/公式各用专用模型，串行组装</td>
+<td>Docling、PaddleOCR PP-StructureV3、Marker（Surya 套件）、MinerU 管线后端</td>
+<td>可解释、可替换单模块、易私有化微调、CPU 可跑</td>
+<td>误差级联、工程复杂</td>
+</tr>
+<tr>
+<td><strong>VLM 端到端</strong></td>
+<td>单模型直接"看图吐 Markdown/JSON"</td>
+<td>MinerU2.5、PaddleOCR-VL、Marker 2、Granite-Docling、GPTPDF、Zerox、olmOCR</td>
+<td>复杂版面鲁棒、训练成本外置</td>
+<td>推理开销大、依赖 GPU、黑盒</td>
+</tr>
+</tbody>
+</table>
+<h3 id="22">2.2　按功能维度分类<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
+<p>PDF 解析的理解能力归为 OCR、版面分析、信息提取三大维度；信息提取细分为三类子任务（见下表）。</p>
+<table>
+<thead>
+<tr>
+<th>能力维度</th>
+<th>解决的问题</th>
+<th>代表性开源库</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OCR（文字识别）</strong></td>
+<td>扫描件/图片/乱码 PDF 的文本抽取，含多语种、手写</td>
+<td>Tesseract、PaddleOCR、EasyOCR、Surya、GOT-OCR 2.0、HunyuanOCR、Dots.OCR</td>
+</tr>
+<tr>
+<td><strong>版面分析（Layout）</strong></td>
+<td>区分标题/正文/表格/图片/公式区域，还原阅读顺序与层级</td>
+<td>LayoutParser、PP-Structure、360LayoutAnalysis、DocLayout-YOLO、DocLayNet（Docling）、PDF-Extract-Kit（MinerU）</td>
+</tr>
+<tr>
+<td><strong>信息提取（IE）</strong></td>
+<td>从文档中抽取结构化信息（含三类子任务，统一见 3.4：3.4.1 表格 / 3.4.2 公式 / 3.4.3 KIE）</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>信息提取的三类子任务：</p>
+<table>
+<thead>
+<tr>
+<th>子任务</th>
+<th>解决的问题</th>
+<th>代表性开源库</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>信息抽取（KIE）</strong></td>
+<td>从票据/合同/表单抽取关键字段与实体关系</td>
+<td>PP-ChatOCR、Unstructured、DeepDoctection、DocXChain、GLM-OCR、HunyuanOCR（开放字段）</td>
+</tr>
+<tr>
+<td><strong>表格提取（Table）</strong></td>
+<td>有线/无线/跨页/合并单元格表格的结构化重建</td>
+<td>Camelot、Tabula、pdfplumber、TableTransformer、gmft、StructEqTable</td>
+</tr>
+<tr>
+<td><strong>公式提取（Formula）</strong></td>
+<td>行内/行间公式识别为 LaTeX / MathML</td>
+<td>UniMERNet、PP-FormulaNet、Surya LaTeX、Nougat、GOT-OCR 2.0</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>注</strong>：上表「信息提取三类子任务」列出的是**专用/代表性工具**；需强调，<strong>端到端文档解析系统（MinerU / Docling / Marker / olmOCR 等）同样内置表格提取、公式识别与 KIE 能力</strong>——二者并非互斥关系。选型时：若只需「拆出单张表/单个字段」，用专用工具（Camelot、pdfplumber、PP-ChatOCR）即可；若需「整文档结构化 + 阅读顺序 + 多格式输出」，则端到端平台更合适。</p>
+</blockquote>
+<h2 id="3">3. 主流开源库<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<h3 id="31">3.1　综合型文档解析平台<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<p><strong>MinerU（OpenDataLab / 上海人工智能实验室）</strong> <code>OCR·版面·表格·转换</code></p>
+<ul>
+<li><strong>仓库</strong>：<code>opendatalab/MinerU</code>；<strong>许可证</strong>：MinerU Open Source License（基于 Apache-2.0 的自定义许可；≥3.1.0 由 AGPLv3 切换，超 100M MAU 或 $20M/月营收需商业授权、对外在线服务须标明）；<strong>活跃度</strong>：约 80.2k★（2026-09）。</li>
+<li><strong>定位</strong>：将 PDF、图片及 Office 文档转换为 LLM-Ready 的 Markdown / JSON 的高精度解析工具，中文社区事实标杆。</li>
+<li><strong>核心能力</strong>：去页眉/页脚/页码/脚注、还原多栏阅读顺序；OCR 约 109 种语言；公式检测+识别输出 LaTeX；表格识别输出 HTML/OTSL；自动提取图片并引用；输出 Markdown、middle-json、model-json 多层结构化格式；4.0 引入质量四档（flash/basic/standard/advanced）、本地文档库、面向 Agent 的 CLI（按页/块续读、稳定定位符 locator）。</li>
+<li><strong>技术架构</strong>：双后端——传统 pipeline 后端（版面检测+公式/表格/OCR 专用模型级联，小模型 ONNX CPU 推理）与 VLM 后端（MinerU2.x/2.5 系列 1.2B，llama.cpp + Vulkan，NVIDIA GPU 可装 <code>mineru[full]</code> 用 vLLM/lmdeploy 提吞吐）。</li>
+<li><strong>性能参考</strong>：OmniDocBench v1.6：MinerU2.5 93.04 / MinerU2.5-Pro 95.75（同规模组榜首）；olmOCR-Bench 75.2（2.5.4）。2026 年陆续发布 3.4（2026-06-18，pipeline 换 PP-OCRv6，较 2.5 +11%）、4.0（四档 tier、9 种渲染输出、本地文档库）。</li>
+<li><strong>部署要求</strong>：Python 3.10–3.14；默认 CPU 可跑，GPU 大幅提吞吐；支持 Windows/macOS/Linux。</li>
+<li><strong>小结</strong>：中文文档、学术论文（公式/表格密集）首选之一；生态成熟、与主流 RAG 框架集成广。注意点：附加商业条款、VLM 后端显存需求。</li>
+</ul>
+<p><strong>Docling（IBM Research → LF AI &amp; Data 基金会）</strong> <code>版面·表格·转换</code></p>
+<ul>
+<li><strong>仓库</strong>：<code>docling-project/docling</code>；<strong>许可证</strong>：MIT（宽松，无权重商用门槛）；<strong>活跃度</strong>：约 66.6k★（2026）。</li>
+<li><strong>定位</strong>："Get your documents ready for gen AI"——面向生成式 AI 的统一文档处理框架。</li>
+<li><strong>核心能力</strong>：输入格式覆盖最广（PDF/DOCX/PPTX/XLSX/HTML/EPUB/邮件/音视频/XBRL 等）；DocLayNet 版面 + TableFormer 表格重建（FinTabNet TEDS&gt;91%）+ 多引擎 OCR；元数据提取（标题/作者/参考文献/语言）；统一中间表示 DoclingDocument，导出 Markdown/HTML/JSON/DocTags/WebVTT；<code>--pipeline vlm</code>（GraniteDocling 258M，Apache-2.0）；LangChain/LlamaIndex/CrewAI/Haystack 官方集成、MCP Server、docling-serve。</li>
+<li><strong>性能参考</strong>：olmOCR-Bench 50.3%（数字版子集 64.0%），强项不在卷 OCR 精度而在格式覆盖与生态集成。</li>
+<li><strong>部署要求</strong>：Python 3.10+；CPU 可跑、GPU 可选；支持完全本地/离线（air-gapped）。</li>
+<li><strong>小结</strong>：MIT + 基金会治理 + IBM 背书，企业级多格式文档 ETL 与 RAG 集成稳健选择；中文公式/手写极限精度弱于 MinerU、PaddleOCR。注意：PDF→DOCX 排版级还原非其目标。</li>
+</ul>
+<p><strong>Marker（Datalab）</strong> <code>OCR·版面·转换</code></p>
+<ul>
+<li><strong>仓库</strong>：<code>datalab-to/marker</code>；<strong>许可证</strong>：代码 Apache-2.0 + 权重 AI Pubs OpenRAIL-M（研究/个人/初创 &lt;$5M 营收或融资免费，超出需购商业授权）；<strong>活跃度</strong>：约 39.8k★（2026）。</li>
+<li><strong>定位</strong>：快速、高精度地将文档转换为 Markdown / JSON / chunks / HTML。</li>
+<li><strong>核心能力</strong>：输入 PDF/图/PPTX/DOCX/XLSX/HTML/EPUB，全语言；输出 Markdown/JSON/RAG chunks/HTML；表格/表单/公式/链接/引用/代码块格式化；<code>--use_llm</code> 可选接 LLM 做跨页表合并、表单值抽取、行内公式修复；架构可扩展。</li>
+<li><strong>技术架构</strong>：深度学习流水线，核心依赖同门 Surya 模型族——balanced 模式用 Surya VLM 做版面+行内公式 OCR+坏页重识别；fast 模式用 rf-detr 版面 + pdftext 文本层提取，仅对公式与损坏块做 VLM 点状修复，纯数字文档可完全绕开 VLM，CPU 友好。2026-07 发布重写版 Marker 2（Surya OCR 2 ~650M、20M 快速版面、pdftext 快约 3×；结构化抽取 converter 移除，改 <code>--use_llm</code>/托管 API）。</li>
+<li><strong>性能参考</strong>：olmOCR-Bench balanced 76.0%（数字版 83.5%）；dots.ocr 仓库引用 Marker 1.10.1 为 76.1。</li>
+<li><strong>部署要求</strong>：Python 3.10+；GPU/CPU/MPS 均可；balanced 需 vLLM（NVIDIA）或 llama.cpp。</li>
+<li><strong>小结</strong>：速度精度平衡好、多格式齐全、RAG 友好；最大风险是权重商用许可门槛（融资/营收超 $5M 需付费）。同公司另有旗舰 <strong>Chandra 2</strong>（olmOCR-Bench 85.8–85.9，高于 dots.mocr 83.9），评估 Datalab 生态应以 Chandra 2 为质量锚点。</li>
+</ul>
+<p><strong>PaddleOCR 3.x（百度飞桨）</strong> <code>OCR·版面·表格·转换</code></p>
+<ul>
+<li><strong>仓库</strong>：<code>PaddlePaddle/PaddleOCR</code>；<strong>许可证</strong>：Apache-2.0（代码与权重均无商用限制）；<strong>活跃度</strong>：79k+★（2026-09，用户遍布 160 国）。</li>
+<li><strong>定位</strong>：从经典 OCR 工具包升级为“OCR + 文档解析 + 文档理解”三位一体体系，三大核心方案：</li>
+<li><strong>PP-OCRv5</strong>（文字识别）：单模型统一简/繁/拼音/英/日，server / mobile 双版本（mobile 面向纯 CPU 与端侧）；</li>
+<li><strong>PP-StructureV3</strong>（文档解析）：PP-DocLayout 版面 + 表格/公式（PP-FormulaNet）/图表（PP-Chart2Table）/印章/阅读顺序一体化，“一键输出 JSON + Markdown”，支持 Word/docx 输出；</li>
+<li><strong>PP-ChatOCRv4-doc</strong>（KIE）：轻量 OCR 与 ERNIE-4.5、PP-DocBee2（3B 多模态）RAG 融合，关键信息抽取端到端 Recall@1 85.55%（官方自报，称超 GPT-4o 22 个百分点）。</li>
+<li><strong>配套</strong>：PaddleOCR-VL（0.9B VLM，见 3.5）；训练/推理/部署工具链完整，支持昆仑芯、昇腾等国产硬件异构加速。</li>
+<li><strong>小结</strong>：中文场景综合最强全家桶，从端侧 mobile 到服务器级 VLM 全覆盖，Apache-2.0 无商用顾虑；代价是绑定 PaddlePaddle 框架，组件繁多、上手略陡。</li>
+</ul>
+<p><strong>olmOCR（Allen Institute for AI）</strong> <code>OCR·版面</code></p>
+<ul>
+<li><strong>仓库</strong>：<code>allenai/olmocr</code>；<strong>许可证</strong>：Apache-2.0（代码与权重均宽松）。</li>
+<li><strong>定位</strong>：PDF 大规模“线性化”（转 Markdown/纯文本）工具链，主打 LLM 训练/RAG 高质量语料。</li>
+<li><strong>核心能力</strong>：直接处理 PDF 原文（正文/标题/章节/表格/公式/手写），清除页眉/页脚/水印，保留元数据，输出干净 Markdown；成本主张鲜明（每百万页 &lt;$200，官方口径）；基于 Qwen2-VL 系微调（7B 级），vLLM 推理；olmOCR 2 引入 Unit Test Rewards（RL 奖励）；副产品 olmOCR-Bench 成行业通用基准。</li>
+<li><strong>性能参考</strong>：olmOCR v0.4.0 在 olmOCR-Bench 总分 82.4（dots.ocr 仓库引用），高于 marker（76.1）与 MinerU 2.5.4（75.2）。</li>
+<li><strong>部署要求</strong>：Python + vLLM；本地 GPU / Docker / AWS S3 集群均可；7B 模型对显存有要求（常 A100/H100 + vLLM）。</li>
+<li><strong>小结</strong>：许可最宽松、面向海量页级批处理的 VLM 方案，学术背书、评测透明；小规模单位成本高于 1B 级专用小模型。</li>
+</ul>
+<p><strong>Unstructured（Unstructured.io）</strong> <code>版面·提取·转换</code></p>
+<ul>
+<li><strong>仓库</strong>：<code>Unstructured-IO/unstructured</code>；<strong>许可证</strong>：Apache-2.0（open-core，LICENSE 核验）。</li>
+<li><strong>定位</strong>：非结构化数据 ETL 库——不做“最强解析”，做“最通用元素化切分”，是 RAG/LLM 数据管道事实标准组件之一。</li>
+<li><strong>核心能力</strong>：<code>partition</code> 系列 API 将 PDF/DOCX/PPTX/HTML/EML/图等 20+ 格式统一切分为带类型标签元素（Title/NarrativeText/Table/ListItem 等）并附页码/坐标；fast（文本层）/hi_res（版面+OCR）/ocr_only/auto 多策略；内置 chunking、清洗、staging（JSON/CSV/DataFrame）；与 LangChain、LlamaIndex 深度集成；可 Docker 化。</li>
+<li><strong>小结</strong>：以“信息提取 + 数据管道”见长；表格/公式极限还原不如 MinerU、PaddleOCR 等专业解析器。常见组合：Unstructured 做统一元素层，专业解析器做 PDF 深度解析。</li>
+</ul>
+<p><strong>其他值得关注</strong>：</p>
+<ul>
+<li>PDF-Extract-Kit（OpenDataLab 高质量抽取工具箱，AGPL-3.0）</li>
+<li>DeepDoctection（Detectron2 全家桶，RAG 场景）</li>
+<li>DocXChain（阿里达摩院模块化工具链，中英开箱）</li>
+<li>Chandra / Chandra 2（Datalab 旗舰模型，olmOCR-Bench 85.8–85.9）</li>
+<li>MonkeyOCR-pro-3B（华科，Elo 781.1）</li>
+<li>HunyuanOCR（腾讯，331 语种，Tencent Hunyuan Community License）</li>
+<li>GLM-OCR（智谱，0.9B）</li>
+<li>SmolDocling / GraniteDocling（超小 VLM，DocTags）</li>
+<li>Infinity-Parser（olmOCR-Bench 82.5+）</li>
+<li>omniparse / open-parse / chunkr（视觉模型驱动分块）</li>
+<li>pdf-extract-api（OCR+Ollama，匿名化/去 PII）</li>
+<li>MarkItDown（微软“任意文件→Markdown”胶水层，MIT）</li>
+<li>Parxy（统一 API 网关，多解析器 A/B 与灰度切换）</li>
+</ul>
+<h3 id="32 ocr">3.2　文本获取：底层文本抽取与 OCR 识别<a class="headerlink" href="#32 ocr" title="Permanent link">&para;</a></h3>
+<p>把 PDF 中的文字“取出来”有两条互补路径：数字原生 PDF 自带文本层（直接读取即可，无需识别），扫描/图片 PDF 则需 OCR 识别。二者均属最底层的文本获取，区别于语义级的信息提取。</p>
+<h4 id="321 pdf">3.2.1 底层文本抽取（数字原生 PDF 文本层）<a class="headerlink" href="#321 pdf" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>许可证</th>
+<th>文本</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PDFMiner.six</strong></td>
+<td>MIT</td>
+<td>优</td>
+<td>底层文本/坐标提取，众多库的基础</td>
+</tr>
+<tr>
+<td><strong>PyMuPDF (fitz)</strong></td>
+<td>AGPL-3.0</td>
+<td>快/优</td>
+<td>渲染级高速文本抽取，无 OCR/版面；RAG 轻量管线常用</td>
+</tr>
+<tr>
+<td><strong>pdfplumber</strong></td>
+<td>MIT</td>
+<td>优</td>
+<td>字符/线/曲线级精细控制，调试首选</td>
+</tr>
+<tr>
+<td><strong>PyMuPDF4LLM</strong></td>
+<td>AGPL-3.0</td>
+<td>优</td>
+<td>在 PyMuPDF 上叠加 Markdown 输出</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数字原生 PDF 应直接读文本层而非逐页 OCR（Docling 官方称快 30×）；PyMuPDF / pdfplumber 在 CPU 上单页仅个位数毫秒。文本层不含阅读顺序、分栏、表格单元格概念，本质是“带坐标的字形袋”。</p>
+</blockquote>
+<h4 id="322 ocr pdf">3.2.2 OCR 识别引擎（扫描件/图片/乱码 PDF）<a class="headerlink" href="#322 ocr pdf" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>引擎</th>
+<th>许可证</th>
+<th>语种</th>
+<th>参数量/规模</th>
+<th>核心特点</th>
+<th>最佳场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tesseract</strong></td>
+<td>Apache-2.0</td>
+<td>100+</td>
+<td>—</td>
+<td>LSTM、CPU 优先、生态最成熟；<strong>版面分析能力弱（仅 PSM 页面分割模式，无结构化输出）</strong></td>
+<td>多语种印刷体批量数字化、离线</td>
+</tr>
+<tr>
+<td><strong>PaddleOCR / PP-OCRv6</strong></td>
+<td>Apache-2.0</td>
+<td>100+</td>
+<td>tiny 1.5M / medium 34.5M / server</td>
+<td>2026-06 发布，DB++ 检测 + SVTR_LCNet 识别，OpenVINO 在 Intel CPU 约 5.2×、M4 约 6.1× 加速；PP-StructureV3 复杂文档解析；GitHub 79k+ Star（已超越 Tesseract）</td>
+<td>中文政务/金融/产业级、边缘</td>
+</tr>
+<tr>
+<td><strong>EasyOCR</strong></td>
+<td>Apache-2.0</td>
+<td>80+</td>
+<td>—</td>
+<td>PyTorch、API 极简、抗干扰强；无表格/版面模块</td>
+<td>多语种轻量快速原型</td>
+</tr>
+<tr>
+<td><strong>Surya</strong></td>
+<td>代码 Apache-2.0；权重 Modified AI Pubs OpenRAIL-M（&lt;$5M 免费，旧 CC-BY-NC-SA 4.0）</td>
+<td>90+</td>
+<td>650M（识别模型单体）</td>
+<td>Transformer，复杂/旋转表格识别强，含阅读顺序</td>
+<td>财务/学术多栏复杂文档（Marker 2 底座）</td>
+</tr>
+<tr>
+<td><strong>GOT-OCR 2.0</strong></td>
+<td>研究用途（原仓库）/ Apache-2.0（HF 卡，存争议）</td>
+<td>50+</td>
+<td>580M</td>
+<td>端到端 VLM（ViTDet + Qwen-0.5B），统一文本/公式/图表/乐谱/分子式，显存 &lt;3GB</td>
+<td>科技文献/结构化文档、低显存</td>
+</tr>
+<tr>
+<td><strong>HunyuanOCR</strong></td>
+<td>Tencent Hunyuan Community License（排除 EU/UK/韩国）</td>
+<td>331（arXiv:2607.04884）</td>
+<td>1B</td>
+<td>腾讯端到端 VLM，OmniDocBench v1.6 94.74（HunyuanOCR-1.5）、OCRBench 860</td>
+<td>轻量 SOTA、消费级 GPU</td>
+</tr>
+<tr>
+<td><strong>Dots.OCR → dots.mocr</strong></td>
+<td>MIT</td>
+<td>100+</td>
+<td>1.7B → 3B</td>
+<td>小红书 hi-lab VLM，统一版面+内容，比 GPT-4o/Gemini 快 10×；<strong>独特支持图表→SVG 代码</strong>；olmOCR-Bench 83.9</td>
+<td>复杂多语种文档、图表矢量重建</td>
+</tr>
+<tr>
+<td><strong>Dolphin</strong></td>
+<td>Apache-2.0</td>
+<td>50+</td>
+<td>400M+</td>
+<td>"先分析后解析"复杂版面</td>
+<td>复杂版面文档</td>
+</tr>
+<tr>
+<td><strong>GLM-OCR</strong></td>
+<td>MIT</td>
+<td>30+</td>
+<td>0.9B</td>
+<td>智谱，支持 schema 引导 JSON 结构化输出，Ollama 可部署</td>
+<td>中文 KIE/字段抽取、学术内容</td>
+</tr>
+<tr>
+<td><strong>DeepSeek-OCR 2</strong></td>
+<td>MIT</td>
+<td>30+</td>
+<td>3.39B（MoE）</td>
+<td>中英文档，MoE 降低单页推理成本</td>
+<td>中英文档、批量云管线</td>
+</tr>
+<tr>
+<td><strong>Baidu Unlimited-OCR</strong></td>
+<td>MIT</td>
+<td>40+</td>
+<td>3B</td>
+<td>多页 PDF 单次通过、HTML+LaTeX 结构化输出</td>
+<td>多页结构化批量</td>
+</tr>
+<tr>
+<td><strong>LightOnOCR-2</strong></td>
+<td>Apache-2.0</td>
+<td>20+</td>
+<td>1B</td>
+<td>法语/欧洲语种优化</td>
+<td>法语/欧洲语种</td>
+</tr>
+<tr>
+<td><strong>Florence-2</strong></td>
+<td>MIT</td>
+<td>100+</td>
+<td>770M</td>
+<td>通用视觉任务基座</td>
+<td>通用视觉+OCR 组合场景</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>关于手写识别的定性结论：Surya 在开源方案中综合最佳，Nougat 手写尚可，Tesseract 在 CPU 上极快但手写弱；超大模型 Qwen2.5-VL-72B 手写最强。</p>
+</blockquote>
+<h3 id="33">3.3　版面分析专用<a class="headerlink" href="#33" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>LayoutParser</strong>（Zejiang Shen 等，Allen Institute for AI / Brown / Harvard / UW / Waterloo，arXiv:2103.15348）：基于 Detectron2（Meta）等可插拔后端的文档图像分析工具箱，内置学术论文/报纸/表格预训练模型，准确率 90%+。</p>
+</li>
+<li>
+<p><strong>PP-Structure / PP-StructureV3</strong>（PaddleOCR 团队）：五模块架构（预处理→OCR→版面→文档项识别→后处理）。版面分析用 <strong>PP-DocLayoutV2</strong>——在 PP-DocLayout_plus-L（RT-DETR-L）之上级联 6 层 Transformer 轻量指针网络；检测框与类别经绝对二维位置编码嵌入，注意力引入 Relation-DETR 几何偏置建模元素间成对几何关系，由成对关系头产生 N×N 相对顺序矩阵，再用确定性 "win-accumulation" 解码还原拓扑一致的阅读顺序；自建评测集含 1,000 张图、覆盖 25 类版面元素（文档标题、章节标题、正文、竖排文字、页码、摘要、目录、参考文献、脚注、图题、页眉/页脚、算法、行内/行间公式、公式编号、图、表、印章、图表、旁注等）。PubLayNet mAP 96.2。</p>
+</li>
+<li>
+<p><strong>360LayoutAnalysis</strong>：360 开源版面检测模型，中文文档适配。</p>
+</li>
+<li>
+<p><strong>DocLayout-YOLO</strong>：基于 YOLO 的高速区域检测，社区流行，轻量易部署。</p>
+</li>
+<li>
+<p><strong>LayoutLMv3 / LayoutXLM / LiLT</strong>：多模态版面理解预训练（详见 3.4.3），多作为下游微调底座而非独立解析器。</p>
+</li>
+<li>
+<p><strong>RT-DETR / Heron</strong>：实时检测 Transformer，Docling 采用做区域检测。</p>
+</li>
+</ul>
+<h3 id="34">3.4　信息提取专项<a class="headerlink" href="#34" title="Permanent link">&para;</a></h3>
+<p>本节整合「信息提取」的三类子任务——<strong>表格提取</strong>、<strong>公式提取</strong>、<strong>信息抽取 KIE</strong>：版面分析先定位表格/公式/字段区域，本层再对框内网格结构、公式符号与语义字段做精细化重建。三者即广义“从文档中抽取结构化信息”，是理解能力的最终落点。</p>
+<h4 id="341">3.4.1　表格提取<a class="headerlink" href="#341" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>工具/模型</th>
+<th>许可证</th>
+<th>有线表</th>
+<th>无线表</th>
+<th>合并/跨页</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Camelot</strong></td>
+<td>MIT</td>
+<td>优</td>
+<td>良</td>
+<td>部分</td>
+<td>CSV/Excel/JSON/SQLite</td>
+</tr>
+<tr>
+<td><strong>Tabula(-py)</strong></td>
+<td>MIT</td>
+<td>优</td>
+<td>良</td>
+<td>弱</td>
+<td>CSV/TSV/JSON</td>
+</tr>
+<tr>
+<td><strong>pdfplumber</strong></td>
+<td>MIT</td>
+<td>优</td>
+<td>优</td>
+<td>部分</td>
+<td>代码→DataFrame</td>
+</tr>
+<tr>
+<td><strong>TableTransformer (TATR)</strong></td>
+<td>MIT(MS)</td>
+<td>优</td>
+<td>优</td>
+<td>良</td>
+<td>图像/PDF（需 GPU）</td>
+</tr>
+<tr>
+<td><strong>gmft</strong></td>
+<td>MIT</td>
+<td>优</td>
+<td>优</td>
+<td>部分</td>
+<td>DataFrame/CSV</td>
+</tr>
+<tr>
+<td><strong>StructEqTable-Deploy</strong></td>
+<td>—</td>
+<td>表格→LaTeX 高效工具包</td>
+<td></td>
+<td></td>
+<td>LaTeX</td>
+</tr>
+</tbody>
+</table>
+<p>经验法则：有线表格用 Camelot(<code>flavor="lattice"</code>) 或 Tabula；无线/白隙表用 Camelot(<code>flavor="stream"</code>) 或 pdfplumber；图片原生/复杂合并单元格用 TableTransformer 或 VLM 平台（MinerU/Docling）。2025 年工业界标准答案已转向 layout-aware 解析器（MinerU/Docling/Marker）。</p>
+<p><strong>深度学习表格结构识别（TSR）模型</strong>：规则/几何方法之外，工业级表格结构重建由专用模型支撑——TableFormer（Docling，金融表格强，FinTabNet TEDS&gt;91%）、SLANet / SLANet_plus（PaddleOCR）、PP-TableMagic（PaddleOCR）；TATR（微软）在财务/专利/法律/科学文献类表格检测领先。</p>
+<h4 id="342">3.4.2　公式提取<a class="headerlink" href="#342" title="Permanent link">&para;</a></h4>
+<p>公式提取 = <strong>公式检测（MFD, Mathematical Formula Detection）</strong> + <strong>公式识别（MER / im2latex）</strong>：先由检测模型在页面中定位行内/行间公式框，再由识别模型将裁剪图转为 LaTeX / MathML。难点在于公式是严格二维、可嵌套（上下标、分式、根式、矩阵、多行对齐）的结构，传统 OCR 把公式当一维文本会丢失层级；评价指标除 BLEU、归一化编辑距离（EditDistance）外，<strong>CDM（Content Detection Match，UniMERNet 提出）</strong> 因不受 LaTeX 等价表达多样性影响，正成为更公平的公式识别度量。</p>
+<p>主流公式识别库 / 模型：</p>
+<table>
+<thead>
+<tr>
+<th>库 / 模型</th>
+<th>机构</th>
+<th>许可证</th>
+<th>架构 / 输出</th>
+<th>关键性能（版本钉死）</th>
+<th>定位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>UniMERNet</strong></td>
+<td>上海 AI Lab / OpenDataLab</td>
+<td>Apache-2.0（代码+权重）</td>
+<td>Donut-Swin 编码 + mBART 解码；LaTeX</td>
+<td>CDM 全面优于 Texify/GOT 乃至 72B/78B VLM（CVPR 2026）；base ExpRate 84.6% / large 87.3%</td>
+<td>真实场景复杂/手写公式，MinerU 默认后端</td>
+</tr>
+<tr>
+<td><strong>PP-FormulaNet / plus</strong></td>
+<td>百度 PaddleOCR</td>
+<td>Apache-2.0</td>
+<td>plus-L（Vary-ViT-B）等；LaTeX</td>
+<td>En-BLEU 92.22 / Zh-BLEU 90.64（plus-L）；S 版约快 10×</td>
+<td>中英文公式、追求速度/工程集成</td>
+</tr>
+<tr>
+<td><strong>LaTeX-OCR（pix2tex）</strong></td>
+<td>Lukas Blecher</td>
+<td>MIT</td>
+<td>ViT 编码（ResNet 骨干）+ Transformer 解码；LaTeX</td>
+<td>BLEU 0.88 / normED 0.10（im2latex-100k）</td>
+<td>开源基线，仅块级公式</td>
+</tr>
+<tr>
+<td><strong>Nougat</strong></td>
+<td>Meta（FAIR）</td>
+<td>MIT 代码 + CC-BY-NC 4.0 权重（禁商用）</td>
+<td>Donut 编码-解码（2×Swin，350M+250M）；Mathpix Markdown</td>
+<td>英文学术 PDF 公式/表格保真标杆</td>
+<td>英文学术文献数字化</td>
+</tr>
+<tr>
+<td><strong>Surya LaTeX</strong></td>
+<td>VikParuchuri / Datalab</td>
+<td>Apache-2.0 代码 + Modified AI Pubs OpenRAIL-M 权重（&lt;$5M 免费）</td>
+<td>650M VLM；LaTeX</td>
+<td>公式支持较 Nougat/GOT 有限（见 3.5）</td>
+<td>Marker 后端，通用 OCR 附带公式</td>
+</tr>
+<tr>
+<td><strong>GOT-OCR 2.0</strong></td>
+<td>阶跃星辰（StepFun）</td>
+<td>Apache-2.0（HF 卡；原仓库标"研究用途"，口径存异，见 4.3）</td>
+<td>Vary 编码 + Qwen 解码；统一文本/公式/图表/乐谱</td>
+<td>公式→LaTeX，低显存 &lt;3GB</td>
+<td>统一端到端 OCR（详见 3.5）</td>
+</tr>
+<tr>
+<td><strong>Texify</strong></td>
+<td>VikParuchuri / Datalab</td>
+<td>GPL-3.0 代码 + CC-BY-SA 4.0 权重（可商用）</td>
+<td>Donut 衍生；LaTeX+Markdown</td>
+<td>已**弃用**，功能并入 Surya</td>
+<td>历史基线，行内+块级公式</td>
+</tr>
+<tr>
+<td><strong>Mathpix Snip</strong></td>
+<td>Mathpix（商业）</td>
+<td>闭源 / 付费 API</td>
+<td>云端深度学习 OCR</td>
+<td>印刷体公式 ~95%+，业界金标准</td>
+<td>商业基准锚点（非开源）</td>
+</tr>
+</tbody>
+</table>
+<p>识别之前需先定位公式。专用检测模型包括 <strong>YOLOv8 微调（PDF-Extract-Kit，AP50≈87.7）</strong>、<strong>Pix2Text-MFD（AP50≈60.1）</strong>；UniMERNet 也提供基于 PDF-Extract-Kit MFD 的教程。</p>
+<p>综合工具包：</p>
+<ul>
+<li><strong>PDF-Extract-Kit（OpenDataLab）</strong>：布局检测（LayoutLMv3）+ 公式检测（YOLOv8）+ 公式识别（复用 UniMERNet 权重）+ OCR（PaddleOCR）的模块化工具包，公式识别直接调用 UniMERNet、无需额外微调；各子模型遵循各自许可证（见 4.3）。</li>
+<li><strong>Pix2Text（breezedeus）</strong>：国产"类 Mathpix"工具，覆盖公式检测+识别（底层复用 LaTeX-OCR），提供易用 API，适合中文公式快速接入。</li>
+</ul>
+<p><strong>选型逻辑</strong>：追求真实场景复杂/手写公式精度且可商用 → <strong>UniMERNet</strong>（MinerU 默认）；追求中文本地化与高吞吐 → <strong>PP-FormulaNet_plus</strong>；只需块级公式快速验证 → <strong>LaTeX-OCR（pix2tex）</strong>；英文学术 PDF 数字化且不考虑商用 → <strong>Nougat</strong>；低显存统一 OCR+公式 → <strong>GOT-OCR 2.0</strong>；严禁依赖外部 API 的产线应避开 <strong>Mathpix</strong>。</p>
+<h4 id="343 kie">3.4.3　信息抽取（KIE）<a class="headerlink" href="#343 kie" title="Permanent link">&para;</a></h4>
+<p>版面解析之上，面向“从文档中抽取结构化字段（发票号、金额、日期、实体）”的任务：</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>机构</th>
+<th>架构</th>
+<th>特点</th>
+<th>代表成绩 / 许可</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LayoutLMv3</strong></td>
+<td>微软</td>
+<td>OCR tokens + 布局 + 图像三模态</td>
+<td>英文表单 F1 最高，需 OCR 预处理</td>
+<td>FUNSD 92.08 F1；DocVQA ANLS 83.37（开源 SOTA）；<strong>权重 CC BY-NC-SA 4.0（非商用）</strong></td>
+</tr>
+<tr>
+<td><strong>LayoutXLM</strong></td>
+<td>微软</td>
+<td>LayoutLMv2 多语言版</td>
+<td>53 语言预训练</td>
+<td>多语言表单理解</td>
+</tr>
+<tr>
+<td><strong>LiLT</strong></td>
+<td>学术界</td>
+<td>布局/文本双 Transformer 解耦</td>
+<td>可插拔任意语言模型，跨语言零样本迁移</td>
+<td>FUNSD 88.41（配 InfoXLM）</td>
+</tr>
+<tr>
+<td><strong>Donut</strong></td>
+<td>NAVER</td>
+<td><strong>OCR-free</strong> Swin + mBART</td>
+<td>免 OCR、像素直出 JSON；训练成本高</td>
+<td>CORD 84.1 F1</td>
+</tr>
+<tr>
+<td><strong>PP-ChatOCRv4</strong></td>
+<td>百度</td>
+<td>轻量 OCR + ERNIE 4.5</td>
+<td>中文 KIE 开箱即用，精度较上代 +15pct</td>
+<td>中文票据/证照场景</td>
+</tr>
+<tr>
+<td><strong>TrOCR / GLM-OCR</strong></td>
+<td>微软 / 智谱</td>
+<td>生成式 OCR</td>
+<td>TrOCR 文本行识别；GLM-OCR 可 Ollama 部署、schema 引导 JSON</td>
+<td>MIT/Apache 许可</td>
+</tr>
+</tbody>
+</table>
+<h3 id="35 vlm">3.5　通用视觉语言模型（VLM）作为解析引擎<a class="headerlink" href="#35 vlm" title="Permanent link">&para;</a></h3>
+<p>通用 VLM 不是专门的 PDF 解析库，而是 <strong>解析后端/底座</strong> ——凭强大文档理解能力被直接调用（如 Zerox、GPTPDF 封装 Qwen/Gemini 作外挂 VLM），或嵌入 MinerU/PP-Structure 的数据构建管线。其优势是零样本泛化强，缺点是成本高、存在幻觉文本风险。</p>
+<h4 id="351 vlm">3.5.1 专用文档 VLM（端到端）<a class="headerlink" href="#351 vlm" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>规模</th>
+<th>许可</th>
+<th>关键特征</th>
+<th>代表成绩</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PaddleOCR-VL-1.6</strong></td>
+<td>0.9B</td>
+<td>Apache-2.0</td>
+<td>NaViT 动态分辨率 + ERNIE-4.5-0.3B，代码与权重均无商用限制，109 语种，支持异形框/印章/跨页</td>
+<td>OmniDocBench v1.6 <strong>96.33</strong>（小模型 SOTA，2026 Q3 被 OvisOCR2 96.58 / TeleOCR 96.87 超越）</td>
+</tr>
+<tr>
+<td><strong>HunyuanOCR</strong></td>
+<td>1B</td>
+<td>Tencent Hunyuan Community License（排除 EU/UK/韩国）</td>
+<td>中文文档优化</td>
+<td>OmniDocBench v1.6 94.74（HunyuanOCR-1.5）</td>
+</tr>
+<tr>
+<td><strong>MinerU2.5</strong></td>
+<td>1.2B</td>
+<td>权重需点协议</td>
+<td>复杂版面鲁棒</td>
+<td>OmniDocBench v1.6 93.04（base）/ 95.75（Pro）</td>
+</tr>
+<tr>
+<td><strong>Dots.OCR → dots.mocr</strong></td>
+<td>1.7B→3B</td>
+<td>MIT</td>
+<td>图表→SVG 代码，多语</td>
+<td>olmOCR-Bench 83.9</td>
+</tr>
+<tr>
+<td><strong>GOT-OCR 2.0</strong></td>
+<td>580M</td>
+<td>研究用途（原仓库）/ Apache-2.0（HF 卡，存争议）</td>
+<td>乐谱/分子式/几何图形多模态</td>
+<td>边缘/低显存首选</td>
+</tr>
+<tr>
+<td><strong>DeepSeek-OCR 2 / OCR2</strong></td>
+<td>3.39B（MoE）</td>
+<td>MIT</td>
+<td>~100 语言，批量成本优</td>
+<td>大规模批处理</td>
+</tr>
+<tr>
+<td><strong>olmOCR</strong></td>
+<td>7B</td>
+<td>Apache-2.0</td>
+<td>GPT-4o 作**教师**生成训练数据、Qwen2-VL-7B 作**学生**基座微调（同一蒸馏链路两端，见 3.1），"小 VLM 做 OCR"</td>
+<td>英文学术文献</td>
+</tr>
+<tr>
+<td><strong>Nougat</strong></td>
+<td>—</td>
+<td>CC-BY-NC</td>
+<td>2023 LaTeX 还原先驱</td>
+<td>历史基线（禁商用）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="352 vlm ocr">3.5.2 通用 VLM 后端（非专为 OCR 设计）<a class="headerlink" href="#352 vlm ocr" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>规模</th>
+<th>许可</th>
+<th>关键特征</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Qwen2.5-VL</strong></td>
+<td>3B→72B</td>
+<td>权重 Apache-2.0（72B 超大规模需遵循 Qwen 社区许可）</td>
+<td>DocVQA 95.7、QwenVL HTML 版面格式，中文文档首选后端之一</td>
+</tr>
+<tr>
+<td><strong>InternVL2.5</strong></td>
+<td>多档</td>
+<td>—</td>
+<td>通用多模态，英文/通用</td>
+</tr>
+<tr>
+<td><strong>GLM-4V-9B</strong></td>
+<td>9B</td>
+<td>代码 Apache-2.0 / 权重 OpenRAIL-M</td>
+<td>1120×1120 端到端中文 OCR，允许商用（年营收&lt;200 万美元初创免费，禁生成违法/歧视内容）</td>
+</tr>
+<tr>
+<td><strong>MiniCPM-V 2.6</strong></td>
+<td>8B（SigLip-400M + Qwen2-7B）</td>
+<td>Apache-2.0</td>
+<td>OCRBench SOTA，端侧友好</td>
+</tr>
+<tr>
+<td><strong>DeepSeek-OCR</strong></td>
+<td>—</td>
+<td>MIT</td>
+<td>低成本光学压缩</td>
+</tr>
+</tbody>
+</table>
+<h2 id="4">4. 综合对比分析<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<h3 id="41 docling mineru marker paddleocr">4.1　第一梯队端到端系统对比（Docling / MinerU / Marker / PaddleOCR）<a class="headerlink" href="#41 docling mineru marker paddleocr" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th><strong>Docling</strong></th>
+<th><strong>MinerU</strong></th>
+<th><strong>Marker 2</strong></th>
+<th><strong>PaddleOCR/PP-StructureV3</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>范式</td>
+<td>Pipeline + 可选 VLM</td>
+<td>Pipeline + MinerU2.5 VLM（双后端）</td>
+<td>Surya 套件编排 + 可选 LLM 精修</td>
+<td>Pipeline + PaddleOCR-VL</td>
+</tr>
+<tr>
+<td>版面模型</td>
+<td>RT-DETR / Heron</td>
+<td>PDF-Extract-Kit</td>
+<td>Surya 20M 快速版面</td>
+<td>PP-DocLayout 系列</td>
+</tr>
+<tr>
+<td>表格</td>
+<td>TableFormer（金融强，FinTabNet TEDS&gt;91%）</td>
+<td>强（跨页合并）</td>
+<td>基础（TEDS 约 75–80%，LLM 补强）</td>
+<td>PP-TableMagic</td>
+</tr>
+<tr>
+<td>公式</td>
+<td>一般（复杂嵌套弱）</td>
+<td><strong>最强</strong>（UniMERNet，LaTeX，编号）</td>
+<td>Surya LaTeX</td>
+<td>PP-FormulaNet_plus</td>
+</tr>
+<tr>
+<td>OCR</td>
+<td>可插拔 Tesseract/EasyOCR/RapidOCR</td>
+<td>内置 PaddleOCR</td>
+<td>Surya OCR 2（~650M）</td>
+<td>PP-OCRv6（单模型 50 语）</td>
+</tr>
+<tr>
+<td>输入格式</td>
+<td><strong>最广</strong>（PDF/DOCX/PPTX/XLSX/HTML/EPUB/邮件/音频）</td>
+<td>PDF/图/DOCX</td>
+<td>PDF/图/PPTX/DOCX/XLSX/HTML/EPUB</td>
+<td>PDF/图</td>
+</tr>
+<tr>
+<td>多语言</td>
+<td>取决于 OCR 后端</td>
+<td><strong>109 语言，CJK 最强</strong></td>
+<td>90+（Surya）</td>
+<td>50 语统一 / VL 版 109 语</td>
+</tr>
+<tr>
+<td>硬件</td>
+<td><strong>纯 CPU 可跑</strong></td>
+<td>高精度路径需 GPU（≥8GB）</td>
+<td>CPU 可跑，批量需大 GPU（~3–5GB/worker）</td>
+<td>CPU/GPU 均可，边缘 1.5M 起</td>
+</tr>
+<tr>
+<td>许可证</td>
+<td><strong>MIT</strong>（Granite Apache-2.0）</td>
+<td><strong>MinerU Open Source License（Apache-2.0 系，≥3.1.0 由 AGPLv3 切换）</strong></td>
+<td><strong>代码 Apache-2.0 + 权重 OpenRAIL-M（$5M 门槛）</strong></td>
+<td><strong>Apache-2.0（代码+权重无限制）</strong></td>
+</tr>
+<tr>
+<td>治理</td>
+<td>LF AI &amp; Data，IBM/Red Hat 背书</td>
+<td>社区活跃，Star 最高</td>
+<td>Datalab 公司主导</td>
+<td>百度开源，持续迭代</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42">4.2　精度基准<a class="headerlink" href="#42" title="Permanent link">&para;</a></h3>
+<p>本报告参考如下两个主流评测基准。注意各仓库自报分数存在“选择性打榜”现象（如 marker README 强调其领先 MinerU/docling，dots.ocr README 强调其超越 MinerU2.5），横向对比时应优先采用同一来源、同一版本的榜单数据，并以自有业务样本复测为最终依据。</p>
+<table>
+<thead>
+<tr>
+<th>基准</th>
+<th>维护方</th>
+<th>规模与构成</th>
+<th>评测方式</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OmniDocBench</strong></td>
+<td>OpenDataLab（上海 AI 实验室）</td>
+<td>v1.0 含 981 页真实 PDF，覆盖 9 大文档类型、4 种布局类别、3 种语言，超 2 万个区域级标注；v1.5 进一步扩充</td>
+<td>端到端整页解析 + 模块级（OCR/表格/公式/阅读顺序）双维度；采用 CDM（Content-Driven Matching）内容驱动匹配框架，降低空白/样式噪声影响</td>
+<td>中英文档解析领域引用最广的基准之一，PP-StructureV3、MinerU2.5、PaddleOCR-VL、dots.ocr 等均在此打榜</td>
+</tr>
+<tr>
+<td><strong>olmOCR-Bench</strong></td>
+<td>Allen Institute for AI（AI2）</td>
+<td>1,400+ 份 PDF、7,000+ 项单元测试，覆盖数学公式、表格、多栏、古旧扫描件、页眉页脚、超长小字等 8 类硬场景</td>
+<td>单元测试式断言（文本存在性、属性、计数等），输出总分</td>
+<td>由 olmOCR 团队发布，被 marker、dots.ocr、surya 等多家第三方主动引用对比</td>
+</tr>
+</tbody>
+</table>
+<h4 id="421 olmocr-bench">4.2.1　olmOCR-Bench<a class="headerlink" href="#421 olmocr-bench" title="Permanent link">&para;</a></h4>
+<p>Allen AI 第三方基准，1,403 份 PDF、8 类子集 macro-average（越高越好）。数字取自 olmOCR 仓库与 dots.ocr 仓库，两源完全一致。</p>
+<table>
+<thead>
+<tr>
+<th>模型（版本）</th>
+<th>Overall</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mistral OCR (API)</td>
+<td>72.0</td>
+<td>商业 API 参照</td>
+</tr>
+<tr>
+<td>MinerU 2.5.4*</td>
+<td>75.2</td>
+<td>端到端</td>
+</tr>
+<tr>
+<td>DeepSeek-OCR (3B)</td>
+<td>75.7</td>
+<td></td>
+</tr>
+<tr>
+<td>Marker 1.10.1</td>
+<td>76.1</td>
+<td>balanced 路径</td>
+</tr>
+<tr>
+<td>dots.ocr (1.7B)</td>
+<td>79.1</td>
+<td></td>
+</tr>
+<tr>
+<td>PaddleOCR-VL* (0.9B)</td>
+<td>80.0</td>
+<td>小模型高调位</td>
+</tr>
+<tr>
+<td>olmOCR v0.4.0 (7B)</td>
+<td>82.4</td>
+<td>GPT-4o 教师蒸馏</td>
+</tr>
+<tr>
+<td>Surya OCR 2</td>
+<td>83.3</td>
+<td>Surya 模型栈新版</td>
+</tr>
+<tr>
+<td>dots.mocr (3B)</td>
+<td>83.9</td>
+<td>公实数值准确</td>
+</tr>
+<tr>
+<td>Chandra 2（Datalab）</td>
+<td>85.8–85.9</td>
+<td>Datalab 旗舰模型（2026）</td>
+</tr>
+<tr>
+<td>Nanonets OCR-3</td>
+<td>87.4</td>
+<td>商业/开源混合</td>
+</tr>
+<tr>
+<td>Infinity-Parser2-Pro</td>
+<td>87.6</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>星标（*）为各仓库官方复测版本。结论：dots.mocr 83.9 公实数值准确，但 2026 年已被 <strong>Chandra 2（85.8–85.9）、Infinity-Parser2-Pro（87.6）、Nanonets OCR-3（87.4）</strong> 等超越，"开源 SOTA 区间"说法已不成立；Surya OCR 2 自身为 83.3。端到端小模型已逼近甚至超过部分商业 API。</p>
+</blockquote>
+<h4 id="422 omnidocbench v16">4.2.2　OmniDocBench 综合得分对比（固定 v1.6 版本）<a class="headerlink" href="#422 omnidocbench v16" title="Permanent link">&para;</a></h4>
+<p>OmniDocBench（CVPR 2025，上海人工智能实验室 / OpenDataLab，arXiv:2412.07626）是当前文档解析选型的**核心综合基准**。其端到端 <strong>Overall（官方排行榜称 Accuracy，满分 100，越高越好）</strong> 由三项子指标按固定权重合成：</p>
+<p><strong>Overall = ((1 − TextEditDist) × 100 + TableTEDS + FormulaCDM) / 3</strong></p>
+<ul>
+<li><strong>TextEditDist</strong>：纯文本归一化编辑距离（越低越好）；</li>
+<li><strong>TableTEDS</strong>：表格结构 TEDS 相似度；</li>
+<li><strong>FormulaCDM</strong>：公式字符检测匹配 CDM。</li>
+</ul>
+<p><strong>本报告固定 OmniDocBench v1.6 为统一口径</strong>（截至 2026-09 公开最完整的官方排行榜版本；v1.6 引入 MGAM 多粒度自适应匹配与 296 页 Hard 子集）。下表 Overall 取自官方排行榜，经 PaddleOCR-VL-1.6 论文 arXiv:2606.03264 Table 2 引用，并与 TeleOCR 论文 arXiv:2608.12898v3 Table 1「v1.6 Full」交叉校验（TeleOCR 96.87、OvisOCR2 96.58 等 2026 Q3 新模型已纳入下表）：</p>
+<table>
+<thead>
+<tr>
+<th>模型（版本）</th>
+<th>参数量</th>
+<th>Overall↑ (v1.6)</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TeleOCR</strong></td>
+<td>1.2B</td>
+<td><strong>96.87</strong></td>
+<td>阿里，2026 Q3 开源新 SOTA（arXiv:2608.12898）</td>
+</tr>
+<tr>
+<td><strong>OvisOCR2</strong></td>
+<td>0.8B</td>
+<td>96.58</td>
+<td>阿里 ATH-MaaS，小模型 SOTA</td>
+</tr>
+<tr>
+<td><strong>PaddleOCR-VL-1.6</strong></td>
+<td>0.9B</td>
+<td><strong>96.33</strong></td>
+<td>0.9B 小模型前列（已被上二者超越）</td>
+</tr>
+<tr>
+<td>MinerU2.5-Pro</td>
+<td>1.2B</td>
+<td>95.75</td>
+<td>数据为中心扩展版</td>
+</tr>
+<tr>
+<td>GLM-OCR</td>
+<td>0.9B</td>
+<td>95.22</td>
+<td>智谱</td>
+</tr>
+<tr>
+<td>PaddleOCR-VL-1.5</td>
+<td>0.9B</td>
+<td>94.93</td>
+<td>上一版（v1.5/v1.6 归属存疑，见注）</td>
+</tr>
+<tr>
+<td>HunyuanOCR-1.5</td>
+<td>1B</td>
+<td>94.74</td>
+<td>升级版</td>
+</tr>
+<tr>
+<td>PaddleOCR-VL</td>
+<td>0.9B</td>
+<td>94.18</td>
+<td>初版</td>
+</tr>
+<tr>
+<td>Qianfan-OCR</td>
+<td>4B</td>
+<td>93.90</td>
+<td></td>
+</tr>
+<tr>
+<td>Youtu-Parsing</td>
+<td>2.5B</td>
+<td>93.74</td>
+<td></td>
+</tr>
+<tr>
+<td>Ovis2.6-30B-A3B</td>
+<td>30B</td>
+<td>93.70</td>
+<td>通用 VLM</td>
+</tr>
+<tr>
+<td>Logics-Parsing-v2</td>
+<td>4B</td>
+<td>93.33</td>
+<td></td>
+</tr>
+<tr>
+<td>FireRed-OCR</td>
+<td>2B</td>
+<td>93.26</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>MinerU2.5</strong></td>
+<td>1.2B</td>
+<td>93.04</td>
+<td>基础版（本报告主引用）</td>
+</tr>
+<tr>
+<td>dots.ocr</td>
+<td>3B</td>
+<td>90.77</td>
+<td></td>
+</tr>
+<tr>
+<td>OpenDoc-0.1B</td>
+<td>0.1B</td>
+<td>90.67</td>
+<td></td>
+</tr>
+<tr>
+<td>DeepSeek-OCR 2</td>
+<td>3.39B（MoE）</td>
+<td>90.25</td>
+<td></td>
+</tr>
+<tr>
+<td>HunyuanOCR</td>
+<td>1B</td>
+<td>89.95</td>
+<td>基础版（v1.5 口径曾报 94.1）</td>
+</tr>
+<tr>
+<td>olmOCR</td>
+<td>7B</td>
+<td>85.74</td>
+<td>GPT-4o 教师蒸馏</td>
+</tr>
+<tr>
+<td>Mistral OCR (API)</td>
+<td>—</td>
+<td>85.66</td>
+<td>商业 API 参照</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>数据出处：OmniDocBench 官方排行榜 <code>github.com/opendatalab/OmniDocBench</code>（Papers With Code / CodeSOTA 镜像），经 arXiv:2606.03264 与 arXiv:2608.12898v3 两篇 2026 论文交叉校验。所有数字为厂商/论文自报，建议以自有样本 POC 复测为最终裁决。</p>
+</blockquote>
+<h3 id="43">4.3　许可证与商用矩阵<a class="headerlink" href="#43" title="Permanent link">&para;</a></h3>
+<p>PDF 文档解析系统的许可证分「代码许可」与「权重许可」两层——<strong>代码开源 ≠ 权重可商用</strong>，商用前须逐一核对仓库 LICENSE 与模型卡。</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>代码许可</th>
+<th>权重许可</th>
+<th>商用注意点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MinerU</td>
+<td>Apache-2.0 系</td>
+<td>MinerU Open Source License（附加商业条款）</td>
+<td>≥3.1.0 由 AGPLv3 切换；超 100M MAU 或 $20M/月营收需商业授权，在线服务须标明</td>
+</tr>
+<tr>
+<td>Marker / Surya</td>
+<td>Apache-2.0</td>
+<td>修改版 AI Pubs OpenRAIL-M</td>
+<td>融资/营收 ≥$5M 企业商用需付费授权</td>
+</tr>
+<tr>
+<td>Docling</td>
+<td>MIT</td>
+<td>MIT（GraniteDocling 等以模型卡为准）</td>
+<td>无显著门槛</td>
+</tr>
+<tr>
+<td>PaddleOCR（含 PP-StructureV3）</td>
+<td>Apache-2.0</td>
+<td>Apache-2.0</td>
+<td>无显著门槛</td>
+</tr>
+<tr>
+<td>PaddleOCR-VL</td>
+<td>Apache-2.0</td>
+<td>Apache-2.0</td>
+<td>无显著门槛</td>
+</tr>
+<tr>
+<td>olmOCR</td>
+<td>Apache-2.0</td>
+<td>Apache-2.0</td>
+<td>无显著门槛</td>
+</tr>
+<tr>
+<td>Unstructured</td>
+<td>Apache-2.0</td>
+<td>—</td>
+<td>开源库与付费云 API 功能有差异</td>
+</tr>
+<tr>
+<td>dots.ocr / dots.mocr</td>
+<td>MIT</td>
+<td>MIT</td>
+<td>无显著门槛</td>
+</tr>
+<tr>
+<td>DeepSeek-OCR 2</td>
+<td>MIT</td>
+<td>MIT</td>
+<td>无显著门槛</td>
+</tr>
+<tr>
+<td>GOT-OCR 2.0</td>
+<td>Apache-2.0</td>
+<td>Apache-2.0</td>
+<td>注：原仓库标"研究用途"，HF 卡为 Apache-2.0，口径存异，商用前核对</td>
+</tr>
+<tr>
+<td>HunyuanOCR</td>
+<td>Tencent Hunyuan Community License</td>
+<td>同左（排除 EU/UK/韩国）</td>
+<td>商用须评估地域排除条款</td>
+</tr>
+<tr>
+<td>DocLayout-YOLO</td>
+<td>AGPL-3.0</td>
+<td>以仓库为准</td>
+<td>SaaS/闭源集成有传染风险</td>
+</tr>
+<tr>
+<td>PDF-Extract-Kit</td>
+<td>AGPL-3.0</td>
+<td>组件各异</td>
+<td>同上，且组件许可需逐个核对</td>
+</tr>
+<tr>
+<td>LayoutLMv3</td>
+<td>MIT（代码）</td>
+<td>CC-BY-NC-SA 4.0（非商业）</td>
+<td>权重不可商用</td>
+</tr>
+<tr>
+<td>MarkItDown</td>
+<td>MIT</td>
+<td>—</td>
+<td>PDF 底座 PyMuPDF 为 AGPL，深度集成需评估</td>
+</tr>
+<tr>
+<td>PyMuPDF</td>
+<td>AGPL-3.0 / 商业双授权</td>
+<td>—</td>
+<td>闭源产品需购买商业许可</td>
+</tr>
+<tr>
+<td>pdfplumber / pdfminer.six / Tesseract / EasyOCR / RapidOCR</td>
+<td>MIT / MIT / Apache-2.0 / Apache-2.0 / Apache-2.0</td>
+<td>同左</td>
+<td>无显著门槛</td>
+</tr>
+</tbody>
+</table>
+<h3 id="44">4.4　选型决策树<a class="headerlink" href="#44" title="Permanent link">&para;</a></h3>
+<ol>
+<li>文档是否含扫描/图片且无文本层？是 → 先 OCR（PaddleOCR 中文 / Tesseract 离线 / HunyuanOCR）；否 → 进入 2。</li>
+<li>中文技术文档 / 公式密集 / 表格多？→ <strong>MinerU</strong>。</li>
+<li>多格式（PDF+Office+HTML）企业 RAG / 强合规离线？→ <strong>Docling</strong>（MIT，纯 CPU，气隙部署）。</li>
+<li>快速转 Markdown、代码 Apache-2.0 友好？→ <strong>Marker</strong>（注意权重 AI Pubs OpenRAIL-M 的 $5M 商用门槛）。</li>
+<li>仅提取规则表格？→ <strong>Camelot / pdfplumber</strong>。</li>
+<li>纯文本快速抽取？→ <strong>PyMuPDF4LLM / pdfplumber</strong>。</li>
+<li>轻量端到端 / 消费级 GPU？→ <strong>HunyuanOCR / Dots.OCR / GOT-OCR 2.0</strong>。</li>
+<li>已具备 GPU 与工程能力、想要自研解析后端？→ <strong>Qwen2.5-VL / InternVL2.5 / GLM-4V-9B / MiniCPM-V 2.6</strong>，同一模型兼顾解析与 RAG 问答，且可避开 AGPL 约束。</li>
+<li>发票/表单字段抽取（中文）？→ <strong>PP-ChatOCRv4</strong> / Donut。</li>
+</ol>
+<h2 id="5">5. 总结<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<p>PDF 解析已从“文本抽取”进化为“文档智能”。开源生态在 2024–2026 年完成关键跃迁：以 MinerU、Docling、Marker 为代表的综合平台，结合 PaddleOCR、HunyuanOCR、Dots.OCR、GOT-OCR 2.0 等识别引擎，以及 Camelot、pdfplumber、LayoutParser、PP-Structure 等专项工具，已能覆盖 OCR、版面分析、信息提取与格式转换的全链路需求，并在多个基准上逼近甚至超过商业 API。</p>
+<p>2026 年形成清晰的“三超 + 一厂”格局：<strong>MinerU 在表格/公式/CJK 维度综合最强（但 OmniDocBench Overall 已被 PaddleOCR-VL-1.6/TeleOCR/OvisOCR2 超越）</strong>、<strong>Marker 轻量转 Markdown 场景采用广（但权重许可证构成商用门槛，且 GitHub Star 约 39.8k 低于 MinerU 80.2k 与 Docling 66.6k）</strong>、<strong>Docling 覆盖面与合规性最强（MIT + 纯 CPU + 企业治理）</strong>、<strong>PaddleOCR 以 Apache-2.0 全栈 + 中文主场 + 0.9B 小模型高调位成为许可证敏感型企业的最优解（GitHub 79k+ 已超越 Tesseract）</strong>。经典工具（PyMuPDF/pdfplumber/Camelot）在规则化数字原生文档上仍是成本最低方案。</p>
+<p>关键技术趋势如下：</p>
+<ul>
+<li>
+<p><strong>VLM 端到端成为主流</strong>：Nougat→GOT-OCR 2.0→HunyuanOCR→Dots.OCR→MinerU 2.5 表明，单次前向推理统一检测/识别/版面/表格/公式/翻译，正系统性替代级联流水线。</p>
+</li>
+<li>
+<p><strong>VLM 小型化竞赛</strong>：1.2B 的 MinerU2.5、0.9B 的 PaddleOCR-VL、258M 的 Granite-Docling 相继刷榜，证明“分辨率工程 &gt; 参数堆叠”成为新范式，端侧/CPU 部署边界不断下移。</p>
+</li>
+<li>
+<p><strong>双后端成为标配</strong>：管线（低成本兜底）+ VLM（高精度攻坚）二元架构 + 级联策略，是 2026 年生产系统主流拓扑。</p>
+</li>
+<li>
+<p><strong>多模态融合与结构化输出</strong>：公式→LaTeX、表格→HTML、流程图→Mermaid、图表→SVG（dots.mocr），输出从纯文本走向机器可读结构化对象。</p>
+</li>
+<li>
+<p><strong>Agent / MCP 原生集成</strong>：MinerU、Docling、Unstructured 均已支持 MCP 与主流 Agent 框架；Docling 已有 OpenShift Operator，解析从”库”推向“服务”。</p>
+</li>
+</ul>
+<hr />
+<h2 id="a">附录 A　项目索引<a class="headerlink" href="#a" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>GitHub / 主页</th>
+<th>许可证</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MinerU</td>
+<td>github.com/opendatalab/MinerU</td>
+<td>MinerU Open Source License（Apache-2.0 系，≥3.1.0）</td>
+</tr>
+<tr>
+<td>Docling</td>
+<td>github.com/docling-project/docling</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>Marker</td>
+<td>github.com/datalab-to/marker</td>
+<td>代码 Apache-2.0 + 权重 AI Pubs OpenRAIL-M（&lt;$5M 门槛，以最新官方仓库为准）</td>
+</tr>
+<tr>
+<td>olmOCR</td>
+<td>github.com/allenai/olmocr</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>Unstructured</td>
+<td>github.com/Unstructured-IO/unstructured</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>DeepDoctection</td>
+<td>github.com/deepdoctection/deepdoctection</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>DocXChain</td>
+<td>github.com/AlibabaResearch/AdvancedLiterateMachinery/tree/main/Applications/DocXChain</td>
+<td>开源</td>
+</tr>
+<tr>
+<td>Tesseract</td>
+<td>github.com/tesseract-ocr/tesseract</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>PaddleOCR</td>
+<td>github.com/PaddlePaddle/PaddleOCR</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>EasyOCR</td>
+<td>github.com/JaidedAI/EasyOCR</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>Surya</td>
+<td>github.com/VikParuchuri/surya</td>
+<td>代码 Apache-2.0；权重 Modified AI Pubs OpenRAIL-M（&lt;$5M 免费，旧 CC-BY-NC-SA 4.0）</td>
+</tr>
+<tr>
+<td>GOT-OCR 2.0</td>
+<td>github.com/Ucas-HaoranWei/GOT-OCR2.0</td>
+<td>研究用途（原仓库）/ Apache-2.0（HF 卡，存争议）</td>
+</tr>
+<tr>
+<td>HunyuanOCR</td>
+<td>github.com/Tencent/llm.hunyuan.ocr</td>
+<td>Tencent Hunyuan Community License（排除 EU/UK/韩国）</td>
+</tr>
+<tr>
+<td>Dots.OCR</td>
+<td>github.com/rednote-hilab/dots.ocr</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>LayoutParser</td>
+<td>github.com/Layout-Parser/layout-parser</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>PP-Structure</td>
+<td>github.com/PaddlePaddle/PaddleOCR</td>
+<td>Apache-2.0</td>
+</tr>
+<tr>
+<td>360LayoutAnalysis</td>
+<td>github.com/360AIResearch/360LayoutAnalysis</td>
+<td>开源</td>
+</tr>
+<tr>
+<td>Camelot</td>
+<td>github.com/camelot-dev/camelot（2026 v2.0.0 活跃维护；atlanhq fork 已归档只读）</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>Tabula</td>
+<td>github.com/tabulapdf/tabula</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>pdfplumber</td>
+<td>github.com/jsvine/pdfplumber</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>TableTransformer</td>
+<td>github.com/microsoft/table-transformer</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>PDFMiner.six</td>
+<td>github.com/pdfminer/pdfminer.six</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>PyMuPDF / 4LLM</td>
+<td>github.com/pymupdf/PyMuPDF</td>
+<td>AGPL-3.0</td>
+</tr>
+<tr>
+<td>markitdown</td>
+<td>github.com/microsoft/markitdown</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>Nougat</td>
+<td>github.com/facebookresearch/nougat</td>
+<td>CC-BY-NC（禁商用）</td>
+</tr>
+<tr>
+<td>pdf-craft</td>
+<td>github.com/oomol-lab/pdf-craft</td>
+<td>开源</td>
+</tr>
+<tr>
+<td>pandoc</td>
+<td>pandoc.org</td>
+<td>GPL-2.0</td>
+</tr>
+<tr>
+<td>SmolDocling</td>
+<td>github.com/docling-project/smoldocling</td>
+<td>与 Docling 兼容</td>
+</tr>
+<tr>
+<td>Parxy</td>
+<td>统一多解析器 API 网关</td>
+<td>—</td>
+</tr>
+<tr>
+<td>StructEqTable-Deploy</td>
+<td>github.com/UniModal4Reasoning/StructEqTable-Deploy</td>
+<td>—</td>
+</tr>
+<tr>
+<td>chunkr</td>
+<td>github.com/lumina-ai-inc/chunkr</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h2 id="b">附录 B　参考资料<a class="headerlink" href="#b" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Livathinos et al., <em>Docling: An Efficient Open-Source Toolkit for AI-driven Document Conversion</em>, arXiv:2501.17887（IBM 官方技术报告与基准）</li>
+<li>Cui et al., <em>PaddleOCR 3.0 Technical Report</em>, arXiv:2507.05595（PP-StructureV3 五模块架构）</li>
+<li><em>A Comparative Study of PDF Parsing Tools Across Diverse Document Categories</em>, arXiv:2410.09871（DocLayNet 十工具对比）</li>
+<li>PaddleX / PaddleOCR 官方文档：PP-StructureV3、PP-DocLayoutV2 阅读顺序机制</li>
+<li>Camelot 官方对比文档（2026-05 版，与 Tabula/pdfplumber/PyMuPDF/unstructured 逐项对比）；camelot-dev/camelot v2.0.0 发布说明（2026）</li>
+<li>olmOCR-Bench（Ai2）、OmniDocBench（CVPR 2025，arXiv:2412.07626）公开榜单及 2026 年第三方复测报道</li>
+<li>pdfmarkdownapp/pdf-to-markdown-benchmark（MIT，公开答案键与缺陷账本）</li>
+<li>"Docling vs Marker vs MinerU: The Ultimate Open-Source PDF Parser Benchmark (2026)", Aditya Mangal（含可复现评测脚本与许可分析）</li>
+<li>Datalab, <em>Marker 2 发布与 olmOCR-bench 对比</em>（2026-07）；<em>Best Open-Source OCR Models 2026 (Compared)</em>（2026-08 更新）；<em>Chandra 2</em> 旗舰 OCR 模型（olmOCR-Bench 85.8–85.9）</li>
+<li>HunyuanOCR 技术报告, arXiv:2607.04884（331 语种；OmniDocBench v1.6 94.74）</li>
+<li>TeleOCR, arXiv:2608.12898（OmniDocBench v1.6 96.87，2026 Q3 开源 SOTA）</li>
+<li>OvisOCR2（阿里 ATH-MaaS，OmniDocBench v1.6 96.58）；MinerU 3.4/4.0 发布说明（2026-06 / 2026 后续，GitHub opendatalab/MinerU）</li>
+</ol>
+<p><em>本报告由 Kimi、Qwen3.8-max、Hy3、DeepSeek-v4.1-flash、Claude Opus 5 基于公开技术资料、官方仓库、技术博客与 2025–2026 年公开基准整理，数据截至 2026-09。具体版本能力与许可证以各项目官方仓库最新声明为准。</em></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+                <p>Copyright &copy; 2016 - 2021 Dothinking</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

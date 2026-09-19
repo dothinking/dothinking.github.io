@@ -48,6 +48,10 @@
 </li>
                                     
 <li>
+    <a href="../categories/document%20analysis/" class="dropdown-item">document analysis</a>
+</li>
+                                    
+<li>
     <a href="../categories/energy/" class="dropdown-item">energy</a>
 </li>
                                     
@@ -157,7 +161,7 @@
                     <div class="col-md-9" role="main">
 
 <h1 id="pdf2docx">pdf2docx开发概要：解析段落<a class="headerlink" href="#pdf2docx" title="Permanent link">&para;</a></h1>
-<p>发布于：2020-08-27 | 分类：<a href="../categories/process%20automation/">process automation</a></p>
+<p>发布于：2020-08-27 | 分类：<a href="../categories/document%20analysis/">document analysis</a></p>
 <hr />
 <p>经过<a href="../2020-08-15-pdf2docx%E5%BC%80%E5%8F%91%E6%A6%82%E8%A6%81%EF%BC%9A%E8%A7%A3%E6%9E%90%E8%A1%A8%E6%A0%BC/">表格解析</a>后，我们得到了整合的块元素：文本/图片块<code>TextBlock</code>和表格块<code>TableBlock</code>。其中文本/图片块将被重建为段落，表格块将被重建为表格，单元格内的块元素按照相同的逻辑进行递归处理。在此基础上，计算相邻元素之间的间距，例如竖直方向的前后段间距、水平方向的段落缩进。</p>
 <h2 id="_1">竖直方向定位：段间距<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
